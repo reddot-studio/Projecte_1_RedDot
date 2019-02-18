@@ -1,3 +1,3 @@
-﻿Audal Maric�
-wala tiu maik cundeixes tet
-Calla cullons
+﻿CITM Project 1  
+Team: RedDot
+
