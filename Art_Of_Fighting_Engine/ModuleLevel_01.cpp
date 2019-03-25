@@ -8,6 +8,12 @@ bool ModuleLevel_01::Init()
 
 update_status ModuleLevel_01::PreUpdate()
 {
+
+	//Zoom test
+	//background->h += 1;
+	//background->y -= 1;
+	//background->x-= 1;
+
 	if (App->input->right && background->x < 510) {
 		background->x += SCROLL_SPEED;
 		background->w -= SCROLL_SPEED;

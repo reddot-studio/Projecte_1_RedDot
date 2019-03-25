@@ -47,8 +47,6 @@ update_status ModuleRender::PreUpdate()
 	SDL_RenderClear(renderer);
 	// TODO 10: Blit our test texture to check functionality
 	//SDL_RenderCopy(renderer, App->textures->textures[0], NULL,&background);
-	
-
 
 	return update_status::UPDATE_CONTINUE;
 }
