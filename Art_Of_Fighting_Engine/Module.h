@@ -8,6 +8,7 @@ class Module
 public:
 	virtual ~Module() {}
 
+	bool Start() { return true; }
 	virtual bool Init()					{ return true; }
 	virtual update_status PreUpdate()	{ return update_status::UPDATE_CONTINUE; }
 	virtual update_status Update()		{ return update_status::UPDATE_CONTINUE; }
