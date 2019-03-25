@@ -3,7 +3,8 @@
 bool ModuleLevel_01::Init()
 {
 	posX = 0;
-	background = new SDL_Rect{ posX,0,1536,768 };
+	
+	background = new SDL_Rect{ 0,0,1536,768 };
 	return true;
 }
 
@@ -15,15 +16,14 @@ update_status ModuleLevel_01::PreUpdate()
 	//background->y -= 1;
 	//background->x-= 1;
 
-	if (App->input->right && posX < 800) {
-		posX--;
-		/*background->x += SCROLL_SPEED;
-		background->w -= SCROLL_SPEED;*/
+	if (App->input->right && limitX < 512) {
+		posX-= SCROLL_SPEED;
+		limitX += SCROLL_SPEED;
+
 	}
 	if (App->input->left && posX < 0) {
-		posX++;
-		//background->x -= SCROLL_SPEED;
-		//background->w += SCROLL_SPEED;
+		posX += SCROLL_SPEED;;
+
 	}
 	return update_status::UPDATE_CONTINUE;
 }
