@@ -8,6 +8,7 @@
 class ModuleLevel_01 : public Module {
 public:
 	SDL_Rect * background = nullptr;
+	int posX;
 
 public:
 	bool Init()		override;
