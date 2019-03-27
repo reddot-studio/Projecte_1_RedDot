@@ -87,17 +87,26 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section, float speed, int IsBackground)
 {
 	bool ret = true;
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x * SCREEN_SIZE;
 	rect.y = (int)(camera.y * speed) + y * SCREEN_SIZE;
 
+
 	if(section != NULL)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
+		if (IsBackground == 1) 
+		{
+			rect.h = SCREEN_HEIGHT;
+			rect.w = (int)((float)section->w * (SCREEN_HEIGHT / (float)section->h));
+		}
+		else
+		{
+			rect.w = section->w;
+			rect.h = section->h;
+		}
 	}
 	else
 	{
