@@ -12,6 +12,8 @@ ModulePlayer::ModulePlayer()
 	position.x = 100;
 	position.y = 220;
 
+	Jump = 0;
+
 	// idle animation (arcade sprite sheet)
 	idle.PushBack({0, 7, 66, 101 + 7});
 	idle.PushBack({66, 7, 133 - 66, 101 + 7});
@@ -60,6 +62,12 @@ update_status ModulePlayer::Update()
 	{
 		current_animation = &forward;
 		position.x -= speed;
+	}
+
+	if (App->input->keyboard[SDL_SCANCODE_SPACE] == 1)
+	{
+		Jump = 1;
+
 	}
 
 	// Draw everything --------------------------------------
