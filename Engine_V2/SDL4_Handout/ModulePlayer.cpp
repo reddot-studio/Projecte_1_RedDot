@@ -13,19 +13,20 @@ ModulePlayer::ModulePlayer()
 	position.y = 220;
 
 	// idle animation (arcade sprite sheet)
-	idle.PushBack({0, 0, 66, 116});
-	idle.PushBack({66, 0, 113 - 46, 116});
-	//idle.PushBack({113, 0, 202-113-66, 116});
-	idle.speed = 0.2f;
+	idle.PushBack({0, 7, 66, 101 + 7});
+	idle.PushBack({66, 7, 133 - 66, 101 + 7});
+	idle.PushBack({133, 7, 202-133, 101+7});
+	idle.PushBack({ 66, 7, 133 - 66, 101+7 });
+	idle.speed = 0.1f;
 
 	// walk forward animation (arcade sprite sheet)
 	//forward.frames.PushBack({9, 136, 53, 83});
-	forward.PushBack({78, 131, 60, 88});
-	forward.PushBack({162, 128, 64, 92});
-	forward.PushBack({259, 128, 63, 90});
-	forward.PushBack({352, 128, 54, 91});
-	forward.PushBack({432, 131, 50, 89});
-	forward.speed = 0.1f;
+	forward.PushBack({632, 348, 689 - 632, 456 - 348});
+	forward.PushBack({689, 348, 747 - 689, 456 - 348});
+	forward.PushBack({747, 348, 816-747, 456-348});
+	forward.PushBack({816, 348, 874 - 816, 456 - 348});
+	forward.PushBack({874, 348, 941 - 874, 456 - 348});
+	forward.speed = 0.11f;
 
 	// TODO 4: Make ryu walk backwards with the correct animations
 }
