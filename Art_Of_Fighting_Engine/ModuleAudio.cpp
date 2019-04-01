@@ -1,20 +1,18 @@
-#include "ModuleAudio.h"
+
 #include "Globals.h"
 #include "Application.h"
-
+#include "ModuleAudio.h"
+#include "ModuleInput.h"
 #include "SDL/include/SDL.h"
-#include "SDL_Mixer/include/SDL_mixer.h"
-#pragma comment(lib, "SDL_Mixer/libx86/SDL2_mixer.lib")
+#include "SDL_mixer\include\SDL_mixer.h"
+#pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
-ModuleAudio::ModuleAudio():Module()
-{
-	for (int i = 0; i < MAX_CHUNKS; i++)
-	{
-		Chunk_Array[i] = nullptr;
-	}
-}
-ModuleAudio::~ModuleAudio()
-{}
+
+
+ModuleAudio::ModuleAudio() : Module() {}
+
+ModuleAudio::~ModuleAudio() {}
+
 
 bool ModuleAudio::Init()
 {
@@ -22,75 +20,68 @@ bool ModuleAudio::Init()
 
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
-		SDL_Log("SDL_INIT_AUDIO could not initialitze! SDL_Mix Error: %s", Mix_GetError());
+		SDL_Log("SDL_INIT_AUDIO could not initialitze! SDL_Mix Error: %s\n", Mix_GetError());
 		ret = false;
 	}
 	else
 	{
-		LOG("SDL_INIT AUDIO correctly initialized!");
+		LOG("SDL_INIT AUDIO correctly initialized!\n");
 		int flags = MIX_INIT_OGG;
 		int initted = Mix_Init(flags);
 		if (initted&flags != flags) {
-			SDL_Log("Mix_Init: Failed to init required ogg support! SDL_Mixer Error: %s", Mix_GetError());
+			SDL_Log("Mix_Init: Failed to init required ogg support! SDL_Mixer Error: %s \n", Mix_GetError());
 			SDL_Log("Mix_Init: %s\n", Mix_GetError());
 			ret = false;
 		}
 		else
 		{
 			LOG("Mix_Init correctly initialized!");
-			Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024);
-			App->audio->Load("Assets/Audio/033xART OF FIGHT.ogg");
-			Play(Chunk_Array[0]);
-			Mix_FadeInChannel(2, Chunk_Array[0], 0, 5000);
-			Mix_FadeOutChannel(2, 10000);
+			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024);
+			start_music = Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
+			todo_music = Load_music("Assets/Audio/033xART OF FIGHT.ogg");
+			ending_music = Load_music("Assets/Audio/042xSono hito-wa watashitachi-no kodomo kana.ogg");
+			john_music = Load_music("Assets/Audio/038xKoukuu Bokaan!.ogg");
 		}
 	}
+
+
 	return ret;
 }
 
-update_status ModuleAudio::PreUpdate()
-{
-	return update_status::UPDATE_CONTINUE;
-}
 
 bool ModuleAudio::CleanUp()
 {
-	bool ret = true;
-	for (int i = 0; i < last_Chunk; i++)
-	{
-		Chunk_Array[i] = nullptr;
-	}
-	return ret;
+	LOG("Cleaning music and fx!\n");
+
+	for (unsigned int i = 0; i < last_audio; i++)
+		Mix_FreeMusic(soundtrack[i]);
+
+	for (unsigned int i = 0; i < last_effect; i++)
+		Mix_FreeChunk(effects[i]);
+
+	Mix_CloseAudio();
+	Mix_Quit();
+
+	return true;
 }
 
-Mix_Chunk * ModuleAudio::Load(const char *path)
+Mix_Music* const ModuleAudio::Load_music(const char *path)
 {
-	Chunk = Mix_LoadWAV(path);
-	if (Chunk==NULL)
-	{
-		SDL_Log("Could not LOAD audio file from path: %s SDL_Mixer Error: %s", path, Mix_GetError());
-		SDL_Quit();
-	}
-	else
-	{
-		Chunk_Array[last_Chunk++] = Chunk;
-		LOG("Chunk path added to Chunks array!");
-	}
-	return Chunk;
+	Mix_Music* music = Mix_LoadMUS(path);
+	soundtrack[last_audio++] = music;
+
+	LOG("Loading Music\n");
+
+	return music;
 }
 
-bool ModuleAudio::Play(Mix_Chunk* chunk)
+Mix_Chunk* const ModuleAudio::Load_effects(const char *path)
 {
-	bool ret = true;
-	Mix_Volume(1, MIX_MAX_VOLUME / 6);
-	if ((Mix_PlayChannel(2,chunk,1) < 2))
-	{
-		SDL_Log("SDL Could not play the chunk! SDL_Mixer Error: %s", Mix_GetError());
-		ret = false;
-	}
-	else
-	{
-		LOG("Chunk is being played!");
-	}
-	return ret;
+	Mix_Chunk* effect = Mix_LoadWAV(path);
+	effects[last_effect++] = effect;
+
+	LOG("Loading FX\n");
+	
+	return effect;
 }
+

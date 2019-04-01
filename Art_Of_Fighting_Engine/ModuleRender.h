@@ -2,11 +2,11 @@
 #define __ModuleRenderer_H__
 
 #include "Module.h"
-#include "SDL_image/include/SDL_image.h"
+#include "SDL\include\SDL_rect.h"
+#include "RectSprites.h"
 
 struct SDL_Renderer;
 struct SDL_Texture;
-//struct SDL_Rect;
 
 class ModuleRender : public Module
 {
@@ -16,15 +16,15 @@ public:
 
 	bool Init();
 	update_status PostUpdate();
+	update_status Update();
 	update_status PreUpdate();
 	bool CleanUp();
 
-	bool Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section = nullptr);
+	bool Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed = 1.0f);
 
 public:
 	SDL_Renderer* renderer = nullptr;
-	SDL_Texture* tex;
-	
+	SDL_Rect camera;
 };
 
 #endif //__ModuleRenderer_H__

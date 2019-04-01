@@ -1,11 +1,11 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleInput.h"
-#include "ModuleLevel_01.h"
 #include "SDL/include/SDL.h"
 
 ModuleInput::ModuleInput() : Module()
-{}
+{
+}
 
 // Destructor
 ModuleInput::~ModuleInput()
@@ -24,39 +24,45 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 
+	for (int i = 4; i < 285; i++)
+	{
+		keyboard_state[i] = KEY_NONE;
+	}
 	return ret;
 }
 
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
+
 	SDL_PumpEvents();
 
 	keyboard = SDL_GetKeyboardState(NULL);
-	// TODO 1: find out how to detect if the ESC key was pressed
-	// and quit the game
-	if (keyboard[SDL_SCANCODE_ESCAPE]) {
-		LOG("\nESCAPE PRESSED");
+
+	for (int i = 4; i < 285; i++)
+	{
+		if (keyboard[i]) {
+			if (keyboard_state[i] == KEY_PRESSED || keyboard_state[i] == KEY_REPEAT) {
+				keyboard_state[i] = KEY_REPEAT;
+			}
+			else {
+				keyboard_state[i] = KEY_PRESSED;
+			}
+		}
+		else if (keyboard_state[i] == KEY_PRESSED || keyboard_state[i] == KEY_REPEAT) {
+			keyboard_state[i] = KEY_REALESE;
+		}
+		else {
+			keyboard_state[i] = KEY_NONE;
+		}
+	}
+
+
+	if(keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_PRESSED)
 		return update_status::UPDATE_STOP;
-	}
-	if (keyboard[SDL_SCANCODE_A]) {
-		left = true;
-	}
-	else {
-		left = false;
-	}
-	if (keyboard[SDL_SCANCODE_D]) {
-		right = true;
-	}
-	else {
-		right = false;
-	}
-
-
 
 	return update_status::UPDATE_CONTINUE;
 }
-
 
 // Called before quitting
 bool ModuleInput::CleanUp()

@@ -2,12 +2,16 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleWindow.h"
-#include "ModuleTextures.h"
-#include "ModuleLevel_01.h"
+#include "ModuleInput.h"
 #include "SDL/include/SDL.h"
+#include "RectSprites.h"
 
 ModuleRender::ModuleRender() : Module()
-{}
+{
+	camera.x = camera.y = 0;
+	camera.w = SCREEN_WIDTH;
+	camera.h = SCREEN_HEIGHT;
+}
 
 // Destructor
 ModuleRender::~ModuleRender()
@@ -16,7 +20,6 @@ ModuleRender::~ModuleRender()
 // Called before render is available
 bool ModuleRender::Init()
 {
-
 	LOG("Creating Renderer context");
 	bool ret = true;
 	Uint32 flags = 0;
@@ -34,26 +37,38 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
-	// TODO 9: load a texture "test.png" to test is everything works well
-	App->textures->Load("Assets/karuta.png");
-
 	return ret;
 }
 
 // Called every draw update
 update_status ModuleRender::PreUpdate()
 {
-	// TODO 7: Clear the screen to black before starting every frame
 	SDL_RenderClear(renderer);
-	// TODO 10: Blit our test texture to check functionality
-	//SDL_RenderCopy(renderer, App->textures->textures[0], NULL,&background);
+
+	return update_status::UPDATE_CONTINUE;
+}
+
+update_status ModuleRender::Update()	
+{
+	int speed = 3;
+
+	if(App->input->keyboard[SDL_SCANCODE_UP] == 1)
+		camera.y += speed;
+
+	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
+		camera.y -= speed;
+
+	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
+		camera.x += speed;
+
+	if(App->input->keyboard[SDL_SCANCODE_RIGHT] == 1)
+		camera.x -= speed;
 
 	return update_status::UPDATE_CONTINUE;
 }
 
 update_status ModuleRender::PostUpdate()
 {
-	// TODO 8: Switch buffers so we actually render
 	SDL_RenderPresent(renderer);
 	return update_status::UPDATE_CONTINUE;
 }
@@ -64,31 +79,36 @@ bool ModuleRender::CleanUp()
 	LOG("Destroying renderer");
 
 	//Destroy window
-	if(renderer != nullptr)
+	if(renderer != NULL)
+	{
 		SDL_DestroyRenderer(renderer);
+	}
 
 	return true;
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed)
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = x;
-	rect.y = y;
+	rect.x = (int)(camera.x * speed) + (x + section->offset.x) * SCREEN_SIZE;
+	rect.y = (int)(camera.y * speed) + (y + section->offset.y) * SCREEN_SIZE;
 
-	if(section != nullptr)
+	if(section != NULL)
 	{
-		rect.w = section->w;
-		rect.h = section->h;
+		rect.w = section->rect.w;
+		rect.h = section->rect.h;
 	}
 	else
 	{
-		SDL_QueryTexture(texture, nullptr, nullptr, &rect.w, &rect.h);
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	if(SDL_RenderCopy(renderer, texture, section, &rect) != 0)
+	rect.w *= SCREEN_SIZE;
+	rect.h *= SCREEN_SIZE;
+
+	if(SDL_RenderCopy(renderer, texture, &section->rect, &rect) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
@@ -96,3 +116,4 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, SDL_Rect* section)
 
 	return ret;
 }
+

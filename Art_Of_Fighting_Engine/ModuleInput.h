@@ -3,7 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "ModuleRender.h"
+#include "SDL\include\SDL_scancode.h"
 
 typedef unsigned char Uint8;
 
@@ -16,13 +16,13 @@ public:
 
 	bool Init();
 	update_status PreUpdate();
-
 	bool CleanUp();
 
 public:
-	bool left = false;
-	bool right = false;
 	const Uint8 *keyboard = nullptr;
+
+	key_state keyboard_state[285];
+
 };
 
 #endif // __ModuleInput_H__
