@@ -28,8 +28,8 @@ struct Collider
 		type(type),
 		callback(callback)
 	{
-		rect.x = rectangle.rect.x - rectangle.offset.x;
-		rect.y = rectangle.rect.y - rectangle.offset.y;
+		rect.x = rectangle.rect.x;
+		rect.y = rectangle.rect.y;
 		rect.w = rectangle.rect.w;
 		rect.h = rectangle.rect.h;
 	}

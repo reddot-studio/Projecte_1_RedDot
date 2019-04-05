@@ -125,7 +125,7 @@ update_status ModulePlayer::Update()
 		current_animation = &idle;
 	}
 
-	int speed = 2;
+	int speed = 3;
 	if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && state == CAN_MOVE)
 	{
 		state = CROUCH;
@@ -211,10 +211,10 @@ update_status ModulePlayer::Update()
 	}
 
 	App->render->Blit(graphics, pivot_player.x, pivot_player.y, &r);
+	App->player->player_collider->SetPos(pivot_player.x, pivot_player.y);
 	RectSprites r1 = idle_player2.GetCurrentFrame();
 	App->render->Blit(graphics, 700,290 , &r1);
 	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect);
-
 	return UPDATE_CONTINUE;
 }
 
