@@ -18,9 +18,9 @@ enum update_status
 };
 
 enum key_state {
-	KEY_NONE = 1,
-	KEY_REALESE,
-	KEY_PRESSED,
+	KEY_IDLE = 1,
+	KEY_UP,
+	KEY_DOWN,
 	KEY_REPEAT,
 };
 
@@ -28,7 +28,7 @@ enum key_state {
 typedef unsigned int uint;
 
 // Configuration -----------
-#define SCREEN_SIZE 2
+#define SCREEN_SIZE 3
 #define SCREEN_WIDTH 384
 #define SCREEN_HEIGHT 224
 #define WIN_FULLSCREEN 0

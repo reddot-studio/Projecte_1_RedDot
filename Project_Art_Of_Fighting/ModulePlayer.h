@@ -35,7 +35,7 @@ public:
 	Collider * player_collider = nullptr;
 
 	player_state state = IDLE;
-	Animation* current_animation;
+	Animation* current_animation = nullptr;
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* pivotTexture = nullptr;
 

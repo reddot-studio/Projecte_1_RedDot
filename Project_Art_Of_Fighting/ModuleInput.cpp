@@ -26,7 +26,7 @@ bool ModuleInput::Init()
 
 	for (int i = 4; i < 285; i++)
 	{
-		keyboard_state[i] = KEY_NONE;
+		keyboard_state[i] = KEY_IDLE;
 	}
 	return ret;
 }
@@ -41,24 +41,24 @@ update_status ModuleInput::PreUpdate()
 
 	for (int i = 4; i < 285; i++)
 	{
-		if (keyboard[i]) {
-			if (keyboard_state[i] == KEY_PRESSED || keyboard_state[i] == KEY_REPEAT) {
+		if (keyboard[i] == 1)
+		{
+			if (keyboard_state[i] == KEY_IDLE)
+				keyboard_state[i] = KEY_DOWN;
+			else
 				keyboard_state[i] = KEY_REPEAT;
-			}
-			else {
-				keyboard_state[i] = KEY_PRESSED;
-			}
 		}
-		else if (keyboard_state[i] == KEY_PRESSED || keyboard_state[i] == KEY_REPEAT) {
-			keyboard_state[i] = KEY_REALESE;
-		}
-		else {
-			keyboard_state[i] = KEY_NONE;
+		else
+		{
+			if (keyboard_state[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+				keyboard_state[i] = KEY_UP;
+			else
+				keyboard_state[i] = KEY_IDLE;
 		}
 	}
 
 
-	if(keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_PRESSED)
+	if(keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 		return update_status::UPDATE_STOP;
 
 	return update_status::UPDATE_CONTINUE;

@@ -84,7 +84,7 @@ update_status ModuleSceneJohn::Update()
 
 	App->render->Blit(graphics, 315, 100, &soldierduo.GetCurrentFrame());
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_PRESSED)
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
 		App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
 	}

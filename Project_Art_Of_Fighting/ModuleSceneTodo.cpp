@@ -44,7 +44,7 @@ update_status ModuleSceneTodo::Update()
 		return update_status::UPDATE_STOP;
 	}
 	
-		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_PRESSED)
+		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 		{
 			App->fade->FadeToBlack(App->scene_todo, App->scene_john);
 		}

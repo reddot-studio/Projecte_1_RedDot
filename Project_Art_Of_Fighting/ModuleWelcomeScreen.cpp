@@ -132,7 +132,7 @@ update_status ModuleWelcomeScreen::Update()
 
 
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_PRESSED)
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
 		
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);

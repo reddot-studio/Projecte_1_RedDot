@@ -14,9 +14,6 @@ ModulePlayer::ModulePlayer()
 {
 
 	pivotRect.rect = {0,0,10,10};
-	pivot_player.x = 100;
-	pivot_player.y = 290;
-
 
 	//idle animation (arcade sprite sheet)
 	idle.PushBack({0, 8, 66, 108}, -29, -43,2);
@@ -48,14 +45,14 @@ ModulePlayer::ModulePlayer()
 	forward.PushBack({ 751, 348, 69 , 108 },-32,-43,3);
 	forward.PushBack({ 820, 348, 58 , 108 },-21,-43,3);
 	forward.PushBack({ 878, 348, 67 , 108 },-29,-43,3);
-	forward.speed = 0.2f;	 
+	forward.speed = 0.25f;	 
 	
 	// walk backward animation (arcade sprite sheet)
 	backward.PushBack({ 577, 479, 59, 107 }, -29, -42, 3);
 	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3);
 	backward.PushBack({ 690, 478, 61 , 107 },  -32,-42 ,3);
 	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3);
-	backward.speed = 0.2f;
+	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
 	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2);
@@ -105,6 +102,8 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	pivot_player.x = 100;
+	pivot_player.y = 150;
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
@@ -113,107 +112,124 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	player_collider = App->collision->AddCollider(idle.frames[0], COLLIDER_PLAYER, App->player);
+	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0} }, COLLIDER_PLAYER, App->player);
 	return ret;
 }
 
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	int speed = 1;
+	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && state == CAN_MOVE)
+	//{
+	//	state = CROUCH;
+	//	current_animation = &crouch;
+	//	//App->render->camera.x -= speed + 0.7;
+	//}
 
-	if (state == CAN_MOVE) {
-		current_animation = &idle;
-	}
+	//else if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REALESE) {
+	//	crouch.ResetCurrentFrame();
+	//	state = CAN_MOVE;
+	//}
+	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && App->input->keyboard_state[SDL_SCANCODE_E] == KEY_PRESSED && state == CROUCH)
+	//{
+	//	crouch_punch.ResetCurrentFrame();
+	//	state = CROUCH;
+	//	current_animation = &crouch_punch;
+	//	//App->render->camera.x -= speed + 0.7;
+	//}
 
-	int speed = 3;
-	if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && state == CAN_MOVE)
-	{
-		state = CROUCH;
-		current_animation = &crouch;
-		//App->render->camera.x -= speed + 0.7;
-	}
-
-	else if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REALESE) {
-		crouch.ResetCurrentFrame();
-		state = CAN_MOVE;
-	}
-	if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && App->input->keyboard_state[SDL_SCANCODE_E] == KEY_PRESSED && state == CROUCH)
-	{
-		crouch_punch.ResetCurrentFrame();
-		state = CROUCH;
-		current_animation = &crouch_punch;
-		//App->render->camera.x -= speed + 0.7;
-	}
-
-
+	//Move right
 	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE)
 	{
-		current_animation = &forward;
 		pivot_player.x += speed;
-		//App->render->camera.x -= speed + 0.7;
+		if (current_animation != &forward)
+		{
+			forward.ResetCurrentFrame();
+			current_animation = &forward;
+		}
 	}
-	else if(App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REALESE && state == CAN_MOVE){
-		forward.ResetCurrentFrame();
-	}	
 	
-
+	//Move Left
 	if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE)
 	{
-		current_animation = &backward;
-		if (pivot_player.x > 60) {
-			pivot_player.x -= speed;
+		pivot_player.x -= speed;
+		if (current_animation != &backward)
+		{
+			backward.ResetCurrentFrame();
+			current_animation = &backward;
+		}		 
+	}
+
+	//Punch weak
+	if(App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
+	{
+		if (current_animation != &punch)
+		{
+			state = ATTACK;
+			punch.ResetCurrentFrame();
+			current_animation = &punch;
+			App->audio->Play_chunk(punchfx);
 		}
-		//App->render->camera.x += speed + 0.7;
-		 
 	}
-	else if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REALESE && state == CAN_MOVE) {
-		backward.ResetCurrentFrame();
-	}
-	if(App->input->keyboard_state[SDL_SCANCODE_E] == KEY_PRESSED && state == CAN_MOVE)
-	{
 
-		state = ATTACK;
-		current_animation = &punch;
-		App->audio->Play_chunk(punchfx);
-	}
-	if(App->input->keyboard_state[SDL_SCANCODE_R] == KEY_PRESSED && state == CAN_MOVE)
+	//kick weak
+	if(App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)
 	{
+		if (current_animation != &kick)
+		{
+			state = ATTACK;
+			kick.ResetCurrentFrame();
+			current_animation = &kick;
+			App->audio->Play_chunk(kickfx);
+		}
+	}
 
-		state = ATTACK;
-		current_animation = &kick;
-		App->audio->Play_chunk(kickfx);
-	}
-	if(App->input->keyboard_state[SDL_SCANCODE_F] == KEY_PRESSED && state == CAN_MOVE)
+	//Jump
+	if(App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)
 	{
-		current_animation = &koouKen;
-		App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y,COLLIDER_NONE, 50);
-		App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y,COLLIDER_PLAYER_SHOT, 600);
-		state = ATTACK;
-		App->audio->Play_chunk(kooukenfx);
+		if (current_animation != &jump)
+		{
+			state = JUMP;
+			jump.ResetCurrentFrame();
+			current_animation = &jump;
+			App->audio->Play_chunk(jumpfx);
+		}
 	}
-	if(App->input->keyboard_state[SDL_SCANCODE_W] == KEY_PRESSED && state == CAN_MOVE)
+
+	//Ko'ou Ken
+	if(App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)
 	{
-		current_animation = &jump;
-		state = JUMP;
-		App->audio->Play_chunk(jumpfx);
+		if (current_animation != &koouKen)
+		{
+			state = ATTACK;
+			koouKen.ResetCurrentFrame();
+			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600);
+			current_animation = &koouKen;
+			App->audio->Play_chunk(kooukenfx);
+		}
+		
 	}
+
+	//Check duration of animation and reset state when it finishes
+	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame () -1 && state != CAN_MOVE)
+	{
+			state = CAN_MOVE;
+	}
+	
+	//Check states and set to Idle
+	if (App->input->keyboard_state[SDL_SCANCODE_A] == key_state::KEY_IDLE
+		&& App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_IDLE && state != ATTACK && state != JUMP)
+		current_animation = &idle;
+
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
-	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame () -1 && state != CAN_MOVE)
-	{
-		if (current_animation != &crouch) {
-			current_animation->ResetCurrentFrame();
-
-
-			state = CAN_MOVE;
-		}
-	}
-
-	App->render->Blit(graphics, pivot_player.x, pivot_player.y, &r);
-	App->player->player_collider->SetPos(pivot_player.x, pivot_player.y);
-	RectSprites r1 = idle_player2.GetCurrentFrame();
-	App->render->Blit(graphics, 700,290 , &r1);
+	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r);
+	App->player->player_collider->SetPos(pivot_player.x - 29, pivot_player.y-43);
+	//RectSprites r1 = idle_player2.GetCurrentFrame();
+	//App->render->Blit(graphics, 700,290 , &r1);
 	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect);
 	return UPDATE_CONTINUE;
 }

@@ -28,21 +28,21 @@ bool ModuleParticles::Start()
 
 	// Ko'ou Ken particle
 	//Charge energy
-	pre_koouKen.anim.PushBack({939,940,19,45},-21,-34,2);
-	pre_koouKen.anim.PushBack({683,869,23,36},-43,-32,2);
-	pre_koouKen.anim.PushBack({707,869,22,36},-36,-16,3);
-	pre_koouKen.anim.PushBack({730,878,26,27},-37,-12,1);
-	pre_koouKen.anim.PushBack({730,878,26,27},-40,-10,1);
+	pre_koouKen.anim.PushBack({939,940,19,45},-33,-39,2);
+	pre_koouKen.anim.PushBack({683,869,23,36},-55,-37,2);
+	pre_koouKen.anim.PushBack({707,869,22,36},-49,-21,3);
+	pre_koouKen.anim.PushBack({730,878,26,27},-49,-17,1);
+	pre_koouKen.anim.PushBack({730,878,26,27},-54,-15,1);
 	pre_koouKen.anim.loop = false;
 	pre_koouKen.anim.speed = 0.32f;
 	////Shoot energy
-	koouKen.anim.PushBack({683,912,54,39},-3,-16,5);
-	koouKen.anim.PushBack({737,905,72,47},-15,-18,5);
-	koouKen.anim.PushBack({809,920,53,31},-2,-13,5);
-	koouKen.anim.PushBack({862,930,36,21},9,-10,5);
+	koouKen.anim.PushBack({683,912,54,39},-3,-22,5);
+	koouKen.anim.PushBack({737,905,72,47},-15,-24,5);
+	koouKen.anim.PushBack({809,920,53,31},-2,-19,5);
+	koouKen.anim.PushBack({862,930,36,21},9,-16,5);
 	koouKen.anim.loop = true;
 	koouKen.life = 1000;
-	koouKen.speed = { 25,0 };
+	koouKen.speed = { 10,0 };
 	koouKen.anim.speed = 1.0f;
 
 
@@ -53,11 +53,6 @@ bool ModuleParticles::Start()
 	//koouKen.anim.PushBack({962,665,22,36});
 	//koouKen.anim.PushBack({985,665,39,36});
 	//koouKen.anim.PushBack({998,612,25,50});
-
-	
-	
-
-
 
 	return true;
 }

@@ -94,8 +94,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x + section->offset.x * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y + section->offset.y * SCREEN_SIZE;
+	rect.x = (int)(camera.x * speed) + x  * SCREEN_SIZE;
+	rect.y = (int)(camera.y * speed) + y  * SCREEN_SIZE;
 
 	if(section != NULL)
 	{
@@ -130,8 +130,8 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	if (use_camera)
 	{
 
-		rec.x = camera.x * speed+ rect.x;
-		rec.y = camera.y * speed+ rect.y;
+		rec.x = (int)camera.x * speed + rect.x * SCREEN_SIZE;
+		rec.y = (int)camera.y * speed + rect.y * SCREEN_SIZE;
 		rec.w *= SCREEN_SIZE;
 		rec.h *= SCREEN_SIZE;
 	}
