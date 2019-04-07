@@ -162,7 +162,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Punch weak
-	if(App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
+	if(App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN && state == CAN_MOVE)
 	{
 		if (current_animation != &punch)
 		{
@@ -174,7 +174,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//kick weak
-	if(App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)
+	if(App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN && state == CAN_MOVE)
 	{
 		if (current_animation != &kick)
 		{
@@ -186,7 +186,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Jump
-	if(App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)
+	if(App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN && state == CAN_MOVE)
 	{
 		if (current_animation != &jump)
 		{
@@ -198,7 +198,7 @@ update_status ModulePlayer::Update()
 	}
 
 	//Ko'ou Ken
-	if(App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)
+	if(App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && state == CAN_MOVE)
 	{
 		if (current_animation != &koouKen)
 		{
