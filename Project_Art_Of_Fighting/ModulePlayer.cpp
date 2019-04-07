@@ -238,6 +238,8 @@ bool ModulePlayer::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
+	if(App->player->player_collider)
+		App->player->player_collider->to_delete = true;
 	LOG(" - ModulePlayer CleanUp");
 	return true;
 }
