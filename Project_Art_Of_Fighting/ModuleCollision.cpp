@@ -190,4 +190,6 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 	
 	return detectedX && detectedY;
 
+
+
 }

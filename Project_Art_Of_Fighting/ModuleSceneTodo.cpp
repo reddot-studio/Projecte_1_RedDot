@@ -31,6 +31,8 @@ bool ModuleSceneTodo::Start()
 	App->audio->Play_music(todo_music);
 	graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png");
 	//App->collision->AddCollider({ {300,0,30,224},{0,0} }, COLLIDER_WALL);
+	BackPanel = App->collision->AddCollider({ { 0-10,0,10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_todo);
+	FrontPanel = App->collision->AddCollider({ {rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_todo);
 	App->player->Enable();
 
 	return true;
@@ -53,6 +55,12 @@ update_status ModuleSceneTodo::Update()
 
 bool ModuleSceneTodo::CleanUp()
 {
+	if (FrontPanel && BackPanel)
+	{
+		FrontPanel->to_delete = true;
+		BackPanel->to_delete = true;
+	}
+
 	App->audio->Unload_music(todo_music);
 	App->textures->Unload(graphics);
 	App->player->Disable();

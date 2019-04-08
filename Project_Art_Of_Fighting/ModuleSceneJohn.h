@@ -24,7 +24,10 @@ public:
 	bool Start() override;
 	update_status Update()override;
 	bool CleanUp();
-	//Collider *ScreenLimits[2];
+
+	Collider* BackPanel;
+	Collider* FrontPanel;
+
 };
 
 #endif

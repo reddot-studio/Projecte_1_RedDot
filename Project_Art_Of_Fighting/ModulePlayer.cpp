@@ -7,6 +7,7 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleDebug.h"
+#include"ModuleCollision.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -142,8 +143,19 @@ update_status ModulePlayer::Update()
 	//	//App->render->camera.x -= speed + 0.7;
 	//}
 
+	//OnWall Colision Exit
+	if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
+	{
+		BackColision = false;
+	}
+
+	if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
+	{
+		FrontColision = false;
+	}
+
 	//Move right
-	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE)
+	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE && !FrontColision)
 	{
 		pivot_player.x += speed;
 		if (current_animation != &forward)
@@ -154,7 +166,7 @@ update_status ModulePlayer::Update()
 	}
 	
 	//Move Left
-	if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE)
+	if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE && !BackColision)
 	{
 		pivot_player.x -= speed;
 		if (current_animation != &backward)
@@ -265,6 +277,22 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
+	//Colision with wall
+	if (c2->type == COLLIDER_WALL)
+	{
 
+		if(c2->rect.x < 0) 
+		{
+			BackColision = true;
+		}
+		if(c2->rect.x > 0)
+		{
+			FrontColision = true;
+		}
+
+
+	}
+
+	CurrentColider = c2;
 
 }

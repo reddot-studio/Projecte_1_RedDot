@@ -20,6 +20,10 @@ public:
 	Mix_Music * todo_music = nullptr;
 	SDL_Texture* graphics = nullptr;
 	RectSprites rect_background;
+
+	Collider* BackPanel;
+	Collider* FrontPanel;
+
 };
 
 #endif // __MODULESCENEKEN_H__

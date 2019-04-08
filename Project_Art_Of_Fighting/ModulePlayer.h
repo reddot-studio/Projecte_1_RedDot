@@ -66,6 +66,10 @@ public:
 	SDL_Rect ActiveScene;
 	int timer;
 
+	bool BackColision, FrontColision;
+	Collider* CurrentColider;
+
+
 };
 
 #endif
