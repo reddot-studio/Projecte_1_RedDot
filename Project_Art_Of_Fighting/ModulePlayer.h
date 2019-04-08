@@ -18,6 +18,8 @@ public:
 	update_status Update();
 	bool CleanUp() override;
 
+	void OnCollision(Collider*, Collider*);
+
 public:
 	Mix_Chunk *punchfx = NULL;
 	Mix_Chunk *kickfx = NULL;

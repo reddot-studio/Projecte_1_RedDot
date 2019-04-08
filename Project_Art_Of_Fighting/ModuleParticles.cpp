@@ -7,6 +7,7 @@
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "Animation.h"
+#include "RectSprites.h"
 
 #include "SDL/include/SDL_timer.h"
 
@@ -36,14 +37,14 @@ bool ModuleParticles::Start()
 	pre_koouKen.anim.loop = false;
 	pre_koouKen.anim.speed = 0.32f;
 	////Shoot energy
-	koouKen.anim.PushBack({683,912,54,39},-3,-22,5);
-	koouKen.anim.PushBack({737,905,72,47},-15,-24,5);
-	koouKen.anim.PushBack({809,920,53,31},-2,-19,5);
-	koouKen.anim.PushBack({862,930,36,21},9,-16,5);
+	koouKen.anim.PushBack({683,912,54,39},-3,-20,5);
+	koouKen.anim.PushBack({737,905,72,47},-21,-23,5);
+	koouKen.anim.PushBack({809,920,53,31},-2,-16,5);
+	koouKen.anim.PushBack({862,930,36,21},15,-11,5);
 	koouKen.anim.loop = true;
-	koouKen.life = 1000;
-	koouKen.speed = { 10,0 };
-	koouKen.anim.speed = 1.0f;
+	koouKen.life = 8000;
+	koouKen.speed = { 0,0 };
+	koouKen.anim.speed = 0.2f;
 
 
 	//Hitted particle
@@ -74,6 +75,7 @@ bool ModuleParticles::CleanUp()
 
 	return true;
 }
+
 
 // Update: draw background
 update_status ModuleParticles::Update()
@@ -115,13 +117,30 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
-			if (collider_type != COLLIDER_NONE)
-				p->collider = App->collision->AddCollider(p->anim.GetCurrentFrame(), collider_type, this);
+			if (collider_type != COLLIDER_NONE) {
+				RectSprites r = p->anim.GetCurrentFrame();
+				p->collider = App->collision->AddCollider(r, collider_type, this);
+			}
 			active[i] = p;
 			break;
 		}
 	}
 }
+
+void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
+{
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	{
+		// Always destroy particles that collide
+		if (active[i] != nullptr && active[i]->collider == c1)
+		{
+			delete active[i];
+			active[i] = nullptr;
+			break;
+		}
+	}
+}
+
 
 // -------------------------------------------------------------
 // -------------------------------------------------------------
@@ -132,6 +151,11 @@ Particle::Particle()
 	speed.SetToZero();
 }
 
+Particle::~Particle()
+{
+	if (collider != nullptr)
+		collider->to_delete = true;
+}
 Particle::Particle(const Particle& p) : 
 anim(p.anim), position(p.position), speed(p.speed),
 fx(p.fx), born(p.born), life(p.life)
@@ -156,7 +180,11 @@ bool Particle::Update()
 	if (SDL_GetTicks() >= born) {
 		position.x += speed.x;
 		position.y += speed.y;
+		if (collider != nullptr)
+			collider->SetPos(position.x, position.y);
 	}
+
+
 
 	return ret;
 }

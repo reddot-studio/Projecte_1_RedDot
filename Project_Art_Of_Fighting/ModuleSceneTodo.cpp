@@ -30,7 +30,7 @@ bool ModuleSceneTodo::Start()
 	todo_music = App->audio->Load_music("Assets/Audio/033xART OF FIGHT.ogg");
 	App->audio->Play_music(todo_music);
 	graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png");
-	//App->collision->AddCollider({ {0,204,400,20},{0,0} }, COLLIDER_WALL);
+	App->collision->AddCollider({ {300,0,30,224},{0,0} }, COLLIDER_WALL);
 	App->player->Enable();
 
 	return true;

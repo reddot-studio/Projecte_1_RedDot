@@ -26,6 +26,7 @@ struct Particle
 	bool fx_played = false;
 
 	Particle();
+	~Particle();
 	Particle(const Particle& p);
 	bool Update();
 };
@@ -39,6 +40,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+
+	void OnCollision(Collider* c1, Collider* c2);
 
 	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0);
 

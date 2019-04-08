@@ -243,3 +243,8 @@ bool ModulePlayer::CleanUp()
 	LOG(" - ModulePlayer CleanUp");
 	return true;
 }
+
+void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
+{
+
+}
