@@ -113,6 +113,9 @@ bool ModulePlayer::Start()
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0} }, COLLIDER_PLAYER, App->player);
+
+
+
 	return ret;
 }
 
@@ -224,6 +227,22 @@ update_status ModulePlayer::Update()
 		current_animation = &idle;
 
 
+	//God Mode
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->rect.w != 0)
+	{
+		GodModeColider = player_collider->rect;
+		player_collider->rect = {0, 0, 0, 0};
+		timer = SDL_GetTicks();
+		LOG("\nGod Mode ON");
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->rect.w == 0 && SDL_GetTicks() != timer)
+	{
+		if(GodModeColider.w != 0)
+			player_collider->rect = GodModeColider;
+		LOG("\nGod Mode OFF");
+	}
+
+
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r);
@@ -246,5 +265,6 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
+
 
 }

@@ -8,6 +8,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleCongratzScreen.h"
+#include"ModuleCollision.h"
 #include "SDL/include/SDL.h"
 
 
@@ -46,6 +47,7 @@ ModuleSceneJohn::ModuleSceneJohn()
 	soldierduo.PushBack({ 578,354,88,97 });
 	soldierduo.PushBack({ 578,460,88,97 });
 	soldierduo.speed = 0.2f;
+
 	
 }
 
@@ -63,6 +65,10 @@ bool ModuleSceneJohn::Start()
 		return false;
 	}
 	App->audio->Play_music(john_music);
+
+	//Screen Limits
+	//ScreenLimits[0] = App->collision->AddCollider({ { 0-10,0,10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_john);
+	//ScreenLimits[1] = App->collision->AddCollider({ {rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_john);
 	
 	App->player->Enable();
 	return true;
@@ -94,6 +100,7 @@ update_status ModuleSceneJohn::Update()
 
 bool ModuleSceneJohn::CleanUp()
 {
+
 	App->audio->Unload_music(john_music);
 	App->textures->Unload(graphics);
 	App->player->Disable();
