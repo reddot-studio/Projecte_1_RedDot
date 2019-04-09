@@ -35,7 +35,6 @@ public:
 	};
 
 	Collider * player_collider = nullptr;
-	SDL_Rect GodModeColider;
 
 	player_state state = IDLE;
 	Animation* current_animation = nullptr;
