@@ -12,6 +12,7 @@
 #include "ModuleCongratzScreen.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleWelcomeScreen.h"
+#include"ModuleUI.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 
 
@@ -101,6 +102,7 @@ bool ModuleWelcomeScreen::Init()
 	App->scene_john->Disable();
 	App->scene_todo->Disable();
 	App->scene_congratz->Disable();
+	App->sceneUI->Disable();
 	return true;
 }
 

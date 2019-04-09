@@ -20,6 +20,12 @@ public:
 
 public:
 
+
+	RectSprites RendPosition;
+
+	SDL_Texture* TimerTexture;
+
+
 	SDL_Texture* Player1;
 	SDL_Texture* Player_1_Health;
 	SDL_Texture* Player_1_Spirit;
