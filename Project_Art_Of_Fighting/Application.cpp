@@ -13,6 +13,7 @@
 #include "ModuleDebug.h"
 #include "ModuleAudio.h"
 #include "ModuleCollision.h"
+#include"ModuleUI.h"
 
 
 Application::Application()
@@ -32,6 +33,7 @@ Application::Application()
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();
 	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = collision = new ModuleCollision();
+	modules[num++] = sceneUI = new ModuleUI();
 	
 	
 }	
