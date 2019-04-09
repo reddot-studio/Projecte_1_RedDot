@@ -42,9 +42,9 @@ bool ModuleParticles::Start()
 	koouKen.anim.PushBack({809,920,53,31},-2,-16,5);
 	koouKen.anim.PushBack({862,930,36,21},15,-11,5);
 	koouKen.anim.loop = true;
-	koouKen.life = 8000;
-	koouKen.speed = { 0,0 };
-	koouKen.anim.speed = 0.2f;
+	koouKen.life = 2000;
+	koouKen.speed = { 12,0 };
+	koouKen.anim.speed = 0.8f;
 
 
 	//Hitted particle

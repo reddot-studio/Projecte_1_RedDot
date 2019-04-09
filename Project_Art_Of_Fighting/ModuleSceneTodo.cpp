@@ -29,7 +29,7 @@ bool ModuleSceneTodo::Start()
 {
 	LOG("Loading todo scene");
 	todo_music = App->audio->Load_music("Assets/Audio/033xART OF FIGHT.ogg");
-	App->audio->Play_music(todo_music);
+	//App->audio->Play_music(todo_music);
 	graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png");
 	//App->collision->AddCollider({ {300,0,30,224},{0,0} }, COLLIDER_WALL);
 	BackPanel = App->collision->AddCollider({ { 0-10,0,10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_todo);
@@ -48,10 +48,10 @@ update_status ModuleSceneTodo::Update()
 		return update_status::UPDATE_STOP;
 	}
 	
-		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
-		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_john);
-		}
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
+	{
+		App->fade->FadeToBlack(App->scene_todo, App->scene_john);
+	}
 	return UPDATE_CONTINUE;
 }
 

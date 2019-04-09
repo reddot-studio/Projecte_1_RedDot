@@ -93,6 +93,7 @@
     <ClInclude Include="ModuleWelcomeScreen.h" />
     <ClInclude Include="ModuleWindow.h" />
     <ClInclude Include="p2Point.h" />
+    <ClInclude Include="p2Qeue.h" />
     <ClInclude Include="RectSprites.h" />
   </ItemGroup>
   <ItemGroup>
