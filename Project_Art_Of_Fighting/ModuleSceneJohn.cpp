@@ -9,6 +9,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleCongratzScreen.h"
 #include"ModuleCollision.h"
+#include"ModuleUI.h"
 #include "SDL/include/SDL.h"
 
 
@@ -71,6 +72,7 @@ bool ModuleSceneJohn::Start()
 	FrontPanel = App->collision->AddCollider({ { rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_john);
 	
 	App->player->Enable();
+	App->sceneUI->Enable();
 	return true;
 }
 
@@ -106,6 +108,7 @@ bool ModuleSceneJohn::CleanUp()
 		BackPanel->to_delete = true;
 	}
 
+	App->sceneUI->Disable();
 	App->audio->Unload_music(john_music);
 	App->textures->Unload(graphics);
 	App->player->Disable();
