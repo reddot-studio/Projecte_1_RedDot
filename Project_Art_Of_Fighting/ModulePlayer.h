@@ -24,7 +24,9 @@ enum ryo_states
 	ST_PUNCH_NEUTRAL_JUMP,
 	ST_PUNCH_FORWARD_JUMP,
 	ST_PUNCH_BACKWARD_JUMP,
-	ST_PUNCH_CROUCH
+	ST_PUNCH_CROUCH,
+	ST_KOOU_KEN,
+	ST_KICK_STANDING
 };
 
 enum ryo_inputs
@@ -38,9 +40,12 @@ enum ryo_inputs
 	IN_CROUCH_UP,
 	IN_CROUCH_DOWN,
 	IN_JUMP_AND_CROUCH,
-	IN_X,
+	IN_PUNCH,
+	IN_KICK,
+	IN_KOOU_KEN,
 	IN_JUMP_FINISH,
-	IN_PUNCH_FINISH
+	IN_ATTACK_FINISH,
+	IN_PUNCH_CROUCH_FINISH,
 };
 
 class ModulePlayer : public Module
@@ -57,7 +62,6 @@ public:
 	update_status Update();
 	bool CleanUp() override;
 
-	bool external_input(p2Qeue<ryo_inputs>& inputs);
 
 	ryo_states process_fsm(p2Qeue<ryo_inputs>& inputs);
 
@@ -69,6 +73,7 @@ public:
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
 
+	int moveSpeed;
 
 	Collider * player_collider = nullptr;
 

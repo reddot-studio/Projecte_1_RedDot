@@ -74,14 +74,14 @@ ModulePlayer::ModulePlayer()
 	 //jump animation (arcade sprite sheet)
 	jump.canMove = true;
 	jump.loop = false;
-	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump.PushBack({ 60, 456, 66 , 130 }, -29,-65,3,0,-8);
-	jump.PushBack({ 126, 471, 62, 113 }, -29,jump.frames[jump.GetLastFrame() -1 ].offset.y,7,0,-5);
-	jump.PushBack({ 188, 474, 57 , 110 }, -29, jump.frames[jump.GetLastFrame() - 1].offset.y,3,0,-5);
-	jump.PushBack({ 245, 492, 52 , 92 }, -29, jump.frames[jump.GetLastFrame() - 1].offset.y,9 );
-	jump.PushBack({ 245, 492, 52 , 92 },  -29, jump.frames[jump.GetLastFrame() - 1].offset.y,5,0,+1);
-	jump.PushBack({ 299, 471 , 57 , 115 }, -29 , jump.frames[jump.GetLastFrame() - 1].offset.y,12,0,+7);
-	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,5);
+	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 4);
+	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 3);
+	jump.PushBack({ 126, 471, 62, 113 }, -29, -48, 7);
+	jump.PushBack({ 188, 474, 57 , 110 }, -29, -45, 3);
+	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27, 9);
+	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27, 5);
+	jump.PushBack({ 299, 471 , 57 , 115 }, -29, -50, 12);
+	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 4);
 	jump.speed = 0.9f;	
 	
 	// ko'ou ken animation (arcade sprite sheet)
@@ -104,8 +104,9 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+	moveSpeed = 1;
 	pivot_player.x = 100;
-	pivot_player.y = 150;
+	pivot_player.y = 145;
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
@@ -123,7 +124,6 @@ bool ModulePlayer::Start()
 
 update_status ModulePlayer::PreUpdate()
 {
-	int speed = 1;
 
 	////OnWall Colision Exit
 	//if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w)
@@ -135,73 +135,6 @@ update_status ModulePlayer::PreUpdate()
 	//{
 	//	FrontColision = false;
 	//}
-
-	//Move right
-	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == ST_IDLE && !FrontColision)
-	{
-		pivot_player.x += speed;
-		inputs.Push(IN_RIGHT_DOWN);
-	}
-	else {
-		inputs.Push(IN_RIGHT_UP);
-	}
-
-	//Move Left
-	if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == ST_IDLE && !BackColision)
-	{
-		pivot_player.x -= speed;
-		inputs.Push(IN_LEFT_DOWN);
-	}
-	else {
-		inputs.Push(IN_LEFT_UP);
-	}
-
-	//Punch weak
-	if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
-	{
-		inputs.Push(IN_X);
-
-	}
-
-	////kick weak
-	//if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN && state == ST_IDLE)
-	//{
-	//	if (current_animation != &kick)
-	//	{
-	//		state = ST_PUNCH_STANDING;
-	//		kick.ResetCurrentFrame();
-	//		current_animation = &kick;
-	//		App->audio->Play_chunk(kickfx);
-	//	}
-	//}
-
-	////Jump
-	if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)
-	{
-		inputs.Push(IN_JUMP);
-	}
-
-	////Ko'ou Ken
-	//if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && state == ST_IDLE)
-	//{
-	//	if (current_animation != &koouKen)
-	//	{
-	//		state = ST_PUNCH_STANDING;
-	//		koouKen.ResetCurrentFrame();
-	//		App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
-	//		App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600);
-	//		current_animation = &koouKen;
-	//		App->audio->Play_chunk(kooukenfx);
-	//	}
-
-	//}
-
-
-
-	//Check states and set to Idle
-	//if (App->input->keyboard_state[SDL_SCANCODE_A] == key_state::KEY_IDLE
-	//	&& App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_IDLE && state != ST_PUNCH_STANDING && state != ST_JUMP_NEUTRAL)
-	//	current_animation = &idle;
 
 
 	////God Mode
@@ -219,10 +152,9 @@ update_status ModulePlayer::PreUpdate()
 	//	LOG("\nGod Mode OFF");
 	//}
 
-	while (external_input(inputs))
+	while (App->input->Update() == update_status::UPDATE_CONTINUE)
 	{
 		//Check duration of animation and reset state when it finishes
-
 		ryo_states state = process_fsm(inputs);
 
 		if (state != current_state)
@@ -234,7 +166,6 @@ update_status ModulePlayer::PreUpdate()
 				LOG("IDLE\n");
 				break;
 			case ST_WALK_FORWARD:
-
 				if (current_animation != &forward)
 				{
 					forward.ResetCurrentFrame();
@@ -266,9 +197,18 @@ update_status ModulePlayer::PreUpdate()
 				LOG("JUMPING BACKWARD ^^<<\n");
 				break;
 			case ST_CROUCH:
+				if (current_animation != &crouch && current_animation != &crouch_punch) {
+					crouch.ResetCurrentFrame();
+					current_animation = &crouch;
+				}
+	
 				LOG("CROUCHING ****\n");
 				break;
 			case ST_PUNCH_CROUCH:
+				if (current_animation != &crouch_punch) {
+					crouch_punch.ResetCurrentFrame();
+					current_animation = &crouch_punch;
+				}
 				LOG("PUNCH CROUCHING **++\n");
 				break;
 			case ST_PUNCH_STANDING:
@@ -290,6 +230,25 @@ update_status ModulePlayer::PreUpdate()
 				LOG("PUNCH JUMP BACKWARD ^<<+\n");
 				break;
 
+			case ST_KOOU_KEN:
+				if (current_animation != &koouKen)
+				{
+					koouKen.ResetCurrentFrame();
+					App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
+					App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600);
+					current_animation = &koouKen;
+					App->audio->Play_chunk(kooukenfx);
+				}
+				LOG("KO'OU KEN\n");
+				break;
+
+			case ST_KICK_STANDING:
+				if (current_animation != &kick)
+				{
+					kick.ResetCurrentFrame();
+					current_animation = &kick;
+					App->audio->Play_chunk(kickfx);
+				}
 			}
 			current_state = state;
 
@@ -302,6 +261,28 @@ update_status ModulePlayer::PreUpdate()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	bool top_jump = false;
+	if (current_state == ST_WALK_FORWARD) {
+		pivot_player.x += moveSpeed;
+	}
+
+	if (current_state == ST_WALK_BACKWARD) {
+		pivot_player.x -= moveSpeed;
+	}
+
+	if (current_state == ST_JUMP_NEUTRAL) {
+		if (pivot_player.y > 50) top_jump = false;
+		else {
+			top_jump = true;
+		}
+		if (!top_jump) {
+			pivot_player.y -= 5;
+		}
+		else if (top_jump) {
+			pivot_player.y += 5;
+		}
+	}
+
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE){
 		switch (current_state)
 		{
@@ -309,32 +290,23 @@ update_status ModulePlayer::Update()
 			inputs.Push(IN_JUMP_FINISH);
 			break;
 		case ST_PUNCH_STANDING:
-			inputs.Push(IN_PUNCH_FINISH);
+			inputs.Push(IN_ATTACK_FINISH);
+			break;
+		case ST_PUNCH_CROUCH:
+			inputs.Push(IN_PUNCH_CROUCH_FINISH);
+			break;
+		case ST_KOOU_KEN:
+			inputs.Push(IN_ATTACK_FINISH);
+			break;
+		case ST_KICK_STANDING:
+			inputs.Push(IN_ATTACK_FINISH);
+			break;
+		default:
 			break;
 		}
 
+
 	}
-	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && state == CAN_MOVE)
-	//{
-	//	state = CROUCH;
-	//	current_animation = &crouch;
-	//	//App->render->camera.x -= speed + 0.7;
-	//}
-
-	//else if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REALESE) {
-	//	crouch.ResetCurrentFrame();
-	//	state = CAN_MOVE;
-	//}
-	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && App->input->keyboard_state[SDL_SCANCODE_E] == KEY_PRESSED && state == CROUCH)
-	//{
-	//	crouch_punch.ResetCurrentFrame();
-	//	state = CROUCH;
-	//	current_animation = &crouch_punch;
-	//	//App->render->camera.x -= speed + 0.7;
-	//}
-
-	
-
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
@@ -356,17 +328,6 @@ bool ModulePlayer::CleanUp()
 	return true;
 }
 
-bool ModulePlayer::external_input(p2Qeue<ryo_inputs>& inputs)
-{
-	if (App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_REPEAT && state == ST_IDLE) {
-		inputs.Push(IN_RIGHT_DOWN);
-	}
-
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == key_state::KEY_UP) {
-
-	}
-	return true;
-}
 
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
@@ -382,12 +343,9 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 		{
 			FrontColision = true;
 		}
-
-
 	}
 
 	CurrentColider = c2;
-
 }
 
 ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
@@ -407,7 +365,9 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 			case IN_JUMP: state = ST_JUMP_NEUTRAL; break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: state = ST_PUNCH_STANDING; break;
+			case IN_PUNCH: state = ST_PUNCH_STANDING; break;
+			case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+			case IN_KICK: state = ST_KICK_STANDING; break;
 			}
 		}
 		break;
@@ -418,9 +378,11 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			{
 			case IN_RIGHT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-			//case IN_JUMP: state = ST_JUMP_FORWARD;  break;
+				//case IN_JUMP: state = ST_JUMP_FORWARD;  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: state = ST_PUNCH_STANDING; break;
+			case IN_PUNCH: state = ST_PUNCH_STANDING; break;
+			case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+			case IN_KICK: state = ST_KICK_STANDING; break;
 			}
 		}
 		break;
@@ -431,9 +393,11 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			{
 			case IN_LEFT_UP: state = ST_IDLE; break;
 			case IN_LEFT_AND_RIGHT: state = ST_IDLE; break;
-			//case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
+				//case IN_JUMP: state = ST_JUMP_BACKWARD; jump_timer = SDL_GetTicks();  break;
 			case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-			case IN_X: state = ST_PUNCH_STANDING; break;
+			case IN_PUNCH: state = ST_PUNCH_STANDING; break;
+			case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+			case IN_KICK: state = ST_KICK_STANDING; break;
 			}
 		}
 		break;
@@ -443,7 +407,7 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
-			//case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
+				//case IN_X: state = ST_PUNCH_NEUTRAL_JUMP; punch_timer = SDL_GetTicks(); break;
 			}
 		}
 		break;
@@ -452,9 +416,8 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			//case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				//case IN_X: state = ST_PUNCH_FORWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
-				// TODO: Add links
 			}
 		}
 		break;
@@ -463,9 +426,8 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			//case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
+				//case IN_X: state = ST_PUNCH_BACKWARD_JUMP; punch_timer = SDL_GetTicks(); break;
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
 			}
 		}
 		break;
@@ -474,8 +436,7 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
+			case IN_ATTACK_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -485,7 +446,6 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
 			}
 		}
 		break;
@@ -495,7 +455,6 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 			switch (last_input)
 			{
 			case IN_JUMP_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
 			}
 		}
 		break;
@@ -504,8 +463,7 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
+			case IN_ATTACK_FINISH: state = ST_IDLE; break;
 			}
 		}
 		break;
@@ -514,9 +472,9 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			//case IN_X: state = ST_PUNCH_CROUCH;  punch_timer = SDL_GetTicks(); break;
+			case IN_PUNCH_CROUCH_FINISH: state = ST_IDLE; break;
+			case IN_PUNCH: state = ST_PUNCH_CROUCH; break;
 			case IN_CROUCH_UP: state = ST_IDLE; break;
-				// TODO: Add Links
 			}
 		}
 		break;
@@ -524,11 +482,25 @@ ryo_states ModulePlayer::process_fsm(p2Qeue<ryo_inputs>& inputs)
 		{
 			switch (last_input)
 			{
-			case IN_PUNCH_FINISH: state = ST_IDLE; break;
-				// TODO: Add Links
+			case IN_PUNCH_CROUCH_FINISH: state = ST_CROUCH; inputs.Push(IN_PUNCH_CROUCH_FINISH); break;
+		
 			}
 		}
 		break;
+		case ST_KOOU_KEN:
+		{
+			switch (last_input)
+			{
+			case IN_ATTACK_FINISH: state = ST_IDLE; break;
+			}
+			
+		}
+		break;
+		case ST_KICK_STANDING:
+			switch (last_input)
+			{
+			case IN_ATTACK_FINISH: state = ST_IDLE; break;
+			}
 		}
 	}
 

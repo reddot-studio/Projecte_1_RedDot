@@ -27,8 +27,8 @@ public:
 		for (int i = 0; i < numFrames; i++)
 		{
 			if (canMove) {
-				offset.x += moveX;
-				offset.y += moveY;
+				frames[last_frame].rect.x += moveX;
+				frames[last_frame].rect.y += moveY;
 			}
 			frames[last_frame].rect = rect;
 			frames[last_frame].offset.x = offset.x;

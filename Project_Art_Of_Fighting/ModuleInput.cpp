@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
+#include "ModulePlayer.h"
 
 ModuleInput::ModuleInput() : Module()
 {
@@ -35,6 +36,21 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 
+	if (external_input(App->player->inputs) == true) {
+		return update_status::UPDATE_CONTINUE;
+	}
+	else {
+		return update_status::UPDATE_STOP;
+	}
+
+}
+
+bool ModuleInput::external_input(p2Qeue<ryo_inputs>& inputs)
+{
+	static bool left = false;
+	static bool right = false;
+	static bool down = false;
+	static bool up = false;
 	SDL_PumpEvents();
 
 	keyboard = SDL_GetKeyboardState(NULL);
@@ -57,13 +73,98 @@ update_status ModuleInput::PreUpdate()
 		}
 	}
 
+	//Escape to exit app
+	if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
+		return false;
 
-	if(keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
-		return update_status::UPDATE_STOP;
+	//Press D to move forward
+	switch (keyboard_state[SDL_SCANCODE_D])
+	{
+	case KEY_DOWN:
+		right = true;
+		break;
+	case KEY_UP:
+		App->player->inputs.Push(IN_RIGHT_UP);
+		right = false;
+		break;
+	}
 
-	return update_status::UPDATE_CONTINUE;
+	//Press A to move backward
+	switch (keyboard_state[SDL_SCANCODE_A])
+	{
+	case KEY_DOWN:
+		left = true;
+		break;
+	case KEY_UP:
+		App->player->inputs.Push(IN_LEFT_UP);
+		left = false;
+		break;
+	}
+
+	//Press W to jump
+	switch (keyboard_state[SDL_SCANCODE_W])
+	{
+	case KEY_DOWN:
+		up = true;
+		break;
+	case KEY_UP:
+		up = false;
+		break;
+	}
+
+	//Press S to crouch
+	switch (keyboard_state[SDL_SCANCODE_S])
+	{
+	case KEY_DOWN:
+		down = true;
+		break;
+	case KEY_UP:
+		App->player->inputs.Push(IN_CROUCH_UP);
+		down = false;
+		break;
+	}
+
+	// Press E to punch
+	if (keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
+	{
+		App->player->inputs.Push(IN_PUNCH);
+	}	
+	
+	// Press R to kick
+	if (keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)
+	{
+		App->player->inputs.Push(IN_KICK);
+	}
+
+	// Press F to ko'ou ken
+	if (keyboard_state[SDL_SCANCODE_F] == KEY_DOWN) {
+		App->player->inputs.Push(IN_KOOU_KEN);
+	}
+
+
+	//Cheking booleans
+	if (left && right)
+		inputs.Push(IN_LEFT_AND_RIGHT);
+	{
+		if (left)
+			inputs.Push(IN_LEFT_DOWN);
+		if (right)
+			inputs.Push(IN_RIGHT_DOWN);
+	}
+
+	if (up && down)
+		inputs.Push(IN_JUMP_AND_CROUCH);
+	else
+	{
+		if (down)
+			inputs.Push(IN_CROUCH_DOWN);
+		if (up)
+			inputs.Push(IN_JUMP);
+	}
+
+
+	return true;
 }
-
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
