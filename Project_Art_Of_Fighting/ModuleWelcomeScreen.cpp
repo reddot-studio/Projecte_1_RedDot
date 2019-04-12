@@ -140,6 +140,10 @@ update_status ModuleWelcomeScreen::Update()
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
 		
 	}
+	if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN)
+	{
+		App->fade->FadeToBlack(App->scene_welcome, App->scene_congratz);
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 

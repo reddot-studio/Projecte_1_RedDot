@@ -13,9 +13,15 @@ public:
 	update_status Update();
 	bool CleanUp();
 public:
+	bool result;
 	Mix_Music * ending_music = nullptr;
 	SDL_Texture* graphics = nullptr;
-	RectSprites rect_background;
+	Animation countback;
+	Animation* current_animation;
+	Animation zero;
+	RectSprites chat_bubble;
+	RectSprites rect_win;
+	RectSprites rect_lose;
 
 };
 

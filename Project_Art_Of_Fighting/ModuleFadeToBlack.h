@@ -20,6 +20,7 @@ private:
 	Module * moduleOff = nullptr;
 	Module * moduleOn = nullptr;
 
+
 	enum fade_step
 	{
 		none,

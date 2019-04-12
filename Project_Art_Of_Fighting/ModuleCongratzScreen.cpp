@@ -9,23 +9,52 @@
 #include "ModuleFadeToBlack.h"
 #include "ModuleWelcomeScreen.h"
 #include "ModuleCongratzScreen.h"
+#include "ModuleSceneTodo.h"
+#include "ModuleUI.h"
 #include "SDL/include/SDL.h"
 
 ModuleCongratzScreen::ModuleCongratzScreen()
 {
-	rect_background.rect.x = 682;
-	rect_background.rect.y = 338;
-	rect_background.rect.w = 304;
-	rect_background.rect.h = 224;
+	countback.PushBack({1858,932,80,96 });
+	countback.PushBack({1968,932,80,96 });
+	countback.PushBack({1859,1069,80,96 });
+	countback.PushBack({1968,1069,80,96 });
+	countback.PushBack({1858,1165,80,96 });
+	countback.PushBack({1968,1165,80,96 });
+	countback.PushBack({1858,1301,80,96 });
+	countback.PushBack({1968,1301,80,96 });
+	countback.PushBack({1858,1397,80,96 });
+	countback.PushBack({1968,1397,80,96 });
+	countback.speed = 0.015f;
+
+
+	zero.PushBack({ 1968,1397,80,96 });
+
+	rect_win.rect.x = 1547;
+	rect_win.rect.y = 931;
+	rect_win.rect.w = 129;
+	rect_win.rect.h = 124;
+
+
+	rect_lose.rect.x = 1692;
+	rect_lose.rect.y = 931;
+	rect_lose.rect.w = 129;
+	rect_lose.rect.h = 124;
+
+	chat_bubble.rect.x = 1547;
+	chat_bubble.rect.y = 1085;
+	chat_bubble.rect.w = 272;
+	chat_bubble.rect.h = 48;
 }
 
 ModuleCongratzScreen::~ModuleCongratzScreen(){}
 
 bool ModuleCongratzScreen::Start()
 {
-
+	
+	App->sceneUI->Disable();
 	LOG("Loading congratz scene");
-	if ((graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png")) == NULL)
+	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
 	{
 		SDL_Log("Could not load image from path! SDL_Error: %s", SDL_GetError());
 		return false;
@@ -37,12 +66,49 @@ bool ModuleCongratzScreen::Start()
 
 update_status ModuleCongratzScreen::Update()
 {
-	if ((App->render->Blit(graphics, 40, 0, &rect_background)) == false)
+	result = true;
+	//TODO 2: Make this function be called when win or lose gets triggered with a parameter instead of bool result
+	current_animation = &countback;
+	//TODO 3: Ryo's quote on win/lose
+	//TODO 4: Waiting for new rivals message
+	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");
-		return update_status::UPDATE_STOP;
+			return update_status::UPDATE_STOP;
+	}
+	switch (result)
+	{
+	case true:
+		if ((App->render->Blit(graphics, 57.5, 40, &rect_win)) == false)
+		{
+			SDL_Log("Unable to [BLIT] texture: texture_background");
+			return update_status::UPDATE_STOP;
+		}
+		break;
+	case false:
+		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose)) == false)
+		{
+			SDL_Log("Unable to [BLIT] texture: texture_background");
+			return update_status::UPDATE_STOP;
+		}
+		break;
 	}
 	
+	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame());
+	
+	//TODO 1: Missatge de que no hi ha més rivals o de que se'n han trobat????
+	//TODO 2: 
+	if (App->input->keyboard_state[SDL_SCANCODE_F1] == KEY_DOWN)
+	{
+		App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
+	}
+
+	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1)
+	{	
+		current_animation = &zero;
+		App->fade->FadeToBlack(App->scene_congratz, App->scene_welcome);
+	}
+
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -50,6 +116,7 @@ update_status ModuleCongratzScreen::Update()
 bool ModuleCongratzScreen::CleanUp()
 {
 	App->textures->Unload(graphics);
+	App->audio->Unload_music(ending_music);
 	LOG("Unloading congratz scene");
 	return true;
 }

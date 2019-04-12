@@ -37,6 +37,7 @@ bool ModuleSceneTodo::Start()
 	App->player1->Enable();
 	App->sceneUI->Enable();
 
+
 	return true;
 }
 
@@ -50,7 +51,7 @@ update_status ModuleSceneTodo::Update()
 	
 		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_john);
+			App->fade->FadeToBlack( App->scene_todo, App->scene_john);
 		}
 	return UPDATE_CONTINUE;
 }

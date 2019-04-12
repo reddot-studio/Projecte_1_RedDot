@@ -44,6 +44,7 @@ update_status ModuleFadeToBlack::Update()
 				//Fades music for 1 sec
 				Mix_FadeOutMusic(1000);
 				//Enables called module, disables current module
+		
 				moduleOff->Disable();
 				moduleOn->Enable();
 				//resets player & camera position
@@ -78,6 +79,7 @@ bool ModuleFadeToBlack::FadeToBlack(Module* module_off, Module* module_on, float
 {
 	moduleOff = module_off;
 	moduleOn = module_on;
+
 
 	
 	bool ret = false;
