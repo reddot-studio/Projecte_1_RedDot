@@ -56,9 +56,9 @@ ModulePlayer::ModulePlayer()
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2, { 1, 0 });
-	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 1, 0 });
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 1, 0 });
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2);
+	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3);
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3);
 	punch.speed = 0.5f;
 	punch.loop = false;
 
@@ -113,7 +113,7 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player);
+	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player1);
 
 
 
@@ -238,6 +238,11 @@ update_status ModulePlayer::Update()
 		&& App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_IDLE && state != ATTACK && state != JUMP)
 		current_animation = &idle;
 
+	//DEBUG CONTROLS
+	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
+	{
+		Deal_Damage(*App->player1, 10);
+	}
 
 	//God Mode
 	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER)
@@ -258,6 +263,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
 	pivot_player += r.displacement;
+	player_collider->rect = r.rect;
 	if (current_animation == &jump) 
 	{
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 5 && state != CAN_MOVE)
@@ -266,7 +272,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r);
-	App->player->player_collider->SetPos(pivot_player.x - 29, pivot_player.y-43);
+	App->player1->player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	//RectSprites r1 = idle_player2.GetCurrentFrame();
 	//App->render->Blit(graphics, 700,290 , &r1);
 	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect);
@@ -277,8 +283,8 @@ bool ModulePlayer::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
-	if(App->player->player_collider)
-		App->player->player_collider->to_delete = true;
+	if(App->player1->player_collider)
+		App->player1->player_collider->to_delete = true;
 	LOG(" - ModulePlayer CleanUp");
 	return true;
 }

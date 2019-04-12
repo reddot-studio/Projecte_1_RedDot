@@ -26,14 +26,6 @@ public:
 	SDL_Texture* TimerTexture;
 
 
-	SDL_Texture* Player1;
-	SDL_Texture* Player_1_Health;
-	SDL_Texture* Player_1_Spirit;
-
-	SDL_Texture* Player2;
-	SDL_Texture* Player_2_Health;
-	SDL_Texture* Player_2_Spirit;
-
 };
 
 #endif // __MODULESCENEKEN_H__

@@ -68,6 +68,18 @@ public:
 	bool BackColision, FrontColision;
 	Collider* CurrentColider;
 
+	//PlayerStats
+	int Player_Health_Value;
+
+	void Deal_Damage(ModulePlayer& Enemy, int AttackDamage)
+	{
+		Enemy.Player_Health_Value -= AttackDamage;
+	}
+
+	SDL_Texture* Player_texture;
+	SDL_Texture* Player_Health_BG;
+	SDL_Texture* Player_Health;
+	SDL_Texture* Player_Spirit;
 
 };
 

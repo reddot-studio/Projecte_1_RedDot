@@ -118,7 +118,7 @@ bool ModuleWelcomeScreen::Start()
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
 	App->audio->Play_music(start_music);
 
-	App->player->Disable();
+	App->player1->Disable();
 
 	return true;
 }
