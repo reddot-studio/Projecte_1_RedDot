@@ -56,9 +56,9 @@ ModulePlayer::ModulePlayer()
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2);
-	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3);
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3);
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2, { 1, 0 });
+	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 1, 0 });
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 1, 0 });
 	punch.speed = 0.5f;
 	punch.loop = false;
 
@@ -74,13 +74,13 @@ ModulePlayer::ModulePlayer()
 	jump.canMove = true;
 	jump.loop = false;
 	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump.PushBack({ 60, 456, 66 , 130 }, -29,-65,3,0,-8);
-	jump.PushBack({ 126, 471, 62, 113 }, -29,jump.frames[jump.GetLastFrame() -1 ].offset.y,7,0,-5);
-	jump.PushBack({ 188, 474, 57 , 110 }, -29, jump.frames[jump.GetLastFrame() - 1].offset.y,3,0,-5);
-	jump.PushBack({ 245, 492, 52 , 92 }, -29, jump.frames[jump.GetLastFrame() - 1].offset.y,9 );
-	jump.PushBack({ 245, 492, 52 , 92 },  -29, jump.frames[jump.GetLastFrame() - 1].offset.y,5,0,+1);
-	jump.PushBack({ 299, 471 , 57 , 115 }, -29 , jump.frames[jump.GetLastFrame() - 1].offset.y,12,0,+7);
-	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,5);
+	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 3, { 0,-8 });
+	jump.PushBack({ 126, 471, 62, 113 }, -29, -48, 7, { 0,-5 });
+	jump.PushBack({ 188, 474, 57 , 110 }, -29, -45, 3, { 0,-4 });
+	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27,9 );
+	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27, 5, { 0,+2 });
+	jump.PushBack({ 299, 471 , 57 , 115 }, -29, -50, 12, { 0,+5 });
+	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
 	jump.speed = 0.9f;	
 	
 	// ko'ou ken animation (arcade sprite sheet)
@@ -113,7 +113,7 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0} }, COLLIDER_PLAYER, App->player);
+	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player);
 
 
 
@@ -257,6 +257,14 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
+	pivot_player += r.displacement;
+	if (current_animation == &jump) 
+	{
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 5 && state != CAN_MOVE)
+		{
+			pivot_player.y = 150;
+		}
+	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r);
 	App->player->player_collider->SetPos(pivot_player.x - 29, pivot_player.y-43);
 	//RectSprites r1 = idle_player2.GetCurrentFrame();

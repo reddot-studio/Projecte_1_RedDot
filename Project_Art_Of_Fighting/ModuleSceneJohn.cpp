@@ -68,8 +68,8 @@ bool ModuleSceneJohn::Start()
 	App->audio->Play_music(john_music);
 
 	//Screen Limits
-	BackPanel = App->collision->AddCollider({ { 0 - 10,0,10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_john);
-	FrontPanel = App->collision->AddCollider({ { rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } }, COLLIDER_WALL, App->scene_john);
+	BackPanel = App->collision->AddCollider({ { 0 - 10,0,10, SCREEN_HEIGHT },{ 0,0 }, {0, 0} }, COLLIDER_WALL, App->scene_john);
+	FrontPanel = App->collision->AddCollider({ { rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_john);
 	
 	App->player->Enable();
 	App->sceneUI->Enable();
