@@ -11,9 +11,9 @@
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
-ModulePlayer::ModulePlayer()
+ModulePlayer::ModulePlayer(int num)
 {
-
+	PlayerNumber = num;
 	pivotRect.rect = {0,0,10,10};
 
 	//idle animation (arcade sprite sheet)
@@ -113,7 +113,10 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player1);
+	if(PlayerNumber == 1)
+		player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player1);
+	if(PlayerNumber == 2)
+		player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player2);
 
 
 
@@ -272,7 +275,7 @@ update_status ModulePlayer::Update()
 		}
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r);
-	App->player1->player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
+	player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	//RectSprites r1 = idle_player2.GetCurrentFrame();
 	//App->render->Blit(graphics, 700,290 , &r1);
 	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect);
@@ -283,8 +286,8 @@ bool ModulePlayer::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
-	if(App->player1->player_collider)
-		App->player1->player_collider->to_delete = true;
+	if(player_collider)
+		player_collider->to_delete = true;
 	LOG(" - ModulePlayer CleanUp");
 	return true;
 }

@@ -27,8 +27,8 @@ Application::Application()
 	modules[num++] = scene_congratz = new ModuleCongratzScreen();
 	modules[num++] = scene_john = new ModuleSceneJohn();
 	modules[num++] = scene_todo = new ModuleSceneTodo();
-	modules[num++] = player1 = new ModulePlayer();
-	modules[num++] = player2 = new ModulePlayer();
+	modules[num++] = player1 = new ModulePlayer(1);
+	modules[num++] = player2 = new ModulePlayer(2);
 	modules[num++] = particles = new ModuleParticles();
 	modules[num++] = fade = new ModuleFadeToBlack();
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();

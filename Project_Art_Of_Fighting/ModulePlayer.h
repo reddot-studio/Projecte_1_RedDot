@@ -11,7 +11,7 @@ struct Mix_Chunk;
 class ModulePlayer : public Module
 {
 public:
-	ModulePlayer();
+	ModulePlayer(int num);
 	~ModulePlayer();
 	int num = 100;
 	bool Start();
@@ -73,9 +73,18 @@ public:
 
 	void Deal_Damage(ModulePlayer& Enemy, int AttackDamage)
 	{
-		Enemy.Player_Health_Value -= AttackDamage;
+		if (Enemy.Player_Health_Value - AttackDamage <= 0) 
+		{
+			LOG("\n Someone died");
+			Enemy.Player_Health_Value = 0;
+		}
+		else
+		{
+			Enemy.Player_Health_Value -= AttackDamage;
+		}
 	}
 
+	int PlayerNumber;
 	SDL_Texture* Player_texture;
 	SDL_Texture* Player_Health_BG;
 	SDL_Texture* Player_Health;
