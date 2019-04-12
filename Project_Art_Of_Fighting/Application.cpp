@@ -50,7 +50,7 @@ bool Application::Init()
 	bool ret = true;
 
 	//Disable Player2 for future implementation
-	App->player2->Disable();
+	//App->player2->Disable();
 
 	for(int i = 0; i < NUM_MODULES && ret == true; ++i)
 		ret = modules[i]->Init();

@@ -119,6 +119,7 @@ bool ModuleWelcomeScreen::Start()
 	App->audio->Play_music(start_music);
 
 	App->player1->Disable();
+	App->player2->Disable();
 
 	return true;
 }

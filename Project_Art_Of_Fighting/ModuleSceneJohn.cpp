@@ -72,6 +72,7 @@ bool ModuleSceneJohn::Start()
 	FrontPanel = App->collision->AddCollider({ { rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_john);
 	
 	App->player1->Enable();
+	App->player2->Enable();
 	App->sceneUI->Enable();
 	return true;
 }
@@ -112,6 +113,7 @@ bool ModuleSceneJohn::CleanUp()
 	App->audio->Unload_music(john_music);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
+	App->player2->Disable();
 	LOG("Unloading john stage");
 	return true;
 }

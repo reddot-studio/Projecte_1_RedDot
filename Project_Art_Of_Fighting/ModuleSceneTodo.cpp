@@ -35,6 +35,7 @@ bool ModuleSceneTodo::Start()
 	BackPanel = App->collision->AddCollider({ { 0-10,0,10, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_todo);
 	FrontPanel = App->collision->AddCollider({ {rect_background.rect.w, 0 , 10, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_todo);
 	App->player1->Enable();
+	App->player2->Enable();
 	App->sceneUI->Enable();
 
 
@@ -67,6 +68,7 @@ bool ModuleSceneTodo::CleanUp()
 	App->audio->Unload_music(todo_music);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
+	App->player2->Disable();
 	App->sceneUI->Disable();
 
 	LOG("Unloading todo scene");

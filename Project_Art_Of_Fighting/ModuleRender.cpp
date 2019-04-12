@@ -89,7 +89,7 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed, int FacingPosition)
 {
 	bool ret = true;
 	SDL_Rect rect;
@@ -109,11 +109,31 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 	rect.w *= SCREEN_SIZE;
 	rect.h *= SCREEN_SIZE;
 
-	if(SDL_RenderCopy(renderer, texture, &section->rect, &rect) != 0)
+	switch (FacingPosition)
 	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
+
+	case 1:
+		//Looking to right
+		if (SDL_RenderCopy(renderer, texture, &section->rect, &rect) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
+		break;
+
+	case 2:
+		//Looking to left, player2 does NOt rotate over pivot, needs to be fixed
+		if(SDL_RenderCopyEx(renderer, texture, &section->rect, &rect, 0, NULL, SDL_FLIP_HORIZONTAL))
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			ret = false;
+		}
+		break;
+
+
 	}
+
+
 
 	return ret;
 }
