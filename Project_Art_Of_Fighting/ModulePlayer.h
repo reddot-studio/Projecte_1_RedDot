@@ -8,6 +8,16 @@
 
 struct SDL_Texture;
 struct Mix_Chunk;
+
+enum player_state
+{
+	IDLE = 0,
+	ATTACK,
+	CAN_MOVE,
+	JUMP,
+	CROUCH,
+};
+
 class ModulePlayer : public Module
 {
 public:
@@ -25,14 +35,7 @@ public:
 	Mix_Chunk *kickfx = NULL;
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
-	enum player_state
-	{
-		IDLE = 0,
-		ATTACK,
-		CAN_MOVE,
-		JUMP,
-		CROUCH,
-	};
+
 
 	Collider * player_collider = nullptr;
 
