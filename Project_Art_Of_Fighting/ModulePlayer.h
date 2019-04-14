@@ -68,7 +68,7 @@ public:
 	SDL_Rect ActiveScene;
 	int timer;
 
-	bool BackColision, FrontColision;
+	//bool BackColision, FrontColision;
 	Collider* CurrentColider;
 
 	//PlayerStats
@@ -90,6 +90,7 @@ public:
 	int PlayerNumber;
 	SDL_Texture* Player_texture;
 	SDL_Texture* Player_Health_BG;
+	SDL_Texture* Player_Health_BG_Empty;
 	SDL_Texture* Player_Health;
 	SDL_Texture* Player_Spirit;
 

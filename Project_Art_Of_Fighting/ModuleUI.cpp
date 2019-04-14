@@ -13,6 +13,7 @@
 ModuleUI::ModuleUI()
 {
 
+
 }
 
 ModuleUI::~ModuleUI()
@@ -25,11 +26,10 @@ bool ModuleUI::Start()
 
 	//Load All UI
 	TimerTexture = App->textures->Load("Assets/UI_Sprites/Timer.png");
-	App->player1->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
-	App->player1->Player_Health = App->textures->Load("Assets/UI_Sprites/Health_Value.png");
-	App->player2->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
-	App->player2->Player_Health = App->textures->Load("Assets/UI_Sprites/Health_Value.png");
-	RendPosition = { { 0, 0, 32, 24 },{ 0, 0 },{ 0, 0 } };
+	App->player1->Player_Health_BG = App->player2->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
+	App->player1->Player_Health = App->player2->Player_Health = App->textures->Load("Assets/UI_Sprites/Health_Value.png");
+	App->player1->Player_Health_BG_Empty = App->player2->Player_Health_BG_Empty = App->textures->Load("Assets/UI_Sprites/HealthBar_Empty.png");
+
 	//126 = player health texture lenght
 	//Do same with App.player2
 	App->player1->Player_Health_Value = 126;
@@ -56,6 +56,8 @@ update_status ModuleUI::Update()
 
 	//Player 1 Health
 	//Render order is really important
+	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
+	App->render->Blit(App->player1->Player_Health_BG_Empty, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, App->player1->Player_Health_Value, 6 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(App->player1->Player_Health, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
@@ -64,6 +66,8 @@ update_status ModuleUI::Update()
 
 
 	//Player 2 Health BackGround
+	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
+	App->render->Blit(App->player2->Player_Health_BG_Empty, (SCREEN_WIDTH / 2) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, App->player2->Player_Health_Value, 6 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(App->player2->Player_Health, (SCREEN_WIDTH / 2 ) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
@@ -80,11 +84,19 @@ bool ModuleUI::CleanUp()
 
 
 	//Unload everything
-	App->textures->Unload(TimerTexture);
-	App->textures->Unload(App->player1->Player_Health_BG);
-	App->textures->Unload(App->player1->Player_Health);
-	App->textures->Unload(App->player2->Player_Health_BG);
-	App->textures->Unload(App->player2->Player_Health);
+
+		App->textures->Unload(TimerTexture);
+		App->textures->Unload(App->player1->Player_Health_BG);
+		App->textures->Unload(App->player1->Player_Health);
+		App->textures->Unload(App->player1->Player_Health_BG_Empty);
+
+
+
+		App->textures->Unload(App->player2->Player_Health_BG);
+		App->textures->Unload(App->player2->Player_Health);
+		App->textures->Unload(App->player2->Player_Health_BG_Empty);
+
+	
 
 	LOG("Unloading todo scene");
 	return true;

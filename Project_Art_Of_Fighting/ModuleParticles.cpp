@@ -55,6 +55,8 @@ bool ModuleParticles::Start()
 	//koouKen.anim.PushBack({985,665,39,36});
 	//koouKen.anim.PushBack({998,612,25,50});
 
+
+
 	return true;
 }
 
@@ -107,7 +109,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -117,6 +119,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
+			p->Damage = Damage;
 			if (collider_type != COLLIDER_NONE) {
 				RectSprites r = p->anim.GetCurrentFrame();
 				p->collider = App->collision->AddCollider(r, collider_type, this);
@@ -131,9 +134,20 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
+
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{
+
+			if (c2->type == COLLIDER_ENEMY)
+			{
+				App->player1->Deal_Damage(*App->player2, active[i]->Damage);
+			}
+			if (c2->type == COLLIDER_PLAYER)
+			{
+				App->player2->Deal_Damage(*App->player1, active[i]->Damage);
+			}
+
 			delete active[i];
 			active[i] = nullptr;
 			break;

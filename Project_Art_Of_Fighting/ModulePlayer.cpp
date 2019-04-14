@@ -150,22 +150,22 @@ update_status ModulePlayer::Update()
 	//	//App->render->camera.x -= speed + 0.7;
 	//}
 
-	//OnWall Colision Exit
-	if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
-	{
-		BackColision = false;
-	}
+	//Old OnWall Colision Exit, DO NOt USE EVER AGAIN
+	//if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
+	//{
+	//	BackColision = false;
+	//}
 
-	if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
-	{
-		FrontColision = false;
-	}
+	//if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
+	//{
+	//	FrontColision = false;
+	//}
 
 	//Player1 Input
 	if (PlayerNumber == 1) 
 	{
 		//Move right
-		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE && !FrontColision)
+		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE)
 		{
 			pivot_player.x += speed;
 			if (current_animation != &forward)
@@ -176,7 +176,7 @@ update_status ModulePlayer::Update()
 		}
 
 		//Move Left
-		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE && !BackColision)
+		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE)
 		{
 			pivot_player.x -= speed;
 			if (current_animation != &backward)
@@ -230,7 +230,7 @@ update_status ModulePlayer::Update()
 				state = ATTACK;
 				koouKen.ResetCurrentFrame();
 				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
-				App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600);
+				App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600, 30);
 				current_animation = &koouKen;
 				App->audio->Play_chunk(kooukenfx);
 			}
@@ -320,11 +320,13 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 
 		if(c2->rect.x < 0) 
 		{
-			BackColision = true;
+			//BackColision = true;
+			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
 		}
 		if(c2->rect.x > 0)
 		{
-			FrontColision = true;
+			//FrontColision = true;
+			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
 		}
 
 

@@ -26,6 +26,8 @@ public:
 	SDL_Texture* TimerTexture;
 
 
+
+
 };
 
 #endif // __MODULESCENEKEN_H__
