@@ -6,12 +6,18 @@
 #include "SDL/include/SDL.h"
 #include "RectSprites.h"
 #include "ModuleDebug.h"
+#include"ModuleCollision.h"
 
 ModuleRender::ModuleRender() : Module()
 {
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
+
+	CameraLimitL = nullptr;
+	CameraLimitR = nullptr;
+
+
 }
 
 // Destructor
@@ -31,6 +37,10 @@ bool ModuleRender::Init()
 	}
 
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
+
+	//Camera Limits
+	//CameraLimitL = App->collision->AddCollider({ {0, 0, 10, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
+	//CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH - 10, 0, 10, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
 	
 	if(renderer == NULL)
 	{
@@ -146,6 +156,7 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);
 
 	SDL_Rect rec(rect);
+
 	if (use_camera)
 	{
 

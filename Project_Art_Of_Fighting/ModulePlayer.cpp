@@ -318,12 +318,12 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 	if (c2->type == COLLIDER_WALL)
 	{
 
-		if(c2->rect.x < 0) 
+		if(c2->rect.x < pivot_player.x) 
 		{
 			//BackColision = true;
 			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
 		}
-		if(c2->rect.x > 0)
+		if(c2->rect.x > pivot_player.x)
 		{
 			//FrontColision = true;
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
