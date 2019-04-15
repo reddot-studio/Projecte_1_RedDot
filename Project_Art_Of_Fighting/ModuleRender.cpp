@@ -7,6 +7,7 @@
 #include "RectSprites.h"
 #include "ModuleDebug.h"
 #include"ModuleCollision.h"
+#include"ModulePlayer.h"
 
 ModuleRender::ModuleRender() : Module()
 {
@@ -39,8 +40,8 @@ bool ModuleRender::Init()
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 
 	//Camera Limits
-	//CameraLimitL = App->collision->AddCollider({ {0, 0, 10, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
-	//CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH - 10, 0, 10, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
+	CameraLimitL = App->collision->AddCollider({ {0, 0, 3, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
+	CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH - 3, 0, 3, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
 	
 	if(renderer == NULL)
 	{
@@ -73,6 +74,10 @@ update_status ModuleRender::Update()
 
 	if(App->input->keyboard_state[SDL_SCANCODE_RIGHT] == KEY_REPEAT)
 		camera.x -= speed;
+	
+	CameraLimitL->rect.x = -(camera.x / speed);
+	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed) + 3);
+
 
 	return update_status::UPDATE_CONTINUE;
 }
