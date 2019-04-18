@@ -278,10 +278,15 @@ update_status ModulePlayer::Update()
 			&& App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_IDLE && state != ATTACK && state != JUMP)
 			current_animation = &idle;
 
-		//DEBUG CONTROLS
+		//DEBUG CONTROLS, Direct win/lose when pressing I or O
 		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
 		{
-			Deal_Damage(*App->player1, 10);
+			Deal_Damage(*App->player1, 200);
+		}		
+		
+		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
+		{
+			Deal_Damage(*App->player2, 200);
 		}
 
 		//God Mode

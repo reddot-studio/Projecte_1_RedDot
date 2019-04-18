@@ -108,10 +108,11 @@ update_status ModuleCongratzScreen::Update()
 	
 	//TODO 1: Missatge de que no hi ha més rivals o de que se'n han trobat????
 	//TODO 2: 
-	if (App->input->keyboard_state[SDL_SCANCODE_F1] == KEY_DOWN)
-	{
-		App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
-	}
+	//When using this, coliders do not render 
+	//if (App->input->keyboard_state[SDL_SCANCODE_F1] == KEY_DOWN)
+	//{
+	//	App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
+	//}
 
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1)
 	{	
