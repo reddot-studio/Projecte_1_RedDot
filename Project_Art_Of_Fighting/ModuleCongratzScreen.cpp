@@ -51,7 +51,6 @@ ModuleCongratzScreen::~ModuleCongratzScreen(){}
 
 bool ModuleCongratzScreen::Start()
 {
-	
 	App->sceneUI->Disable();
 	LOG("Loading congratz scene");
 	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
@@ -66,7 +65,7 @@ bool ModuleCongratzScreen::Start()
 
 update_status ModuleCongratzScreen::Update()
 {
-	result = true;
+
 	//TODO 2: Make this function be called when win or lose gets triggered with a parameter instead of bool result
 	current_animation = &countback;
 	//TODO 3: Ryo's quote on win/lose

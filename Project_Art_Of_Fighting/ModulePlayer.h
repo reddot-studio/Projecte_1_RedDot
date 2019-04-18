@@ -5,6 +5,11 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include"Application.h"
+#include"ModuleFadeToBlack.h"
+#include"ModuleCongratzScreen.h"
+#include"ModuleSceneJohn.h"
+#include"ModuleSceneTodo.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
@@ -80,6 +85,24 @@ public:
 		{
 			LOG("\n Someone died");
 			Enemy.Player_Health_Value = 0;
+
+			Module *CurrentScene = nullptr;
+
+			if (App->scene_todo->IsEnabled())
+				CurrentScene = App->scene_todo;
+			if (App->scene_john->IsEnabled())
+				CurrentScene = App->scene_john;
+
+			if (Enemy.num == 1) 
+			{
+				App->scene_congratz->result = false;
+			}
+			else
+			{
+				App->scene_congratz->result = true;
+			}
+			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+
 		}
 		else
 		{
