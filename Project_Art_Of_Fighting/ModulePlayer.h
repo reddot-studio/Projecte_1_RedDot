@@ -56,6 +56,8 @@ public:
 	Animation punch;
 	Animation kick;
 	Animation jump;
+	Animation jumpkick;
+	Animation jumppunch;
 
 	//Crouch Moves
 	Animation crouch;
