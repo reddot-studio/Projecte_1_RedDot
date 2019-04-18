@@ -60,12 +60,23 @@ bool ModuleCongratzScreen::Start()
 	}	
 	ending_music = App->audio->Load_music("Assets/Audio/042xSono hito-wa watashitachi-no kodomo kana.ogg");
 	App->audio->Play_music(ending_music);
+
+	if (App->player1->Player_Health_Value <= 0) 
+	{
+		result = false;
+	}
+	if (App->player2->Player_Health_Value <= 0)
+	{
+		result = true;
+	}
+
+
+
 	return true;
 }
 
 update_status ModuleCongratzScreen::Update()
 {
-
 	//TODO 2: Make this function be called when win or lose gets triggered with a parameter instead of bool result
 	current_animation = &countback;
 	//TODO 3: Ryo's quote on win/lose

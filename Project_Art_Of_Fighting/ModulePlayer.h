@@ -93,14 +93,6 @@ public:
 			if (App->scene_john->IsEnabled())
 				CurrentScene = App->scene_john;
 
-			if (Enemy.num == 1) 
-			{
-				App->scene_congratz->result = false;
-			}
-			else
-			{
-				App->scene_congratz->result = true;
-			}
 			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
 
 		}
