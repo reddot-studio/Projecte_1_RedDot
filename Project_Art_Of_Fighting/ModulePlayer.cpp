@@ -82,6 +82,16 @@ ModulePlayer::ModulePlayer(int num)
 	jump.PushBack({ 299, 471 , 57 , 115 }, -29, -50, 12, { 0,+5 });
 	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
 	jump.speed = 0.9f;	
+
+	//jump + kick animation (arcade sprite sheet)
+
+	jumpkick.PushBack({ 562,146,57,89 }, -29, -65, 10, { 0,+3 }); //TODO 1: És raro pq no se com fitejarho be amb el salt, proveu, que no tinc gaire idea del pushback
+	jumpkick.PushBack({ 619,149,96,86 }, -29, -48, 12, { 0,+3 });
+	
+	//jump + punch animation (arcade sprite sheet)
+
+	jumppunch.PushBack({ 715,141,66,94 },0 ,0 ,4 );
+	jumppunch.PushBack({ 781,157,86,78 },0 ,0 , 4);
 	
 	// ko'ou ken animation (arcade sprite sheet)
 
@@ -219,6 +229,26 @@ update_status ModulePlayer::Update()
 				jump.ResetCurrentFrame();
 				current_animation = &jump;
 				App->audio->Play_chunk(jumpfx);
+			}
+		}
+		if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN &&state==JUMP)
+		{
+			if (current_animation != &jumpkick)
+			{
+				state = ATTACK;
+				jumpkick.ResetCurrentFrame();
+				current_animation = &jumpkick;
+				App->audio->Play_chunk(kickfx);
+			}
+		}
+		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN && state == JUMP)
+		{
+			if (current_animation != &jumppunch)
+			{
+				state = ATTACK;
+				jumppunch.ResetCurrentFrame();
+				current_animation = &jumppunch;
+				App->audio->Play_chunk(punchfx);
 			}
 		}
 
