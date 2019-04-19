@@ -33,13 +33,9 @@ bool ModuleAudio::Init()
 		else
 		{
 			LOG("Mix_Init correctly initialized!");
-			
 			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024);
-			
 		}
 	}
-
-
 	return ret;
 }
 
@@ -49,10 +45,11 @@ bool ModuleAudio::CleanUp()
 	LOG("Cleaning music and fx!\n");
 	
 	for (unsigned int i = 0; i < last_audio; i++) {
+		if(soundtrack[i]!=nullptr)
 			Mix_FreeMusic(soundtrack[i]);
 	}
-
 	for (unsigned int i = 0; i < last_effect; i++)
+		if (effects[i] != nullptr)
 		Mix_FreeChunk(effects[i]);
 
 	Mix_CloseAudio();
@@ -120,11 +117,33 @@ bool ModuleAudio::Unload_music(Mix_Music* track)
 			{
 				soundtrack[i] = nullptr;
 				ret = true;
+				last_audio--;
+				Mix_FreeMusic(track);
+				LOG("Efficiently cleaned music track!\n");
 				break;
 			}
 		}
-		Mix_FreeMusic(track);
 	}
+	return ret;
+}
 
+bool ModuleAudio::Unload_effects(Mix_Chunk* track)
+{
+	bool ret = false;
+	if (track != nullptr)
+	{
+		for (int i = 0; i < MAX_FX; ++i)
+		{
+			if (effects[i] == track)
+			{
+				effects[i] = nullptr;
+				ret = true;
+				last_effect--;
+				Mix_FreeChunk(track);
+				LOG("Efficiently cleaned chunk track!\n");
+				break;
+			}
+		}	
+	}
 	return ret;
 }

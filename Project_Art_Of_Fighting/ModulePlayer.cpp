@@ -268,6 +268,10 @@ update_status ModulePlayer::Update()
 
 bool ModulePlayer::CleanUp()
 {
+	App->audio->Unload_effects(punchfx);
+	App->audio->Unload_effects(kickfx);
+	App->audio->Unload_effects(kooukenfx);
+	App->audio->Unload_effects(jumpfx); 
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
 	if(player_collider)
@@ -292,8 +296,6 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 			//FrontColision = true;
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
 		}
-
-
 	}
 
 	CurrentColider = c2;

@@ -27,14 +27,12 @@ ModuleCongratzScreen::ModuleCongratzScreen()
 	countback.PushBack({1968,1397,80,96 });
 	countback.speed = 0.015f;
 
-
 	zero.PushBack({ 1968,1397,80,96 });
 
 	rect_win.rect.x = 1547;
 	rect_win.rect.y = 931;
 	rect_win.rect.w = 129;
 	rect_win.rect.h = 124;
-
 
 	rect_lose.rect.x = 1692;
 	rect_lose.rect.y = 931;
@@ -69,15 +67,12 @@ bool ModuleCongratzScreen::Start()
 	{
 		result = true;
 	}
-
-
-
 	return true;
 }
 
 update_status ModuleCongratzScreen::Update()
 {
-	//TODO 2: Make this function be called when win or lose gets triggered with a parameter instead of bool result
+
 	current_animation = &countback;
 	//TODO 3: Ryo's quote on win/lose
 	//TODO 4: Waiting for new rivals message
@@ -105,22 +100,18 @@ update_status ModuleCongratzScreen::Update()
 	}
 	
 	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame());
-	
-	//TODO 1: Missatge de que no hi ha més rivals o de que se'n han trobat????
-	//TODO 2: 
+ 
 	//When using this, coliders do not render 
-	//if (App->input->keyboard_state[SDL_SCANCODE_F1] == KEY_DOWN)
-	//{
-	//	App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
-	//}
+	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN)
+	{
+		App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
+	}
 
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1)
 	{	
 		current_animation = &zero;
 		App->fade->FadeToBlack(App->scene_congratz, App->scene_welcome);
 	}
-
-
 	return update_status::UPDATE_CONTINUE;
 }
 
