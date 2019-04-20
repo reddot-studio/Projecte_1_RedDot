@@ -48,12 +48,14 @@ bool ModuleParticles::Start()
 
 
 	//Hitted particle
-	//koouKen.anim.PushBack({942,612,30,37});
-	//koouKen.anim.PushBack({973,612,22,37});
-	//koouKen.anim.PushBack({942,664,20,37});
-	//koouKen.anim.PushBack({962,665,22,36});
-	//koouKen.anim.PushBack({985,665,39,36});
-	//koouKen.anim.PushBack({998,612,25,50});
+	post_koouKen.anim.PushBack({942,612,30,37},10,-21,2);
+	post_koouKen.anim.PushBack({973,612,22,37},15, -21, 2);
+	post_koouKen.anim.PushBack({942,664,20,37},15,-21,2);
+	post_koouKen.anim.PushBack({962,665,22,36},18,-20,2);
+	post_koouKen.anim.PushBack({985,665,39,36},-3,-20,2);
+	post_koouKen.anim.PushBack({998,612,25,50},9,-24,3);
+	post_koouKen.anim.speed = 1.0f;
+	post_koouKen.anim.loop = false;
 
 
 
@@ -138,7 +140,8 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{
-
+			
+			AddParticle(post_koouKen, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
 			if (c2->type == COLLIDER_ENEMY)
 			{
 				App->player1->Deal_Damage(*App->player2, active[i]->Damage);

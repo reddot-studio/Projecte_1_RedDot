@@ -165,7 +165,7 @@ bool ModulePlayer::Start()
 		
 	if (PlayerNumber == 2) 
 	{
-		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
+		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
 		pivot_player.x += 200;
 	}
 
@@ -294,6 +294,7 @@ update_status ModulePlayer::Update()
 	// Draw everything --------------------------------------
 		RectSprites r = current_animation->GetCurrentFrame();
 
+		if(PlayerNumber == 1)
 		player_collider->rect = r.rect;
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL) 
@@ -334,8 +335,13 @@ update_status ModulePlayer::Update()
 
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
-	player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
-	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
+	if (PlayerNumber == 1) {
+		player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
+	}
+	if (PlayerNumber == 2) {
+		player_collider->SetPos(pivot_player.x + r.offset.x + 20, pivot_player.y + r.offset.y);
+	}
+	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }
 
