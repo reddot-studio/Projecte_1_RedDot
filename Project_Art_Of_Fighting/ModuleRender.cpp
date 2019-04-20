@@ -106,6 +106,7 @@ bool ModuleRender::CleanUp()
 // Blit to screen
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed, int FacingPosition)
 {
+	SDL_RendererFlip facingPos;
 	bool ret = true;
 	SDL_Rect rect;
 	rect.x = (int)(camera.x * speed) + x  * SCREEN_SIZE;
@@ -127,28 +128,21 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 	switch (FacingPosition)
 	{
 
+
 	case 1:
 		//Looking to right
-		if (SDL_RenderCopy(renderer, texture, &section->rect, &rect) != 0)
-		{
-			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-			ret = false;
-		}
+		facingPos = SDL_FLIP_NONE;
 		break;
-
 	case 2:
 		//Looking to left, player2 does NOt rotate over pivot, needs to be fixed
-		if(SDL_RenderCopyEx(renderer, texture, &section->rect, &rect, 0, NULL, SDL_FLIP_HORIZONTAL))
-		{
-			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-			ret = false;
-		}
+		facingPos = SDL_FLIP_HORIZONTAL;
 		break;
-
-
 	}
-
-
+	if (SDL_RenderCopyEx(renderer, texture, &section->rect, &rect, 0, NULL, facingPos))
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
 
 	return ret;
 }
