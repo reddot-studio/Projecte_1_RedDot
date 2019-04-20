@@ -82,6 +82,16 @@ ModulePlayer::ModulePlayer(int num)
 	jump.PushBack({ 299, 471 , 57 , 115 }, -29, -50, 12, { 0,+5 });
 	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
 	jump.speed = 0.9f;	
+
+	//jump + kick animation (arcade sprite sheet)
+
+	jumpkick.PushBack({ 562,146,57,89 }, -29, -65, 10, { 0,+3 }); //TODO 1: És raro pq no se com fitejarho be amb el salt, proveu, que no tinc gaire idea del pushback
+	jumpkick.PushBack({ 619,149,96,86 }, -29, -48, 12, { 0,+3 });
+	
+	//jump + punch animation (arcade sprite sheet)
+
+	jumppunch.PushBack({ 715,141,66,94 },0 ,0 ,4 );
+	jumppunch.PushBack({ 781,157,86,78 },0 ,0 , 4);
 	
 	// ko'ou ken animation (arcade sprite sheet)
 
@@ -93,6 +103,7 @@ ModulePlayer::ModulePlayer(int num)
 	koouKen.PushBack({ 497, 878, 102 , 107 }, -22, -42, 30);
 	koouKen.speed = 0.9f;
 	koouKen.loop = false;
+
 
 	current_animation = &idle;
 }
@@ -131,127 +142,84 @@ bool ModulePlayer::Start()
 update_status ModulePlayer::Update()
 {
 	int speed = 1;
-	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && state == CAN_MOVE)
-	//{
-	//	state = CROUCH;
-	//	current_animation = &crouch;
-	//	//App->render->camera.x -= speed + 0.7;
-	//}
+	if (PlayerNumber == 1) {
 
-	//else if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REALESE) {
-	//	crouch.ResetCurrentFrame();
-	//	state = CAN_MOVE;
-	//}
-	//if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT && App->input->keyboard_state[SDL_SCANCODE_E] == KEY_PRESSED && state == CROUCH)
-	//{
-	//	crouch_punch.ResetCurrentFrame();
-	//	state = CROUCH;
-	//	current_animation = &crouch_punch;
-	//	//App->render->camera.x -= speed + 0.7;
-	//}
 
-	//Old OnWall Colision Exit, DO NOt USE EVER AGAIN
-	//if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
-	//{
-	//	BackColision = false;
-	//}
+		states(speed);
+		//Old OnWall Colision Exit, DO NOt USE EVER AGAIN
+		//if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
+		//{
+		//	BackColision = false;
+		//}
 
-	//if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
-	//{
-	//	FrontColision = false;
-	//}
-
+		//if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
+		//{
+		//	FrontColision = false;
+		//}
+	}
 	//Player1 Input
 	if (PlayerNumber == 1) 
 	{
 		//Move right
-		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && state == CAN_MOVE)
-		{
-			pivot_player.x += speed;
-			if (current_animation != &forward)
-			{
-				forward.ResetCurrentFrame();
-				current_animation = &forward;
-			}
-		}
-
+		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;	
+		else if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) last_input = IN_RIGHT_UP;
+		
 		//Move Left
-		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && state == CAN_MOVE)
-		{
-			pivot_player.x -= speed;
-			if (current_animation != &backward)
-			{
-				backward.ResetCurrentFrame();
-				current_animation = &backward;
-			}
-		}
+		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
+		else if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_UP) last_input = IN_LEFT_UP;
 
 		//Punch weak
-		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN && state == CAN_MOVE)
-		{
-			if (current_animation != &punch)
-			{
-				state = ATTACK;
-				punch.ResetCurrentFrame();
-				current_animation = &punch;
-				App->audio->Play_chunk(punchfx);
-			}
-		}
-
+		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)	last_input = IN_PUNCH;
+		
 		//kick weak
-		if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN && state == CAN_MOVE)
-		{
-			if (current_animation != &kick)
-			{
-				state = ATTACK;
-				kick.ResetCurrentFrame();
-				current_animation = &kick;
-				App->audio->Play_chunk(kickfx);
-			}
-		}
+		if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input = IN_KICK;
+		
+		//Ko'ou Ken
+		if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU_KEN;
 
 		//Jump
-		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN && state == CAN_MOVE)
-		{
-			if (current_animation != &jump)
-			{
-				state = JUMP;
-				jump.ResetCurrentFrame();
-				current_animation = &jump;
-				App->audio->Play_chunk(jumpfx);
-			}
-		}
+		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN) last_input = IN_JUMP_DOWN;
 
-		//Ko'ou Ken
-		if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && state == CAN_MOVE)
-		{
-			if (current_animation != &koouKen)
-			{
-				state = ATTACK;
-				koouKen.ResetCurrentFrame();
-				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
-				App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600, 30);
-				current_animation = &koouKen;
-				App->audio->Play_chunk(kooukenfx);
-			}
+		//if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)
+		//{
+		//	if (current_animation != &jumpkick)
+		//	{
+		//		current_state = ST_ATTACK;
+		//		jumpkick.ResetCurrentFrame();
+		//		current_animation = &jumpkick;
+		//		App->audio->Play_chunk(kickfx);
+		//	}
+		//}
+		//if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
+		//{
+		//	if (current_animation != &jumppunch)
+		//	{
+		//		current_state = ST_ATTACK;
+		//		jumppunch.ResetCurrentFrame();
+		//		current_animation = &jumppunch;
+		//		App->audio->Play_chunk(punchfx);
+		//	}
+		//}
 
-		}
+
+
 
 		//Check duration of animation and reset state when it finishes
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && state != CAN_MOVE)
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE)
 		{
-			state = CAN_MOVE;
+			last_input = IN_ATTACK_FINISH;
 		}
 
-		//Check states and set to Idle
-		if (App->input->keyboard_state[SDL_SCANCODE_A] == key_state::KEY_IDLE
-			&& App->input->keyboard_state[SDL_SCANCODE_D] == key_state::KEY_IDLE && state != ATTACK && state != JUMP)
-			current_animation = &idle;
 
-		//DEBUG CONTROLS
+		//DEBUG CONTROLS, Direct win/lose when pressing I or O
 		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
 		{
-			Deal_Damage(*App->player1, 10);
+			Deal_Damage(*App->player1, 200);
+		}		
+		
+		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
+		{
+			Deal_Damage(*App->player2, 200);
 		}
 
 		//God Mode
@@ -271,14 +239,11 @@ update_status ModulePlayer::Update()
 
 	}
 
+
 	if (PlayerNumber == 2) 
 	{
-
-
-		
+	
 		//Player 2 Input
-
-
 
 	}
 	
@@ -289,21 +254,24 @@ update_status ModulePlayer::Update()
 	player_collider->rect = r.rect;
 	if (current_animation == &jump) 
 	{
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 5 && state != CAN_MOVE)
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 5)
 		{
 			pivot_player.y = 150;
+			last_input = IN_JUMP_FINISH;
 		}
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
 	player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
-	//RectSprites r1 = idle_player2.GetCurrentFrame();
-	//App->render->Blit(graphics, 700,290 , &r1);
 	App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }
 
 bool ModulePlayer::CleanUp()
 {
+	App->audio->Unload_effects(punchfx);
+	App->audio->Unload_effects(kickfx);
+	App->audio->Unload_effects(kooukenfx);
+	App->audio->Unload_effects(jumpfx); 
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
 	if(player_collider)
@@ -328,10 +296,152 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 			//FrontColision = true;
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
 		}
-
-
 	}
 
 	CurrentColider = c2;
 
 }
+
+player_state ModulePlayer::ControlStates()
+{
+	static player_state state = ST_IDLE;
+	
+	switch (current_state)
+	{
+	case ST_IDLE:
+		switch (last_input)
+		{
+		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
+		case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
+		case IN_JUMP_DOWN: state = ST_NEUTRAL_JUMP;	 break;
+		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
+		case IN_KICK: state = ST_STANDING_KICK; break;
+		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		}
+		break;
+	case ST_WALK_FORWARD:
+		switch (last_input)
+		{
+		case IN_RIGHT_UP: state = ST_IDLE; break;
+		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
+		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
+		case IN_KICK: state = ST_STANDING_KICK; break;
+		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		}
+		break;
+	case ST_WALK_BACKWARD:
+		switch (last_input)
+		{
+		case IN_LEFT_UP: state = ST_IDLE; break;
+		case IN_RIGHT_DOWN: state = ST_IDLE; break;
+		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
+		case IN_KICK: state = ST_STANDING_KICK; break;
+		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		}
+		break;
+	case ST_STANDING_PUNCH:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
+
+	case ST_STANDING_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_NEUTRAL_JUMP:
+		switch (last_input)
+		{
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_KOOU_KEN:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_CROUCH:
+		break;
+	default:
+		break;
+	}
+	
+	return state;
+}
+
+void ModulePlayer::states(int speed)
+{
+	player_state state = ControlStates();
+
+	// Control state
+	switch (state)
+	{
+	case ST_IDLE:
+		current_animation = &idle;
+		LOG("IDLE");
+		break;
+	case ST_WALK_FORWARD:
+		pivot_player.x += speed;
+		if (current_animation != &forward)
+		{
+			forward.ResetCurrentFrame();
+			current_animation = &forward;
+		}
+		LOG("FORWARD");
+		break;
+	case ST_WALK_BACKWARD:
+		pivot_player.x -= speed;
+		if (current_animation != &backward)
+		{
+			backward.ResetCurrentFrame();
+			current_animation = &backward;
+		}
+		LOG("BACKWARD");
+		break;
+	case ST_STANDING_PUNCH:
+		if (current_animation != &punch)
+		{
+			punch.ResetCurrentFrame();
+			current_animation = &punch;
+			App->audio->Play_chunk(punchfx);
+		}
+		LOG("PUNCH");
+		break;
+	case ST_STANDING_KICK:
+		if (current_animation != &kick)
+		{
+			kick.ResetCurrentFrame();
+			current_animation = &kick;
+			App->audio->Play_chunk(kickfx);
+		}
+		break;
+	case ST_NEUTRAL_JUMP:
+		if (current_animation != &jump)
+		{
+			jump.ResetCurrentFrame();
+			current_animation = &jump;
+			App->audio->Play_chunk(jumpfx);
+		}
+		break;
+	case ST_KOOU_KEN:
+		if (current_animation != &koouKen)
+		{
+			koouKen.ResetCurrentFrame();
+			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600, 30);
+			current_animation = &koouKen;
+			App->audio->Play_chunk(kooukenfx);
+		}
+		break;
+	case ST_CROUCH:
+		break;
+	}
+	current_state = state;
+
+}
+
+

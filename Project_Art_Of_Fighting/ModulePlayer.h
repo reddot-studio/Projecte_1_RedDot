@@ -5,17 +5,41 @@
 #include "Animation.h"
 #include "Globals.h"
 #include "p2Point.h"
+#include "p2Qeue.h"
+#include"Application.h"
+#include"ModuleFadeToBlack.h"
+#include"ModuleCongratzScreen.h"
+#include"ModuleSceneJohn.h"
+#include"ModuleSceneTodo.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
 
 enum player_state
+{	ST_UNKNOWN,
+	ST_IDLE,
+	ST_WALK_FORWARD,
+	ST_WALK_BACKWARD,
+	ST_STANDING_PUNCH,
+	ST_STANDING_KICK,
+	ST_NEUTRAL_JUMP,
+	ST_KOOU_KEN,
+	ST_CROUCH,
+};
+
+enum inputs
 {
-	IDLE = 0,
-	ATTACK,
-	CAN_MOVE,
-	JUMP,
-	CROUCH,
+	IN_UNKNOWN,
+	IN_LEFT_UP,
+	IN_LEFT_DOWN,
+	IN_RIGHT_UP,
+	IN_RIGHT_DOWN,
+	IN_JUMP_DOWN,
+	IN_PUNCH,
+	IN_KICK,
+	IN_KOOU_KEN,
+	IN_JUMP_FINISH,
+	IN_ATTACK_FINISH,
 };
 
 class ModulePlayer : public Module
@@ -29,6 +53,8 @@ public:
 	bool CleanUp() override;
 
 	void OnCollision(Collider*, Collider*);
+	player_state ControlStates();
+	void states(int speed);
 
 public:
 	Mix_Chunk *punchfx = NULL;
@@ -39,7 +65,11 @@ public:
 
 	Collider * player_collider = nullptr;
 
-	player_state state = IDLE;
+	player_state current_state = ST_UNKNOWN;
+
+	inputs last_input = IN_UNKNOWN;
+	
+
 	Animation* current_animation = nullptr;
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* pivotTexture = nullptr;
@@ -56,6 +86,8 @@ public:
 	Animation punch;
 	Animation kick;
 	Animation jump;
+	Animation jumpkick;
+	Animation jumppunch;
 
 	//Crouch Moves
 	Animation crouch;
@@ -80,6 +112,16 @@ public:
 		{
 			LOG("\n Someone died");
 			Enemy.Player_Health_Value = 0;
+
+			Module *CurrentScene = nullptr;
+
+			if (App->scene_todo->IsEnabled())
+				CurrentScene = App->scene_todo;
+			if (App->scene_john->IsEnabled())
+				CurrentScene = App->scene_john;
+
+			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+
 		}
 		else
 		{

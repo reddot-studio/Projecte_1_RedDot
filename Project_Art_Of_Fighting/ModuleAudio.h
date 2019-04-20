@@ -32,6 +32,7 @@ public:
 	bool Play_music(Mix_Music* track);
 	bool Play_chunk(Mix_Chunk* track);
 	bool Unload_music(Mix_Music* track);
+	bool Unload_effects(Mix_Chunk* track);
 };
 
 
