@@ -10,13 +10,14 @@ class Animation
 {
 public:
 	bool loop = true;
-	bool canMove = false;
 	float speed = 1.0f;
 	RectSprites frames[MAX_FRAMES];
 	int currentPos = 0;
+	int currentDisPos = 0;
 
 private:
 	float current_frame = 0;
+	float current_displacement_frame = 0;
 	int last_frame = 0;
 	int loops = 0;
 
@@ -48,6 +49,16 @@ public:
 		currentPos = (int)current_frame;
 		return frames[currentPos];
 	}
+	iPoint& GetDisplacementFrame() {
+		current_displacement_frame += speed;
+		if (current_displacement_frame >= last_frame) {
+			current_displacement_frame = (loop) ? 0.0f : last_frame - 1;
+			loops++;
+		}
+
+		currentDisPos = (int)current_displacement_frame;
+		return frames[currentDisPos].displacement;
+	}
 
 	bool Finished() const {
 		return loops > 0;
@@ -55,15 +66,22 @@ public:
 	int GetCurrentFramePos() {
 		return currentPos;
 	}
+
+	int GetDisplacementFramePos(){
+		return currentDisPos;
+	}
 	void ResetCurrentFrame() {
 		current_frame = 0;
 		currentPos = 0;
+
+	}
+	void ResetDisplacement() {
+		currentDisPos = 0;
+		current_displacement_frame = 0;
 	}
 	int GetLastFrame() {
 		return last_frame;
 	}
-
-
 
 };
 

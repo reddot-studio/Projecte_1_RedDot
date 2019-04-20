@@ -23,7 +23,19 @@ enum player_state
 	ST_STANDING_PUNCH,
 	ST_STANDING_KICK,
 	ST_NEUTRAL_JUMP,
+	ST_NEUTRAL_JUMP_PUNCH,
+	ST_NEUTRAL_JUMP_KICK,
+	ST_FORWARD_JUMP,
+	ST_BACKWARD_JUMP,
+	ST_FORWARD_JUMP_PUNCH,
+	ST_FORWARD_JUMP_KICK,
+	ST_BACKWARD_JUMP_PUNCH,
+	ST_BACKWARD_JUMP_KICK,
 	ST_KOOU_KEN,
+	ST_FALL,
+	ST_FORWARD_FALL,
+	ST_BACKWARD_FALL,
+	ST_RECOVER,
 	ST_CROUCH,
 };
 
@@ -40,6 +52,8 @@ enum inputs
 	IN_KOOU_KEN,
 	IN_JUMP_FINISH,
 	IN_ATTACK_FINISH,
+	IN_RECOVER_FINISH,
+	IN_RECOVER,
 };
 
 class ModulePlayer : public Module
@@ -86,8 +100,13 @@ public:
 	Animation punch;
 	Animation kick;
 	Animation jump;
+	Animation fall;
+	Animation recover;
 	Animation jumpkick;
 	Animation jumppunch;
+	Animation jump_forward;
+	Animation jump_backward;
+	
 
 	//Crouch Moves
 	Animation crouch;

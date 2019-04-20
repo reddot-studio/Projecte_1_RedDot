@@ -71,17 +71,50 @@ ModulePlayer::ModulePlayer(int num)
 	kick.loop = false;
 	
 	 //jump animation (arcade sprite sheet)
-	jump.canMove = true;
 	jump.loop = false;
 	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 3, { 0,-8 });
-	jump.PushBack({ 126, 471, 62, 113 }, -29, -48, 7, { 0,-5 });
-	jump.PushBack({ 188, 474, 57 , 110 }, -29, -45, 3, { 0,-4 });
-	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27,9 );
-	jump.PushBack({ 245, 492, 52 , 92 }, -29, -27, 5, { 0,+2 });
-	jump.PushBack({ 299, 471 , 57 , 115 }, -29, -50, 12, { 0,+5 });
+	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,-8 });
+	jump.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,-4 });
+	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,-4 });
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9 );
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,+2 });
+	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 0,+5 });
 	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
 	jump.speed = 0.9f;	
+		 
+	//jump forward animation (arcade sprite sheet)
+	jump_forward.loop = false;
+	jump_forward.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
+	jump_forward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 3,-8 });
+	jump_forward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 3,-4 });
+	jump_forward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 3,-3 });
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, {2,+1});
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 2,+2 });
+	jump_forward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 2,+5 });
+	jump_forward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
+	jump_forward.speed = 0.9f;
+
+	//jump backward animation (arcade sprite sheet)
+	jump_backward.loop = false;
+	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 4);
+	jump_backward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { -3,-8 });
+	jump_backward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { -3,-4 });
+	jump_backward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { -3,-3 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { -2,+1 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { -2,+2 });
+	jump_backward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { -2,+5 });
+	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0, 0 });
+	jump_backward.speed = 0.9f;
+
+	//falling animation
+	fall.loop = false;
+	fall.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 0,+5 });
+
+
+	//Recover animation
+	recover.loop = false;
+	recover.PushBack({ 0, 503, 60, 83 }, -29, -18, 3, { 0, 0 });
+	recover.speed = 0.5f;
 
 	//jump + kick animation (arcade sprite sheet)
 
@@ -90,9 +123,11 @@ ModulePlayer::ModulePlayer(int num)
 	
 	//jump + punch animation (arcade sprite sheet)
 
-	jumppunch.PushBack({ 715,141,66,94 },0 ,0 ,4 );
-	jumppunch.PushBack({ 781,157,86,78 },0 ,0 , 4);
-	
+	jumppunch.PushBack({ 715,141,66,94 }, -38, -55,3 );
+	jumppunch.PushBack({ 781,157,86,78 }, -38, -55, 4);
+	jumppunch.PushBack({ 715,141,66,94 }, -38, -55, 4);
+	jumppunch.speed = 0.5;
+	jumppunch.loop = false;
 	// ko'ou ken animation (arcade sprite sheet)
 
 	koouKen.PushBack({ 178, 878, 65, 107 }, -31, -42, 4);
@@ -114,6 +149,7 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+
 	pivot_player.x = 100;
 	pivot_player.y = 150;
 	LOG("Loading player textures");
@@ -160,14 +196,15 @@ update_status ModulePlayer::Update()
 	//Player1 Input
 	if (PlayerNumber == 1) 
 	{
+
+
 		//Move right
-		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;	
-		else if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) last_input = IN_RIGHT_UP;
+		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
+		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) last_input = IN_RIGHT_UP;
 		
 		//Move Left
 		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
-		else if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_UP) last_input = IN_LEFT_UP;
-
+		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_UP) last_input = IN_LEFT_UP;
 		//Punch weak
 		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)	last_input = IN_PUNCH;
 		
@@ -207,8 +244,14 @@ update_status ModulePlayer::Update()
 		//Check duration of animation and reset state when it finishes
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE)
 		{
-			last_input = IN_ATTACK_FINISH;
+			if (current_animation == &recover) {
+				last_input = IN_RECOVER_FINISH;
+			}
+			else {
+				last_input = IN_ATTACK_FINISH;
+			}
 		}
+
 
 
 		//DEBUG CONTROLS, Direct win/lose when pressing I or O
@@ -249,16 +292,46 @@ update_status ModulePlayer::Update()
 	
 
 	// Draw everything --------------------------------------
-	RectSprites r = current_animation->GetCurrentFrame();
-	pivot_player += r.displacement;
-	player_collider->rect = r.rect;
-	if (current_animation == &jump) 
+		RectSprites r = current_animation->GetCurrentFrame();
+
+		player_collider->rect = r.rect;
+
+	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL) 
 	{
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 5)
+		iPoint p = jump.GetDisplacementFrame();
+		pivot_player += p;
+		if (jump.GetDisplacementFramePos() == jump.GetLastFrame() - 5)
 		{
+			jump.ResetDisplacement();
 			pivot_player.y = 150;
-			last_input = IN_JUMP_FINISH;
+			last_input = IN_RECOVER;
 		}
+
+	}	
+	
+	if (current_state == ST_FORWARD_JUMP || current_state == ST_FORWARD_JUMP_PUNCH ||  current_state == ST_FORWARD_FALL) 
+	{
+		iPoint p = jump_forward.GetDisplacementFrame();
+		pivot_player += p;
+		if (jump_forward.GetDisplacementFramePos() == jump_forward.GetLastFrame() - 5)
+		{
+			jump_forward.ResetDisplacement();
+			pivot_player.y = 150;
+			last_input = IN_RECOVER;
+		}
+
+	}	
+	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH ||  current_state == ST_BACKWARD_FALL) 
+	{
+		iPoint p = jump_backward.GetDisplacementFrame();
+		pivot_player += p;
+		if (jump_backward.GetDisplacementFramePos() == jump_backward.GetLastFrame() - 5)
+		{
+			jump_backward.ResetDisplacement();
+			pivot_player.y = 150;
+			last_input = IN_RECOVER;
+		}
+
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
 	player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
@@ -327,6 +400,7 @@ player_state ModulePlayer::ControlStates()
 		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -337,6 +411,7 @@ player_state ModulePlayer::ControlStates()
 		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -356,6 +431,22 @@ player_state ModulePlayer::ControlStates()
 		switch (last_input)
 		{
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_PUNCH: state = ST_NEUTRAL_JUMP_PUNCH; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_FORWARD_JUMP:
+		switch (last_input)
+		{
+		//INPUNCH
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_BACKWARD_JUMP:
+		switch (last_input)
+		{
+		//INPUNCH
+		case IN_RECOVER: state = ST_RECOVER; break;
 		}
 		break;
 	case ST_KOOU_KEN:
@@ -364,6 +455,24 @@ player_state ModulePlayer::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
+	case ST_NEUTRAL_JUMP_PUNCH:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		}
+	case ST_FALL:
+		switch (last_input)
+		{
+		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_PUNCH: state = ST_NEUTRAL_JUMP_PUNCH; break;
+		}
+	case ST_RECOVER:
+		switch (last_input)
+		{
+		case IN_RECOVER_FINISH: state = ST_IDLE; break;
+		}
+
 	case ST_CROUCH:
 		break;
 	default:
@@ -418,6 +527,7 @@ void ModulePlayer::states(int speed)
 			current_animation = &kick;
 			App->audio->Play_chunk(kickfx);
 		}
+		LOG("KICK");
 		break;
 	case ST_NEUTRAL_JUMP:
 		if (current_animation != &jump)
@@ -426,6 +536,7 @@ void ModulePlayer::states(int speed)
 			current_animation = &jump;
 			App->audio->Play_chunk(jumpfx);
 		}
+		LOG("NEUTRAL JUMP");
 		break;
 	case ST_KOOU_KEN:
 		if (current_animation != &koouKen)
@@ -436,6 +547,47 @@ void ModulePlayer::states(int speed)
 			current_animation = &koouKen;
 			App->audio->Play_chunk(kooukenfx);
 		}
+		break;
+	case ST_NEUTRAL_JUMP_PUNCH:
+		if (current_animation != &jumppunch)
+		{
+			jumppunch.ResetCurrentFrame();
+			current_animation = &jumppunch;
+			App->audio->Play_chunk(punchfx);
+		}
+		LOG("NEUTRAL JUMP PUNCH");
+		break;
+	case ST_FORWARD_JUMP:
+		if (current_animation != &jump_forward)
+		{
+			jump_forward.ResetCurrentFrame();
+			current_animation = &jump_forward;
+			App->audio->Play_chunk(jumpfx);
+		}
+		LOG("FORWARD JUMP");
+		break;
+	case ST_BACKWARD_JUMP:
+		if (current_animation != &jump_backward)
+		{
+			jump_backward.ResetCurrentFrame();
+			current_animation = &jump_backward;
+			App->audio->Play_chunk(jumpfx);
+		}
+		LOG("BACKWARD JUMP");
+		break;
+	case ST_FALL:
+		if (current_animation != &fall) {
+			fall.ResetCurrentFrame();
+			current_animation = &fall;
+		}
+		LOG("FALL");
+		break;
+	case ST_RECOVER:
+		if (current_animation != &recover) {
+			recover.ResetCurrentFrame();
+			current_animation = &recover;
+		}
+		LOG("RECOVER");
 		break;
 	case ST_CROUCH:
 		break;
