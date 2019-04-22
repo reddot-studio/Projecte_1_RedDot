@@ -9,6 +9,7 @@ public:
 	SDL_Rect rect;
 	iPoint offset;
 	iPoint displacement;
+	iPoint DamagePosition;
 
 
 public:

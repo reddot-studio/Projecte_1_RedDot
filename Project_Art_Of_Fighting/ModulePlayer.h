@@ -121,6 +121,7 @@ public:
 
 	//bool BackColision, FrontColision;
 	Collider* CurrentColider;
+	Collider* HitColider;
 
 	//PlayerStats
 	int Player_Health_Value;
@@ -131,6 +132,7 @@ public:
 		{
 			LOG("\n Someone died");
 			Enemy.Player_Health_Value = 0;
+
 
 			Module *CurrentScene = nullptr;
 

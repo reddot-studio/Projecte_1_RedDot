@@ -56,9 +56,9 @@ ModulePlayer::ModulePlayer(int num)
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,2);
-	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3);
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3);
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, { 0, 0 }, {20, -20});
+	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
 	punch.speed = 0.5f;
 	punch.loop = false;
 
@@ -160,16 +160,20 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	if(PlayerNumber == 1)
-		player_collider = App->collision->AddCollider({ {pivot_player.x,pivot_player.y,70,109},{0,0}, {0, 0} }, COLLIDER_PLAYER, App->player1);
+	if (PlayerNumber == 1) 
+	{
+		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
+		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT, App->player1);
+	}
 		
 	if (PlayerNumber == 2) 
 	{
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
+		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		pivot_player.x += 200;
 	}
 
-
+	
 
 	return ret;
 }
@@ -178,26 +182,11 @@ bool ModulePlayer::Start()
 update_status ModulePlayer::Update()
 {
 	int speed = 1;
-	if (PlayerNumber == 1) {
-
-
-		states(speed);
-		//Old OnWall Colision Exit, DO NOt USE EVER AGAIN
-		//if (CurrentColider != nullptr && BackColision && player_collider->rect.x > CurrentColider->rect.x + CurrentColider->rect.w) 
-		//{
-		//	BackColision = false;
-		//}
-
-		//if (CurrentColider != nullptr && FrontColision && player_collider->rect.x < CurrentColider->rect.x - player_collider->rect.w)
-		//{
-		//	FrontColision = false;
-		//}
-	}
 	//Player1 Input
-	if (PlayerNumber == 1) 
+	if (PlayerNumber == 1 && App->player1->Player_Health_Value > 0) 
 	{
 
-
+		states(speed);
 		//Move right
 		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
 		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) last_input = IN_RIGHT_UP;
@@ -292,10 +281,19 @@ update_status ModulePlayer::Update()
 	
 
 	// Draw everything --------------------------------------
-		RectSprites r = current_animation->GetCurrentFrame();
+	RectSprites r = current_animation->GetCurrentFrame();
 
-		if(PlayerNumber == 1)
+	if (PlayerNumber == 1) 
+	{
 		player_collider->rect = r.rect;
+		player_collider->rect.h /= 2;
+		player_collider->rect.w /= 2;
+
+		//Full body Colider
+		//player_collider->rect = r.rect;
+	}
+	if(HitColider)
+		HitColider->SetPos(pivot_player.x + r.DamagePosition.x, pivot_player.y + r.DamagePosition.y);
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL) 
 	{
@@ -335,10 +333,14 @@ update_status ModulePlayer::Update()
 
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
-	if (PlayerNumber == 1) {
-		player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
+	if (PlayerNumber == 1) 
+	{
+		player_collider->SetPos(pivot_player.x - 15, pivot_player.y + r.offset.y);
+		//Full body colider
+		//player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}
-	if (PlayerNumber == 2) {
+	if (PlayerNumber == 2) 
+	{
 		player_collider->SetPos(pivot_player.x + r.offset.x + 20, pivot_player.y + r.offset.y);
 	}
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
@@ -355,6 +357,11 @@ bool ModulePlayer::CleanUp()
 	App->textures->Unload(pivotTexture);
 	if(player_collider)
 		player_collider->to_delete = true;
+
+	if (HitColider)
+		HitColider->to_delete = true;
+
+
 	LOG(" - ModulePlayer CleanUp");
 	return true;
 }
@@ -375,9 +382,20 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 			//FrontColision = true;
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
 		}
+
+		CurrentColider = c2;
 	}
 
-	CurrentColider = c2;
+	//Hit Detection
+	if (c2->type == COLLIDER_ENEMY_SHOT) 
+	{
+		Deal_Damage(*App->player1, 20);
+	}
+	if (c2->type == COLLIDER_PLAYER_SHOT)
+	{
+		Deal_Damage(*App->player2, 20);
+	}
+
 
 }
 
@@ -484,6 +502,8 @@ player_state ModulePlayer::ControlStates()
 	default:
 		break;
 	}
+
+	last_input = IN_UNKNOWN;
 	
 	return state;
 }
