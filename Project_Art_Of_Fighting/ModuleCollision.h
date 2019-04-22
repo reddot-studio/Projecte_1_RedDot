@@ -23,6 +23,7 @@ struct Collider
 	bool to_delete = false;
 	COLLIDER_TYPE type;
 	Module* callback = nullptr;
+	bool Enabled = true;
 
 	Collider(RectSprites rectangle, COLLIDER_TYPE type, Module* callback = nullptr) :
 		type(type),

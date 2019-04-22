@@ -163,7 +163,7 @@ bool ModulePlayer::Start()
 	if (PlayerNumber == 1) 
 	{
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
-		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT, App->player1);
+		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT);
 	}
 		
 	if (PlayerNumber == 2) 
@@ -285,9 +285,9 @@ update_status ModulePlayer::Update()
 
 	if (PlayerNumber == 1) 
 	{
-		player_collider->rect = r.rect;
-		player_collider->rect.h /= 2;
-		player_collider->rect.w /= 2;
+		player_collider->rect.x = pivot_player.x;
+		player_collider->rect.h = 87;
+		player_collider->rect.w = 32;
 
 		//Full body Colider
 		//player_collider->rect = r.rect;
@@ -335,7 +335,7 @@ update_status ModulePlayer::Update()
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
 	if (PlayerNumber == 1) 
 	{
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y + r.offset.y);
+		player_collider->SetPos(pivot_player.x - 15 + r.displacement.x, pivot_player.y - 22 + r.displacement.y);
 		//Full body colider
 		//player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}
@@ -369,6 +369,7 @@ bool ModulePlayer::CleanUp()
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
 	//Colision with wall
+
 	if (c2->type == COLLIDER_WALL)
 	{
 
@@ -387,13 +388,15 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 	}
 
 	//Hit Detection
-	if (c2->type == COLLIDER_ENEMY_SHOT) 
+	if (c2->type == COLLIDER_ENEMY_SHOT && c2->Enabled) 
 	{
 		Deal_Damage(*App->player1, 20);
+		c2->Enabled = false;
 	}
-	if (c2->type == COLLIDER_PLAYER_SHOT)
+	if (c2->type == COLLIDER_PLAYER_SHOT && c2->Enabled)
 	{
 		Deal_Damage(*App->player2, 20);
+		c2->Enabled = false;
 	}
 
 
@@ -543,6 +546,7 @@ void ModulePlayer::states(int speed)
 			punch.ResetCurrentFrame();
 			current_animation = &punch;
 			App->audio->Play_chunk(punchfx);
+			HitColider->Enabled = true;
 		}
 		LOG("PUNCH");
 		break;
