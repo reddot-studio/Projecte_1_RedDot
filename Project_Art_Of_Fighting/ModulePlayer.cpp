@@ -78,7 +78,7 @@ ModulePlayer::ModulePlayer(int num)
 	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,-4 });
 	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9 );
 	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,+2 });
-	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 0,+5 });
+	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 13, { 0,+5 });
 	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
 	jump.speed = 0.9f;	
 		 
@@ -118,15 +118,18 @@ ModulePlayer::ModulePlayer(int num)
 
 	//jump + kick animation (arcade sprite sheet)
 
-	jumpkick.PushBack({ 562,146,57,89 }, -29, -65, 10, { 0,+3 }); //TODO 1: És raro pq no se com fitejarho be amb el salt, proveu, que no tinc gaire idea del pushback
-	jumpkick.PushBack({ 619,149,96,86 }, -29, -48, 12, { 0,+3 });
+	jumpkick.PushBack({ 562,146,57,89 }, -32, -55, 2);
+	jumpkick.PushBack({ 619,149,96,86 }, -40, -48, 4);
+	jumpkick.PushBack({ 562,146,57,89 }, -32, -55, 4);
+	jumpkick.loop = false;
+	jumpkick.speed = 0.5f;
 	
 	//jump + punch animation (arcade sprite sheet)
 
 	jumppunch.PushBack({ 715,141,66,94 }, -38, -55,3 );
 	jumppunch.PushBack({ 781,157,86,78 }, -38, -55, 4);
 	jumppunch.PushBack({ 715,141,66,94 }, -38, -55, 4);
-	jumppunch.speed = 0.5;
+	jumppunch.speed = 0.5f;
 	jumppunch.loop = false;
 	// ko'ou ken animation (arcade sprite sheet)
 
@@ -194,6 +197,15 @@ update_status ModulePlayer::Update()
 		//Move Left
 		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
 		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_UP) last_input = IN_LEFT_UP;
+		
+		//Crouch
+		if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
+		if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP) 
+		{
+			last_input = IN_CROUCH_UP;
+			crouch.ResetCurrentFrame();
+		}
+
 		//Punch weak
 		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)	last_input = IN_PUNCH;
 		
@@ -206,32 +218,10 @@ update_status ModulePlayer::Update()
 		//Jump
 		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN) last_input = IN_JUMP_DOWN;
 
-		//if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)
-		//{
-		//	if (current_animation != &jumpkick)
-		//	{
-		//		current_state = ST_ATTACK;
-		//		jumpkick.ResetCurrentFrame();
-		//		current_animation = &jumpkick;
-		//		App->audio->Play_chunk(kickfx);
-		//	}
-		//}
-		//if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)
-		//{
-		//	if (current_animation != &jumppunch)
-		//	{
-		//		current_state = ST_ATTACK;
-		//		jumppunch.ResetCurrentFrame();
-		//		current_animation = &jumppunch;
-		//		App->audio->Play_chunk(punchfx);
-		//	}
-		//}
-
-
 
 
 		//Check duration of animation and reset state when it finishes
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE)
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH)
 		{
 			if (current_animation == &recover) {
 				last_input = IN_RECOVER_FINISH;
@@ -295,7 +285,7 @@ update_status ModulePlayer::Update()
 	if(HitColider)
 		HitColider->SetPos(pivot_player.x + r.DamagePosition.x, pivot_player.y + r.DamagePosition.y);
 
-	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL) 
+	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK) 
 	{
 		iPoint p = jump.GetDisplacementFrame();
 		pivot_player += p;
@@ -308,7 +298,7 @@ update_status ModulePlayer::Update()
 
 	}	
 	
-	if (current_state == ST_FORWARD_JUMP || current_state == ST_FORWARD_JUMP_PUNCH ||  current_state == ST_FORWARD_FALL) 
+	if (current_state == ST_FORWARD_JUMP || current_state == ST_FORWARD_JUMP_PUNCH ||  current_state == ST_FORWARD_FALL || current_state == ST_FORWARD_JUMP_KICK) 
 	{
 		iPoint p = jump_forward.GetDisplacementFrame();
 		pivot_player += p;
@@ -320,7 +310,7 @@ update_status ModulePlayer::Update()
 		}
 
 	}	
-	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH ||  current_state == ST_BACKWARD_FALL) 
+	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH ||  current_state == ST_BACKWARD_FALL || current_state == ST_BACKWARD_JUMP_KICK) 
 	{
 		iPoint p = jump_backward.GetDisplacementFrame();
 		pivot_player += p;
@@ -414,6 +404,7 @@ player_state ModulePlayer::ControlStates()
 		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -425,6 +416,8 @@ player_state ModulePlayer::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
+		case IN_UNKNOWN: state = ST_IDLE; break;
+		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -433,9 +426,11 @@ player_state ModulePlayer::ControlStates()
 		case IN_LEFT_UP: state = ST_IDLE; break;
 		case IN_RIGHT_DOWN: state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_STANDING_PUNCH; break;
-		case IN_KICK: state = ST_STANDING_KICK; break;
+		case IN_KICK: state = ST_STANDING_KICK; break; 
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
+		case IN_UNKNOWN: state = ST_IDLE; break;
+		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -456,20 +451,57 @@ player_state ModulePlayer::ControlStates()
 		{
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_NEUTRAL_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_NEUTRAL_JUMP_KICK; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
 		}
 		break;
 	case ST_FORWARD_JUMP:
 		switch (last_input)
 		{
-		//INPUNCH
+		case IN_PUNCH: state = ST_FORWARD_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_FORWARD_JUMP_KICK; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_FORWARD_JUMP_PUNCH:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_FORWARD_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_FORWARD_JUMP_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_FORWARD_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
 		}
 		break;
 	case ST_BACKWARD_JUMP:
 		switch (last_input)
 		{
-		//INPUNCH
+		case IN_PUNCH: state = ST_BACKWARD_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_BACKWARD_JUMP_KICK; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_BACKWARD_JUMP_PUNCH:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_BACKWARD_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
+	case ST_BACKWARD_JUMP_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_BACKWARD_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
 		}
 		break;
@@ -484,23 +516,68 @@ player_state ModulePlayer::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
 		}
+		break;
+	case ST_NEUTRAL_JUMP_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_FALL; break;
+		case IN_JUMP_FINISH: state = ST_IDLE; break;
+		case IN_RECOVER: state = ST_RECOVER; break;
+		}
+		break;
 	case ST_FALL:
 		switch (last_input)
 		{
 		case IN_RECOVER: state = ST_RECOVER; break;
 		case IN_PUNCH: state = ST_NEUTRAL_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_NEUTRAL_JUMP_KICK; break;
 		}
+		break;
+	case ST_FORWARD_FALL:
+		switch (last_input)
+		{
+		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_PUNCH: state = ST_FORWARD_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_FORWARD_JUMP_KICK; break;
+		}
+		break;
+	case ST_BACKWARD_FALL:
+		switch (last_input)
+		{
+		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_PUNCH: state = ST_BACKWARD_JUMP_PUNCH; break;
+		case IN_KICK: state = ST_BACKWARD_JUMP_KICK; break;
+		}
+		break;
 	case ST_RECOVER:
 		switch (last_input)
 		{
 		case IN_RECOVER_FINISH: state = ST_IDLE; break;
 		}
-
+		break;
 	case ST_CROUCH:
+		switch (last_input)
+		{
+		case IN_CROUCH_UP: state = ST_IDLE; break;
+		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
+		//case IN_KICK: state = ST_CROUCH_KICK; break; //Pending to do animations
+		case IN_UNKNOWN: state = ST_IDLE; break;
+		}
 		break;
-	default:
-		break;
+	case ST_CROUCH_PUNCH:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
+		}
+		break;	
+	case ST_CROUCH_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
+		}
+		break;	
 	}
 
 	last_input = IN_UNKNOWN;
@@ -582,7 +659,16 @@ void ModulePlayer::states(int speed)
 			App->audio->Play_chunk(punchfx);
 		}
 		LOG("NEUTRAL JUMP PUNCH");
-		break;
+		break;	
+	case ST_NEUTRAL_JUMP_KICK:
+		if (current_animation != &jumpkick)
+		{
+			jumpkick.ResetCurrentFrame();
+			current_animation = &jumpkick;
+			App->audio->Play_chunk(kickfx);
+		}
+		LOG("NEUTRAL JUMP KIcK");
+		break;	
 	case ST_FORWARD_JUMP:
 		if (current_animation != &jump_forward)
 		{
@@ -591,6 +677,24 @@ void ModulePlayer::states(int speed)
 			App->audio->Play_chunk(jumpfx);
 		}
 		LOG("FORWARD JUMP");
+		break;
+	case ST_FORWARD_JUMP_KICK:
+		if (current_animation != &jumpkick)
+		{
+			jumpkick.ResetCurrentFrame();
+			current_animation = &jumpkick;
+			App->audio->Play_chunk(kickfx);
+		}
+		LOG("FORWARD JUMP KICK");
+		break;	
+	case ST_FORWARD_JUMP_PUNCH:
+		if (current_animation != &jumppunch)
+		{
+			jumppunch.ResetCurrentFrame();
+			current_animation = &jumppunch;
+			App->audio->Play_chunk(punchfx);
+		}
+		LOG("FORWARD JUMP PUNCH");
 		break;
 	case ST_BACKWARD_JUMP:
 		if (current_animation != &jump_backward)
@@ -601,7 +705,39 @@ void ModulePlayer::states(int speed)
 		}
 		LOG("BACKWARD JUMP");
 		break;
+	case ST_BACKWARD_JUMP_PUNCH:
+		if (current_animation != &jumppunch)
+		{
+			jumppunch.ResetCurrentFrame();
+			current_animation = &jumppunch;
+			App->audio->Play_chunk(punchfx);
+		}
+		LOG("BACKWARD JUMP PUNCH");
+		break;
+	case ST_BACKWARD_JUMP_KICK:
+		if (current_animation != &jumpkick)
+		{
+			jumpkick.ResetCurrentFrame();
+			current_animation = &jumpkick;
+			App->audio->Play_chunk(kickfx);
+		}
+		LOG("BACKWARD JUMP KICK");
+		break;
 	case ST_FALL:
+		if (current_animation != &fall) {
+			fall.ResetCurrentFrame();
+			current_animation = &fall;
+		}
+		LOG("FALL");
+		break;
+	case ST_FORWARD_FALL:
+		if (current_animation != &fall) {
+			fall.ResetCurrentFrame();
+			current_animation = &fall;
+		}
+		LOG("FALL");
+		break;
+	case ST_BACKWARD_FALL:
 		if (current_animation != &fall) {
 			fall.ResetCurrentFrame();
 			current_animation = &fall;
@@ -616,6 +752,26 @@ void ModulePlayer::states(int speed)
 		LOG("RECOVER");
 		break;
 	case ST_CROUCH:
+		if (current_animation != &crouch) {
+			current_animation = &crouch;
+		}
+		LOG("CROUCH");
+		break;	
+	case ST_CROUCH_PUNCH:
+		if (current_animation != &crouch_punch) 
+		{
+			crouch_punch.ResetCurrentFrame();
+			current_animation = &crouch_punch;
+			App->audio->Play_chunk(punchfx);
+		}
+		LOG("CROUCH PUNCH");
+		break;	
+	case ST_CROUCH_KICK:
+		if (current_animation != &crouch_kick) {
+			crouch_kick.ResetCurrentFrame();
+			current_animation = &crouch_kick;
+		}
+		LOG("CROUCH KICK");
 		break;
 	}
 	current_state = state;
