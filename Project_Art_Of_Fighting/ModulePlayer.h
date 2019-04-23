@@ -145,10 +145,13 @@ public:
 
 			if (App->scene_todo->IsEnabled())
 				CurrentScene = App->scene_todo;
-			if (App->scene_john->IsEnabled())
-				CurrentScene = App->scene_john;
+			//if (App->scene_john->IsEnabled())
+			//	CurrentScene = App->scene_john;
+
 
 			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+
+			
 
 		}
 		else

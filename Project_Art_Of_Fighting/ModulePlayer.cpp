@@ -155,6 +155,7 @@ bool ModulePlayer::Start()
 
 	pivot_player.x = 100;
 	pivot_player.y = 150;
+	Player_Health_Value = 126;
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
@@ -234,12 +235,12 @@ update_status ModulePlayer::Update()
 
 
 		//DEBUG CONTROLS, Direct win/lose when pressing I or O
-		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
+		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
 			Deal_Damage(*App->player1, 200);
 		}		
 		
-		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE)
+		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
 			Deal_Damage(*App->player2, 200);
 		}

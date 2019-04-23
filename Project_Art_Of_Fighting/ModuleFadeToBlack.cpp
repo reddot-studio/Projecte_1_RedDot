@@ -23,6 +23,7 @@ bool ModuleFadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
+	IsFading = false;
 	return true;
 }
 
@@ -45,8 +46,13 @@ update_status ModuleFadeToBlack::Update()
 				Mix_FadeOutMusic(1000);
 				//Enables called module, disables current module
 		
+
 				moduleOff->Disable();
+				App->player1->Disable();
+				App->player2->Disable();
 				moduleOn->Enable();
+
+
 				//resets player & camera position
 				App->render->camera.x = 0;
 				App->render->camera.y = 0;
@@ -62,8 +68,11 @@ update_status ModuleFadeToBlack::Update()
 		{
 			
 			normalized = 1.0f - normalized;
-			if(now >= total_time)
+			if (now >= total_time) 
+			{
+				IsFading = false;
 				current_step = fade_step::none;
+			}
 		} break;
 	}
 
@@ -80,7 +89,7 @@ bool ModuleFadeToBlack::FadeToBlack(Module* module_off, Module* module_on, float
 	moduleOff = module_off;
 	moduleOn = module_on;
 
-
+	IsFading = true;
 	
 	bool ret = false;
 

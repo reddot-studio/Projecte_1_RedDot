@@ -67,13 +67,16 @@ bool ModuleCongratzScreen::Start()
 	{
 		result = true;
 	}
+
+	current_animation = &countback;
+	current_animation->ResetCurrentFrame();
 	return true;
 }
 
 update_status ModuleCongratzScreen::Update()
 {
 
-	current_animation = &countback;
+
 	//TODO 3: Ryo's quote on win/lose
 	//TODO 4: Waiting for new rivals message
 	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
@@ -84,6 +87,7 @@ update_status ModuleCongratzScreen::Update()
 	switch (result)
 	{
 	case true:
+
 		if ((App->render->Blit(graphics, 57.5, 40, &rect_win)) == false)
 		{
 			SDL_Log("Unable to [BLIT] texture: texture_background");
@@ -104,6 +108,7 @@ update_status ModuleCongratzScreen::Update()
 	//When using this, coliders do not render 
 	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN)
 	{
+
 		App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
 	}
 
