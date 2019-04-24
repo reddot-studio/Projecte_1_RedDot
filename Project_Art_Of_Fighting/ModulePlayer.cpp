@@ -164,26 +164,20 @@ bool ModulePlayer::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
+
 	if (PlayerNumber == 1) 
 	{
-<<<<<<< HEAD
-		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
-		LowerColider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
-		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT);
-		HitColider->Enabled = false;
-=======
-		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
+
+		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
 		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_HIT);
->>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
+		HitColider->Enabled = false;
 	}
 		
 	if (PlayerNumber == 2) 
 	{
-<<<<<<< HEAD
-		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
-=======
-		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
->>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
+
+		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
+
 		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		pivot_player.x += 200;
 	}
@@ -256,11 +250,7 @@ update_status ModulePlayer::Update()
 		}
 
 		//God Mode
-<<<<<<< HEAD
-		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_PLAYER)
-=======
-		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION)
->>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
+		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_PLAYER_COLLISION)
 		{
 
 			UpperCollider->type = COLLIDER_NONE;
@@ -270,11 +260,8 @@ update_status ModulePlayer::Update()
 		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
 		{
 
-<<<<<<< HEAD
-			UpperCollider->type = COLLIDER_PLAYER;
-=======
-			player_collider->type = COLLIDER_PLAYER_COLLISION;
->>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
+			UpperCollider->type = COLLIDER_PLAYER_COLLISION;
+
 			LOG("\nGod Mode OFF");
 		}
 
@@ -299,9 +286,9 @@ update_status ModulePlayer::Update()
 		UpperCollider->rect.h = 50;
 		UpperCollider->rect.w = 35;
 
-		LowerColider->rect = r.rect;
-		LowerColider->rect.h = 50;
-		LowerColider->rect.w = 35;
+		//LowerColider->rect = r.rect;
+		//LowerColider->rect.h = 50;
+		//LowerColider->rect.w = 35;
 		//Full body Colider
 		//player_collider->rect = r.rect;
 	}
@@ -349,7 +336,7 @@ update_status ModulePlayer::Update()
 	if (PlayerNumber == 1) 
 	{
 		UpperCollider->SetPos(pivot_player.x + r.offset.x + 13, pivot_player.y + r.offset.y);
-		LowerColider->SetPos(pivot_player.x + r.offset.x + 13, pivotRect.rect.y + pivotRect.rect.h);
+		//LowerColider->SetPos(pivot_player.x + r.offset.x + 13, pivotRect.rect.y + pivotRect.rect.h);
 		//Full body colider
 		//FullBodyCollider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}

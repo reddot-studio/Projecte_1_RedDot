@@ -8,7 +8,6 @@ ModuleCollision::ModuleCollision()
 	for(uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[COLLIDER_WALL][COLLIDER_WALL] = false;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER_COLLISION] = true;
 	matrix[COLLIDER_WALL][COLLIDER_ENEMY_COLLISION] = true;
 	matrix[COLLIDER_WALL][COLLIDER_PLAYER_HIT] = true;
@@ -36,10 +35,10 @@ ModuleCollision::ModuleCollision()
 	matrix[COLLIDER_PLAYER_HIT][COLLIDER_PLAYER_COLLISION] = false;
 	matrix[COLLIDER_PLAYER_HIT][COLLIDER_ENEMY_COLLISION] = true;
 	matrix[COLLIDER_PLAYER_HIT][COLLIDER_PLAYER_HIT] = false;
-	matrix[COLLIDER_PLAYER_HIT][COLLIDER_ENEMY_HIT] = false;	
-	matrix[COLLIDER_PLAYER_HIT][COLLIDER_PLAYER_HURT] = false;	
-	matrix[COLLIDER_PLAYER_HIT][COLLIDER_ENEMY_HURT] = true;	
-	
+	matrix[COLLIDER_PLAYER_HIT][COLLIDER_ENEMY_HIT] = false;
+	matrix[COLLIDER_PLAYER_HIT][COLLIDER_PLAYER_HURT] = false;
+	matrix[COLLIDER_PLAYER_HIT][COLLIDER_ENEMY_HURT] = true;
+
 	matrix[COLLIDER_ENEMY_HIT][COLLIDER_WALL] = true;
 	matrix[COLLIDER_ENEMY_HIT][COLLIDER_PLAYER_COLLISION] = true;
 	matrix[COLLIDER_ENEMY_HIT][COLLIDER_ENEMY_COLLISION] = false;
@@ -54,7 +53,7 @@ ModuleCollision::ModuleCollision()
 	matrix[COLLIDER_PLAYER_HURT][COLLIDER_PLAYER_HIT] = false;
 	matrix[COLLIDER_PLAYER_HURT][COLLIDER_ENEMY_HIT] = true;
 	matrix[COLLIDER_PLAYER_HURT][COLLIDER_PLAYER_HURT] = false;
-	matrix[COLLIDER_PLAYER_HURT][COLLIDER_ENEMY_HURT] = false;	
+	matrix[COLLIDER_PLAYER_HURT][COLLIDER_ENEMY_HURT] = false;
 
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_WALL] = false;
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_PLAYER_COLLISION] = false;
@@ -63,7 +62,6 @@ ModuleCollision::ModuleCollision()
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_ENEMY_HIT] = false;
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_PLAYER_HURT] = false;
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_ENEMY_HURT] = false;
-
 
 }
 
@@ -148,15 +146,6 @@ void ModuleCollision::DebugDraw()
 			break;
 			case COLLIDER_WALL: // cian
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
-			break;
-			case COLLIDER_HURT: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-			case COLLIDER_HIT: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
-			case COLLIDER_COLLISION: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 			case COLLIDER_PLAYER_COLLISION: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
