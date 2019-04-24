@@ -74,8 +74,9 @@ bool ModuleCongratzScreen::Start()
 	current_animation = &countback;
 	current_animation->ResetCurrentFrame();
 
-	App->fonts->Load("Assets/fonts/big_orange_font.png", "ficar", 1);
-	App->fonts->Load("Assets/fonts/small_orange_font.png", "ficar", 1);
+	//App->fonts->Load("Assets/fonts/big_orange_font.png", "ficar", 1);
+	//App->fonts->Load("Assets/fonts/small_orange_font.png", "ficar", 1);
+
 
 	return true;
 }
