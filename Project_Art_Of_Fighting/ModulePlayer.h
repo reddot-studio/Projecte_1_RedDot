@@ -114,6 +114,7 @@ public:
 	Animation jump_forward;
 	Animation jump_backward;
 	
+	
 
 	//Crouch Moves
 	Animation crouch;
