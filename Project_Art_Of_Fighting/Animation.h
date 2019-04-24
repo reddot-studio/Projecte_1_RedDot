@@ -23,7 +23,8 @@ private:
 	int loops = 0;
 
 public:
-	bool PushBack(const SDL_Rect& rect, int offsetX = 0, int offsetY = 0, int numFrames = 1, iPoint displacement = { 0, 0 }, iPoint HitColiderPosition = {-10, -10})
+	bool PushBack(const SDL_Rect& rect, int offsetX = 0, int offsetY = 0, int numFrames = 1,
+		SDL_Rect hurtRect1 = { 0,0,0,0 }, SDL_Rect hurtRect2 = { 0,0,0,0 }, SDL_Rect hurtRect3 = { 0,0,0,0 }, SDL_Rect hitRect = { 0,0,0,0 }, iPoint displacement = { 0, 0 })
 	{
 		iPoint offset{ offsetX,offsetY};
 		for (int i = 0; i < numFrames; i++)
@@ -33,7 +34,10 @@ public:
 			frames[last_frame].offset.x = offset.x;
 			frames[last_frame].offset.y = offset.y;
 			frames[last_frame].displacement = displacement;
-			frames[last_frame].DamagePosition = HitColiderPosition;
+			frames[last_frame].hurtColliders[0] = hurtRect1;
+			frames[last_frame].hurtColliders[1] = hurtRect2;
+			frames[last_frame].hurtColliders[2] = hurtRect3;
+			frames[last_frame].hitCollider = hitRect;
 			last_frame++;
 		}
 		return true;

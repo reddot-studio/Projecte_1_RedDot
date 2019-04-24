@@ -37,10 +37,24 @@ struct Collider
 		rect.h = rectangle.rect.h;
 	}
 
+	void SetRect(SDL_Rect collider, iPoint pos = { 0,0 })
+	{
+		rect.x = collider.x + pos.x;
+		rect.y = collider.y + pos.y;
+		rect.w = collider.w;
+		rect.h = collider.h;
+	}
+
 	void SetPos(int x, int y)
 	{
 		rect.x = x;
 		rect.y = y;
+	}
+
+	void SetSize (int w, int h)
+	{
+		rect.w = w;
+		rect.h = h;
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;

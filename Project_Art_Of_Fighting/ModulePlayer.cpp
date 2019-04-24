@@ -1,3 +1,4 @@
+
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleTextures.h"
@@ -19,45 +20,63 @@ ModulePlayer::ModulePlayer(int num)
 	}
 
 	PlayerNumber = num;
-	pivotRect.rect = {0,0,10,10};
+	pivotRect.rect = { 0,0,10,10 };
+
+	//Rect Colliders
+	SDL_Rect rect1 = { -10,-40,25,20 };
+	SDL_Rect rect2 = { -20,-20,45,60 };
+	SDL_Rect rect3 = { -25,40,50,30 };
+
+	//Jump Colliders
+	SDL_Rect head_jump_collider = { -10,-40,25,20 };
+	SDL_Rect body_jump_collider = { -20,-20,45,60 };
+	SDL_Rect legs_jump_collider = { -25,40,50,30 };
+
+	//Crouch Rect Colliders
+	SDL_Rect head_crouch_collider = { -10,-8,25,20 };
+	SDL_Rect body_crouch_collider = { -20,8,50,58 };	
+	
+	//Crouch Punch Rect Colliders
+	SDL_Rect head_crouchPunch_collider = { 5,-8,25,20 };
+	SDL_Rect body_crouchPunch_collider = { -10,8,50,58 };
 
 	//idle animation (arcade sprite sheet)
-	idle.PushBack({0, 8, 66, 108}, -29, -43,2);
-	idle.PushBack({ 68, 8, 67, 108}, -29, -43,2);
-	idle.PushBack({ 135 , 8, 69, 108 }, -29, -43,2);
+	idle.PushBack({ 0, 8, 66, 108 }, -29, -43, 2, rect1, rect2, rect3);
+	idle.PushBack({ 68, 8, 67, 108 }, -29, -43, 2, rect1, rect2, rect3);
+	idle.PushBack({ 135 , 8, 69, 108 }, -29, -43, 2, rect1, rect2, rect3);
 	idle.speed = 0.25f;	
 	
 	//crouch animation (arcade sprite sheet)
-	crouch.PushBack({ 0, 503, 60, 83 }, -29, -18,2);
-	crouch.PushBack({815, 43, 62, 73}, -24, -8);
+	crouch.PushBack({ 0, 503, 60, 83 }, -29, -18,2,head_crouch_collider,body_crouch_collider);
+	crouch.PushBack({815, 43, 62, 73}, -24, -8,2, head_crouch_collider,body_crouch_collider);
 	crouch.speed = 0.5f;
 	crouch.loop = false;
 
 	//crouched punch animation (arcade sprite sheet)
-	crouch_punch.PushBack({ 416, 42, 53, 74 }, -19, -9, 2);
-	crouch_punch.PushBack({ 469, 41,109, 75 }, -33, -10, 4);
-	crouch_punch.PushBack({ 578, 41, 67, 75 }, -21, -10, 4);
+	crouch_punch.PushBack({ 416, 42, 53, 74 }, -19, -9, 2, { -5,-8,25,20 }, body_crouchPunch_collider);
+	crouch_punch.PushBack({ 469, 41,109, 75 }, -33, -10, 4,head_crouchPunch_collider,body_crouchPunch_collider);
+	crouch_punch.PushBack({ 578, 41, 67, 75 }, -21, -10, 4, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_punch.speed = 0.5f;
 	crouch_punch.loop = false;
 
 	// walk forward animation (arcade sprite sheet)
-	forward.PushBack({ 693, 348, 58, 108 }, -21, -43,3);
-	forward.PushBack({ 751, 348, 69 , 108 },-32,-43,3);
-	forward.PushBack({ 820, 348, 58 , 108 },-21,-43,3);
-	forward.PushBack({ 878, 348, 67 , 108 },-29,-43,3);
+	forward.PushBack({ 693, 348, 58 , 108 }, -21, -43, 3, rect1, rect2, rect3);
+	forward.PushBack({ 751, 348, 69 , 108 }, -32, -43, 3, rect1, rect2, rect3);
+	forward.PushBack({ 820, 348, 58 , 108 }, -21, -43, 3, rect1, rect2, rect3);
+	forward.PushBack({ 878, 348, 67 , 108 }, -29, -43, 3, rect1, rect2, rect3);
 	forward.speed = 0.25f;	 
 	
 	// walk backward animation (arcade sprite sheet)
-	backward.PushBack({ 577, 479, 59, 107 }, -29, -42, 3);
-	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3);
-	backward.PushBack({ 690, 478, 61 , 107 },  -32,-42 ,3);
-	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3);
+	backward.PushBack({ 577, 479, 59 , 107 }, -29, -42, 3, rect1, rect2, rect3);
+	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3, rect1, rect2, rect3);
+	backward.PushBack({ 690, 478, 61 , 107 }, -32, -42 ,3, rect1, rect2, rect3);
+	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3, rect1, rect2, rect3);
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, { 0, 0 }, {20, -20});
-	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, { 0, 0 });
+	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 0, 0 });
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 0, 0 });
 	punch.speed = 0.5f;
 	punch.AnimationDamage = 20;
 	punch.loop = false;
@@ -73,37 +92,37 @@ ModulePlayer::ModulePlayer(int num)
 	 //jump animation (arcade sprite sheet)
 	jump.loop = false;
 	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,-8 });
-	jump.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,-4 });
-	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,-4 });
-	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9 );
-	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,+2 });
-	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 13, { 0,+5 });
-	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
+	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0, -8 });
+	jump.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,-4 });
+	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,-4 });
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9,{ 0, 0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,+2 });
+	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 13, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,+5 });
+	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump.speed = 0.9f;	
 		 
 	//jump forward animation (arcade sprite sheet)
 	jump_forward.loop = false;
 	jump_forward.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump_forward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 3,-8 });
-	jump_forward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 3,-4 });
-	jump_forward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 3,-3 });
-	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, {2,+1});
-	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 2,+2 });
-	jump_forward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 2,+5 });
-	jump_forward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, {0, 0});
+	jump_forward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-8 });
+	jump_forward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-4 });
+	jump_forward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-3 });
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, {2,+1});
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 2,+2 });
+	jump_forward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 2,+5 });
+	jump_forward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, {0, 0});
 	jump_forward.speed = 0.9f;
 
 	//jump backward animation (arcade sprite sheet)
 	jump_backward.loop = false;
 	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 4);
-	jump_backward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { -3,-8 });
-	jump_backward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { -3,-4 });
-	jump_backward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { -3,-3 });
-	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { -2,+1 });
-	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { -2,+2 });
-	jump_backward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { -2,+5 });
-	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0, 0 });
+	jump_backward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-8 });
+	jump_backward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-4 });
+	jump_backward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-3 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+1 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+2 });
+	jump_backward.PushBack({ 299, 471 , 57 , 115 }, -25, -55,  12, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+5 });
+	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump_backward.speed = 0.9f;
 
 	//falling animation
@@ -166,7 +185,10 @@ bool ModulePlayer::Start()
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (PlayerNumber == 1) 
 	{
-		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
+		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 }}, COLLIDER_PLAYER_COLLISION, App->player1);
+		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
+		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
+		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
 		//HurtColliders[0] = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,50 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		
 		
@@ -219,7 +241,8 @@ update_status ModulePlayer::Update()
 		if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU_KEN;
 
 		//Jump
-		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN) last_input = IN_JUMP_DOWN;
+		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
+
 
 
 
@@ -290,12 +313,17 @@ update_status ModulePlayer::Update()
 		player_collider->rect.x = pivot_player.x;
 		player_collider->rect.h = 90;
 		player_collider->rect.w = 32;
+		for (int i = 0; i < 3; i++)
+		{
+		HurtColliders[i]->SetRect(r.hurtColliders[i],pivot_player);
+
+		}
 
 		//Full body Colider
 		//player_collider->rect = r.rect;
 	}
 	if(HitColider != nullptr)
-		HitColider->SetPos(pivot_player.x + r.DamagePosition.x, pivot_player.y + r.DamagePosition.y);
+		HitColider->SetPos(pivot_player.x , pivot_player.y);
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK) 
 	{
@@ -348,7 +376,7 @@ update_status ModulePlayer::Update()
 		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 45);
 
 		}
-		else if(current_state== ST_CROUCH) 
+		else if(current_state== ST_CROUCH || current_state ==  ST_CROUCH_PUNCH ||  current_state == ST_CROUCH_KICK) 
 		{
 			player_collider->rect.h = 65;
 			player_collider->SetPos(pivot_player.x - 15, pivot_player.y);
@@ -399,16 +427,6 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
-
-
-	if (c2->type == COLLIDER_PLAYER_COLLISION) 
-	{
-
-	}
-
-
-
-
 
 	//Colision with wall
 	if (c2->type == COLLIDER_WALL)
@@ -673,7 +691,7 @@ void ModulePlayer::states(int speed)
 		{
 			punch.ResetCurrentFrame();
 			HitColider = App->collision->AddCollider({ { 200, 200, 30, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_PLAYER_HIT);
-			//HitColider->Enabled = false;
+			HitColider->Enabled = false;
 			current_animation = &punch;
 			App->audio->Play_chunk(punchfx);
 			HitColider->Enabled = true;
