@@ -28,9 +28,9 @@ ModulePlayer::ModulePlayer(int num)
 	SDL_Rect rect3 = { -25,40,50,30 };
 
 	//Jump Colliders
-	SDL_Rect head_jump_collider = { -10,-40,25,20 };
-	SDL_Rect body_jump_collider = { -20,-20,45,60 };
-	SDL_Rect legs_jump_collider = { -25,40,50,30 };
+	SDL_Rect head_jump_collider = { -10,-55,25,20 };
+	SDL_Rect body_jump_collider = { -20,-40,45,60 };
+	SDL_Rect legs_jump_collider = { -25,10,50,30 };
 
 	//Crouch Rect Colliders
 	SDL_Rect head_crouch_collider = { -10,-8,25,20 };
@@ -39,6 +39,9 @@ ModulePlayer::ModulePlayer(int num)
 	//Crouch Punch Rect Colliders
 	SDL_Rect head_crouchPunch_collider = { 5,-8,25,20 };
 	SDL_Rect body_crouchPunch_collider = { -10,8,50,58 };
+
+	//Hit Collider
+	SDL_Rect hit_punch_colllider = { 20,-25,43,10 };
 
 	//idle animation (arcade sprite sheet)
 	idle.PushBack({ 0, 8, 66, 108 }, -29, -43, 2, rect1, rect2, rect3);
@@ -74,9 +77,9 @@ ModulePlayer::ModulePlayer(int num)
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, { 0, 0 });
-	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 0, 0 });
-	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 0, 0 });
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2,rect1,rect2,rect3,hit_punch_colllider );
+	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3,rect1, rect2, rect3, hit_punch_colllider);
+	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, rect1, rect2, rect3, hit_punch_colllider);
 	punch.speed = 0.5f;
 	punch.AnimationDamage = 20;
 	punch.loop = false;
@@ -92,37 +95,37 @@ ModulePlayer::ModulePlayer(int num)
 	 //jump animation (arcade sprite sheet)
 	jump.loop = false;
 	jump.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0, -8 });
-	jump.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,-4 });
-	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,-4 });
-	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9,{ 0, 0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
-	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,+2 });
-	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 13, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,+5 });
-	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
+	jump.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 0, -8 });
+	jump.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 0,-4 });
+	jump.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 0,-4 });
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58,9, head_jump_collider, body_jump_collider, legs_jump_collider);
+	jump.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 0,+2 });
+	jump.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 13, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 0,+5 });
+	jump.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump.speed = 0.9f;	
 		 
 	//jump forward animation (arcade sprite sheet)
 	jump_forward.loop = false;
 	jump_forward.PushBack({ 0, 503, 60, 83 }, -29,-18,4);
-	jump_forward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-8 });
-	jump_forward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-4 });
-	jump_forward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 3,-3 });
-	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, {2,+1});
-	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 2,+2 });
-	jump_forward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { 2,+5 });
-	jump_forward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, {0, 0});
+	jump_forward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 3,-8 });
+	jump_forward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 3,-4 });
+	jump_forward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 3,-3 });
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, {2,+1});
+	jump_forward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 2,+2 });
+	jump_forward.PushBack({ 299, 471 , 57 , 115 }, -25, -55, 12,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { 2,+5 });
+	jump_forward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6,  head_jump_collider, body_jump_collider, legs_jump_collider, {0, 0});
 	jump_forward.speed = 0.9f;
 
 	//jump backward animation (arcade sprite sheet)
 	jump_backward.loop = false;
 	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 4);
-	jump_backward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-8 });
-	jump_backward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-4 });
-	jump_backward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -3,-3 });
-	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+1 });
-	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+2 });
-	jump_backward.PushBack({ 299, 471 , 57 , 115 }, -25, -55,  12, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider, { -2,+5 });
-	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6, { 0,0 }, head_jump_collider, body_jump_collider, legs_jump_collider);
+	jump_backward.PushBack({ 60, 456, 66 , 130 }, -29, -65, 5, head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -3,-8 });
+	jump_backward.PushBack({ 126, 471, 62, 113 }, -29, -58, 7,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -3,-4 });
+	jump_backward.PushBack({ 188, 474, 57 , 110 }, -26, -58, 3,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -3,-3 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 10,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -2,+1 });
+	jump_backward.PushBack({ 245, 492, 52 , 92 }, -26, -58, 5,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -2,+2 });
+	jump_backward.PushBack({ 299, 471 , 57 , 115 }, -25, -55,  12,  head_jump_collider, body_jump_collider, legs_jump_collider, { 0,0 }, { -2,+5 });
+	jump_backward.PushBack({ 0, 503, 60, 83 }, -29, -18, 6,  head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump_backward.speed = 0.9f;
 
 	//falling animation
@@ -189,7 +192,8 @@ bool ModulePlayer::Start()
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
 		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
 		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT);
-		//HurtColliders[0] = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,50 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_HURT, App->player1);
+		HitColider = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT);
+
 		
 		
 	}
@@ -313,17 +317,13 @@ update_status ModulePlayer::Update()
 		player_collider->rect.x = pivot_player.x;
 		player_collider->rect.h = 90;
 		player_collider->rect.w = 32;
-		for (int i = 0; i < 3; i++)
-		{
-		HurtColliders[i]->SetRect(r.hurtColliders[i],pivot_player);
 
-		}
+
 
 		//Full body Colider
 		//player_collider->rect = r.rect;
 	}
-	if(HitColider != nullptr)
-		HitColider->SetPos(pivot_player.x , pivot_player.y);
+
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK) 
 	{
@@ -386,7 +386,13 @@ update_status ModulePlayer::Update()
 			player_collider->rect.h = 90;
 			player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 25);
 		}
-		//HurtColliders[0]->SetPos(pivot_player.x - 15 , pivot_player.y - 25 );
+		for (int i = 0; i < 3; i++)
+		{
+			HurtColliders[i]->SetRect(r.hurtColliders[i], pivot_player);
+
+		}
+		if (HitColider != nullptr)
+			HitColider->SetRect(r.hitCollider, pivot_player);
 		//Full body colider
 		//player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}
