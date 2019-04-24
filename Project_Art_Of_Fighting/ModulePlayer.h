@@ -83,9 +83,6 @@ public:
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
 
-
-	Collider * player_collider = nullptr;
-
 	player_state current_state = ST_UNKNOWN;
 
 	inputs last_input = IN_UNKNOWN;
@@ -128,6 +125,11 @@ public:
 
 	//bool BackColision, FrontColision;
 	Collider* CurrentColider;
+
+	//Body Coliders
+	Collider* FullBodyColider = nullptr;
+	Collider* LowerColider = nullptr;
+	Collider * UpperCollider = nullptr;
 	Collider* HitColider;
 
 	//PlayerStats

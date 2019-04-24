@@ -166,17 +166,27 @@ bool ModulePlayer::Start()
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (PlayerNumber == 1) 
 	{
+<<<<<<< HEAD
+		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
+		LowerColider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
+		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT);
+		HitColider->Enabled = false;
+=======
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
 		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_HIT);
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 	}
 		
 	if (PlayerNumber == 2) 
 	{
+<<<<<<< HEAD
+		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
+=======
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		pivot_player.x += 200;
 	}
-
 	
 
 	return ret;
@@ -235,28 +245,36 @@ update_status ModulePlayer::Update()
 
 
 		//DEBUG CONTROLS, Direct win/lose when pressing I or O
-		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
+		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && UpperCollider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
 			Deal_Damage(*App->player1, 200);
 		}		
 		
-		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
+		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && UpperCollider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
 			Deal_Damage(*App->player2, 200);
 		}
 
 		//God Mode
+<<<<<<< HEAD
+		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_PLAYER)
+=======
 		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION)
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 		{
 
-			player_collider->type = COLLIDER_NONE;
+			UpperCollider->type = COLLIDER_NONE;
 			timer = SDL_GetTicks();
 			LOG("\nGod Mode ON");
 		}
-		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
+		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
 		{
 
+<<<<<<< HEAD
+			UpperCollider->type = COLLIDER_PLAYER;
+=======
 			player_collider->type = COLLIDER_PLAYER_COLLISION;
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 			LOG("\nGod Mode OFF");
 		}
 
@@ -276,10 +294,14 @@ update_status ModulePlayer::Update()
 
 	if (PlayerNumber == 1) 
 	{
-		player_collider->rect.x = pivot_player.x;
-		player_collider->rect.h = 87;
-		player_collider->rect.w = 32;
 
+		UpperCollider->rect = r.rect;
+		UpperCollider->rect.h = 50;
+		UpperCollider->rect.w = 35;
+
+		LowerColider->rect = r.rect;
+		LowerColider->rect.h = 50;
+		LowerColider->rect.w = 35;
 		//Full body Colider
 		//player_collider->rect = r.rect;
 	}
@@ -326,13 +348,14 @@ update_status ModulePlayer::Update()
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
 	if (PlayerNumber == 1) 
 	{
-		player_collider->SetPos(pivot_player.x - 15 + r.displacement.x, pivot_player.y - 22 + r.displacement.y);
+		UpperCollider->SetPos(pivot_player.x + r.offset.x + 13, pivot_player.y + r.offset.y);
+		LowerColider->SetPos(pivot_player.x + r.offset.x + 13, pivotRect.rect.y + pivotRect.rect.h);
 		//Full body colider
-		//player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
+		//FullBodyCollider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}
 	if (PlayerNumber == 2) 
 	{
-		player_collider->SetPos(pivot_player.x + r.offset.x + 20, pivot_player.y + r.offset.y);
+		UpperCollider->SetPos(pivot_player.x + r.offset.x + 20, pivot_player.y + r.offset.y);
 	}
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
@@ -346,8 +369,8 @@ bool ModulePlayer::CleanUp()
 	App->audio->Unload_effects(jumpfx); 
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
-	if(player_collider)
-		player_collider->to_delete = true;
+	if(UpperCollider)
+		UpperCollider->to_delete = true;
 
 	if (HitColider)
 		HitColider->to_delete = true;
@@ -367,12 +390,12 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 		if(c2->rect.x < pivot_player.x) 
 		{
 			//BackColision = true;
-			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - UpperCollider->rect.x);
 		}
 		if(c2->rect.x > pivot_player.x)
 		{
 			//FrontColision = true;
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
+			pivot_player.x = c2->rect.x - ((UpperCollider->rect.x + UpperCollider->rect.w) - pivot_player.x); 
 		}
 
 		CurrentColider = c2;
