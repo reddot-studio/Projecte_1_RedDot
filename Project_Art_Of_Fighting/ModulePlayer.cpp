@@ -13,6 +13,11 @@
 
 ModulePlayer::ModulePlayer(int num)
 {
+	for (int i = 0; i < 3; i++)
+	{
+		HurtColliders[i] = nullptr;
+	}
+
 	PlayerNumber = num;
 	pivotRect.rect = {0,0,10,10};
 
@@ -35,12 +40,6 @@ ModulePlayer::ModulePlayer(int num)
 	crouch_punch.speed = 0.5f;
 	crouch_punch.loop = false;
 
-	//idle animation (arcade sprite sheet)
-	idle_player2.PushBack({0, 8, 66, 108}, -29, -43,2);
-	idle_player2.PushBack({ 68, 8, 67, 108}, -29, -43,2);
-	idle_player2.PushBack({ 135 , 8, 69, 108 }, -29, -43,2);
-	idle_player2.speed = 0.25f;
-
 	// walk forward animation (arcade sprite sheet)
 	forward.PushBack({ 693, 348, 58, 108 }, -21, -43,3);
 	forward.PushBack({ 751, 348, 69 , 108 },-32,-43,3);
@@ -60,6 +59,7 @@ ModulePlayer::ModulePlayer(int num)
 	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
 	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, { 0, 0 }, { 25, -25 });
 	punch.speed = 0.5f;
+	punch.AnimationDamage = 20;
 	punch.loop = false;
 
 	// kick animation (arcade sprite sheet)
@@ -167,8 +167,9 @@ bool ModulePlayer::Start()
 	if (PlayerNumber == 1) 
 	{
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
-		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_HIT);
-		HitColider->Enabled = false;
+		//HurtColliders[0] = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,50 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_HURT, App->player1);
+		
+		
 	}
 		
 	if (PlayerNumber == 2) 
@@ -230,6 +231,10 @@ update_status ModulePlayer::Update()
 			}
 			else {
 				last_input = IN_ATTACK_FINISH;
+				if (HitColider != nullptr) {
+					HitColider->to_delete = true;
+					LOG("HITBOX DELETED");
+				}
 			}
 		}
 
@@ -267,7 +272,12 @@ update_status ModulePlayer::Update()
 	if (PlayerNumber == 2) 
 	{
 	
-		//Player 2 Input
+		if (App->input->keyboard_state[SDL_SCANCODE_K] == KEY_REPEAT) 
+		{
+
+			pivot_player.x -= 3;
+
+		}
 
 	}
 	
@@ -278,17 +288,18 @@ update_status ModulePlayer::Update()
 	if (PlayerNumber == 1) 
 	{
 		player_collider->rect.x = pivot_player.x;
-		player_collider->rect.h = 87;
+		player_collider->rect.h = 90;
 		player_collider->rect.w = 32;
 
 		//Full body Colider
 		//player_collider->rect = r.rect;
 	}
-	if(HitColider)
+	if(HitColider != nullptr)
 		HitColider->SetPos(pivot_player.x + r.DamagePosition.x, pivot_player.y + r.DamagePosition.y);
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK) 
 	{
+		isJumping = true;
 		iPoint p = jump.GetDisplacementFrame();
 		pivot_player += p;
 		if (jump.GetDisplacementFramePos() == jump.GetLastFrame() - 5)
@@ -296,12 +307,14 @@ update_status ModulePlayer::Update()
 			jump.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
+			isJumping = false;
 		}
 
 	}	
 	
 	if (current_state == ST_FORWARD_JUMP || current_state == ST_FORWARD_JUMP_PUNCH ||  current_state == ST_FORWARD_FALL || current_state == ST_FORWARD_JUMP_KICK) 
 	{
+		isJumping = true;
 		iPoint p = jump_forward.GetDisplacementFrame();
 		pivot_player += p;
 		if (jump_forward.GetDisplacementFramePos() == jump_forward.GetLastFrame() - 5)
@@ -309,11 +322,13 @@ update_status ModulePlayer::Update()
 			jump_forward.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
+			isJumping = false;
 		}
 
 	}	
 	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH ||  current_state == ST_BACKWARD_FALL || current_state == ST_BACKWARD_JUMP_KICK) 
 	{
+		isJumping = true;
 		iPoint p = jump_backward.GetDisplacementFrame();
 		pivot_player += p;
 		if (jump_backward.GetDisplacementFramePos() == jump_backward.GetLastFrame() - 5)
@@ -321,13 +336,29 @@ update_status ModulePlayer::Update()
 			jump_backward.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
+			isJumping = false;
 		}
 
 	}
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
 	if (PlayerNumber == 1) 
 	{
-		player_collider->SetPos(pivot_player.x - 15 + r.displacement.x, pivot_player.y - 22 + r.displacement.y);
+		if(isJumping)
+		{
+		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 45);
+
+		}
+		else if(current_state== ST_CROUCH) 
+		{
+			player_collider->rect.h = 65;
+			player_collider->SetPos(pivot_player.x - 15, pivot_player.y);
+		}
+		else 
+		{
+			player_collider->rect.h = 90;
+			player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 25);
+		}
+		//HurtColliders[0]->SetPos(pivot_player.x - 15 , pivot_player.y - 25 );
 		//Full body colider
 		//player_collider->SetPos(pivot_player.x + r.offset.x, pivot_player.y + r.offset.y);
 	}
@@ -350,8 +381,16 @@ bool ModulePlayer::CleanUp()
 	if(player_collider)
 		player_collider->to_delete = true;
 
-	if (HitColider)
+	if (HitColider) {
 		HitColider->to_delete = true;
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		if (HurtColliders[i] != nullptr) {
+			HurtColliders[i]->to_delete = true;
+		}
+	}
 
 
 	LOG(" - ModulePlayer CleanUp");
@@ -360,8 +399,18 @@ bool ModulePlayer::CleanUp()
 
 void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 {
-	//Colision with wall
 
+
+	if (c2->type == COLLIDER_PLAYER_COLLISION) 
+	{
+
+	}
+
+
+
+
+
+	//Colision with wall
 	if (c2->type == COLLIDER_WALL)
 	{
 
@@ -382,12 +431,12 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 	//Hit Detection
 	if (c2->type == COLLIDER_ENEMY_HIT && c2->Enabled) 
 	{
-		Deal_Damage(*App->player1, 20);
+		Deal_Damage(*App->player1, current_animation->AnimationDamage);
 		c2->Enabled = false;
 	}
 	if (c2->type == COLLIDER_PLAYER_HIT && c2->Enabled)
 	{
-		Deal_Damage(*App->player2, 20);
+		Deal_Damage(*App->player2, current_animation->AnimationDamage);
 		c2->Enabled = false;
 	}
 
@@ -623,6 +672,8 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &punch)
 		{
 			punch.ResetCurrentFrame();
+			HitColider = App->collision->AddCollider({ { 200, 200, 30, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_PLAYER_HIT);
+			//HitColider->Enabled = false;
 			current_animation = &punch;
 			App->audio->Play_chunk(punchfx);
 			HitColider->Enabled = true;

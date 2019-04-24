@@ -14,6 +14,7 @@ public:
 	RectSprites frames[MAX_FRAMES];
 	int currentPos = 0;
 	int currentDisPos = 0;
+	int AnimationDamage;
 
 private:
 	float current_frame = 0;

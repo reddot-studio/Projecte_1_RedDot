@@ -25,7 +25,7 @@ ModuleCollision::ModuleCollision()
 	matrix[COLLIDER_PLAYER_COLLISION][COLLIDER_ENEMY_HURT] = false;
 
 	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_WALL] = true;
-	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_PLAYER_COLLISION] = true;
+	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_PLAYER_COLLISION] = false;
 	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_ENEMY_COLLISION] = false;
 	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_PLAYER_HIT] = true;
 	matrix[COLLIDER_ENEMY_COLLISION][COLLIDER_ENEMY_HIT] = false;
@@ -149,26 +149,23 @@ void ModuleCollision::DebugDraw()
 			case COLLIDER_WALL: // cian
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
-			//case COLLIDER_HURT: // blue
-			//App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			//break;
-			//case COLLIDER_HIT: // red
-			//App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			//break;
-			//case COLLIDER_COLLISION: // green
-			//App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			//break;
+			case COLLIDER_PLAYER_HURT: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+			case COLLIDER_ENEMY_HURT: // blue
+			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
 			case COLLIDER_PLAYER_COLLISION: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-			case COLLIDER_ENEMY_COLLISION: // yellow
-			App->render->DrawQuad(colliders[i]->rect, 255, 255, 0, alpha);
+			case COLLIDER_ENEMY_COLLISION: // green
+			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
 			case COLLIDER_PLAYER_HIT: // red
 			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-			case COLLIDER_ENEMY_HIT: // magenta
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
+			case COLLIDER_ENEMY_HIT: // red
+			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
 		}
 	}

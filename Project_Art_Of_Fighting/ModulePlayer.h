@@ -126,9 +126,12 @@ public:
 	SDL_Rect ActiveScene;
 	int timer;
 
+	bool isJumping = false;
+
 	//bool BackColision, FrontColision;
-	Collider* CurrentColider;
-	Collider* HitColider;
+	Collider* CurrentColider = nullptr;
+	Collider* HitColider = nullptr;;
+	Collider* HurtColliders[3];
 
 	//PlayerStats
 	int Player_Health_Value;
