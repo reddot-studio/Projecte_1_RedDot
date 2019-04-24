@@ -12,6 +12,7 @@
 #include "ModuleSceneTodo.h"
 #include "ModuleUI.h"
 #include "SDL/include/SDL.h"
+#include "ModuleFonts.h"
 
 ModuleCongratzScreen::ModuleCongratzScreen()
 {
@@ -61,15 +62,21 @@ bool ModuleCongratzScreen::Start()
 
 	if (App->player1->Player_Health_Value <= 0) 
 	{
+		beat_by_2++;
 		result = false;
 	}
 	if (App->player2->Player_Health_Value <= 0)
 	{
+		beat_by_1++;
 		result = true;
 	}
 
 	current_animation = &countback;
 	current_animation->ResetCurrentFrame();
+
+	App->fonts->Load("Assets/fonts/big_orange_font.png", "ficar", 1);
+	App->fonts->Load("Assets/fonts/small_orange_font.png", "ficar", 1);
+
 	return true;
 }
 
