@@ -166,15 +166,24 @@ bool ModulePlayer::Start()
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (PlayerNumber == 1) 
 	{
+<<<<<<< HEAD
 		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
 		LowerColider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER, App->player1);
 		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_SHOT);
 		HitColider->Enabled = false;
+=======
+		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
+		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_HIT);
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 	}
 		
 	if (PlayerNumber == 2) 
 	{
+<<<<<<< HEAD
 		UpperCollider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY, App->player2);
+=======
+		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		pivot_player.x += 200;
 	}
@@ -247,7 +256,11 @@ update_status ModulePlayer::Update()
 		}
 
 		//God Mode
+<<<<<<< HEAD
 		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_PLAYER)
+=======
+		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION)
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 		{
 
 			UpperCollider->type = COLLIDER_NONE;
@@ -257,7 +270,11 @@ update_status ModulePlayer::Update()
 		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && UpperCollider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
 		{
 
+<<<<<<< HEAD
 			UpperCollider->type = COLLIDER_PLAYER;
+=======
+			player_collider->type = COLLIDER_PLAYER_COLLISION;
+>>>>>>> 36bf1d047eef99cd843b5e29c3468d226e61cc23
 			LOG("\nGod Mode OFF");
 		}
 
@@ -385,12 +402,12 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 	}
 
 	//Hit Detection
-	if (c2->type == COLLIDER_ENEMY_SHOT && c2->Enabled) 
+	if (c2->type == COLLIDER_ENEMY_HIT && c2->Enabled) 
 	{
 		Deal_Damage(*App->player1, 20);
 		c2->Enabled = false;
 	}
-	if (c2->type == COLLIDER_PLAYER_SHOT && c2->Enabled)
+	if (c2->type == COLLIDER_PLAYER_HIT && c2->Enabled)
 	{
 		Deal_Damage(*App->player2, 20);
 		c2->Enabled = false;
@@ -657,7 +674,7 @@ void ModulePlayer::states(int speed)
 		{
 			koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_SHOT, 600, 30);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_HIT, 600, 30);
 			current_animation = &koouKen;
 			App->audio->Play_chunk(kooukenfx);
 		}
