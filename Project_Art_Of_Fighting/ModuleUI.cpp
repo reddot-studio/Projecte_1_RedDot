@@ -8,6 +8,7 @@
 #include "ModuleUI.h"
 #include "SDL/include/SDL.h"
 #include "ModuleCollision.h"
+#include "ModuleFonts.h"
 
 
 ModuleUI::ModuleUI()
@@ -29,6 +30,9 @@ bool ModuleUI::Start()
 	App->player1->Player_Health_BG = App->player2->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
 	App->player1->Player_Health = App->player2->Player_Health = App->textures->Load("Assets/UI_Sprites/Health_Value.png");
 	App->player1->Player_Health_BG_Empty = App->player2->Player_Health_BG_Empty = App->textures->Load("Assets/UI_Sprites/HealthBar_Empty.png");
+
+	//Load fonts
+	App->fonts->Load("assets/fonts/big_orange_font.png", " abcdefghijklmnoprstuvwyz,:0123456789", 1);
 
 	//126 = player health texture lenght
 	//Do same with App.player2
@@ -73,6 +77,11 @@ update_status ModuleUI::Update()
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(App->player2->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 
+	//Player 1 Beat By
+
+
+
+	//Player 2 Beat By
 
 
 

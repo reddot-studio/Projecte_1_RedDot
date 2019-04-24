@@ -21,6 +21,7 @@ class ModuleDebug;
 class ModuleCollision;
 class ModuleUI;
 class Module;
+class ModuleFonts;
 
 class Application
 {
@@ -43,6 +44,7 @@ public:
 	ModuleDebug* debug;
 	ModuleCollision* collision;
 	ModuleUI* sceneUI;
+	ModuleFonts* fonts;
 
 public:
 

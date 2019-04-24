@@ -22,7 +22,7 @@ public:
 	RectSprites chat_bubble;
 	RectSprites rect_win;
 	RectSprites rect_lose;
-
+	uint beat_by_1 = 0, beat_by_2 = 0;
 };
 
 #endif
