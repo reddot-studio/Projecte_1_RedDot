@@ -168,6 +168,7 @@ bool ModulePlayer::Start()
 	{
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_PLAYER_COLLISION, App->player1);
 		HitColider = App->collision->AddCollider({ {200, 200, 30, 10,}, {0, 0}, {0, 0}}, COLLIDER_PLAYER_HIT);
+		HitColider->Enabled = false;
 	}
 		
 	if (PlayerNumber == 2) 

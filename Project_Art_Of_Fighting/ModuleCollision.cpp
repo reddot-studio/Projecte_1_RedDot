@@ -149,15 +149,15 @@ void ModuleCollision::DebugDraw()
 			case COLLIDER_WALL: // cian
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 255, alpha);
 			break;
-			case COLLIDER_HURT: // blue
-			App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
-			break;
-			case COLLIDER_HIT: // red
-			App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
-			break;
-			case COLLIDER_COLLISION: // green
-			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
-			break;
+			//case COLLIDER_HURT: // blue
+			//App->render->DrawQuad(colliders[i]->rect, 0, 0, 255, alpha);
+			//break;
+			//case COLLIDER_HIT: // red
+			//App->render->DrawQuad(colliders[i]->rect, 255, 0, 0, alpha);
+			//break;
+			//case COLLIDER_COLLISION: // green
+			//App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
+			//break;
 			case COLLIDER_PLAYER_COLLISION: // green
 			App->render->DrawQuad(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
