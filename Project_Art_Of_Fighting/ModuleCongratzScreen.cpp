@@ -61,10 +61,14 @@ bool ModuleCongratzScreen::Start()
 
 	if (App->player1->Player_Health_Value <= 0) 
 	{
+		//augmento el beat by del player 2
+		beat_by_2++;
 		result = false;
 	}
 	if (App->player2->Player_Health_Value <= 0)
 	{
+		//augmento el beat by del player 1
+		beat_by_1++;
 		result = true;
 	}
 
