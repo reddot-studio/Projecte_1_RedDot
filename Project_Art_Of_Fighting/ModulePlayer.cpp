@@ -196,6 +196,65 @@ ModulePlayer::ModulePlayer(int num)
 	koouKen.speed = 0.9f;
 	koouKen.loop = false;
 
+	//win animation
+	win.PushBack({ 820 ,1140,50,112 }, 0, 0, 0);
+	win.PushBack({ 875 ,1148,66,104 }, 0, 0, 0);
+
+	//defeat animation
+	defeat.PushBack({ 508 ,1023,66,110 }, 0, 0, 0);
+	defeat.PushBack({ 582 ,1045,64,88 }, 0, 0, 0);
+	defeat.PushBack({ 649 ,1069,60,64 }, 0, 0, 0);
+	
+
+	//DAMAGES
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({478 ,1254,69,112 },0, 0, 0);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 547,1253,81,113 },0, 0, 0);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 478 ,1254,69,112 }, 0, 0, 0);
+
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 745,1144,64,109 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 586,1144,68,108 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 446,1138,60,114 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 0,1283,112,83 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 230,1288,108,78 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 118,1263,97,103 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 230,1288,108,78 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 358,1325,118,42 }, 0, 0, 0);
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 815, 43, 62, 73 }, -24, -8, 2);// getting up == crouch animation
+	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 0, 503, 60, 83 }, -29, -18, 2); 
+
+	pose_idle_receive_crouch_kick.PushBack({ 745,1144,64,109 }, 0, 0, 0);
+	pose_idle_receive_crouch_kick.PushBack({ 586,1144,68,108 }, 0, 0, 0);
+
+	pose_idle_receive_crouch_punch.PushBack({ 119,1146,55,106 }, 0, 0, 0);
+	pose_idle_receive_crouch_punch.PushBack({ 247,1149,46,158 }, 0, 0, 0);
+
+	pose_crouch_receive_standing_crouch_kick.PushBack({ 299,1178,73,73 }, 0, 0, 0);
+
+	pose_crouch_receive_crouch_punch.PushBack({376,1177,65,75},0,0,0);
+	pose_crouch_receive_crouch_punch.PushBack({ 299,1178,73,73 }, 0, 0, 0);
+
+	//EFFECTS
+	//starhit animation
+	starhit.PushBack({ 975 ,885,18,23 }, 0, 0, 0);
+	starhit.PushBack({ 1008 ,879,29,36 }, 0, 0, 0);
+
+	//impact floor animation
+	impactfloor.PushBack({ 977 ,923,16,12 }, 0, 0, 0);
+	impactfloor.PushBack({ 1013 ,922,18,15 }, 0, 0, 0);
+	impactfloor.PushBack({ 973 ,951,24 ,21 }, 0, 0, 0);
+	impactfloor.PushBack({ 1011 ,948,24,24 }, 0, 0, 0);
+
+	//vomit animation
+	vomit.PushBack({ 983 ,1042,11,12 }, 0, 0, 0);
+	vomit.PushBack({ 1002 ,1042,18,13 }, 0, 0, 0);
+	vomit.PushBack({ 986 ,1068,10,7 }, 0, 0, 0);
+	vomit.PushBack({ 1010 ,1067,5,5 }, 0, 0, 0);
+
+	//blood animation
+	blood.PushBack({ 962 ,1155,6,6 }, 0, 0, 0);
+	blood.PushBack({ 959 ,1175,48,17 }, 0, 0, 0);
+	blood.PushBack({ 961 ,1204,43,16 }, 0, 0, 0);
+	blood.PushBack({ 960 ,1224,49,16 }, 0, 0, 0);
 
 	current_animation = &idle;
 }
