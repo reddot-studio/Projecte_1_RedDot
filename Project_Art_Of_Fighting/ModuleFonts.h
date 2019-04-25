@@ -19,12 +19,12 @@ struct Font
 class ModuleFonts : public Module
 {
 public:
-
+	Font	 fonts[MAX_FONTS];
 	ModuleFonts();
 	~ModuleFonts();
 
 	// Load Font
-	int Load(const char* texture_path, const char* characters, uint rows, uint h, uint w);
+	int Load(const char* texture_path, const char* characters, uint rows, uint h, uint w, uint rc);
 	void UnLoad(int font_id);
 
 	// Create a surface from text
@@ -32,7 +32,7 @@ public:
 
 private:
 
-	Font	 fonts[MAX_FONTS];
+
 };
 
 

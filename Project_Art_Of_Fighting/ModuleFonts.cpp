@@ -15,7 +15,7 @@ ModuleFonts::~ModuleFonts()
 {}
 
 // Load new texture from file path
-int ModuleFonts::Load(const char* texture_path, const char* characters, uint rows, uint w, uint h)
+int ModuleFonts::Load(const char* texture_path, const char* characters, uint rows, uint w, uint h, uint rc)
 {
 	int id = -1;
 
@@ -50,8 +50,11 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 
 	fonts[id].char_h = h;
 	fonts[id].char_w = w;
-	fonts[id].row_chars = 1;
-	fonts[id].table[256] = *characters;
+	fonts[id].row_chars = rc;
+	for (int i = 0; i < MAX_FONT_CHARS; i++) {
+		fonts[id].table[i] = characters[i];
+		if (characters[i] == NULL) { break; }
+	}
 					   // TODO 1: Finish storing font data
 
 					   // table: array of chars to have the list of characters
@@ -86,17 +89,23 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 	const Font* font = &fonts[font_id];
 	RectSprites rect;
 	uint len = strlen(text);
-
+	int y2 = y;
 	rect.rect.w = font->char_w;
 	rect.rect.h = font->char_h;
 
-	for (uint i = 0; i < len; ++i)
+	for (int i = 0; i < len; ++i)
 	{
-		for (int j = 0; i < len; j++) {
+		for (int j = 0; j < MAX_FONT_CHARS; j++) {
 			if (text[i] == font->table[j]) {
+				rect.rect.x = j * font->char_w;
+				rect.rect.y = 0;
+				if (font_id == 0 && j == 36) { y -= 2; }
 				App->render->Blit(font->graphic, x, y, &rect);
-				x += rect.rect.w;
+				y = y2;
+				x += 8;
+				break;
 			}
+			if (j > font->row_chars) { break; }
 		}
 		// TODO 2: Find the character in the table and its position in the texture, then Blit
 	}

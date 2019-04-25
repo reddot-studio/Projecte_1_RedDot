@@ -74,8 +74,9 @@ bool ModuleCongratzScreen::Start()
 	current_animation = &countback;
 	current_animation->ResetCurrentFrame();
 
-	//App->fonts->Load("Assets/fonts/big_orange_font.png", "ficar", 1);
-	//App->fonts->Load("Assets/fonts/small_orange_font.png", "ficar", 1);
+	//Load fonts
+	App->fonts->Load("Assets/fonts/big_orange_font.png", " abcdefghiklmnoprstuvwyz,:0123456789'!", 1, 8, 13, 38);
+	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
 
 
 	return true;
@@ -101,6 +102,10 @@ update_status ModuleCongratzScreen::Update()
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
 		}
+		App->fonts->BlitText(58.5, 173, 0, "anytime, anywhere, cross my path");
+		App->fonts->BlitText(58.5, 188, 0, "again and you're mine!");
+		App->fonts->BlitText(220, 47, 1, "waiting for");
+		App->fonts->BlitText(225, 58, 1, "a challenger");
 		break;
 	case false:
 		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose)) == false)
@@ -108,6 +113,11 @@ update_status ModuleCongratzScreen::Update()
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
 		}
+		App->fonts->BlitText(58.5, 173, 0, "i'll take you on anytime,");
+		App->fonts->BlitText(58.5, 188, 0, "taco breath!");
+		App->fonts->BlitText(220, 47, 1, "waiting for");
+		App->fonts->BlitText(225, 58, 1, "a challenger");
+
 		break;
 	}
 	
