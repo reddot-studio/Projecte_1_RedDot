@@ -113,6 +113,20 @@ public:
 	Animation jumppunch;
 	Animation jump_forward;
 	Animation jump_backward;
+			
+	Animation pose_idle_receive_standing_punch_kick_plus_jump_punch; //1st frame, 2nd frame, 1st frame SAME
+	Animation pose_idle_receive_jump_kick;
+	Animation pose_idle_receive_crouch_kick;
+	Animation pose_idle_receive_crouch_punch;
+
+	Animation pose_crouch_receive_standing_crouch_kick; 
+	Animation pose_crouch_receive_crouch_punch; 
+	Animation pose_crouch_receive_jump_kick;		//crouch receive jump kick-> same as idle receiving jump kick
+	Animation pose_crouch_receive_jump_punch;		//crouch receive jump punch-> same as idle receiving jump kick [
+
+
+	Animation pose_jump_receive_dmg; //Not sure for prototype
+
 	
 	
 
