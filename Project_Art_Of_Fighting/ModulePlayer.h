@@ -126,7 +126,7 @@ public:
 
 	SDL_Rect ActiveScene;
 	int timer;
-
+	int p1_win = 0;
 	bool isJumping = false;
 
 	//bool BackColision, FrontColision;
@@ -144,7 +144,7 @@ public:
 		{
 			LOG("\n Someone died");
 			Enemy.Player_Health_Value = 0;
-
+			p1_win++;
 
 			Module *CurrentScene = nullptr;
 
@@ -156,7 +156,12 @@ public:
 
 			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
 
-			
+			App->fade->FadeToBlack(CurrentScene, CurrentScene);
+			if (p1_win == 2)
+			{
+				p1_win = 0;
+				App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+			}
 
 		}
 		else
