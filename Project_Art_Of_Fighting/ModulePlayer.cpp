@@ -103,11 +103,12 @@ ModulePlayer::ModulePlayer(int num)
 	backward.speed = 0.25f;
 
 	// punch animation (arcade sprite sheet)
-	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2,rect1,rect2,rect3,hit_punch_colllider );
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2,rect1,rect2,rect3,hit_punch_colllider);
 	punch.PushBack({ 546, 350, 89 , 106 },  -29,-41 ,3,rect1, rect2, rect3, hit_punch_colllider);
 	punch.PushBack({ 488, 350, 58, 106 },  -29,-41 ,3, rect1, rect2, rect3, hit_punch_colllider);
 	punch.speed = 0.5f;
 	punch.loop = false;
+	punch.damage = 20;
 
 	// kick animation (arcade sprite sheet)
 	kick.PushBack({ 669, 235, 60, 110 },  -35,-45 ,4, head_kick_collider,body_kick_collider,legs_kick_collider);		//TODO PLAYER 2: HITBOXES D'ATACS
@@ -217,7 +218,8 @@ bool ModulePlayer::Start()
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
-		HitColider = App->collision->AddCollider({ { -20,-20,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT);
+		HitColider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT,App->player1);
+		HitColider->Enabled = false;
 
 		
 		
@@ -229,7 +231,7 @@ bool ModulePlayer::Start()
 		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
-		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
+		HurtColliders[2] = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 		pivot_player.x += 200;
 	}
 
@@ -286,10 +288,6 @@ update_status ModulePlayer::Update()
 			}
 			else {
 				last_input = IN_ATTACK_FINISH;
-				if (HitColider != nullptr) {
-					HitColider->to_delete = true;
-					LOG("HITBOX DELETED");
-				}
 			}
 		}
 
@@ -415,8 +413,7 @@ update_status ModulePlayer::Update()
 			player_collider->rect.h = 90;
 			player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 25);
 		}
-		if (HitColider != nullptr)
-			HitColider->SetRect(r.hitCollider, pivot_player);
+
 	}
 	if (PlayerNumber == 2) 
 	{
@@ -426,9 +423,10 @@ update_status ModulePlayer::Update()
 
 	for (int i = 0; i < 3; i++)
 	{
-		HurtColliders[i]->SetRect(r.hurtColliders[i], pivot_player);
+		HurtColliders[i]->SetRect(r.hurtColliders[i],current_animation->damage, pivot_player);
 	}
-
+	if(HitColider != nullptr)
+	HitColider->SetRect(r.hitCollider,current_animation->damage, pivot_player);
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }
@@ -444,7 +442,7 @@ bool ModulePlayer::CleanUp()
 	if(player_collider)
 		player_collider->to_delete = true;
 
-	if (HitColider) 
+	if (HitColider != nullptr) 
 	{
 		HitColider->to_delete = true;
 	}
@@ -493,7 +491,6 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 			Deal_Damage(*App->player2, c2->ColiderDamage);
 
 		c2->Enabled = false;
-		c2->to_delete = true;
 	}
 
 
@@ -728,10 +725,10 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &punch)
 		{
 			punch.ResetCurrentFrame();
-			HitColider = App->collision->AddCollider({ { 200, 200, 30, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_PLAYER_HIT, nullptr, 20);
+			HitColider->Enabled = true;
 			current_animation = &punch;
 			App->audio->Play_chunk(punchfx);
-			HitColider->Enabled = true;
+			
 		}
 		LOG("PUNCH");
 		break;

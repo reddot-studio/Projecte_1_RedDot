@@ -39,12 +39,13 @@ struct Collider
 		rect.h = rectangle.rect.h;
 	}
 
-	void SetRect(SDL_Rect collider, iPoint pos = { 0,0 })
+	void SetRect(SDL_Rect collider,int damage, iPoint pos = { 0,0 })
 	{
 		rect.x = collider.x + pos.x;
 		rect.y = collider.y + pos.y;
 		rect.w = collider.w;
 		rect.h = collider.h;
+		ColiderDamage = damage;
 	}
 
 	void SetPos(int x, int y)

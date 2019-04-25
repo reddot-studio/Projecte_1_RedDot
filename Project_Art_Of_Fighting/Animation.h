@@ -11,6 +11,7 @@ class Animation
 public:
 	bool loop = true;
 	float speed = 1.0f;
+	int damage = 0;
 	RectSprites frames[MAX_FRAMES];
 	int currentPos = 0;
 	int currentDisPos = 0;

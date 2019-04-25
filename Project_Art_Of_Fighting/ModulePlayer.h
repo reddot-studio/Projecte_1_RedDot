@@ -131,8 +131,9 @@ public:
 
 	//bool BackColision, FrontColision;
 	Collider* CurrentColider = nullptr;
-	Collider* HitColider = nullptr;;
+	Collider* HitColider = nullptr;
 	Collider* HurtColliders[3];
+
 
 	//PlayerStats
 	int Player_Health_Value;
