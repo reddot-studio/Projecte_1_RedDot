@@ -26,10 +26,12 @@ struct Collider
 	COLLIDER_TYPE type;
 	Module* callback = nullptr;
 	bool Enabled = true;
+	int ColiderDamage;
 
-	Collider(RectSprites rectangle, COLLIDER_TYPE type, Module* callback = nullptr) :
+	Collider(RectSprites rectangle, COLLIDER_TYPE type, Module* callback = nullptr, int Damage = 0) :
 		type(type),
-		callback(callback)
+		callback(callback),
+		ColiderDamage(Damage)
 	{
 		rect.x = rectangle.rect.x;
 		rect.y = rectangle.rect.y;
@@ -71,7 +73,7 @@ public:
 	update_status Update() override;
 	bool CleanUp() override;
 
-	Collider* AddCollider(RectSprites rect, COLLIDER_TYPE type, Module* callback = nullptr);
+	Collider* AddCollider(RectSprites rect, COLLIDER_TYPE type, Module* callback = nullptr, int Damage = 0);
 	void DebugDraw();
 
 private:

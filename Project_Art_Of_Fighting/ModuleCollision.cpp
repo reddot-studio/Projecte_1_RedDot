@@ -188,7 +188,7 @@ bool ModuleCollision::CleanUp()
 	return true;
 }
 
-Collider* ModuleCollision::AddCollider(RectSprites rect, COLLIDER_TYPE type, Module* callback)
+Collider* ModuleCollision::AddCollider(RectSprites rect, COLLIDER_TYPE type, Module* callback, int Damage)
 {
 	Collider* ret = nullptr;
 
@@ -196,7 +196,7 @@ Collider* ModuleCollision::AddCollider(RectSprites rect, COLLIDER_TYPE type, Mod
 	{
 		if(colliders[i] == nullptr)
 		{
-			ret = colliders[i] = new Collider(rect, type, callback);
+			ret = colliders[i] = new Collider(rect, type, callback, Damage);
 			break;
 		}
 	}

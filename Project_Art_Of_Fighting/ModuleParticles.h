@@ -24,7 +24,7 @@ struct Particle
 	int born = 0;
 	int life = 0;
 	bool fx_played = false;
-	int Damage = 0;
+
 
 	Particle();
 	~Particle();

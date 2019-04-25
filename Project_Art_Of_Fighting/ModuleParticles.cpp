@@ -121,10 +121,9 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
-			p->Damage = Damage;
 			if (collider_type != COLLIDER_NONE) {
 				RectSprites r = p->anim.GetCurrentFrame();
-				p->collider = App->collision->AddCollider(r, collider_type, this);
+				p->collider = App->collision->AddCollider(r, collider_type, this, Damage);
 			}
 			active[i] = p;
 			break;
@@ -142,14 +141,6 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 		{
 			
 			AddParticle(post_koouKen, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
-			if (c2->type == COLLIDER_ENEMY_COLLISION)
-			{
-				App->player1->Deal_Damage(*App->player2, active[i]->Damage);
-			}
-			if (c2->type == COLLIDER_PLAYER_COLLISION)
-			{
-				App->player2->Deal_Damage(*App->player1, active[i]->Damage);
-			}
 
 			delete active[i];
 			active[i] = nullptr;
