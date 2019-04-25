@@ -183,6 +183,7 @@ ModulePlayer::ModulePlayer(int num)
 	jumppunch.PushBack({ 781,157,86,78 }, -38, -55, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider, { 5,-20,45,25 });
 	jumppunch.PushBack({ 715,141,66,94 }, -38, -55, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
+	jumppunch.damage = 20;
 	jumppunch.loop = false;
 	// ko'ou ken animation (arcade sprite sheet)
 
@@ -894,6 +895,7 @@ void ModulePlayer::states(int speed)
 			HitCollider->Enabled = true;
 			crouch_kick.ResetCurrentFrame();
 			current_animation = &crouch_kick;
+			App->audio->Play_chunk(kickfx);
 		}
 		LOG("CROUCH KICK");
 		break;

@@ -57,6 +57,10 @@ bool ModuleParticles::Start()
 	post_koouKen.anim.speed = 1.0f;
 	post_koouKen.anim.loop = false;
 
+	//Effects
+	hitParticle.anim.PushBack({ 918,391,18,23 }, 0, 0, 4);
+	hitParticle.anim.PushBack({ 951,385,29,36 }, 0, 0, 4);
+
 
 
 	return true;
@@ -141,6 +145,7 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 		{
 			
 			AddParticle(post_koouKen, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
+			AddParticle(hitParticle, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
 
 			delete active[i];
 			active[i] = nullptr;
