@@ -83,18 +83,15 @@ ModuleWelcomeScreen::ModuleWelcomeScreen()
 	final_logo.PushBack({ 1609,244,216,130 });
 
 
-	insert_coin.PushBack({ 1545,464,309,232 });
-	insert_coin.PushBack({ 1545,696,309,232 });
-	insert_coin.speed = 0.1f;
+	insert_coin.PushBack({ 1574,1100,140,10 });
+	insert_coin.PushBack({ 1574,1133,140,10 });
+	insert_coin.speed = 0.07f;
 	
 
-	snk.rect.x = 1586;
-	snk.rect.y = 406;
-	snk.rect.w = 77;
-	snk.rect.h = 25;
+	snk.rect = { 1547,1141,77,25 };
 
 	//TODO 1 WELCOMESCR: CREATE ANIMATION FOR BLACK RECT
-	black.rect = { 100,150,1200,10 };
+	black.rect = { 100,150,120,10 };
 	current_animation = &logo_transition;
 }
 
@@ -134,6 +131,7 @@ bool ModuleWelcomeScreen::Start()
 
 update_status ModuleWelcomeScreen::Update()
 {
+
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() -1)
 	{
 		finish_animation = 1;
@@ -145,21 +143,22 @@ update_status ModuleWelcomeScreen::Update()
 	}
 	
 	if (finish_animation == 1) {
-		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
 		App->render->Blit(graphics, 60, 180, &snk);
-		App->fonts->BlitText(61, 205, 0, "snk home entertainment, inc.!1992");
-		App->fonts->BlitText(100, 150, 0, "push start button");
-		App->render->DrawQuad(black.rect, 0, 0, 0, 255);
+
+		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
 		
+		App->fonts->BlitText(61, 205, 0, "snk home entertainment, inc.!1992");
+		App->fonts->BlitText(130, 150, 0, "push start button");
+		App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}
 
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
-		
-		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
-		
+		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);	
 	}
+
+
 	if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN)
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_congratz);
