@@ -181,12 +181,12 @@ ModulePlayer::ModulePlayer(int num)
 	jumppunch.loop = false;
 	// ko'ou ken animation (arcade sprite sheet)
 
-	koouKen.PushBack({ 178, 878, 65, 107 }, -31, -42, 4);
-	koouKen.PushBack({ 864, 734, 75, 123 }, -44, -58, 6);
-	koouKen.PushBack({ 243, 878, 88 , 107 }, -57, -42, 4);
-	koouKen.PushBack({ 331, 878, 85, 107 }, -50, -42, 10);
-	koouKen.PushBack({ 416, 878, 81 , 107 }, -46, -42, 5);
-	koouKen.PushBack({ 497, 878, 102 , 107 }, -22, -42, 30);
+	koouKen.PushBack({ 178, 878, 65, 107 }, -31, -42, 4, rect1, rect2, rect3);
+	koouKen.PushBack({ 864, 734, 75, 123 }, -44, -58, 6, rect1, rect2, rect3);
+	koouKen.PushBack({ 243, 878, 88 , 107 }, -57, -42, 4, rect1, rect2, rect3);
+	koouKen.PushBack({ 331, 878, 85, 107 }, -50, -42, 10, rect1, rect2, rect3);
+	koouKen.PushBack({ 416, 878, 81 , 107 }, -46, -42, 5, rect1, rect2, rect3);
+	koouKen.PushBack({ 497, 878, 102 , 107 }, -22, -42, 30, rect1, rect2, rect3);
 	koouKen.speed = 0.9f;
 	koouKen.loop = false;
 
@@ -483,11 +483,13 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 	{
 		Deal_Damage(*App->player1, current_animation->AnimationDamage);
 		c2->Enabled = false;
+		c2->to_delete = true;
 	}
 	if (c2->type == COLLIDER_PLAYER_HIT && c2->Enabled)
 	{
 		Deal_Damage(*App->player2, current_animation->AnimationDamage);
 		c2->Enabled = false;
+		c2->to_delete = true;
 	}
 
 
@@ -723,7 +725,7 @@ void ModulePlayer::states(int speed)
 		{
 			punch.ResetCurrentFrame();
 			HitColider = App->collision->AddCollider({ { 200, 200, 30, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_PLAYER_HIT);
-			HitColider->Enabled = false;
+			HitColider->Enabled = true;
 			current_animation = &punch;
 			App->audio->Play_chunk(punchfx);
 			HitColider->Enabled = true;
