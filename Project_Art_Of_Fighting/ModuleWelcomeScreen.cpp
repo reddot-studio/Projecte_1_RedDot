@@ -14,6 +14,7 @@
 #include "ModuleWelcomeScreen.h"
 #include"ModuleUI.h"
 #include "SDL_mixer/include/SDL_mixer.h"
+#include "ModuleFonts.h"
 
 
 
@@ -76,9 +77,10 @@ ModuleWelcomeScreen::ModuleWelcomeScreen()
 	logo_transition.PushBack({ 1545,0,309,232 });
 	logo_transition.PushBack({ 1545,0,309,232 });
 	logo_transition.PushBack({ 1545,0,309,232 });
-	logo_transition.PushBack({ 1545,232,309,232 });
 	logo_transition.speed = 0.4f;
 
+	//Final_logo
+	final_logo.PushBack({ 1609,244,216,130 });
 
 
 	insert_coin.PushBack({ 1545,464,309,232 });
@@ -86,11 +88,13 @@ ModuleWelcomeScreen::ModuleWelcomeScreen()
 	insert_coin.speed = 0.1f;
 	
 
-	//coin.PushBack({ 0,797,95,16});
-	//coin.PushBack({ 103,797,95,16});
-	//coin.speed = 0.1f;
+	snk.rect.x = 1586;
+	snk.rect.y = 406;
+	snk.rect.w = 77;
+	snk.rect.h = 25;
 
-
+	//TODO 1 WELCOMESCR: CREATE ANIMATION FOR BLACK RECT
+	black.rect = { 100,150,1200,10 };
 	current_animation = &logo_transition;
 }
 
@@ -118,6 +122,9 @@ bool ModuleWelcomeScreen::Start()
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
 	App->audio->Play_music(start_music);
 
+	//Load fonts
+	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
+
 	App->player1->Disable();
 	App->player2->Disable();
 
@@ -129,10 +136,22 @@ update_status ModuleWelcomeScreen::Update()
 {
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() -1)
 	{
-		current_animation = &insert_coin;
+		finish_animation = 1;
+		current_animation = &final_logo;
 	}
-	App->render->Blit(graphics, 25, 0, &current_animation->GetCurrentFrame());
-
+	else
+	{
+		App->render->Blit(graphics, 25, 0, &current_animation->GetCurrentFrame());
+	}
+	
+	if (finish_animation == 1) {
+		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
+		App->render->Blit(graphics, 60, 180, &snk);
+		App->fonts->BlitText(61, 205, 0, "snk home entertainment, inc.!1992");
+		App->fonts->BlitText(100, 150, 0, "push start button");
+		App->render->DrawQuad(black.rect, 0, 0, 0, 255);
+		
+	}
 
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
@@ -154,6 +173,8 @@ bool ModuleWelcomeScreen::CleanUp()
 	App->audio->Unload_music(start_music);
 	App->textures->Unload(graphics);
 	
+	App->fonts->UnLoad(0);
+
 	LOG("Unloading welcome scene");
 	return true;
 }

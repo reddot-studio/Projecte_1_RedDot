@@ -142,6 +142,8 @@ bool ModuleCongratzScreen::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->audio->Unload_music(ending_music);
+	App->fonts->UnLoad(0);
+	App->fonts->UnLoad(1);
 	LOG("Unloading congratz scene");
 	return true;
 }

@@ -33,6 +33,10 @@ public:
 	Animation logo_transition;
 	Animation insert_coin;
 	Animation coin;
+	Animation final_logo;
+	int finish_animation = 0;
+	RectSprites snk;
+	RectSprites black;
 };
 
 

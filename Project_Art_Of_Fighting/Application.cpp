@@ -24,6 +24,7 @@ Application::Application()
 	modules[num++] = render = new ModuleRender();
 	modules[num++] = input = new ModuleInput();
 	modules[num++] = audio = new ModuleAudio();
+	modules[num++] = fonts = new ModuleFonts();
 	modules[num++] = textures = new ModuleTextures();
 	modules[num++] = scene_congratz = new ModuleCongratzScreen();
 	modules[num++] = scene_john = new ModuleSceneJohn();
@@ -36,7 +37,7 @@ Application::Application()
 	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = collision = new ModuleCollision();
 	modules[num++] = sceneUI = new ModuleUI();
-	modules[num++] = fonts = new ModuleFonts();
+	
 	
 }	
 
