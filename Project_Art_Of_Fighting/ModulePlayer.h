@@ -93,6 +93,7 @@ public:
 
 	Animation* current_animation = nullptr;
 	SDL_Texture* graphics = nullptr;
+	SDL_Texture* graphics2 = nullptr;
 	SDL_Texture* pivotTexture = nullptr;
 
 	RectSprites pivotRect;
