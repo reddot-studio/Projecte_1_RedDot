@@ -78,9 +78,10 @@ ModulePlayer::ModulePlayer(int num)
 
 	//crouched punch animation (arcade sprite sheet)
 	crouch_punch.PushBack({ 416, 42, 53, 74 }, -19, -9, 2, { -5,-8,25,20 }, body_crouchPunch_collider);
-	crouch_punch.PushBack({ 469, 41,109, 75 }, -33, -10, 4,head_crouchPunch_collider,body_crouchPunch_collider);
-	crouch_punch.PushBack({ 578, 41, 67, 75 }, -21, -10, 4, { -5,-8,25,20 },body_crouchPunch_collider);
+	crouch_punch.PushBack({ 469, 41,109, 75 }, -33, -10, 4, head_crouchPunch_collider, body_crouchPunch_collider, {}, { 30,5,43,10 });
+	crouch_punch.PushBack({ 578, 41, 67, 75 }, -21, -10, 4, { -5,-8,25,20 }, body_crouchPunch_collider);
 	crouch_punch.speed = 0.5f;
+	crouch_punch.damage = 20;
 	crouch_punch.loop = false;
 
 	//crouched kick animation (arcade sprite sheet)
@@ -112,7 +113,7 @@ ModulePlayer::ModulePlayer(int num)
 	punch.damage = 20;
 
 	// kick animation (arcade sprite sheet)
-	kick.PushBack({ 669, 235, 60, 110 },  -35,-45 ,4, head_kick_collider,body_kick_collider,legs_kick_collider);		//TODO PLAYER 2: HITBOXES D'ATACS
+	kick.PushBack({ 669, 235, 60, 110 },  -35,-45 ,4, head_kick_collider,body_kick_collider,legs_kick_collider);
 	kick.PushBack({ 729, 235, 61 , 113 },  -38,-48 ,4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 790, 235, 103, 113 },  -44,-48 ,8, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 729, 235, 61 , 113 },  -38,-48 ,4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
@@ -671,7 +672,7 @@ player_state ModulePlayer::ControlStates()
 		{
 		case IN_CROUCH_UP: state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
-		//case IN_KICK: state = ST_CROUCH_KICK; break; //Pending to do animations
+		case IN_KICK: state = ST_CROUCH_KICK; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		}
 		break;
@@ -872,6 +873,7 @@ void ModulePlayer::states(int speed)
 	case ST_CROUCH_PUNCH:
 		if (current_animation != &crouch_punch) 
 		{
+			HitCollider->Enabled = true;
 			crouch_punch.ResetCurrentFrame();
 			current_animation = &crouch_punch;
 			App->audio->Play_chunk(punchfx);
