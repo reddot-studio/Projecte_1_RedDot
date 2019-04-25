@@ -85,9 +85,10 @@ ModulePlayer::ModulePlayer(int num)
 	crouch_punch.loop = false;
 
 	//crouched kick animation (arcade sprite sheet)
-	crouch_kick.PushBack({ 867,169,55,66 }, 0, 0, 2); //TODO PLAYER 1: Implementar state i input + establir colliders
-	crouch_kick.PushBack({ 0,280,127,68 }, 0, 0, 4);
+	crouch_kick.PushBack({ 867,169,55,66 }, -24, -1, 3, { -5,-8,25,20 }, body_crouchPunch_collider); //TODO PLAYER 1: Implementar state i input + establir colliders
+	crouch_kick.PushBack({ 0,280,127,68 }, -50, -3, 4, { -5, -8, 25, 20 }, body_crouchPunch_collider, {}, { 10, 40, 70, 23 });
 	crouch_kick.speed = 0.5f;
+	crouch_kick.damage = 20;
 	crouch_kick.loop = false;
 
 	// walk forward animation (arcade sprite sheet)
@@ -169,16 +170,17 @@ ModulePlayer::ModulePlayer(int num)
 
 	//jump + kick animation (arcade sprite sheet)
 
-	jumpkick.PushBack({ 562,146,57,89 }, -32, -55, 2, head_jumpkick_collider, body_jumpkick_collider, legs_jumpkick_collider); 
-	jumpkick.PushBack({ 619,149,96,86 }, -40, -48, 4, head_jumpkick_collider, body_jumpkick_collider, legs_jumpkick_collider);
+	jumpkick.PushBack({ 562,146,57,89 }, -32, -55, 2, head_jumpkick_collider, body_jumpkick_collider, legs_jumpkick_collider);
+	jumpkick.PushBack({ 619,149,96,86 }, -40, -48, 4, head_jumpkick_collider, body_jumpkick_collider, legs_jumpkick_collider, { 10,10,45,30 });
 	jumpkick.PushBack({ 562,146,57,89 }, -32, -55, 4, head_jumpkick_collider, body_jumpkick_collider, legs_jumpkick_collider);
 	jumpkick.loop = false;
+	jumpkick.damage = 20;
 	jumpkick.speed = 0.5f;
 	
 	//jump + punch animation (arcade sprite sheet)
 
 	jumppunch.PushBack({ 715,141,66,94 }, -38, -55,3,head_jumppunch_collider,body_jumppunch_collider, legs_jumppunch_collider);			
-	jumppunch.PushBack({ 781,157,86,78 }, -38, -55, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumppunch.PushBack({ 781,157,86,78 }, -38, -55, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider, { 5,-20,45,25 });
 	jumppunch.PushBack({ 715,141,66,94 }, -38, -55, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
 	jumppunch.loop = false;
@@ -768,6 +770,7 @@ void ModulePlayer::states(int speed)
 	case ST_NEUTRAL_JUMP_PUNCH:
 		if (current_animation != &jumppunch)
 		{
+			HitCollider->Enabled = true;
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
@@ -777,6 +780,7 @@ void ModulePlayer::states(int speed)
 	case ST_NEUTRAL_JUMP_KICK:
 		if (current_animation != &jumpkick)
 		{
+			HitCollider->Enabled = true;
 			jumpkick.ResetCurrentFrame();
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
@@ -796,6 +800,7 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &jumpkick)
 		{
 			jumpkick.ResetCurrentFrame();
+			HitCollider->Enabled = true;
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
 		}
@@ -804,6 +809,7 @@ void ModulePlayer::states(int speed)
 	case ST_FORWARD_JUMP_PUNCH:
 		if (current_animation != &jumppunch)
 		{
+			HitCollider->Enabled = true;
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
@@ -822,6 +828,7 @@ void ModulePlayer::states(int speed)
 	case ST_BACKWARD_JUMP_PUNCH:
 		if (current_animation != &jumppunch)
 		{
+			HitCollider->Enabled = true;
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
@@ -831,6 +838,7 @@ void ModulePlayer::states(int speed)
 	case ST_BACKWARD_JUMP_KICK:
 		if (current_animation != &jumpkick)
 		{
+			HitCollider->Enabled = true;
 			jumpkick.ResetCurrentFrame();
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
@@ -883,6 +891,7 @@ void ModulePlayer::states(int speed)
 		break;	
 	case ST_CROUCH_KICK:
 		if (current_animation != &crouch_kick) {
+			HitCollider->Enabled = true;
 			crouch_kick.ResetCurrentFrame();
 			current_animation = &crouch_kick;
 		}
@@ -891,6 +900,38 @@ void ModulePlayer::states(int speed)
 	}
 	current_state = state;
 
+}
+
+void ModulePlayer::Deal_Damage(ModulePlayer & Enemy, int AttackDamage)
+{
+	if (Enemy.Player_Health_Value - AttackDamage <= 0)
+	{
+		LOG("\n Someone died");
+		Enemy.Player_Health_Value = 0;
+		p1_win++;
+
+		Module *CurrentScene = nullptr;
+
+		if (App->scene_todo->IsEnabled())
+			CurrentScene = App->scene_todo;
+		//if (App->scene_john->IsEnabled())
+		//	CurrentScene = App->scene_john;
+
+
+		App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+
+		App->fade->FadeToBlack(CurrentScene, CurrentScene);
+		if (p1_win == 2)
+		{
+			p1_win = 0;
+			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+		}
+
+	}
+	else
+	{
+		Enemy.Player_Health_Value -= AttackDamage;
+	}
 }
 
 

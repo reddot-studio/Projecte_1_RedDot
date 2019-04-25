@@ -153,37 +153,8 @@ public:
 	//PlayerStats
 	int Player_Health_Value;
 
-	void Deal_Damage(ModulePlayer& Enemy, int AttackDamage)
-	{
-		if (Enemy.Player_Health_Value - AttackDamage <= 0) 
-		{
-			LOG("\n Someone died");
-			Enemy.Player_Health_Value = 0;
-			p1_win++;
+	void Deal_Damage(ModulePlayer& Enemy, int AttackDamage);
 
-			Module *CurrentScene = nullptr;
-
-			if (App->scene_todo->IsEnabled())
-				CurrentScene = App->scene_todo;
-			//if (App->scene_john->IsEnabled())
-			//	CurrentScene = App->scene_john;
-
-
-			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-
-			App->fade->FadeToBlack(CurrentScene, CurrentScene);
-			if (p1_win == 2)
-			{
-				p1_win = 0;
-				App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-			}
-
-		}
-		else
-		{
-			Enemy.Player_Health_Value -= AttackDamage;
-		}
-	}
 
 	int PlayerNumber;
 	SDL_Texture* Player_texture;
