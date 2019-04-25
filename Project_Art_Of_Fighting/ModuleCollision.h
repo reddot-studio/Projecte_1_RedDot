@@ -26,12 +26,12 @@ struct Collider
 	COLLIDER_TYPE type;
 	Module* callback = nullptr;
 	bool Enabled = true;
-	int ColiderDamage;
+	int ColliderDamage;
 
 	Collider(RectSprites rectangle, COLLIDER_TYPE type, Module* callback = nullptr, int Damage = 0) :
 		type(type),
 		callback(callback),
-		ColiderDamage(Damage)
+		ColliderDamage(Damage)
 	{
 		rect.x = rectangle.rect.x;
 		rect.y = rectangle.rect.y;
@@ -45,7 +45,7 @@ struct Collider
 		rect.y = collider.y + pos.y;
 		rect.w = collider.w;
 		rect.h = collider.h;
-		ColiderDamage = damage;
+		ColliderDamage = damage;
 	}
 
 	void SetPos(int x, int y)

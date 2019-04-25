@@ -131,7 +131,7 @@ public:
 
 	//bool BackColision, FrontColision;
 	Collider* CurrentColider = nullptr;
-	Collider* HitColider = nullptr;
+	Collider* HitCollider = nullptr;
 	Collider* HurtColliders[3];
 
 
