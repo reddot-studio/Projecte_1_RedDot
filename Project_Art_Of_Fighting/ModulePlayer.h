@@ -169,6 +169,7 @@ public:
 	SDL_Texture* Player_Health;
 	SDL_Texture* Player_Spirit;
 
+	int tick1 = 0, tick2 = 0;
 };
 
 #endif

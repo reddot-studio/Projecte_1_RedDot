@@ -60,10 +60,10 @@ update_status ModuleUI::Update()
 	tick2 = SDL_GetTicks();
 	timer_float = (tick2 - tick1) / 100;
 	timer = timer_float;
-	//timer to string time
+	//timer to string time and it will work ********************************************************************
 	RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-	App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "23",2);
+	App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time,2);
 	
 
 	//Player 1 Health
