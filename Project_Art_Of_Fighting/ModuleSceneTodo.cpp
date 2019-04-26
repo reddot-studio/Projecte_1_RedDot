@@ -11,6 +11,7 @@
 #include "SDL/include/SDL.h"
 #include "ModuleCollision.h"
 #include"ModuleUI.h"
+#include "ModuleFonts.h"
 
 
 ModuleSceneTodo::ModuleSceneTodo()
@@ -19,6 +20,7 @@ ModuleSceneTodo::ModuleSceneTodo()
 	rect_background.rect.h = 224;
 	rect_background.rect.x = 0;
 	rect_background.rect.y = 338;	
+
 }
 
 ModuleSceneTodo::~ModuleSceneTodo()
@@ -27,6 +29,7 @@ ModuleSceneTodo::~ModuleSceneTodo()
 
 bool ModuleSceneTodo::Start()
 {
+	tick1 = SDL_GetTicks();
 	LOG("Loading todo scene");
 	todo_music = App->audio->Load_music("Assets/Audio/033xART OF FIGHT.ogg");
 	App->audio->Play_music(todo_music);
@@ -38,6 +41,12 @@ bool ModuleSceneTodo::Start()
 	App->player2->Enable();
 	App->sceneUI->Enable();
 
+	indicator.rect.x = 0;
+	indicator.rect.y = 96;
+	indicator.rect.h = 16;
+	indicator.rect.w = 100;
+
+	indicator_fight = App->textures->Load("Assets/UI_Sprites/indicator_fight.png");
 
 	return true;
 }
@@ -49,11 +58,21 @@ update_status ModuleSceneTodo::Update()
 		SDL_Log("Unable to [BLIT] texture: texture_background");
 		return update_status::UPDATE_STOP;
 	}
-	
-		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
-		{
-			App->fade->FadeToBlack( App->scene_todo, App->scene_john);
-		}
+	if (tick2 - tick1 < 2000) {
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-50, (SCREEN_HEIGHT / 2)-8, &indicator);
+	}
+	if (tick2-tick1>2000 && tick2 - tick1 < 4000) {
+		indicator.rect.x = 0;
+		indicator.rect.y = 113;
+		indicator.rect.h = 16;
+		indicator.rect.w = 80;
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
+	{
+		App->fade->FadeToBlack( App->scene_todo, App->scene_john);
+	}
+	tick2 = SDL_GetTicks();
 	return UPDATE_CONTINUE;
 }
 
@@ -70,7 +89,7 @@ bool ModuleSceneTodo::CleanUp()
 	App->player1->Disable();
 	App->player2->Disable();
 	App->sceneUI->Disable();
-
+	App->textures->Unload(indicator_fight);
 	LOG("Unloading todo scene");
 	return true;
 }

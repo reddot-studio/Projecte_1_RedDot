@@ -78,7 +78,7 @@ void ModuleFonts::UnLoad(int font_id)
 }
 
 // Render text using a bitmap font
-void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
+void ModuleFonts::BlitText(int x, int y, int font_id, const char* text, int space) const
 {
 	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].graphic == nullptr)
 	{
@@ -102,7 +102,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text) const
 				if (font_id == 0 && j == 36) { y -= 2; }
 				App->render->Blit(font->graphic, x, y, &rect);
 				y = y2;
-				x += 8;
+				x += font->char_w + space;
 				break;
 			}
 			if (j > font->row_chars) { break; }

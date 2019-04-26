@@ -24,9 +24,10 @@ public:
 	RectSprites RendPosition;
 
 	SDL_Texture* TimerTexture;
-
-
-
+	int timer;
+	float timer_float;
+	int tick1 = 0, tick2 = 0;
+	char* time;
 
 };
 

@@ -8,7 +8,8 @@
 #include "ModuleUI.h"
 #include "SDL/include/SDL.h"
 #include "ModuleCollision.h"
-
+#include "ModuleFonts.h"
+#include <string>
 
 ModuleUI::ModuleUI()
 {
@@ -23,7 +24,7 @@ ModuleUI::~ModuleUI()
 bool ModuleUI::Start()
 {
 	LOG("Loading UI");
-
+	tick1 = SDL_GetTicks();
 	//Load All UI
 	TimerTexture = App->textures->Load("Assets/UI_Sprites/Timer.png");
 	App->player1->Player_Health_BG = App->player2->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
@@ -34,7 +35,10 @@ bool ModuleUI::Start()
 	//Do same with App.player2
 	App->player1->Player_Health_Value = 126;
 	App->player2->Player_Health_Value = 126;
-
+	
+	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
+	timer = 60;
+	time = "";
 	return true;
 }
 
@@ -50,9 +54,17 @@ update_status ModuleUI::Update()
 	//}
 
 	//Needs To sTop on fail bliT
+
+
 	//Timer renderer
+	tick2 = SDL_GetTicks();
+	timer_float = (tick2 - tick1) / 100;
+	timer = timer_float;
+	//timer to string time
 	RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
+	App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "23",2);
+	
 
 	//Player 1 Health
 	//Render order is really important

@@ -23,7 +23,9 @@ public:
 
 	Collider* BackPanel;
 	Collider* FrontPanel;
-
+	SDL_Texture* indicator_fight;
+	RectSprites indicator;
+	int tick1 = 0, tick2 = 0;
 };
 
 #endif // __MODULESCENEKEN_H__

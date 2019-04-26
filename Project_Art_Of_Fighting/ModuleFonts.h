@@ -28,7 +28,7 @@ public:
 	void UnLoad(int font_id);
 
 	// Create a surface from text
-	void BlitText(int x, int y, int bmp_font_id, const char* text) const;
+	void BlitText(int x, int y, int bmp_font_id, const char* text, int space=0) const;
 
 private:
 
