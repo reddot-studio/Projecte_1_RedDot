@@ -9,7 +9,10 @@
 #include "SDL/include/SDL.h"
 #include "ModuleCollision.h"
 #include "ModuleFonts.h"
+#include <iostream>
 #include <string>
+using namespace std;
+
 
 ModuleUI::ModuleUI()
 {
@@ -39,13 +42,16 @@ bool ModuleUI::Start()
 	
 	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	timer = 60;
-	time = "";
+	string time = "";
 
 	//Animation winPOint
 	winpoint.PushBack({ 0,161,15,15 });
 	winpoint.PushBack({ 15,161,15,15 });
 	winpoint.PushBack({ 30,161,15,15 });
-	winpoint.speed = 4.0f;
+	winpoint.PushBack({ 30,161,15,15 });
+	winpoint.PushBack({ 15,161,15,15 });
+	winpoint.PushBack({ 0,161,15,15 });
+	winpoint.speed = 100.0f;
 	current_animation = &winpoint;
 
 	return true;

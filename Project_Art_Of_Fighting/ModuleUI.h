@@ -27,7 +27,6 @@ public:
 	int timer;
 	float timer_float;
 	int tick1 = 0, tick2 = 0;
-	char* time;
 	Animation winpoint;
 	Animation* current_animation;
 	int counter1 = 0, counter2 = 0;
