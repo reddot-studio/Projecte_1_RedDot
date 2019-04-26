@@ -9,9 +9,7 @@
 #include "SDL/include/SDL.h"
 #include "ModuleCollision.h"
 #include "ModuleFonts.h"
-#include <iostream>
-#include <string>
-using namespace std;
+
 
 
 ModuleUI::ModuleUI()
@@ -42,7 +40,7 @@ bool ModuleUI::Start()
 	
 	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	timer = 60;
-	string time = "";
+	time = "";
 
 	//Animation winPOint
 	winpoint.PushBack({ 0,161,15,15 });
@@ -73,12 +71,20 @@ update_status ModuleUI::Update()
 
 	//Timer renderer
 	tick2 = SDL_GetTicks();
-	timer_float = (tick2 - tick1) / 100;
-	timer = timer_float;
-	//timer to string time and it will work ********************************************************************
-	RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-	App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time,2);
+	if (tick2 - tick1 < 4) {
+		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "60", 2);
+	}
+	else {
+		timer_float = 60 - (tick2 - tick1) / 100;
+		timer = timer_float;
+		//timer to string time and it will work ********************************************************************
+
+
+
+		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
+		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
+		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+	}
 
 
 

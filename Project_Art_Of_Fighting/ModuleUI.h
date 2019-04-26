@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Globals.h"
 
+
 struct SDL_Texture;
 struct Mix_Music;
 
@@ -30,6 +31,7 @@ public:
 	Animation winpoint;
 	Animation* current_animation;
 	int counter1 = 0, counter2 = 0;
+	char* time;
 };
 
 #endif // __MODULESCENEKEN_H__
