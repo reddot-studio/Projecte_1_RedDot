@@ -41,6 +41,8 @@ bool ModuleSceneTodo::Start()
 	App->player2->Enable();
 	App->sceneUI->Enable();
 
+	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_UP;
+
 	indicator.rect.x = 0;
 	indicator.rect.y = 96;
 	indicator.rect.h = 16;

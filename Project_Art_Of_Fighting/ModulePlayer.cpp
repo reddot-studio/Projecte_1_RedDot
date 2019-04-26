@@ -310,8 +310,14 @@ update_status ModulePlayer::Update()
 {
 	//4 seconds without moving
 	tick2 = SDL_GetTicks();
-	if (tick2 - tick1 < 4000) { App->input->Disable(); }
-	else{ App->input->Enable(); }
+	if (tick2 - tick1 < 4000) 
+	{ 
+		App->input->Disable(); 
+	}
+	else
+	{ 
+		App->input->Enable(); 
+	}
 
 
 	int speed = 1;
