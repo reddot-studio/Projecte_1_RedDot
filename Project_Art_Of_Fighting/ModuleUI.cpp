@@ -88,6 +88,10 @@ update_status ModuleUI::Update()
 			timer_float = 60000 - (tick2 - tick3);
 			timer = timer_float / 1000;
 		}
+		else
+		{
+			//Do something when time runs out here
+		}
 
 		//timer to string time and it will work ********************************************************************
 

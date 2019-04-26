@@ -265,7 +265,6 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
-
 	pivot_player.x = 90;
 	pivot_player.y = 150;
 	Player_Health_Value = 126;
@@ -556,7 +555,6 @@ bool ModulePlayer::CleanUp()
 			HurtColliders[i]->to_delete = true;
 		}
 	}
-
 
 	LOG(" - ModulePlayer CleanUp");
 	return true;
