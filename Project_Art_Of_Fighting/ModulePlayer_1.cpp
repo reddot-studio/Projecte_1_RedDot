@@ -296,19 +296,7 @@ bool ModulePlayer_1::Start()
 // Update: draw background
 update_status ModulePlayer_1::Update()
 {
-	//4 seconds without moving
-	tick2 = SDL_GetTicks();
-	if (tick2 - tick1 < 4000) 
-	{ 
-		App->input->Disable(); 
-		App->input->Paused = true;
-	}
-	else
-	{ 
-		App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
-		App->input->Enable(); 
-		App->input->Paused = false;
-	}
+
 
 
 	speed = 1;
@@ -390,7 +378,19 @@ update_status ModulePlayer_1::Update()
 		}
 
 
-
+		//4 seconds without moving
+		tick2 = SDL_GetTicks();
+		if (tick2 - tick1 < 4000)
+		{
+			App->input->Paused = true;
+		}
+		else
+		{		
+			if (App->input->Paused == true) 
+			{
+				App->input->Paused = false;
+			}
+		}
 
 	
 
@@ -447,8 +447,14 @@ update_status ModulePlayer_1::Update()
 		}
 
 	}
+	if (Side == 1) {
 
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	}	
+	else if (Side == 2) {
+
+	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	}
 
 
 		if(isJumping)
@@ -565,6 +571,7 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_IDLE:
 		switch (last_input)
 		{
+		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 		case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 		case IN_JUMP_DOWN: state = ST_NEUTRAL_JUMP;	 break;
