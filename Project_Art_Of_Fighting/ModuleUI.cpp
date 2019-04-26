@@ -71,22 +71,39 @@ update_status ModuleUI::Update()
 
 
 	//Timer renderer
-	if (tick2 - tick1 < 4000) {
+	if (tick2 - tick1 <= 4000)
+	{
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
 		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "60", 2);
 		tick3 = SDL_GetTicks();
 	}
-	else {
-		timer_float = 60000 - (tick2 - tick3);
-		timer = timer_float/1000;
-		//timer to string time and it will work ********************************************************************
-
-		sprintf_s(time, 10, "%i", timer);
+	else
+	{
 
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+		if (timer > 0)
+		{
+			timer_float = 60000 - (tick2 - tick3);
+			timer = timer_float / 1000;
+		}
+
+		//timer to string time and it will work ********************************************************************
+
+		if (timer >= 10)
+		{
+			sprintf_s(time, 10, "%d", timer);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+		}
+		else
+		{
+			timer = timer_float / 1000;
+			sprintf_s(time, 10, "%d", timer);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "0", 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 0, time, 2);
+		}
+
 	}
 	tick2 = SDL_GetTicks();
 

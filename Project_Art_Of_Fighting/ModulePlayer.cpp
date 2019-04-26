@@ -284,7 +284,7 @@ bool ModulePlayer::Start()
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
-		HitCollider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT,App->player1);
+		HitCollider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT);
 		HitCollider->Enabled = false;
 		Side = 1;
 		
@@ -493,7 +493,9 @@ update_status ModulePlayer::Update()
 		}
 
 	}
+
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+
 	if (PlayerNumber == 1) 
 	{
 		if(isJumping)
@@ -519,6 +521,7 @@ update_status ModulePlayer::Update()
 		player_collider->SetPos(pivot_player.x + r.offset.x + 20, pivot_player.y + r.offset.y);
 	}
 
+	
 
 	for (int i = 0; i < 3; i++)
 	{
