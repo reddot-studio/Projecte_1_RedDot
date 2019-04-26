@@ -292,18 +292,6 @@ bool ModulePlayer_2::Start()
 // Update: draw background
 update_status ModulePlayer_2::Update()
 {
-	//4 seconds without moving
-	tick2 = SDL_GetTicks();
-	if (tick2 - tick1 < 4000)
-	{
-		App->input->Disable();
-	}
-	else
-	{
-		App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
-		App->input->Enable();
-	}
-
 
 	speed = 1;
 	if (Player_Health_Value > 0)
@@ -436,7 +424,15 @@ update_status ModulePlayer_2::Update()
 
 	}
 
-	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	if (Side == 2 && (current_animation == &punch)) 
+	{
+		App->render->Blit(graphics, pivot_player.x - r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	}
+	else
+	{
+		App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	}
+
 
 	if (isJumping)
 	{
@@ -462,7 +458,7 @@ update_status ModulePlayer_2::Update()
 		HurtColliders[i]->SetRect(r.hurtColliders[i], current_animation->damage, pivot_player);
 	}
 	if (HitCollider != nullptr)
-		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player);
+		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }

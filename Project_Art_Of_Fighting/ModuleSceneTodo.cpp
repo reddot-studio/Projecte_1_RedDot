@@ -72,7 +72,7 @@ update_status ModuleSceneTodo::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
 	}
-	if ( App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && App->input->IsEnabled())
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && !App->input->Paused)
 	{
 		App->fade->FadeToBlack( App->scene_todo, App->scene_john);
 		App->input->Disable();

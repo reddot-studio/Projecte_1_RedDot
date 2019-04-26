@@ -60,7 +60,6 @@ bool ModuleUI::Start()
 update_status ModuleUI::Update()
 {
 
-
 	//Draw UI
 	//if ((App->render->Blit(graphics, 0, 0, &rect_background)) == false)
 	//{

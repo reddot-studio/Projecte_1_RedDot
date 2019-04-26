@@ -20,6 +20,7 @@ bool ModuleInput::Init()
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
+		
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
@@ -28,6 +29,7 @@ bool ModuleInput::Init()
 	{
 		keyboard_state[i] = KEY_IDLE;
 	}
+
 	return ret;
 }
 
@@ -35,31 +37,35 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 
-	SDL_PumpEvents();
-
-	keyboard = SDL_GetKeyboardState(NULL);
-
-	for (int i = 4; i < 285; i++)
+	if (!Paused) 
 	{
-		if (keyboard[i] == 1)
+		SDL_PumpEvents();
+
+		keyboard = SDL_GetKeyboardState(NULL);
+
+		for (int i = 4; i < 285; i++)
 		{
-			if (keyboard_state[i] == KEY_IDLE)
-				keyboard_state[i] = KEY_DOWN;
+			if (keyboard[i] == 1)
+			{
+				if (keyboard_state[i] == KEY_IDLE)
+					keyboard_state[i] = KEY_DOWN;
+				else
+					keyboard_state[i] = KEY_REPEAT;
+			}
 			else
-				keyboard_state[i] = KEY_REPEAT;
+			{
+				if (keyboard_state[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
+					keyboard_state[i] = KEY_UP;
+				else
+					keyboard_state[i] = KEY_IDLE;
+			}
 		}
-		else
-		{
-			if (keyboard_state[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard_state[i] = KEY_UP;
-			else
-				keyboard_state[i] = KEY_IDLE;
-		}
+
+
+		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
+			return update_status::UPDATE_STOP;
+
 	}
-
-
-	if(keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
-		return update_status::UPDATE_STOP;
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -67,6 +73,12 @@ update_status ModuleInput::PreUpdate()
 // Called before quitting
 bool ModuleInput::CleanUp()
 {
+
+	for (int i = 4; i < 285; i++)
+	{
+		keyboard_state[i] = KEY_IDLE;
+	}
+	Paused = true;
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;

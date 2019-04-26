@@ -301,11 +301,13 @@ update_status ModulePlayer_1::Update()
 	if (tick2 - tick1 < 4000) 
 	{ 
 		App->input->Disable(); 
+		App->input->Paused = true;
 	}
 	else
 	{ 
 		App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
 		App->input->Enable(); 
+		App->input->Paused = false;
 	}
 
 
@@ -475,7 +477,7 @@ update_status ModulePlayer_1::Update()
 		HurtColliders[i]->SetRect(r.hurtColliders[i],current_animation->damage, pivot_player);
 	}
 	if(HitCollider != nullptr)
-		HitCollider->SetRect(r.hitCollider,current_animation->damage, pivot_player);
+		HitCollider->SetRect(r.hitCollider,current_animation->damage, pivot_player, Side);
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }

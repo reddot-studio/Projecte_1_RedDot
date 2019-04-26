@@ -20,6 +20,7 @@ public:
 
 public:
 	const Uint8 *keyboard = nullptr;
+	bool Paused = false;
 
 	key_state keyboard_state[285];
 
