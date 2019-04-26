@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "ModuleDebug.h"
-#include "ModulePlayer.h"
+#include "ModulePlayer_1.h"
+#include "ModulePlayer_2.h"
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 bool ModuleDebug::Init()

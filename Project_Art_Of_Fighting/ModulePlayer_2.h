@@ -1,5 +1,5 @@
-#ifndef __ModulePlayer_H__
-#define __ModulePlayer_H__
+#ifndef __ModulePlayer2_H__
+#define __ModulePlayer2_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -11,63 +11,18 @@
 #include"ModuleCongratzScreen.h"
 #include"ModuleSceneJohn.h"
 #include"ModuleSceneTodo.h"
+#include"ModulePlayer_1.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
 
-enum player_state
-{	ST_UNKNOWN,
-	ST_IDLE,
-	ST_WALK_FORWARD,
-	ST_WALK_BACKWARD,
-	ST_STANDING_PUNCH,
-	ST_STANDING_KICK,
-	ST_NEUTRAL_JUMP,
-	ST_NEUTRAL_JUMP_PUNCH,
-	ST_NEUTRAL_JUMP_KICK,
-	ST_FORWARD_JUMP,
-	ST_BACKWARD_JUMP,
-	ST_FORWARD_JUMP_PUNCH,
-	ST_FORWARD_JUMP_KICK,
-	ST_BACKWARD_JUMP_PUNCH,
-	ST_BACKWARD_JUMP_KICK,
-	ST_KOOU_KEN,
-	ST_FALL,
-	ST_FORWARD_FALL,
-	ST_BACKWARD_FALL,
-	ST_RECOVER,
-	ST_CROUCH,
-	ST_CROUCH_PUNCH,
-	ST_CROUCH_KICK,
-	ST_CROUCH_RECOVER,
-};
 
-enum inputs
-{
-	IN_UNKNOWN,
-	IN_LEFT_UP,
-	IN_LEFT_DOWN,
-	IN_RIGHT_UP,
-	IN_RIGHT_DOWN,
-	IN_JUMP_DOWN,
-	IN_CROUCH_DOWN,
-	IN_CROUCH_UP,
-	IN_PUNCH,
-	IN_KICK,
-	IN_KOOU_KEN,
-	IN_JUMP_FINISH,
-	IN_ATTACK_FINISH,
-	IN_RECOVER_FINISH,
-	IN_CROUCH_RECOVER_FINISH,
-	IN_CROUCH_RECOVER,
-	IN_RECOVER,
-};
 
-class ModulePlayer : public Module
+class ModulePlayer_2 : public Module
 {
 public:
-	ModulePlayer(int num);
-	~ModulePlayer();
+	ModulePlayer_2();
+	~ModulePlayer_2();
 	int num = 100;
 	bool Start();
 	update_status Update();
@@ -78,7 +33,7 @@ public:
 	void states(int speed);
 
 public:
-	Mix_Chunk *punchfx = NULL;
+	Mix_Chunk * punchfx = NULL;
 	Mix_Chunk *kickfx = NULL;
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
@@ -89,7 +44,7 @@ public:
 	player_state current_state = ST_UNKNOWN;
 
 	inputs last_input = IN_UNKNOWN;
-	
+
 
 	Animation* current_animation = nullptr;
 	SDL_Texture* graphics = nullptr;
@@ -112,7 +67,7 @@ public:
 	Animation recover;
 	Animation jumpkick;
 	Animation jumppunch;
-	Animation jump_forward; 
+	Animation jump_forward;
 	Animation jump_backward;
 	Animation win;
 	Animation defeat;
@@ -120,23 +75,23 @@ public:
 	Animation impactfloor;
 	Animation vomit;
 	Animation blood;
-			
+
 	Animation pose_idle_receive_standing_punch_kick_plus_jump_punch;
 	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;
 	Animation pose_idle_receive_crouch_kick;
 	Animation pose_idle_receive_crouch_punch;
 
-	Animation pose_crouch_receive_standing_crouch_kick; 
-	Animation pose_crouch_receive_crouch_punch; 
+	Animation pose_crouch_receive_standing_crouch_kick;
+	Animation pose_crouch_receive_crouch_punch;
 
 
 
 	Animation pose_jump_receive_dmg; //Not sure for prototype
 
-	
-	
 
-	//Crouch Moves
+
+
+									 //Crouch Moves
 	Animation crouch;
 	Animation crouch_punch;
 	Animation crouch_kick;
@@ -158,10 +113,8 @@ public:
 	//PlayerStats
 	int Player_Health_Value;
 
-	void Deal_Damage(ModulePlayer& Enemy, int AttackDamage);
+	void Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage);
 
-
-	int PlayerNumber;
 	int Side;
 	SDL_Texture* Player_texture;
 	SDL_Texture* Player_Health_BG;

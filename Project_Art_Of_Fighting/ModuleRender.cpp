@@ -7,7 +7,8 @@
 #include "RectSprites.h"
 #include "ModuleDebug.h"
 #include"ModuleCollision.h"
-#include"ModulePlayer.h"
+#include "ModulePlayer_1.h"
+#include "ModulePlayer_2.h"
 
 ModuleRender::ModuleRender() : Module()
 {

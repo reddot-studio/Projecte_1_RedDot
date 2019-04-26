@@ -5,7 +5,8 @@
 #include "ModuleTextures.h"
 #include "ModuleSceneTodo.h"
 #include "ModuleSceneJohn.h"
-#include "ModulePlayer.h"
+#include "ModulePlayer_1.h"
+#include"ModulePlayer_2.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleWelcomeScreen.h"
 #include "ModuleCongratzScreen.h"
@@ -29,8 +30,8 @@ Application::Application()
 	modules[num++] = scene_congratz = new ModuleCongratzScreen();
 	modules[num++] = scene_john = new ModuleSceneJohn();
 	modules[num++] = scene_todo = new ModuleSceneTodo();
-	modules[num++] = player1 = new ModulePlayer(1);
-	modules[num++] = player2 = new ModulePlayer(2);
+	modules[num++] = player1 = new ModulePlayer_1();
+	modules[num++] = player2 = new ModulePlayer_2();
 	modules[num++] = particles = new ModuleParticles();
 	modules[num++] = fade = new ModuleFadeToBlack();
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();
