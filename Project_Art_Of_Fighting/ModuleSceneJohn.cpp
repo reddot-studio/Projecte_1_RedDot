@@ -74,7 +74,7 @@ bool ModuleSceneJohn::Start()
 	App->player1->Enable();
 	App->player2->Enable();
 	App->sceneUI->Enable();
-	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_UP;
+	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
 	return true;
 }
 

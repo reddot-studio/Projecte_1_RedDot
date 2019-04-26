@@ -316,15 +316,15 @@ update_status ModulePlayer::Update()
 	}
 	else
 	{ 
+		App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
 		App->input->Enable(); 
 	}
 
 
-	int speed = 1;
+	speed = 1;
 	//Player1 Input
 	if (PlayerNumber == 1 && App->player1->Player_Health_Value > 0) 
 	{
-
 		states(speed);
 		//Move right
 		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;

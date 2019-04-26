@@ -168,6 +168,7 @@ public:
 	SDL_Texture* Player_Health_BG_Empty;
 	SDL_Texture* Player_Health;
 	SDL_Texture* Player_Spirit;
+	int speed;
 
 	int tick1 = 0, tick2 = 0;
 };

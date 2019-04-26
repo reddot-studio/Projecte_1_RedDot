@@ -10,7 +10,6 @@
 #include "ModuleCollision.h"
 #include "ModuleFonts.h"
 #include <stdio.h>
-using namespace std;
 
 
 
@@ -128,7 +127,8 @@ update_status ModuleUI::Update()
 	}
 	if (counter2 > 0) {
 		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 16, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
-		if (counter2 == 2) {
+		if (counter2 == 2) 
+		{
 			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 31, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
 		}
 	}

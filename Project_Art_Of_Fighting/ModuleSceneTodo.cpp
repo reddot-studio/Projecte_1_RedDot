@@ -40,8 +40,9 @@ bool ModuleSceneTodo::Start()
 	App->player1->Enable();
 	App->player2->Enable();
 	App->sceneUI->Enable();
+	App->input->Disable();
 
-	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_UP;
+	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
 
 	indicator.rect.x = 0;
 	indicator.rect.y = 96;
@@ -70,9 +71,10 @@ update_status ModuleSceneTodo::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
+	if ( App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && App->input->IsEnabled())
 	{
 		App->fade->FadeToBlack( App->scene_todo, App->scene_john);
+		App->input->Disable();
 	}
 	tick2 = SDL_GetTicks();
 	return UPDATE_CONTINUE;
