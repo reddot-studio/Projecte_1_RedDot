@@ -51,7 +51,7 @@ bool ModuleUI::Start()
 	winpoint.PushBack({ 30,161,15,15 });
 	winpoint.PushBack({ 15,161,15,15 });
 	winpoint.PushBack({ 0,161,15,15 });
-	winpoint.speed = 100.0f;
+	winpoint.speed = 0.2f;
 	current_animation = &winpoint;
 
 	return true;
@@ -147,10 +147,10 @@ update_status ModuleUI::Update()
 		counter2++;
 	}
 	if (counter2 > 0) {
-		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 16, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
 		if (counter2 == 2) 
 		{
-			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 31, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
 		}
 	}
 
@@ -175,7 +175,7 @@ bool ModuleUI::CleanUp()
 		App->textures->Unload(App->player2->Player_Health_BG);
 		App->textures->Unload(App->player2->Player_Health);
 		App->textures->Unload(App->player2->Player_Health_BG_Empty);
-
+		App->fonts->UnLoad(0);
 	
 
 	LOG("Unloading todo scene");

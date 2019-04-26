@@ -85,10 +85,9 @@ bool ModuleCongratzScreen::Start()
 
 update_status ModuleCongratzScreen::Update()
 {
+	App->fonts->BlitText(220, 47, 1, "waiting for");
+	App->fonts->BlitText(215, 58, 1, "a challenger");
 
-
-	//TODO 3: Ryo's quote on win/lose
-	//TODO 4: Waiting for new rivals message
 	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");
@@ -105,8 +104,7 @@ update_status ModuleCongratzScreen::Update()
 		}
 		App->fonts->BlitText(58.5, 173, 0, "anytime, anywhere, cross my path");
 		App->fonts->BlitText(58.5, 188, 0, "again and you're mine!");
-		App->fonts->BlitText(220, 47, 1, "waiting for");
-		App->fonts->BlitText(225, 58, 1, "a challenger");
+
 		break;
 	case false:
 		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose)) == false)
@@ -116,8 +114,7 @@ update_status ModuleCongratzScreen::Update()
 		}
 		App->fonts->BlitText(58.5, 173, 0, "i'll take you on anytime,");
 		App->fonts->BlitText(58.5, 188, 0, "taco breath!");
-		App->fonts->BlitText(220, 47, 1, "waiting for");
-		App->fonts->BlitText(225, 58, 1, "a challenger");
+
 
 		break;
 	}
