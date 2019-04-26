@@ -266,7 +266,7 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 
-	pivot_player.x = 100;
+	pivot_player.x = 90;
 	pivot_player.y = 150;
 	Player_Health_Value = 126;
 	LOG("Loading player textures");
@@ -286,22 +286,21 @@ bool ModulePlayer::Start()
 		HurtColliders[2] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
 		HitCollider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HIT,App->player1);
 		HitCollider->Enabled = false;
-
+		Side = 1;
 		
 		
 	}
 		
 	if (PlayerNumber == 2) 
 	{
-		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
+		player_collider = App->collision->AddCollider({ { pivot_player.x * PlayerNumber ,pivot_player.y ,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
 		//HitColider = App->collision->AddCollider({ { 200, 200, 10, 10, },{ 0, 0 },{ 0, 0 } }, COLLIDER_ENEMY_SHOT, App->player2);
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 		HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 		HurtColliders[2] = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 		pivot_player.x += 200;
+		Side = 2;
 	}
-
-	
 
 	return ret;
 }
@@ -385,6 +384,18 @@ update_status ModulePlayer::Update()
 			LOG("\nGod Mode OFF");
 		}
 
+		//ViewPoint
+		if (pivot_player.x < App->player2->pivot_player.x) 
+		{
+			Side = 1;
+		}
+		else
+		{
+			Side = 2;
+		}
+
+
+
 	}
 
 
@@ -396,6 +407,16 @@ update_status ModulePlayer::Update()
 
 			pivot_player.x -= 3;
 
+		}
+
+		//ViewPoint
+		if (pivot_player.x < App->player1->pivot_player.x)
+		{
+			Side = 1;
+		}
+		else
+		{
+			Side = 2;
 		}
 
 	}
@@ -460,7 +481,7 @@ update_status ModulePlayer::Update()
 		}
 
 	}
-	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, PlayerNumber);
+	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
 	if (PlayerNumber == 1) 
 	{
 		if(isJumping)
@@ -492,7 +513,7 @@ update_status ModulePlayer::Update()
 		HurtColliders[i]->SetRect(r.hurtColliders[i],current_animation->damage, pivot_player);
 	}
 	if(HitCollider != nullptr)
-	HitCollider->SetRect(r.hitCollider,current_animation->damage, pivot_player);
+		HitCollider->SetRect(r.hitCollider,current_animation->damage, pivot_player);
 	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
 	return UPDATE_CONTINUE;
 }
@@ -541,10 +562,23 @@ void ModulePlayer::OnCollision(Collider * c1, Collider * c2)
 		if(c2->rect.x > pivot_player.x)
 		{
 			//FrontColision = true;
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x); 
+			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
 		}
 
 		CurrentColider = c2;
+	}
+
+	//When coliding with a wall, you'll get infiniteleport
+	if (c2->type == COLLIDER_PLAYER_COLLISION || c2->type == COLLIDER_ENEMY_COLLISION) 
+	{
+		if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+		{
+			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+		}
+		if (pivot_player.x < c2->rect.x)
+		{
+			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+		}
 	}
 
 	//Hit Detection
@@ -762,28 +796,44 @@ void ModulePlayer::states(int speed)
 {
 	player_state state = ControlStates();
 
+
 	// Control state
 	switch (state)
 	{
 	case ST_IDLE:
 		current_animation = &idle;
+		//if (player_collider->CheckCollision(App->player2->player_collider->rect) == false)
+		//{
+		//	player_collider->Enabled = true;
+		//}
+		player_collider->Enabled = true;
 		LOG("IDLE");
 		break;
 	case ST_WALK_FORWARD:
 		pivot_player.x += speed;
-		if (current_animation != &forward)
+		if (current_animation != &forward && Side == 1)
 		{
 			forward.ResetCurrentFrame();
 			current_animation = &forward;
+		}
+		if (current_animation != &backward && Side == 2) 
+		{
+			backward.ResetCurrentFrame();
+			current_animation = &backward;
 		}
 		LOG("FORWARD");
 		break;
 	case ST_WALK_BACKWARD:
 		pivot_player.x -= speed;
-		if (current_animation != &backward)
+		if (current_animation != &backward && Side == 1)
 		{
 			backward.ResetCurrentFrame();
 			current_animation = &backward;
+		}		
+		if (current_animation != &forward && Side == 2)
+		{
+			forward.ResetCurrentFrame();
+			current_animation = &forward;
 		}
 		LOG("BACKWARD");
 		break;
@@ -814,12 +864,14 @@ void ModulePlayer::states(int speed)
 			jump.ResetCurrentFrame();
 			current_animation = &jump;
 			App->audio->Play_chunk(jumpfx);
+			player_collider->Enabled = false;
 		}
 		LOG("NEUTRAL JUMP");
 		break;
 	case ST_KOOU_KEN:
 		if (current_animation != &koouKen)
 		{
+			//Whem side == 2 does not work
 			koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
 			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_HIT, 600, 30);
@@ -834,6 +886,7 @@ void ModulePlayer::states(int speed)
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
+			player_collider->Enabled = false;
 		}
 		LOG("NEUTRAL JUMP PUNCH");
 		break;	
@@ -844,6 +897,7 @@ void ModulePlayer::states(int speed)
 			jumpkick.ResetCurrentFrame();
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
+			player_collider->Enabled = false;
 		}
 		LOG("NEUTRAL JUMP KIcK");
 		break;	
@@ -853,6 +907,7 @@ void ModulePlayer::states(int speed)
 			jump_forward.ResetCurrentFrame();
 			current_animation = &jump_forward;
 			App->audio->Play_chunk(jumpfx);
+			player_collider->Enabled = false;
 		}
 		LOG("FORWARD JUMP");
 		break;
@@ -863,6 +918,7 @@ void ModulePlayer::states(int speed)
 			HitCollider->Enabled = true;
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
+			player_collider->Enabled = false;
 		}
 		LOG("FORWARD JUMP KICK");
 		break;	
@@ -873,6 +929,7 @@ void ModulePlayer::states(int speed)
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
+			player_collider->Enabled = false;
 		}
 		LOG("FORWARD JUMP PUNCH");
 		break;
@@ -882,6 +939,7 @@ void ModulePlayer::states(int speed)
 			jump_backward.ResetCurrentFrame();
 			current_animation = &jump_backward;
 			App->audio->Play_chunk(jumpfx);
+			player_collider->Enabled = false;
 		}
 		LOG("BACKWARD JUMP");
 		break;
@@ -892,6 +950,7 @@ void ModulePlayer::states(int speed)
 			jumppunch.ResetCurrentFrame();
 			current_animation = &jumppunch;
 			App->audio->Play_chunk(punchfx);
+			player_collider->Enabled = false;
 		}
 		LOG("BACKWARD JUMP PUNCH");
 		break;
@@ -902,6 +961,7 @@ void ModulePlayer::states(int speed)
 			jumpkick.ResetCurrentFrame();
 			current_animation = &jumpkick;
 			App->audio->Play_chunk(kickfx);
+			player_collider->Enabled = false;
 		}
 		LOG("BACKWARD JUMP KICK");
 		break;
@@ -909,6 +969,7 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &fall) {
 			fall.ResetCurrentFrame();
 			current_animation = &fall;
+			player_collider->Enabled = false;
 		}
 		LOG("FALL");
 		break;
@@ -916,6 +977,7 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &fall) {
 			fall.ResetCurrentFrame();
 			current_animation = &fall;
+			player_collider->Enabled = false;
 		}
 		LOG("FALL");
 		break;
@@ -923,6 +985,7 @@ void ModulePlayer::states(int speed)
 		if (current_animation != &fall) {
 			fall.ResetCurrentFrame();
 			current_animation = &fall;
+			player_collider->Enabled = false;
 		}
 		LOG("FALL");
 		break;

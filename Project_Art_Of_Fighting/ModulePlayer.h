@@ -162,6 +162,7 @@ public:
 
 
 	int PlayerNumber;
+	int Side;
 	SDL_Texture* Player_texture;
 	SDL_Texture* Player_Health_BG;
 	SDL_Texture* Player_Health_BG_Empty;
