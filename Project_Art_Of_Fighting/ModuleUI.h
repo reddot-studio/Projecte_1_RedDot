@@ -27,11 +27,12 @@ public:
 	SDL_Texture* TimerTexture;
 	int timer;
 	float timer_float;
-	int tick1 = 0, tick2 = 0;
+	int tick1 = 0, tick2 = 0, tick3 = 0;
 	Animation winpoint;
 	Animation* current_animation;
 	int counter1 = 0, counter2 = 0;
-	char* time;
+	char time[10];
+	int dont_pass = 1;
 };
 
 #endif // __MODULESCENEKEN_H__
