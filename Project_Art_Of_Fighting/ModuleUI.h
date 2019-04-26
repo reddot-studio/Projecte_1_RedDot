@@ -22,13 +22,15 @@ public:
 
 
 	RectSprites RendPosition;
-
+	SDL_Texture* win_points;
 	SDL_Texture* TimerTexture;
 	int timer;
 	float timer_float;
 	int tick1 = 0, tick2 = 0;
 	char* time;
-
+	Animation winpoint;
+	Animation* current_animation;
+	int counter1 = 0, counter2 = 0;
 };
 
 #endif // __MODULESCENEKEN_H__

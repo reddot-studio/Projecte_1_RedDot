@@ -308,10 +308,12 @@ bool ModulePlayer::Start()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	//seconds
+	//4 seconds without moving
 	tick2 = SDL_GetTicks();
 	if (tick2 - tick1 < 4000) { App->input->Disable(); }
 	else{ App->input->Enable(); }
+
+
 	int speed = 1;
 	//Player1 Input
 	if (PlayerNumber == 1 && App->player1->Player_Health_Value > 0) 
