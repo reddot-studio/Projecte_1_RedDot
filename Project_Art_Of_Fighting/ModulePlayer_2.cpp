@@ -424,14 +424,8 @@ update_status ModulePlayer_2::Update()
 
 	}
 
-	if (Side == 2 && (current_animation == &punch)) 
-	{
-		App->render->Blit(graphics, pivot_player.x - r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
-	}
-	else
-	{
-		App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
-	}
+	
+	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
 
 
 	if (isJumping)
