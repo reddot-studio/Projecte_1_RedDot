@@ -365,7 +365,7 @@ update_status ModulePlayer_2::Update()
 		}
 
 		//ViewPoint
-		if (pivot_player.x < App->player1->pivot_player.x)
+		if (player_collider->rect.x < App->player1->player_collider->rect.x)
 		{
 			Side = 1;
 		}
@@ -506,7 +506,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	//Colision with wall
 	if (c2->type == COLLIDER_WALL)
 	{
-
+		WallColiding = true;
 		if (c2->rect.x < pivot_player.x)
 		{
 			//BackColision = true;
@@ -518,19 +518,38 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
 		}
 
+		if (c2->LeftRight == false && player_collider->rect.x <= c2->rect.x)
+		{
+			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+		}
+		if (c2->LeftRight == true && player_collider->rect.x + player_collider->rect.w > c2->rect.x)
+		{
+			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+		}
+
 		CurrentColider = c2;
+	}
+	else
+	{
+		WallColiding = false;
 	}
 
 	//When coliding with a wall, you'll get infiniteleport
 	if (c2->type == COLLIDER_PLAYER_COLLISION && (c1->Enabled && c2->Enabled))
 	{
-		if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+		if(!App->player1->WallColiding && !isJumping && !WallColiding)
 		{
-			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
-		}
-		if (pivot_player.x < c2->rect.x)
-		{
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x) - 1;
+			if (player_collider->rect.x != App->player1->player_collider->rect.x + 1 && player_collider->rect.x != App->player1->player_collider->rect.x - 1)
+			{
+				if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+				{
+					pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+				}
+				if (pivot_player.x < c2->rect.x)
+				{
+					pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x) - 1;
+				}
+			}
 		}
 	}
 

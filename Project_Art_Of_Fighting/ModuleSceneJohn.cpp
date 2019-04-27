@@ -71,7 +71,9 @@ bool ModuleSceneJohn::Start()
 	//Screen Limits
 	BackPanel = App->collision->AddCollider({ { 0,0,25, SCREEN_HEIGHT },{ 0,0 }, {0, 0} }, COLLIDER_WALL, App->scene_john);
 	FrontPanel = App->collision->AddCollider({ { rect_background.rect.w-25, 0 , 25, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_john);
-	
+	BackPanel->LeftRight = false;
+	FrontPanel->LeftRight = true;
+
 	App->player1->Enable();
 	App->player2->Enable();
 	App->sceneUI->Enable();
