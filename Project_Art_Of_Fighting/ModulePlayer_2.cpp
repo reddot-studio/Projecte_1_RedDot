@@ -108,7 +108,7 @@ ModulePlayer_2::ModulePlayer_2()
 	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, rect1, rect2, rect3, hit_punch_colllider);
 	punch.PushBack({ 546, 350, 89 , 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
 	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
-	punch.speed = 0.5f;
+	punch.speed = 0.25f;
 	punch.loop = false;
 	punch.damage = 20;
 
@@ -117,7 +117,7 @@ ModulePlayer_2::ModulePlayer_2()
 	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 790, 235, 103, 113 }, -44, -48, 8, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
-	kick.speed = 1.0f;
+	kick.speed = 0.5f;
 	kick.damage = 30;
 	kick.loop = false;
 
@@ -206,9 +206,11 @@ ModulePlayer_2::ModulePlayer_2()
 
 
 	//DAMAGES
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 478 ,1254,69,112 }, 0, 0, 0);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 547,1253,81,113 }, 0, 0, 0);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 478 ,1254,69,112 }, 0, 0, 0);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 478 ,1254,69,112 }, -29, -43, 3);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 547,1253,81,113 }, -29, -43, 3);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 478 ,1254,69,112 }, -29, -43, 3);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.5f;
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 
 	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 745,1144,64,109 }, 0, 0, 0);
 	pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch.PushBack({ 586,1144,68,108 }, 0, 0, 0);
@@ -294,99 +296,99 @@ bool ModulePlayer_2::Start()
 update_status ModulePlayer_2::Update()
 {
 
-	speed = 1;
+	speed = 1.5;
 	//if (Player_Health_Value > 0)
 	//{
 
-		states(speed);
-		//Move right
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_UP) last_input = IN_RIGHT_UP;
+	states(speed);
+	//Move right
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_UP) last_input = IN_RIGHT_UP;
 
-		//Move Left
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_UP) last_input = IN_LEFT_UP;
+	//Move Left
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_UP) last_input = IN_LEFT_UP;
 
-		//Crouch
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_UP)
-		{
-			last_input = IN_CROUCH_UP;
-			crouch.ResetCurrentFrame();
+	//Crouch
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_UP)
+	{
+		last_input = IN_CROUCH_UP;
+		crouch.ResetCurrentFrame();
+	}
+
+	//Punch weak
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_4] == KEY_DOWN)	last_input = IN_PUNCH;
+
+	//kick weak
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_DOWN)	last_input = IN_KICK;
+
+	//Ko'ou Ken
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN)	last_input = IN_KOOU_KEN;
+
+	//Jump
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_5] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
+
+
+
+
+	//Check duration of animation and reset state when it finishes
+	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH)
+	{
+		if (current_animation == &recover) {
+			last_input = IN_RECOVER_FINISH;
 		}
-
-		//Punch weak
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_4] == KEY_DOWN)	last_input = IN_PUNCH;
-
-		//kick weak
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_DOWN)	last_input = IN_KICK;
-
-		//Ko'ou Ken
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN)	last_input = IN_KOOU_KEN;
-
-		//Jump
-		if (App->input->keyboard_state[SDL_SCANCODE_KP_5] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
-
-
-
-
-		//Check duration of animation and reset state when it finishes
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH)
-		{
-			if (current_animation == &recover) {
-				last_input = IN_RECOVER_FINISH;
-			}
-			else {
-				last_input = IN_ATTACK_FINISH;
-			}
+		else {
+			last_input = IN_ATTACK_FINISH;
 		}
+	}
 
 
 
-		//DEBUG CONTROLS, Direct win/lose when pressing I or O
-		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
+	//DEBUG CONTROLS, Direct win/lose when pressing I or O
+	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
+	{
+		Deal_Damage(*App->player1, 200);
+	}
+
+	//God Mode
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_ENEMY_COLLISION)
+	{
+
+		player_collider->type = COLLIDER_NONE;
+		timer = SDL_GetTicks();
+		LOG("\nGod Mode ON");
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
+	{
+
+		player_collider->type = COLLIDER_ENEMY_COLLISION;
+		LOG("\nGod Mode OFF");
+	}
+
+	//ViewPoint
+	if (player_collider->rect.x < App->player1->player_collider->rect.x)
+	{
+		Side = 1;
+	}
+	else
+	{
+		Side = 2;
+	}
+
+	tick2 = SDL_GetTicks();
+	if (tick2 - tick1 < 4000)
+	{
+		App->input->Paused = true;
+	}
+	else
+	{
+		if (App->input->Paused == true && App->sceneUI->time_over == false)
 		{
-			Deal_Damage(*App->player1, 200);
-		}
 
-		//God Mode
-		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_ENEMY_COLLISION)
-		{
-
-			player_collider->type = COLLIDER_NONE;
-			timer = SDL_GetTicks();
-			LOG("\nGod Mode ON");
+			App->input->Paused = false;
 		}
-		if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
-		{
-
-			player_collider->type = COLLIDER_ENEMY_COLLISION;
-			LOG("\nGod Mode OFF");
-		}
-
-		//ViewPoint
-		if (player_collider->rect.x < App->player1->player_collider->rect.x)
-		{
-			Side = 1;
-		}
-		else
-		{
-			Side = 2;
-		}
-
-		tick2 = SDL_GetTicks();
-		if (tick2 - tick1 < 4000)
-		{
-			App->input->Paused = true;
-		}
-		else
-		{
-			if (App->input->Paused == true && App->sceneUI->time_over == false)
-			{
-
-				App->input->Paused = false;
-			}
-		}
+	}
 
 	//}
 
@@ -436,10 +438,10 @@ update_status ModulePlayer_2::Update()
 			last_input = IN_RECOVER;
 			isJumping = false;
 		}
-
 	}
 
-	
+
+
 	App->render->Blit(graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
 
 
@@ -603,6 +605,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -616,6 +619,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -629,6 +633,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -776,6 +781,12 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
 		}
 		break;
+	case ST_DAMAGE:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
 	}
 
 	last_input = IN_UNKNOWN;
@@ -797,6 +808,9 @@ void ModulePlayer_2::states(int speed)
 		//{
 		//	player_collider->Enabled = true;
 		//}
+		HurtColliders[0]->Enabled = true;
+		HurtColliders[1]->Enabled = true;
+		HurtColliders[2]->Enabled = true;
 		player_collider->Enabled = true;
 		LOG("IDLE");
 		break;
@@ -1012,6 +1026,13 @@ void ModulePlayer_2::states(int speed)
 		}
 		LOG("CROUCH KICK");
 		break;
+	case ST_DAMAGE:
+		if (current_animation != &pose_idle_receive_standing_punch_kick_plus_jump_punch) {
+			pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
+			current_animation = &pose_idle_receive_standing_punch_kick_plus_jump_punch;
+		}
+		LOG("DAMAGE");
+		break;
 	}
 	current_state = state;
 
@@ -1019,6 +1040,12 @@ void ModulePlayer_2::states(int speed)
 
 void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 {
+
+	last_input = IN_RECEIVE_DAMAGE;
+	HurtColliders[0]->Enabled = false;
+	HurtColliders[1]->Enabled = false;
+	HurtColliders[2]->Enabled = false;
+
 	App->audio->Play_chunk(dmg);
 	if (Enemy.Player_Health_Value_p1 - AttackDamage <= 0)
 	{
@@ -1040,7 +1067,7 @@ void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 
 void ModulePlayer_2::CheckHealth(ModulePlayer_1&Enemy)
 {
-	
+
 	if ((Enemy.Player_Health_Value_p1 > Player_Health_Value_p2) && App->sceneUI->time_over == true)
 	{
 		Player_Health_Value_p2 = 126;

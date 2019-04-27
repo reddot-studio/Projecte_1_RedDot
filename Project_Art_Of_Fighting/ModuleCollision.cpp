@@ -103,16 +103,18 @@ update_status ModuleCollision::PreUpdate()
 				// skip empty colliders
 				if (colliders[k] == nullptr)
 					continue;
-
-				c2 = colliders[k];
-
-				if (c1->CheckCollision(c2->rect) == true)
+				if (colliders[k]->Enabled == true)
 				{
-					if (matrix[c1->type][c2->type] && c1->callback)
-						c1->callback->OnCollision(c1, c2);
+					c2 = colliders[k];
 
-					if (matrix[c2->type][c1->type] && c2->callback)
-						c2->callback->OnCollision(c2, c1);
+					if (c1->CheckCollision(c2->rect) == true)
+					{
+						if (matrix[c1->type][c2->type] && c1->callback)
+							c1->callback->OnCollision(c1, c2);
+
+						if (matrix[c2->type][c1->type] && c2->callback)
+							c2->callback->OnCollision(c2, c1);
+					}
 				}
 			}
 		}
