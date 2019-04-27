@@ -150,7 +150,7 @@ update_status ModuleSceneTodo::Update()
 		App->player1->CheckHealth(*App->player2);
 		App->player2->CheckHealth(*App->player1);
 		
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup, 0);
 			App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame());
 			if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 			{

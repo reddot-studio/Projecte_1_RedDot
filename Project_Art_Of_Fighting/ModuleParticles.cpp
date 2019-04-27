@@ -104,7 +104,7 @@ update_status ModuleParticles::Update()
 		else if(SDL_GetTicks() >= p->born)
 		{
 			RectSprites r = p->anim.GetCurrentFrame();
-			App->render->Blit(graphics, p->position.x +r.offset.x, p->position.y + r.offset.y, &r);
+			App->render->Blit(graphics, p->position.x +r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;
@@ -116,7 +116,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage)
+void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -126,6 +126,7 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
+			p->Side = Side;
 			if (collider_type != COLLIDER_NONE) {
 				RectSprites r = p->anim.GetCurrentFrame();
 				p->collider = App->collision->AddCollider(r, collider_type, this, Damage);
@@ -172,7 +173,7 @@ Particle::~Particle()
 }
 Particle::Particle(const Particle& p) : 
 anim(p.anim), position(p.position), speed(p.speed),
-fx(p.fx), born(p.born), life(p.life)
+fx(p.fx), born(p.born), life(p.life), Side(p.Side)
 {}
 
 bool Particle::Update()
@@ -191,9 +192,20 @@ bool Particle::Update()
 		if (anim.Finished()) {
 			ret = false;
 		}
-	if (SDL_GetTicks() >= born) {
-		position.x += speed.x;
-		position.y += speed.y;
+	if (SDL_GetTicks() >= born)
+	{
+
+		if (Side == 1) 
+		{
+			position.x += speed.x;
+			position.y += speed.y;
+		}
+		else
+		{
+			position.x -= speed.x;
+			position.y -= speed.y;
+		}
+
 		if (collider != nullptr)
 			collider->SetPos(position.x, position.y);
 	}
