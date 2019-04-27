@@ -43,6 +43,8 @@ bool ModuleRender::Init()
 	//Camera Limits
 	CameraLimitL = App->collision->AddCollider({ {0, 0, 25, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
 	CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH - 25, 0, 25, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
+	CameraLimitL->LeftRight = false;
+	CameraLimitR->LeftRight = true;
 	
 	if(renderer == NULL)
 	{

@@ -26,6 +26,7 @@ struct Collider
 	COLLIDER_TYPE type;
 	Module* callback = nullptr;
 	bool Enabled = true;
+	bool LeftRight;
 	int ColliderDamage;
 
 	Collider(RectSprites rectangle, COLLIDER_TYPE type, Module* callback = nullptr, int Damage = 0) :

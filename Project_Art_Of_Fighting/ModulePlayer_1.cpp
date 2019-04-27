@@ -364,7 +364,7 @@ update_status ModulePlayer_1::Update()
 		}
 
 		//ViewPoint
-		if (pivot_player.x < App->player2->pivot_player.x) 
+		if (player_collider->rect.x < App->player2->player_collider->rect.x) 
 		{
 			Side = 1;
 		}
@@ -372,6 +372,9 @@ update_status ModulePlayer_1::Update()
 		{
 			Side = 2;
 		}
+
+		//if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)
+		//	App->player1->pivot_player = App->player2->pivot_player;
 
 		//4 seconds without moving
 		tick2 = SDL_GetTicks();
@@ -514,31 +517,70 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 	//Colision with wall
 	if (c2->type == COLLIDER_WALL)
 	{
-
-		if(c2->rect.x < pivot_player.x) 
+		WallColiding = true;
+		if (c2->rect.x < pivot_player.x)
 		{
 			//BackColision = true;
 			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
 		}
-		if(c2->rect.x > pivot_player.x)
+		if (c2->rect.x > pivot_player.x)
 		{
 			//FrontColision = true;
 			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
 		}
 
+		if (c2->LeftRight == false && player_collider->rect.x <= c2->rect.x)
+		{
+			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+		}
+		if (c2->LeftRight == true && player_collider->rect.x + player_collider->rect.w > c2->rect.x)
+		{
+			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+		}
+
+
 		CurrentColider = c2;
+	}
+	else
+	{
+		WallColiding = false;
 	}
 
 	//When coliding with a wall, you'll get infiniteleport
 	if (c2->type == COLLIDER_ENEMY_COLLISION && (c2->Enabled && c1->Enabled)) 
 	{
-		if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+
+		if (App->player2->WallColiding)
 		{
-			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x) + 1;
+			if (player_collider->rect.x >= App->player2->player_collider->rect.x && Side == 1) 
+			{
+				int test = App->player2->pivot_player.x;
+				if (App->player2->Side == 2)
+				{
+					App->player2->pivot_player.x = player_collider->rect.x + c2->rect.w - 3;
+				}
+				if (App->player2->Side == 1)
+				{
+					App->player2->pivot_player.x = player_collider->rect.x - c2->rect.w + 3;
+				}
+				pivot_player.x = test;
+			}
 		}
-		if (pivot_player.x < c2->rect.x)
+		if(!App->player2->WallColiding)
 		{
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+
+			if (player_collider->rect.x != App->player2->player_collider->rect.x + 2 && player_collider->rect.x != App->player2->player_collider->rect.x - 2 && player_collider->rect.x != App->player2->player_collider->rect.x)
+			{
+
+				if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+				{
+					pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x) + 1;
+				}
+				if (pivot_player.x < c2->rect.x)
+				{
+					pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+				}
+			}
 		}
 	}
 
@@ -548,7 +590,6 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 
 		Deal_Damage(*App->player2, c2->ColliderDamage);
 		c2->Enabled = false;
-
 	}
 
 

@@ -71,6 +71,8 @@ bool ModuleSceneTodo::Start()
 	//App->collision->AddCollider({ {300,0,30,224},{0,0} }, COLLIDER_WALL);
 	BackPanel = App->collision->AddCollider({ { 0,0,25, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_todo);
 	FrontPanel = App->collision->AddCollider({ {rect_background.rect.w - 25, 0 , 25, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_todo);
+	BackPanel->LeftRight = false;
+	FrontPanel->LeftRight = true;
 	App->player1->Enable();
 	App->player2->Enable();
 	App->sceneUI->Enable();

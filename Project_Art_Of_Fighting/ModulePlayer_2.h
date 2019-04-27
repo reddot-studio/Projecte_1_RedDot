@@ -124,6 +124,7 @@ public:
 	SDL_Texture* Player_Health;
 	SDL_Texture* Player_Spirit;
 	int speed;
+	bool WallColiding = false;
 
 	int tick1 = 0, tick2 = 0;
 };
