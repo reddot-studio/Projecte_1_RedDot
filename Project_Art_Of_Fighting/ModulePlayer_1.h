@@ -125,6 +125,7 @@ public:
 	SDL_Texture* Player_Spirit;
 	int speed;
 	bool WallColiding = false;
+	ModulePlayer_2* Enemy;
 
 	int tick1 = 0, tick2 = 0;
 };

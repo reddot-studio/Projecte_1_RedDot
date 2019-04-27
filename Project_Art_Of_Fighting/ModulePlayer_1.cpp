@@ -288,6 +288,7 @@ bool ModulePlayer_1::Start()
 		Side = 1;
 		
 	tick1 = SDL_GetTicks();
+	Enemy = App->player2;
 	return ret;
 }
 
@@ -516,75 +517,75 @@ bool ModulePlayer_1::CleanUp()
 void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 {
 
-	//Colision with wall
-	if (c2->type == COLLIDER_WALL)
+	//Camera limits
+	//Is Player coliding with wall?
+	if (c2->type == COLLIDER_WALL) 
 	{
-		WallColiding = true;
-		if (c2->rect.x < pivot_player.x)
+		//Camera is not under nor over the limit
+		if (-App->render->camera.x < 0)
+			App->render->camera.x = 0;
+		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44)
+			App->render->camera.x = -(App->render->CurrentSceneLenght - 44);
+
+		//Coliding with left side of the camera?
+		if (c2->LeftRight == false) 
 		{
-			//BackColision = true;
+			//Move camera
+			if(-App->render->camera.x > 0)
+				App->render->camera.x += App->render->speed;
+			//Limit player inside camera
 			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
 		}
-		if (c2->rect.x > pivot_player.x)
-		{
-			//FrontColision = true;
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
-		}
 
-		if (c2->LeftRight == false && player_collider->rect.x <= c2->rect.x)
+		if (c2->LeftRight == true) 
 		{
-			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
+			//Move camera and limit player
+			App->render->camera.x -= App->render->speed;
+			pivot_player.x = c2->rect.x + (pivot_player.x - player_collider->rect.x) - player_collider->rect.w;
 		}
-		if (c2->LeftRight == true && player_collider->rect.x + player_collider->rect.w > c2->rect.x)
-		{
-			pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
-		}
-
-
-		CurrentColider = c2;
-	}
-	else
-	{
-		WallColiding = false;
 	}
 
-	//When coliding with a wall, you'll get infiniteleport
-	if (c2->type == COLLIDER_ENEMY_COLLISION && (c2->Enabled && c1->Enabled)) 
+	//Am I coliding with an enemy?
+	if (c2->type == COLLIDER_ENEMY_COLLISION && (c1->Enabled && c2->Enabled)) 
 	{
 
-		if (App->player2->WallColiding)
+		//Only if is moving
+		if (current_state != ST_IDLE) 
 		{
-			if (player_collider->rect.x >= App->player2->player_collider->rect.x && Side == 1) 
+			//When can you move the enemy? I'm coliding from the right?
+			if (player_collider->rect.x + player_collider->rect.w - 5 < Enemy->player_collider->rect.x)
 			{
-				int test = App->player2->pivot_player.x;
-				if (App->player2->Side == 2)
+				if (Enemy->player_collider->rect.x + Enemy->player_collider->rect.w < App->render->CameraLimitR->rect.x)
 				{
-					App->player2->pivot_player.x = player_collider->rect.x + c2->rect.w - 3;
+					//Am i entering to the enemy by the left?
+					//eNEMY REPELED BY PLAYER
+					Enemy->pivot_player.x = player_collider->rect.x + player_collider->rect.w + (Enemy->pivot_player.x - Enemy->player_collider->rect.x);
 				}
-				if (App->player2->Side == 1)
+				else
 				{
-					App->player2->pivot_player.x = player_collider->rect.x - c2->rect.w + 3;
+					//PLAYED REPELED BY ENEMY ON WALL COLISION
+					pivot_player.x = Enemy->pivot_player.x - (Enemy->pivot_player.x - Enemy->player_collider->rect.x) - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
 				}
-				pivot_player.x = test;
 			}
-		}
-		if(!App->player2->WallColiding)
-		{
-
-			if (player_collider->rect.x != App->player2->player_collider->rect.x + 2 && player_collider->rect.x != App->player2->player_collider->rect.x - 2 && player_collider->rect.x != App->player2->player_collider->rect.x)
+			else
 			{
-
-				if (pivot_player.x > c2->rect.x + (c2->rect.w / 3))
+				if (Enemy->player_collider->rect.x > App->render->CameraLimitL->rect.x + App->render->CameraLimitL->rect.w)
 				{
-					pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x) + 1;
+					//Am i entering to the enemy by the RIGHT?
+					//PLAYER PUSHING ENEMY BACKWARDS
+					Enemy->pivot_player.x = pivot_player.x - (pivot_player.x - player_collider->rect.x) - ((Enemy->player_collider->rect.x + Enemy->player_collider->rect.w) - Enemy->pivot_player.x);
 				}
-				if (pivot_player.x < c2->rect.x)
+				else
 				{
-					pivot_player.x = c2->rect.x - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+					pivot_player.x = Enemy->player_collider->rect.x + Enemy->player_collider->rect.w + (pivot_player.x - player_collider->rect.x);
 				}
 			}
 		}
+		
+
+		LOG("");
 	}
+
 
 	//Hit Detection
 	if (c2->type == COLLIDER_ENEMY_HIT && c2->Enabled)

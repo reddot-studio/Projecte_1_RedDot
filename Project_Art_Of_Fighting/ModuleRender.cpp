@@ -12,7 +12,8 @@
 
 ModuleRender::ModuleRender() : Module()
 {
-	camera.x = camera.y = 0;
+	camera.x = -1;
+	camera.y = 0;
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
 
@@ -46,6 +47,12 @@ bool ModuleRender::Init()
 	CameraLimitL->LeftRight = false;
 	CameraLimitR->LeftRight = true;
 	
+	if (App->scene_john->IsEnabled() == true)
+		CurrentSceneLenght = App->scene_john->rect_background.rect.w;	
+	if (App->scene_todo->IsEnabled() == true)
+		CurrentSceneLenght = App->scene_todo->rect_background.rect.w;
+
+
 	if(renderer == NULL)
 	{
 		LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());

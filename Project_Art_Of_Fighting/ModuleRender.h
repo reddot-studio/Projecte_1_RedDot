@@ -27,6 +27,7 @@ public:
 	SDL_Renderer* renderer = nullptr;
 	SDL_Rect camera;
 	int speed = 3;
+	int CurrentSceneLenght;
 
 	Collider* CameraLimitL;
 	Collider* CameraLimitR;
