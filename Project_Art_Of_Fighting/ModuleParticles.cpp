@@ -59,8 +59,8 @@ bool ModuleParticles::Start()
 	post_koouKen.anim.loop = false;
 
 	//Effects
-	hitParticle.anim.PushBack({ 918,391,18,23 }, 0, 0, 4);
-	hitParticle.anim.PushBack({ 951,385,29,36 }, 0, 0, 4);
+	//hitParticle.anim.PushBack({ 918,391,18,23 }, 0, 0, 4);
+	//hitParticle.anim.PushBack({ 951,385,29,36 }, 0, 0, 4);
 
 
 
