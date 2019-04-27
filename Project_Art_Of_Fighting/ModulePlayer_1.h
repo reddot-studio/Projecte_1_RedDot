@@ -100,7 +100,8 @@ public:
 
 	SDL_Rect ActiveScene;
 	int timer;
-	int p1_win = 0;
+	int p2_win = 0;
+	bool win_check = false;
 	bool isJumping = false;
 
 	//bool BackColision, FrontColision;
@@ -110,9 +111,9 @@ public:
 
 
 	//PlayerStats
-	int Player_Health_Value;
+	int Player_Health_Value_p1;
 
-	void Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage);
+	void Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage);
 
 	int Side;
 	SDL_Texture* Player_texture;

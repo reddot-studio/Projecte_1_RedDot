@@ -20,8 +20,28 @@ ModuleSceneTodo::ModuleSceneTodo()
 	rect_background.rect.w = 556;
 	rect_background.rect.h = 224;
 	rect_background.rect.x = 0;
-	rect_background.rect.y = 338;	
+	rect_background.rect.y = 338;
 
+	indicator.rect.x = 0;
+	indicator.rect.y = 96;
+	indicator.rect.h = 16;
+	indicator.rect.w = 100;
+
+	timeup.rect.x = 0;
+	timeup.rect.y = 129;
+	timeup.rect.w = 104;
+	timeup.rect.h = 16;
+
+	nthng.PushBack({ 120,23,104,16 },0,0,30);
+	nthng.speed = 0.15f;
+
+	winp1.PushBack({ 0,40,116,40 }, 0, 0, 30);
+	winp1.speed = 0.15f;
+	
+	winp2.PushBack({ 0,0,120,40 },0 , 0,30 );
+	winp2.speed = 0.15f;
+
+	
 }
 
 ModuleSceneTodo::~ModuleSceneTodo()
@@ -30,6 +50,21 @@ ModuleSceneTodo::~ModuleSceneTodo()
 
 bool ModuleSceneTodo::Start()
 {
+	if (current_animation == &winp1)
+	{
+		App->player2->p1_win++;
+	}
+	if (current_animation == &winp2)
+	{
+		App->player1->p2_win++;
+	}
+	win_p1 = App->player2->p1_win + 1;
+	win_p2 = App->player2->p1_win + 1;
+	current_animation = nullptr;
+	winp1.ResetCurrentFrame();
+	winp2.ResetCurrentFrame();
+	//timeup.ResetCurrentFrame();
+	tick1 = 0;
 	tick1 = SDL_GetTicks();
 	LOG("Loading todo scene");
 	todo_music = App->audio->Load_music("Assets/Audio/033xART OF FIGHT.ogg");
@@ -44,10 +79,6 @@ bool ModuleSceneTodo::Start()
 
 	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
 
-	indicator.rect.x = 0;
-	indicator.rect.y = 96;
-	indicator.rect.h = 16;
-	indicator.rect.w = 100;
 
 	indicator_fight = App->textures->Load("Assets/UI_Sprites/indicator_fight.png");
 
@@ -62,7 +93,31 @@ update_status ModuleSceneTodo::Update()
 		return update_status::UPDATE_STOP;
 	}
 	if (tick2 - tick1 < 2000) {
-		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-50, (SCREEN_HEIGHT / 2)-8, &indicator);
+		if (rounds_counter == 0)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 96;
+			indicator.rect.w = 100;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator);
+		}
+		if (rounds_counter == 1)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 80;
+			indicator.rect.w = 104;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator);
+		}
+		if (rounds_counter >1)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 145;
+			indicator.rect.w = 168;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator);
+		}
+		
 	}
 	if (tick2-tick1>2000 && tick2 - tick1 < 4000) {
 		indicator.rect.x = 0;
@@ -71,6 +126,120 @@ update_status ModuleSceneTodo::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
 	}
+
+	//TIME UP//
+	if (App->sceneUI->time_over == true)
+	{
+		//current_animation = &timeup;
+		
+
+		if (App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)
+		{
+			current_animation = &winp2;
+		}
+		else
+	
+
+		if (App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)
+		{
+			current_animation = &winp1;
+		}
+
+		if (current_animation != &winp2 && current_animation != &winp1)
+		{
+			current_animation = &nthng;
+		}
+
+			App->input->Paused = true;
+			if (App->player1->isJumping != true)
+			{
+				App->player1->current_state = ST_IDLE;
+				App->player1->last_input = IN_UNKNOWN;
+			}
+
+			if (App->player2->isJumping != true)
+			{
+				App->player2->current_state = ST_IDLE;
+				App->player2->last_input = IN_UNKNOWN;
+			}
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup);
+
+		
+				if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && win_p1 < 2 /*|| (App->player1->p2_win+1)<2)*/)
+				{
+					App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
+				}
+				if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && win_p2 > 2 /*|| (App->player1->p2_win+1)==2)*/)
+				{
+					App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+				}
+
+
+		App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame());
+	
+	}
+
+
+	if (App->player2->win_check == true)
+	{
+		current_animation = &winp1;
+	
+		App->input->Paused = true;
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
+
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1&& App->player2->p1_win<2)
+		{
+			App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
+		}
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player2->p1_win >= 2)
+		{
+			App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+		}
+	}
+
+	if (App->player1->win_check == true)
+	{
+		current_animation = &winp2;
+
+		App->input->Paused = true;
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
+
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+
+		
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
+
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player1->p2_win<2)
+		{
+			App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
+		}
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player1->p2_win >= 2)
+		{
+			App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+		}
+	}
+
+
+	//JOHN SCENE
 	//if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && !App->input->Paused)
 	//{
 	//	App->fade->FadeToBlack( App->scene_todo, App->scene_john);
@@ -88,12 +257,24 @@ bool ModuleSceneTodo::CleanUp()
 		BackPanel->to_delete = true;
 	}
 
+	if (current_animation != &nthng)
+	{
+		rounds_counter++;
+	}
+
 	App->audio->Unload_music(todo_music);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
 	App->player2->Disable();
 	App->sceneUI->Disable();
 	App->textures->Unload(indicator_fight);
+	App->input->Paused = false;
+	App->sceneUI->time_over = false;
+	App->player1->win_check = false;
+	App->player2->win_check = false;
+
+
+
 	LOG("Unloading todo scene");
 	return true;
 }

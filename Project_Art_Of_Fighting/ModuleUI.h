@@ -26,6 +26,7 @@ public:
 	SDL_Texture* win_points;
 	SDL_Texture* TimerTexture;
 	int timer;
+	bool time_over = false;
 	float timer_float;
 	int tick1 = 0, tick2 = 0, tick3 = 0;
 	Animation winpoint;

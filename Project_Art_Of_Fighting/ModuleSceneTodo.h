@@ -24,8 +24,16 @@ public:
 	Collider* BackPanel;
 	Collider* FrontPanel;
 	SDL_Texture* indicator_fight;
+	Animation winp2;
+	Animation winp1;
+	int win_p1;
+	int win_p2;
+	Animation nthng;
 	RectSprites indicator;
-	int tick1 = 0, tick2 = 0;
+	RectSprites timeup;
+	Animation *current_animation =nullptr;
+	int tick1 = 0, tick2 = 0, tick3 = 0;
+	int rounds_counter = 0;
 };
 
 #endif // __MODULESCENEKEN_H__

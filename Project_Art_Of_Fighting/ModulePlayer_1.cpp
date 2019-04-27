@@ -9,6 +9,7 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleDebug.h"
+#include "ModuleUI.h"
 #include"ModuleCollision.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -267,7 +268,7 @@ bool ModulePlayer_1::Start()
 {
 	pivot_player.x = 90;
 	pivot_player.y = 150;
-	Player_Health_Value = 126;
+	Player_Health_Value_p1 = 126;
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
@@ -286,9 +287,6 @@ bool ModulePlayer_1::Start()
 		HitCollider->Enabled = false;
 		Side = 1;
 		
-		
-
-
 	tick1 = SDL_GetTicks();
 	return ret;
 }
@@ -296,23 +294,21 @@ bool ModulePlayer_1::Start()
 // Update: draw background
 update_status ModulePlayer_1::Update()
 {
-
-
-
 	speed = 1;
-	//Player1 Input
+	
+		//Player1 Input
 		states(speed);
 		//Move right
 		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
 		if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) last_input = IN_RIGHT_UP;
-		
+
 		//Move Left
 		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
 		if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_UP) last_input = IN_LEFT_UP;
-		
+
 		//Crouch
 		if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
-		if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP) 
+		if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 		{
 			last_input = IN_CROUCH_UP;
 			crouch.ResetCurrentFrame();
@@ -320,17 +316,17 @@ update_status ModulePlayer_1::Update()
 
 		//Punch weak
 		if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)	last_input = IN_PUNCH;
-		
+
 		//kick weak
 		if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input = IN_KICK;
-		
+
 		//Ko'ou Ken
 		if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU_KEN;
 
 		//Jump
 		if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
 
-
+	
 
 
 		//Check duration of animation and reset state when it finishes
@@ -349,7 +345,7 @@ update_status ModulePlayer_1::Update()
 		//DEBUG CONTROLS, Direct win/lose when pressing I or O
 		if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
-			Deal_Damage(*App->player1, 200);
+			Deal_Damage(*App->player2, 200);
 		}
 
 		//God Mode
@@ -377,7 +373,6 @@ update_status ModulePlayer_1::Update()
 			Side = 2;
 		}
 
-
 		//4 seconds without moving
 		tick2 = SDL_GetTicks();
 		if (tick2 - tick1 < 4000)
@@ -386,13 +381,12 @@ update_status ModulePlayer_1::Update()
 		}
 		else
 		{		
-			if (App->input->Paused == true) 
+			if (App->input->Paused == true && App->sceneUI->time_over==false) 
 			{
+		
 				App->input->Paused = false;
 			}
 		}
-
-	
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
@@ -401,8 +395,6 @@ update_status ModulePlayer_1::Update()
 		player_collider->rect.x = pivot_player.x;
 		player_collider->rect.h = 90;
 		player_collider->rect.w = 32;
-
-
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH ||  current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK) 
 	{
@@ -554,7 +546,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 	if (c2->type == COLLIDER_ENEMY_HIT && c2->Enabled)
 	{
 
-		Deal_Damage(*App->player1, c2->ColliderDamage);
+		Deal_Damage(*App->player2, c2->ColliderDamage);
 		c2->Enabled = false;
 
 	}
@@ -993,35 +985,24 @@ void ModulePlayer_1::states(int speed)
 
 }
 
-void ModulePlayer_1::Deal_Damage(ModulePlayer_1 & Enemy, int AttackDamage)
+void ModulePlayer_1::Deal_Damage(ModulePlayer_2 & Enemy, int AttackDamage)
 {
-	if (Enemy.Player_Health_Value - AttackDamage <= 0)
+	if (Enemy.Player_Health_Value_p2 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
-		Enemy.Player_Health_Value = 0;
-		p1_win++;
+		Enemy.Player_Health_Value_p2 = 0;
+		p2_win++;
+		win_check = true;
 
 		Module *CurrentScene = nullptr;
-
+		
 		if (App->scene_todo->IsEnabled())
 			CurrentScene = App->scene_todo;
-		//if (App->scene_john->IsEnabled())
-		//	CurrentScene = App->scene_john;
-
-
-		App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-
-		App->fade->FadeToBlack(CurrentScene, CurrentScene);
-		if (p1_win == 2)
-		{
-			p1_win = 0;
-			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-		}
 
 	}
 	else
 	{
-		Enemy.Player_Health_Value -= AttackDamage;
+		Enemy.Player_Health_Value_p2 -= AttackDamage;
 	}
 }
 

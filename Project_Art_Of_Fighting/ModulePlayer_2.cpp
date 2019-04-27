@@ -7,6 +7,7 @@
 #include "ModuleParticles.h"
 #include "ModuleAudio.h"
 #include "ModuleDebug.h"
+#include "ModuleUI.h"
 #include"ModuleCollision.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -265,7 +266,7 @@ bool ModulePlayer_2::Start()
 {
 	pivot_player.x = 90;
 	pivot_player.y = 150;
-	Player_Health_Value = 126;
+	Player_Health_Value_p2 = 126;
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
@@ -294,8 +295,8 @@ update_status ModulePlayer_2::Update()
 {
 
 	speed = 1;
-	if (Player_Health_Value > 0)
-	{
+	//if (Player_Health_Value > 0)
+	//{
 
 		states(speed);
 		//Move right
@@ -345,7 +346,7 @@ update_status ModulePlayer_2::Update()
 		//DEBUG CONTROLS, Direct win/lose when pressing I or O
 		if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
 		{
-			Deal_Damage(*App->player2, 200);
+			Deal_Damage(*App->player1, 200);
 		}
 
 		//God Mode
@@ -373,7 +374,21 @@ update_status ModulePlayer_2::Update()
 			Side = 2;
 		}
 
-	}
+		tick2 = SDL_GetTicks();
+		if (tick2 - tick1 < 4000)
+		{
+			App->input->Paused = true;
+		}
+		else
+		{
+			if (App->input->Paused == true && App->sceneUI->time_over == false)
+			{
+
+				App->input->Paused = false;
+			}
+		}
+
+	//}
 
 
 	// Draw everything --------------------------------------
@@ -523,7 +538,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	if (c2->type == COLLIDER_PLAYER_HIT && c2->Enabled)
 	{
 
-		Deal_Damage(*App->player2, c2->ColliderDamage);
+		Deal_Damage(*App->player1, c2->ColliderDamage);
 
 		c2->Enabled = false;
 	}
@@ -540,6 +555,7 @@ player_state ModulePlayer_2::ControlStates()
 	case ST_IDLE:
 		switch (last_input)
 		{
+		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 		case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
 		case IN_JUMP_DOWN: state = ST_NEUTRAL_JUMP;	 break;
@@ -961,35 +977,36 @@ void ModulePlayer_2::states(int speed)
 
 }
 
-void ModulePlayer_2::Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage)
+void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 {
-	if (Enemy.Player_Health_Value - AttackDamage <= 0)
+	if (Enemy.Player_Health_Value_p1 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
-		Enemy.Player_Health_Value = 0;
+		Enemy.Player_Health_Value_p1 = 0;
 		p1_win++;
-
+		win_check = true;
 		Module *CurrentScene = nullptr;
 
 		if (App->scene_todo->IsEnabled())
 			CurrentScene = App->scene_todo;
-		//if (App->scene_john->IsEnabled())
-		//	CurrentScene = App->scene_john;
+
+	/*	if (App->scene_john->IsEnabled())
+			CurrentScene = App->scene_john;*/
 
 
-		App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
+		/*App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
 
 		App->fade->FadeToBlack(CurrentScene, CurrentScene);
-		if (p1_win == 2)
+		if (p2_win == 2)
 		{
-			p1_win = 0;
+			p2_win = 0;
 			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-		}
+		}*/
 
 	}
 	else
 	{
-		Enemy.Player_Health_Value -= AttackDamage;
+		Enemy.Player_Health_Value_p1 -= AttackDamage;
 	}
 }
 

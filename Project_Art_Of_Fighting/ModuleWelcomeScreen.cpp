@@ -91,7 +91,6 @@ ModuleWelcomeScreen::ModuleWelcomeScreen()
 
 	snk.rect = { 1547,1141,77,25 };
 
-	//TODO 1 WELCOMESCR: CREATE ANIMATION FOR BLACK RECT
 	black.rect = { 100,150,120,10 };
 	current_animation = &logo_transition;
 }

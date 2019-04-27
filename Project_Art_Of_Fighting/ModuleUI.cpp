@@ -37,8 +37,8 @@ bool ModuleUI::Start()
 
 	//126 = player health texture lenght
 	//Do same with App.player2
-	App->player1->Player_Health_Value = 126;
-	App->player2->Player_Health_Value = 126;
+	App->player1->Player_Health_Value_p1 = 126;
+	App->player2->Player_Health_Value_p2 = 126;
 	
 	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	timer = 60;
@@ -83,14 +83,15 @@ update_status ModuleUI::Update()
 
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-		if (timer > 0)
+		if (timer > 0 && App->player1->win_check==false && App->player2->win_check == false)
 		{
-			timer_float = 60000 - (tick2 - tick3);
+			timer_float = 10000 - (tick2 - tick3);
 			timer = timer_float / 1000;
 		}
 		else
 		{
-			//Do something when time runs out here
+			if(App->player1->win_check == false && App->player2->win_check == false)
+			time_over = true;
 		}
 
 		//timer to string time and it will work ********************************************************************
@@ -116,25 +117,25 @@ update_status ModuleUI::Update()
 	//Player 1 Health
 	//Render order is really important
 	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health_BG_Empty, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
-	RendPosition = { { 0, 0, App->player1->Player_Health_Value, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player2->Player_Health_BG_Empty, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	RendPosition = { { 0, 0, App->player2->Player_Health_Value_p2, 6 },{ 0, 0 } ,{ 0, 0 } };
+	App->render->Blit(App->player2->Player_Health, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player2->Player_Health_BG, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 
 
 
 	//Player 2 Health BackGround
 	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health_BG_Empty, (SCREEN_WIDTH / 2) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
-	RendPosition = { { 0, 0, App->player2->Player_Health_Value, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health, (SCREEN_WIDTH / 2 ) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player1->Player_Health_BG_Empty, (SCREEN_WIDTH / 2) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	RendPosition = { { 0, 0, App->player1->Player_Health_Value_p1, 6 },{ 0, 0 } ,{ 0, 0 } };
+	App->render->Blit(App->player1->Player_Health, (SCREEN_WIDTH / 2 ) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
 
 
 	//WinPoints
-	if (App->player2->Player_Health_Value == 0) {
+	if (App->player1->Player_Health_Value_p1 == 0 || (time_over==true&& App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)) {
 		counter1++;
 	}
 	if(counter1 > 0 ) { 
@@ -143,7 +144,7 @@ update_status ModuleUI::Update()
 			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
 		}
 	}
-	if (App->player1->Player_Health_Value == 0) {
+	if (App->player2->Player_Health_Value_p2 == 0 || (time_over == true && App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)) {
 		counter2++;
 	}
 	if (counter2 > 0) {

@@ -61,14 +61,23 @@ bool ModuleCongratzScreen::Start()
 	ending_music = App->audio->Load_music("Assets/Audio/042xSono hito-wa watashitachi-no kodomo kana.ogg");
 	App->audio->Play_music(ending_music);
 
-	if (App->player1->Player_Health_Value <= 0) 
+	//if (App->player1->Player_Health_Value <= 0)
+	//{
+	//	beat_by_2++;
+	//	result = false;
+	//}
+	//if (App->player2->Player_Health_Value <= 0)
+	//{
+	//	beat_by_1++;
+	//	result = true;
+	//}
+
+	if (App->player1->p2_win == 2)
 	{
-		beat_by_2++;
 		result = false;
 	}
-	if (App->player2->Player_Health_Value <= 0)
+	else
 	{
-		beat_by_1++;
 		result = true;
 	}
 
@@ -106,7 +115,7 @@ update_status ModuleCongratzScreen::Update()
 		App->fonts->BlitText(58.5, 188, 0, "again and you're mine!");
 
 		break;
-	case false:
+	default:
 		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose)) == false)
 		{
 			SDL_Log("Unable to [BLIT] texture: texture_background");
@@ -142,6 +151,11 @@ bool ModuleCongratzScreen::CleanUp()
 	App->audio->Unload_music(ending_music);
 	App->fonts->UnLoad(0);
 	App->fonts->UnLoad(1);
-	LOG("Unloading congratz scene");
+	App->player1->p2_win = 0;
+	App->player2->p1_win = 0;
+	App->sceneUI->counter1 = 0;
+	App->sceneUI->counter2 = 0;
+	App->scene_todo->rounds_counter = 0;
+		LOG("Unloading congratz scene");
 	return true;
 }
