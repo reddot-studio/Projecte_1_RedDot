@@ -87,7 +87,7 @@ update_status ModuleSceneTodo::Update()
 			indicator.rect.y = 96;
 			indicator.rect.w = 100;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
 		}
 		if (rounds_counter == 1)
 		{
@@ -95,7 +95,7 @@ update_status ModuleSceneTodo::Update()
 			indicator.rect.y = 80;
 			indicator.rect.w = 104;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
 		}
 		if (rounds_counter >1)
 		{
@@ -103,7 +103,7 @@ update_status ModuleSceneTodo::Update()
 			indicator.rect.y = 145;
 			indicator.rect.w = 168;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator, 0);
 		}	
 	}
 	
@@ -116,7 +116,7 @@ update_status ModuleSceneTodo::Update()
 		indicator.rect.y = 113;
 		indicator.rect.h = 16;
 		indicator.rect.w = 80;
-		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator, 0);
 		first_row = false;
 	}
 
@@ -151,7 +151,7 @@ update_status ModuleSceneTodo::Update()
 		App->player2->CheckHealth(*App->player1);
 		
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup, 0);
-			App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame());
+			App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame(), 0);
 			if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 			{
 				if (App->player2->p1_win < 2 && App->player1->p2_win < 2)
@@ -182,7 +182,7 @@ update_status ModuleSceneTodo::Update()
 			App->player2->current_state = ST_IDLE;
 			App->player2->last_input = IN_UNKNOWN;
 		}
-		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
 			if (App->player2->p1_win < 2)
@@ -214,7 +214,7 @@ update_status ModuleSceneTodo::Update()
 		}
 
 		
-		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
 
 		if (App->player1->p2_win<2)
 		{

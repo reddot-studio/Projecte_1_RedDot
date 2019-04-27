@@ -577,7 +577,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	}
 
 	//Hit Detection
-	if (c2->type == COLLIDER_PLAYER_HIT && c2->Enabled)
+	if (c2->type == COLLIDER_PLAYER_HIT && (c2->Enabled && c1->Enabled))
 	{
 
 		Deal_Damage(*App->player1, c2->ColliderDamage);
@@ -879,7 +879,7 @@ void ModulePlayer_2::states(int speed)
 			//Whem side == 2 does not work
 			koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_ENEMY_HIT, 600, 30);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_ENEMY_HIT, 600, 30, Side);
 			current_animation = &koouKen;
 			App->audio->Play_chunk(kooukenfx);
 		}

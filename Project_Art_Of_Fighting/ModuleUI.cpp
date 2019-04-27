@@ -139,19 +139,19 @@ update_status ModuleUI::Update()
 		counter1++;
 	}
 	if(counter1 > 0 ) { 
-		App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+		App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		if (counter1 == 2) {
-			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		}
 	}
 	if (App->player2->Player_Health_Value_p2 == 0 || (time_over == true && App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)) {
 		counter2++;
 	}
 	if (counter2 > 0) {
-		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		if (counter2 == 2) 
 		{
-			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame());
+			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		}
 	}
 
