@@ -115,6 +115,7 @@ public:
 	int Player_Health_Value_p2;
 
 	void Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage);
+	void CheckHealth(ModulePlayer_1&Enemy);
 
 	int Side;
 	SDL_Texture* Player_texture;

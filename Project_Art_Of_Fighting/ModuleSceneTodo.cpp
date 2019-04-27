@@ -50,16 +50,14 @@ ModuleSceneTodo::~ModuleSceneTodo()
 
 bool ModuleSceneTodo::Start()
 {
-	if (current_animation == &winp1)
-	{
-		App->player2->p1_win++;
-	}
-	if (current_animation == &winp2)
-	{
-		App->player1->p2_win++;
-	}
-	win_p1 = App->player2->p1_win + 1;
-	win_p2 = App->player2->p1_win + 1;
+	//if (current_animation == &winp1)
+	//{
+	//	App->player2->p1_win++;
+	//}
+	//if (current_animation == &winp2)
+	//{
+	//	App->player1->p2_win++;
+	//}
 	current_animation = nullptr;
 	winp1.ResetCurrentFrame();
 	winp2.ResetCurrentFrame();
@@ -130,55 +128,48 @@ update_status ModuleSceneTodo::Update()
 	//TIME UP//
 	if (App->sceneUI->time_over == true)
 	{
-		//current_animation = &timeup;
-		
+		App->input->Paused = true;
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
 
 		if (App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)
 		{
 			current_animation = &winp2;
 		}
-		else
-	
-
 		if (App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)
 		{
 			current_animation = &winp1;
 		}
-
 		if (current_animation != &winp2 && current_animation != &winp1)
 		{
 			current_animation = &nthng;
 		}
-
-			App->input->Paused = true;
-			if (App->player1->isJumping != true)
-			{
-				App->player1->current_state = ST_IDLE;
-				App->player1->last_input = IN_UNKNOWN;
-			}
-
-			if (App->player2->isJumping != true)
-			{
-				App->player2->current_state = ST_IDLE;
-				App->player2->last_input = IN_UNKNOWN;
-			}
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup);
-
+		App->player1->CheckHealth(*App->player2);
+		App->player2->CheckHealth(*App->player1);
 		
-				if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && win_p1 < 2 /*|| (App->player1->p2_win+1)<2)*/)
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup);
+			App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame());
+			if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+			{
+				if (App->player2->p1_win < 2 && App->player1->p2_win < 2)
 				{
 					App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
 				}
-				if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && win_p2 > 2 /*|| (App->player1->p2_win+1)==2)*/)
+				else
 				{
 					App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
 				}
-
-
-		App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame());
-	
+			}
+		
 	}
-
 
 	if (App->player2->win_check == true)
 	{
@@ -197,14 +188,16 @@ update_status ModuleSceneTodo::Update()
 			App->player2->last_input = IN_UNKNOWN;
 		}
 		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
-
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1&& App->player2->p1_win<2)
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
-		}
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player2->p1_win >= 2)
-		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+			if (App->player2->p1_win < 2)
+			{
+				App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
+			}
+			else
+			{
+				App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+			}
 		}
 	}
 
@@ -228,11 +221,11 @@ update_status ModuleSceneTodo::Update()
 		
 		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame());
 
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player1->p2_win<2)
+		if (App->player1->p2_win<2)
 		{
 			App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
 		}
-		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && App->player1->p2_win >= 2)
+		else
 		{
 			App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
 		}

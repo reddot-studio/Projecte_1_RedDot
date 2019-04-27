@@ -1006,4 +1006,15 @@ void ModulePlayer_1::Deal_Damage(ModulePlayer_2 & Enemy, int AttackDamage)
 	}
 }
 
+void ModulePlayer_1::CheckHealth(ModulePlayer_2&Enemy)
+{
+
+	if ((Enemy.Player_Health_Value_p2 > Player_Health_Value_p1) && App->sceneUI->time_over == true)
+	{
+		Enemy.Player_Health_Value_p2 = 126;
+		Player_Health_Value_p1 = 126;
+		App->player2->p1_win++;
+	}
+}
+
 

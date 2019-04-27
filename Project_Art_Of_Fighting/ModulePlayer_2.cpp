@@ -990,24 +990,22 @@ void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 		if (App->scene_todo->IsEnabled())
 			CurrentScene = App->scene_todo;
 
-	/*	if (App->scene_john->IsEnabled())
-			CurrentScene = App->scene_john;*/
-
-
-		/*App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-
-		App->fade->FadeToBlack(CurrentScene, CurrentScene);
-		if (p2_win == 2)
-		{
-			p2_win = 0;
-			App->fade->FadeToBlack(CurrentScene, App->scene_congratz);
-		}*/
-
 	}
 	else
 	{
 		Enemy.Player_Health_Value_p1 -= AttackDamage;
 	}
 }
+
+void ModulePlayer_2::CheckHealth(ModulePlayer_1&Enemy)
+{
+	if ((Enemy.Player_Health_Value_p1 > Player_Health_Value_p2) && App->sceneUI->time_over == true)
+	{
+		Player_Health_Value_p2 = 126;
+		Enemy.Player_Health_Value_p1 = 126;
+		App->player1->p2_win++;
+	}
+}
+
 
 

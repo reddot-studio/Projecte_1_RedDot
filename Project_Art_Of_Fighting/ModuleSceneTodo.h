@@ -26,8 +26,8 @@ public:
 	SDL_Texture* indicator_fight;
 	Animation winp2;
 	Animation winp1;
-	int win_p1;
-	int win_p2;
+	int win_p1=0;
+	int win_p2=0;
 	Animation nthng;
 	RectSprites indicator;
 	RectSprites timeup;
