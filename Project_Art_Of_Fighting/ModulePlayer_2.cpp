@@ -275,6 +275,7 @@ bool ModulePlayer_2::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
+	dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
 
 	player_collider = App->collision->AddCollider({ { pivot_player.x * 2,pivot_player.y,35,109 },{ 0,0 },{ 0, 0 } }, COLLIDER_ENEMY_COLLISION, App->player2);
 	HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
@@ -1000,6 +1001,7 @@ void ModulePlayer_2::states(int speed)
 
 void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 {
+	App->audio->Play_chunk(dmg);
 	if (Enemy.Player_Health_Value_p1 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
@@ -1020,6 +1022,7 @@ void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 
 void ModulePlayer_2::CheckHealth(ModulePlayer_1&Enemy)
 {
+	
 	if ((Enemy.Player_Health_Value_p1 > Player_Health_Value_p2) && App->sceneUI->time_over == true)
 	{
 		Player_Health_Value_p2 = 126;

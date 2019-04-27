@@ -36,6 +36,7 @@ public:
 	Mix_Chunk *kickfx = NULL;
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
+	Mix_Chunk *dmg = NULL;
 
 
 	Collider * player_collider = nullptr;

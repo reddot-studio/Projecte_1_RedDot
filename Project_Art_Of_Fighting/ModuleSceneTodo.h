@@ -7,6 +7,7 @@
 
 struct SDL_Texture;
 struct Mix_Music;
+struct Mix_Chunk;
 class ModuleSceneTodo : public Module
 {
 public:
@@ -18,6 +19,7 @@ public:
 
 public:
 	Mix_Music * todo_music = nullptr;
+	Mix_Chunk * fightfx = NULL;
 	SDL_Texture* graphics = nullptr;
 	RectSprites rect_background;
 
@@ -26,8 +28,10 @@ public:
 	SDL_Texture* indicator_fight;
 	Animation winp2;
 	Animation winp1;
+
 	int win_p1=0;
 	int win_p2=0;
+	bool first_row;
 	int collider_cleaning=0;
 	Animation nthng;
 	RectSprites indicator;

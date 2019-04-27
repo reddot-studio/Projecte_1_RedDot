@@ -50,22 +50,13 @@ ModuleSceneTodo::~ModuleSceneTodo()
 
 bool ModuleSceneTodo::Start()
 {
-	//if (current_animation == &winp1)
-	//{
-	//	App->player2->p1_win++;
-	//}
-	//if (current_animation == &winp2)
-	//{
-	//	App->player1->p2_win++;
-	//}
-	current_animation = nullptr;
-	winp1.ResetCurrentFrame();
-	winp2.ResetCurrentFrame();
+	first_row = true;
 	//timeup.ResetCurrentFrame();
 	tick1 = 0;
 	tick1 = SDL_GetTicks();
 	LOG("Loading todo scene");
 	todo_music = App->audio->Load_music("Assets/Audio/033xART OF FIGHT.ogg");
+	fightfx = App->audio->Load_effects("Assets/Audio/FX/Fight.wav");
 	App->audio->Play_music(todo_music);
 	graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png");
 	//App->collision->AddCollider({ {300,0,30,224},{0,0} }, COLLIDER_WALL);
@@ -116,15 +107,20 @@ update_status ModuleSceneTodo::Update()
 			indicator.rect.w = 168;
 			indicator.rect.h = 16;
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator);
-		}
-		
+		}	
 	}
+	
 	if (tick2-tick1>2000 && tick2 - tick1 < 4000) {
+		if (first_row == true)
+		{
+			App->audio->Play_chunk(fightfx);
+		}
 		indicator.rect.x = 0;
 		indicator.rect.y = 113;
 		indicator.rect.h = 16;
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2)-40, (SCREEN_HEIGHT / 2)-8, &indicator);
+		first_row = false;
 	}
 
 	//TIME UP//
@@ -253,11 +249,13 @@ bool ModuleSceneTodo::CleanUp()
 		BackPanel->to_delete = true;
 	}
 	App->audio->Unload_music(todo_music);
+	App->audio->Unload_effects(fightfx);
 	App->textures->Unload(indicator_fight);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
 	App->player2->Disable();
 	App->sceneUI->Disable();
+	
 
 
 	//RESET

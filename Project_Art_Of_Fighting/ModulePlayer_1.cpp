@@ -277,6 +277,7 @@ bool ModulePlayer_1::Start()
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
+	dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
 
 		player_collider = App->collision->AddCollider({ { pivot_player.x,pivot_player.y,70,109 },{ 0,0 },{ 0, 0 }}, COLLIDER_PLAYER_COLLISION, App->player1);
 		HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_PLAYER_HURT, App->player1);
@@ -1029,6 +1030,7 @@ void ModulePlayer_1::states(int speed)
 
 void ModulePlayer_1::Deal_Damage(ModulePlayer_2 & Enemy, int AttackDamage)
 {
+	App->audio->Play_chunk(dmg);
 	if (Enemy.Player_Health_Value_p2 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
