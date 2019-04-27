@@ -209,6 +209,10 @@ Collider* ModuleCollision::AddCollider(RectSprites rect, COLLIDER_TYPE type, Mod
 			ret = colliders[i] = new Collider(rect, type, callback, Damage);
 			break;
 		}
+		else
+		{
+			LOG("QUETALLENO");
+		}
 	}
 
 	return ret;

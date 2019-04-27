@@ -28,6 +28,7 @@ public:
 	Animation winp1;
 	int win_p1=0;
 	int win_p2=0;
+	int collider_cleaning=0;
 	Animation nthng;
 	RectSprites indicator;
 	RectSprites timeup;

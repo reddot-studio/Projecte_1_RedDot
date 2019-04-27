@@ -240,6 +240,7 @@ update_status ModuleSceneTodo::Update()
 	//	App->fade->FadeToBlack( App->scene_todo, App->scene_john);
 	//	App->input->Disable();
 	//}
+
 	tick2 = SDL_GetTicks();
 	return UPDATE_CONTINUE;
 }
@@ -251,25 +252,24 @@ bool ModuleSceneTodo::CleanUp()
 		FrontPanel->to_delete = true;
 		BackPanel->to_delete = true;
 	}
-
-	if (current_animation != &nthng)
-	{
-		rounds_counter++;
-	}
-
 	App->audio->Unload_music(todo_music);
+	App->textures->Unload(indicator_fight);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
 	App->player2->Disable();
 	App->sceneUI->Disable();
-	App->textures->Unload(indicator_fight);
+
+
+	//RESET
 	App->input->Paused = false;
 	App->sceneUI->time_over = false;
 	App->player1->win_check = false;
 	App->player2->win_check = false;
-
-
-
+	//ROUNDS_COUNTER
+	if (current_animation != &nthng)
+	{
+		rounds_counter++;
+	}
 	LOG("Unloading todo scene");
 	return true;
 }

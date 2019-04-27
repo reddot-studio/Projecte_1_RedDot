@@ -270,7 +270,6 @@ bool ModulePlayer_2::Start()
 	LOG("Loading player textures");
 	bool ret = true;
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
-	graphics2 = App->textures->Load("Assets/MR_Karate_SpriteSheet.png");
 	pivotTexture = App->textures->Load("Assets/red_square.png"); // arcade version
 	punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");
 	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
@@ -480,8 +479,11 @@ bool ModulePlayer_2::CleanUp()
 	App->audio->Unload_effects(jumpfx);
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
-	if (player_collider)
+
+	if (player_collider != nullptr)
+	{
 		player_collider->to_delete = true;
+	}
 
 	if (HitCollider != nullptr)
 	{
