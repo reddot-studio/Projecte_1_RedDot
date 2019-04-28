@@ -64,6 +64,8 @@ ModuleCollision::ModuleCollision()
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_PLAYER_HURT] = false;
 	matrix[COLLIDER_ENEMY_HURT][COLLIDER_ENEMY_HURT] = false;
 
+	debug = false;
+
 
 }
 
