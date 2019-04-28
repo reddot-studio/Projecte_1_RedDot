@@ -31,8 +31,7 @@ public:
 		{
 
 			frames[last_frame].rect = rect;
-			frames[last_frame].offset.x = offset.x;
-			frames[last_frame].offset.y = offset.y;
+			frames[last_frame].offset = offset;
 			frames[last_frame].displacement = displacement;
 			frames[last_frame].hurtColliders[0] = hurtRect1;
 			frames[last_frame].hurtColliders[1] = hurtRect2;
@@ -42,6 +41,14 @@ public:
 		}
 		return true;
 
+	}
+	void SetReverseOffset(iPoint offset, int num) {
+		RectSprites* pos = &frames[last_frame];
+		for (int i = 0; i < num; i++)
+		{
+		pos->offset_reverse = offset;
+		*pos++;
+		}
 	}
 
 	RectSprites& GetCurrentFrame()

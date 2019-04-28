@@ -8,6 +8,7 @@ class RectSprites {
 public:
 	SDL_Rect rect;
 	iPoint offset;
+	iPoint offset_reverse;
 	iPoint displacement;
 	SDL_Rect hurtColliders[3];
 	SDL_Rect hitCollider;
@@ -15,7 +16,7 @@ public:
 
 public:
 	RectSprites() {};
-	RectSprites(SDL_Rect rect, iPoint point,iPoint displ = { 0,0 }) : rect(rect), offset(point), displacement(displ) {}
+	RectSprites(SDL_Rect rect, iPoint point, iPoint displ = { 0,0 }) : rect(rect), offset(point), displacement(displ) {}
 	void SetOffset(int x,int y) {
 		offset.x += x;
 		offset.y += y;

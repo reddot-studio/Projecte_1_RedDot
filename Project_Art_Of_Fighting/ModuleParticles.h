@@ -27,6 +27,7 @@ struct Particle
 	int Side;
 
 
+
 	Particle();
 	~Particle();
 	Particle(const Particle& p);
@@ -55,12 +56,16 @@ private:
 	uint last_particle = 0;
 
 public:
+	int lastSide;
 
 	Particle pre_koouKen;
 	Particle koouKen;
 	Particle post_koouKen;
 
-	Particle hitParticle;
+	Particle starhit;
+	Particle impactfloor;
+	Particle vomit;
+	Particle blood;
 };
 
 #endif // __MODULEPARTICLES_H__

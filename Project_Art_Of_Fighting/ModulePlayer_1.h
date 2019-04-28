@@ -72,10 +72,6 @@ public:
 	Animation jump_backward;
 	Animation win;
 	Animation defeat;
-	Animation starhit;
-	Animation impactfloor;
-	Animation vomit;
-	Animation blood;
 			
 	Animation pose_idle_receive_standing_punch_kick_plus_jump_punch;
 	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;

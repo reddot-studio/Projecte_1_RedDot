@@ -30,17 +30,27 @@ bool ModuleParticles::Start()
 
 	// Ko'ou Ken particle
 	//Charge energy
+	pre_koouKen.anim.SetReverseOffset({ 35,-39 }, 2);
 	pre_koouKen.anim.PushBack({939,940,19,45},-33,-39,2);
+	pre_koouKen.anim.SetReverseOffset({ 50,-37 }, 2);
 	pre_koouKen.anim.PushBack({683,869,23,36},-55,-37,2);
+	pre_koouKen.anim.SetReverseOffset({ 40,-21 }, 3);
 	pre_koouKen.anim.PushBack({707,869,22,36},-49,-21,3);
+	pre_koouKen.anim.SetReverseOffset({ 45,-17 }, 1);
 	pre_koouKen.anim.PushBack({730,878,26,27},-49,-17,1);
+	pre_koouKen.anim.SetReverseOffset({ 45,-15 }, 1);
 	pre_koouKen.anim.PushBack({730,878,26,27},-54,-15,1);
 	pre_koouKen.anim.loop = false;
 	pre_koouKen.anim.speed = 0.32f;
+
 	////Shoot energy
+	koouKen.anim.SetReverseOffset({ -3,-20 }, 5);
 	koouKen.anim.PushBack({683,912,54,39},-3,-20,5);
+	koouKen.anim.SetReverseOffset({ -3,-23 }, 5);
 	koouKen.anim.PushBack({737,905,72,47},-21,-23,5);
+	koouKen.anim.SetReverseOffset({ -3,-16 }, 5);
 	koouKen.anim.PushBack({809,920,53,31},-2,-16,5);
+	koouKen.anim.SetReverseOffset({ -3,-11 }, 5);
 	koouKen.anim.PushBack({862,930,36,21},15,-11,5);
 	koouKen.anim.loop = true;
 	koouKen.life = 1500;
@@ -49,20 +59,47 @@ bool ModuleParticles::Start()
 
 
 	//Hitted particle
+	post_koouKen.anim.SetReverseOffset({ 10,-21 }, 2);
 	post_koouKen.anim.PushBack({942,612,30,37},10,-21,2);
+	post_koouKen.anim.SetReverseOffset({ 10, -21 }, 2);
 	post_koouKen.anim.PushBack({973,612,22,37},15, -21, 2);
+	post_koouKen.anim.SetReverseOffset({ 10, -21 }, 2);
 	post_koouKen.anim.PushBack({942,664,20,37},15,-21,2);
+	post_koouKen.anim.SetReverseOffset({ 13,-20 }, 2);
 	post_koouKen.anim.PushBack({962,665,22,36},18,-20,2);
+	post_koouKen.anim.SetReverseOffset({ 5,-20 }, 2);
 	post_koouKen.anim.PushBack({985,665,39,36},-3,-20,2);
+	post_koouKen.anim.SetReverseOffset({ 9,-24 }, 3);
 	post_koouKen.anim.PushBack({998,612,25,50},9,-24,3);
 	post_koouKen.anim.speed = 1.0f;
 	post_koouKen.anim.loop = false;
 
-	//Effects
-	//hitParticle.anim.PushBack({ 918,391,18,23 }, 0, 0, 4);
-	//hitParticle.anim.PushBack({ 951,385,29,36 }, 0, 0, 4);
+		//EFFECTS
+	//starhit animation
+	starhit.anim.SetReverseOffset({0,0}, 2);
+	starhit.anim.PushBack({ 975 ,885,18,23 }, 0, 0, 2);
+	starhit.anim.SetReverseOffset({-5,-8}, 2);
+	starhit.anim.PushBack({ 1008 ,879,29,36 }, -5, -8, 2);
+	starhit.anim.speed = 0.5f;
+	starhit.anim.loop = false;
 
+	//impact floor animation
+	impactfloor.anim.PushBack({ 977 ,923,16,12 }, 0, 0, 0);
+	impactfloor.anim.PushBack({ 1013 ,922,18,15 }, 0, 0, 0);
+	impactfloor.anim.PushBack({ 973 ,951,24 ,21 }, 0, 0, 0);
+	impactfloor.anim.PushBack({ 1011 ,948,24,24 }, 0, 0, 0);
 
+	//vomit animation
+	vomit.anim.PushBack({ 983 ,1042,11,12 }, 0, 0, 0);
+	vomit.anim.PushBack({ 1002 ,1042,18,13 }, 0, 0, 0);
+	vomit.anim.PushBack({ 986 ,1068,10,7 }, 0, 0, 0);
+	vomit.anim.PushBack({ 1010 ,1067,5,5 }, 0, 0, 0);
+
+	//blood animation
+	blood.anim.PushBack({ 962 ,1155,6,6 }, 0, 0, 0);
+	blood.anim.PushBack({ 959 ,1175,48,17 }, 0, 0, 0);
+	blood.anim.PushBack({ 961 ,1204,43,16 }, 0, 0, 0);
+	blood.anim.PushBack({ 960 ,1224,49,16 }, 0, 0, 0);
 
 	return true;
 }
@@ -104,7 +141,16 @@ update_status ModuleParticles::Update()
 		else if(SDL_GetTicks() >= p->born)
 		{
 			RectSprites r = p->anim.GetCurrentFrame();
+			if (p->Side == 2) 
+			{
+			App->render->Blit(graphics, p->position.x +r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
+			lastSide = p->Side;
+			}
+			else if (p->Side == 1) 
+			{
 			App->render->Blit(graphics, p->position.x +r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+			lastSide = p->Side;
+			}
 			if(p->fx_played == false)
 			{
 				p->fx_played = true;
@@ -145,9 +191,15 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 		// Always destroy particles that collide
 		if (active[i] != nullptr && active[i]->collider == c1)
 		{
-			
-			AddParticle(post_koouKen, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
-			AddParticle(hitParticle, c1->rect.x + active[i]->collider->rect.w/2, c1->rect.y);
+			int offsetX = 0;
+
+			if (lastSide == 1) {
+				offsetX = active[i]->collider->rect.w / 2;
+			}
+			else if (lastSide == 2) {
+				offsetX = -active[i]->collider->rect.w / 4;
+			}
+			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,lastSide);
 
 			delete active[i];
 			active[i] = nullptr;
@@ -207,7 +259,7 @@ bool Particle::Update()
 		}
 
 		if (collider != nullptr)
-			collider->SetPos(position.x, position.y);
+			collider->SetPos(position.x, position.y -20);
 	}
 
 
