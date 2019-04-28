@@ -432,18 +432,19 @@ update_status ModulePlayer_1::Update()
 	
 	//4 seconds without moving
 	tick2 = SDL_GetTicks();
-	if (tick2 - tick1 < 4000)
+	if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->win_check != true && App->player2->win_check != true)
 	{
-		App->input->Paused = true;
+		App->input->Paused = false;
 	}
-	else
+	/*else
 	{
 		if (App->input->Paused == true && App->sceneUI->time_over == false)
 		{
 
 			App->input->Paused = false;
 		}
-	}
+	}*/
+
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();

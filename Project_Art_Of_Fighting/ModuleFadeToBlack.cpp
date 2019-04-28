@@ -6,6 +6,7 @@
 #include "ModulePlayer_1.h"
 #include "ModulePlayer_2.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_render.h"
 #include "SDL/include/SDL_timer.h"
@@ -60,7 +61,7 @@ update_status ModuleFadeToBlack::Update()
 				
 				total_time += total_time;
 				start_time = SDL_GetTicks();
-				
+				App->input->Paused = true;
 				current_step = fade_step::fade_from_black;
 			}
 		} break;

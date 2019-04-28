@@ -1,4 +1,4 @@
-CITM Project 1  
+﻿CITM Project 1  
 Team: RedDot
 Github Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
 Members: 
@@ -21,8 +21,10 @@ In the case time runs out, the player with more health amount will be the one to
 
 If time runs out and the two players have the same health amount the round will be repeated.
 
+## Generic Controls
 
 * Start -> RETURN
+* Q -> REPLAY
 
 ## Debug Controls
 F1 -> Shows/Hide Collisions

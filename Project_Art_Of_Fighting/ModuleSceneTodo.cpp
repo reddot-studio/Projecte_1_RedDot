@@ -257,7 +257,6 @@ bool ModuleSceneTodo::CleanUp()
 
 
 	//RESET
-	App->input->Paused = false;
 	App->sceneUI->time_over = false;
 	App->player1->win_check = false;
 	App->player2->win_check = false;
