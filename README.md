@@ -1,11 +1,11 @@
 CITM Project 1  
 Team: RedDot
 Github Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
-Members:  <br>
-*Jordi Pardo Gutiérrez. Github User: @Kansas94. Responsibility: Art 
-*Bernat Casañas Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
-*Miquel Suau González. Github User: @MayKoder. Responsibility: God Coder 
-*Eudald Garrofé Flix. Github User: @Hevne. Responsibility: Audio, General Analysis & Wiki Polisher 
+Members: 
+* Jordi Pardo Gutiérrez. Github User: @Kansas94. Responsibility: Art 
+* Bernat Casañas Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
+* Miquel Suau González. Github User: @MayKoder. Responsibility: God Coder 
+* Eudald Garrofé Flix. Github User: @Hevne. Responsibility: Audio, General Analysis & Wiki Polisher 
 
 # ABOUT THE GAME:
 
