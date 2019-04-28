@@ -402,21 +402,6 @@ update_status ModulePlayer_2::Update()
 		Deal_Damage(*App->player1, 200);
 	}
 
-	//God Mode
-	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_ENEMY_COLLISION)
-	{
-
-		player_collider->type = COLLIDER_NONE;
-		timer = SDL_GetTicks();
-		LOG("\nGod Mode ON");
-	}
-	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
-	{
-
-		player_collider->type = COLLIDER_ENEMY_COLLISION;
-		LOG("\nGod Mode OFF");
-	}
-
 	//ViewPoint
 	if (player_collider->rect.x < App->player1->player_collider->rect.x)
 	{

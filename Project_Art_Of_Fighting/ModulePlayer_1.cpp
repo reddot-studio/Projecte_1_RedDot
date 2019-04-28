@@ -403,17 +403,19 @@ update_status ModulePlayer_1::Update()
 	}
 
 	//God Mode
-	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION)
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION && App->collision->debug)
 	{
 
 		player_collider->type = COLLIDER_NONE;
+		App->player2->player_collider->type = COLLIDER_NONE;
 		timer = SDL_GetTicks();
 		LOG("\nGod Mode ON");
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
+	if ((App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer) || !App->collision->debug)
 	{
 
 		player_collider->type = COLLIDER_PLAYER_COLLISION;
+		App->player2->player_collider->type = COLLIDER_PLAYER_COLLISION;
 		LOG("\nGod Mode OFF");
 	}
 
