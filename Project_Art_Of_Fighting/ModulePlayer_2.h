@@ -48,6 +48,7 @@ public:
 
 
 	Animation* current_animation = nullptr;
+	Animation* current_fx_animation = nullptr;
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* graphics2 = nullptr;
 	SDL_Texture* pivotTexture = nullptr;

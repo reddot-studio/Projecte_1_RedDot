@@ -75,6 +75,7 @@ bool ModuleSceneTodo::Start()
 
 update_status ModuleSceneTodo::Update()
 {
+
 	if ((App->render->Blit(graphics, 0, 0, &rect_background)) == false )
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");

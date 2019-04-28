@@ -238,8 +238,10 @@ ModulePlayer_1::ModulePlayer_1()
 
 	//EFFECTS
 	//starhit animation
-	starhit.PushBack({ 975 ,885,18,23 }, 0, 0, 0);
-	starhit.PushBack({ 1008 ,879,29,36 }, 0, 0, 0);
+	starhit.PushBack({ 975 ,885,18,23 }, 0, 0, 4);
+	starhit.PushBack({ 1008 ,879,29,36 }, 0, 0, 4);
+	starhit.speed = 0.85f;
+	starhit.loop = false;
 
 	//impact floor animation
 	impactfloor.PushBack({ 977 ,923,16,12 }, 0, 0, 0);
@@ -297,7 +299,7 @@ bool ModulePlayer_1::Start()
 // Update: draw background
 update_status ModulePlayer_1::Update()
 {
-	speed = 1;
+	speed = 1.5;
 
 	//Player1 Input
 	states(speed);
@@ -339,7 +341,22 @@ update_status ModulePlayer_1::Update()
 			last_input = IN_RECOVER_FINISH;
 		}
 		else {
-			last_input = IN_ATTACK_FINISH;
+		/*	if (current_fx_animation != nullptr)
+			{
+				App->render->Blit(graphics, App->player1->pivot_player.x + 30, 100, &starhit.GetCurrentFrame());
+				if (current_fx_animation->GetCurrentFramePos() == current_fx_animation->GetLastFrame() - 1 && current_fx_animation == &starhit)
+				{
+					
+					current_fx_animation->ResetCurrentFrame();
+					current_fx_animation=nullptr;
+
+				}
+				last_input = IN_ATTACK_FINISH;
+			}
+			else
+			{*/
+				last_input = IN_ATTACK_FINISH;
+			
 		}
 	}
 
@@ -378,7 +395,7 @@ update_status ModulePlayer_1::Update()
 
 	//if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)
 	//	App->player1->pivot_player = App->player2->pivot_player;
-
+	
 	//4 seconds without moving
 	tick2 = SDL_GetTicks();
 	if (tick2 - tick1 < 4000)
@@ -488,6 +505,7 @@ update_status ModulePlayer_1::Update()
 
 bool ModulePlayer_1::CleanUp()
 {
+	
 	App->audio->Unload_effects(punchfx);
 	App->audio->Unload_effects(kickfx);
 	App->audio->Unload_effects(kooukenfx);
@@ -617,7 +635,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -631,7 +649,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -644,7 +662,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -792,7 +810,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
 		}
 		break;
-	case ST_DAMAGE:
+	case ST_IDLE_TO_DAMAGE:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
@@ -1037,10 +1055,11 @@ void ModulePlayer_1::states(int speed)
 		}
 		LOG("CROUCH KICK");
 		break;
-	case ST_DAMAGE:
+	case ST_IDLE_TO_DAMAGE:
 		if (current_animation != &pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &pose_idle_receive_standing_punch_kick_plus_jump_punch;
+			
 		}
 		LOG("DAMAGE");
 		break;
@@ -1051,11 +1070,12 @@ void ModulePlayer_1::states(int speed)
 
 void ModulePlayer_1::Deal_Damage(ModulePlayer_2 & Enemy, int AttackDamage)
 {
-	last_input = IN_RECEIVE_DAMAGE;
+	last_input = IN_RECEIVE_DAMAGE_FROM_IDLE;
 	HurtColliders[0]->Enabled = false;
 	HurtColliders[1]->Enabled = false;
 	HurtColliders[2]->Enabled = false;
 	App->audio->Play_chunk(dmg);
+	//current_fx_animation = &starhit;
 	if (Enemy.Player_Health_Value_p2 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
@@ -1067,7 +1087,6 @@ void ModulePlayer_1::Deal_Damage(ModulePlayer_2 & Enemy, int AttackDamage)
 
 		if (App->scene_todo->IsEnabled())
 			CurrentScene = App->scene_todo;
-
 	}
 	else
 	{

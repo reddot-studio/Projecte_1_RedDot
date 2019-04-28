@@ -108,7 +108,7 @@ ModulePlayer_2::ModulePlayer_2()
 	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, rect1, rect2, rect3, hit_punch_colllider);
 	punch.PushBack({ 546, 350, 89 , 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
 	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
-	punch.speed = 0.25f;
+	punch.speed = 0.5f;
 	punch.loop = false;
 	punch.damage = 20;
 
@@ -117,7 +117,7 @@ ModulePlayer_2::ModulePlayer_2()
 	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 790, 235, 103, 113 }, -44, -48, 8, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
-	kick.speed = 0.5f;
+	kick.speed = 1.0f;
 	kick.damage = 30;
 	kick.loop = false;
 
@@ -236,8 +236,11 @@ ModulePlayer_2::ModulePlayer_2()
 
 	//EFFECTS
 	//starhit animation
-	starhit.PushBack({ 975 ,885,18,23 }, 0, 0, 0);
-	starhit.PushBack({ 1008 ,879,29,36 }, 0, 0, 0);
+	starhit.PushBack({ 975 ,885,18,23 }, 0, 0, 4);
+	starhit.PushBack({ 1008 ,879,29,36 }, 0, 0, 4);
+	starhit.speed = 0.85f;
+	starhit.loop = false;
+
 
 	//impact floor animation
 	impactfloor.PushBack({ 977 ,923,16,12 }, 0, 0, 0);
@@ -339,6 +342,20 @@ update_status ModulePlayer_2::Update()
 			last_input = IN_RECOVER_FINISH;
 		}
 		else {
+			/*	if (current_fx_animation != nullptr)
+		{
+			App->render->Blit(graphics, App->player1->pivot_player.x + 30, 100, &starhit.GetCurrentFrame());
+			if (current_fx_animation->GetCurrentFramePos() == current_fx_animation->GetLastFrame() - 1 && current_fx_animation == &starhit)
+			{
+
+				current_fx_animation->ResetCurrentFrame();
+				current_fx_animation=nullptr;
+
+			}
+			last_input = IN_ATTACK_FINISH;
+		}
+		else
+		{*/
 			last_input = IN_ATTACK_FINISH;
 		}
 	}
@@ -579,9 +596,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	//Hit Detection
 	if (c2->type == COLLIDER_PLAYER_HIT && (c2->Enabled && c1->Enabled))
 	{
-
 		Deal_Damage(*App->player1, c2->ColliderDamage);
-
 		c2->Enabled = false;
 	}
 
@@ -605,7 +620,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -619,7 +634,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -633,7 +648,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -767,6 +782,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
 		case IN_KICK: state = ST_CROUCH_KICK; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_CROUCH_PUNCH:
@@ -781,7 +797,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
 		}
 		break;
-	case ST_DAMAGE:
+	case ST_IDLE_TO_DAMAGE:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
@@ -1026,7 +1042,7 @@ void ModulePlayer_2::states(int speed)
 		}
 		LOG("CROUCH KICK");
 		break;
-	case ST_DAMAGE:
+	case ST_IDLE_TO_DAMAGE:
 		if (current_animation != &pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &pose_idle_receive_standing_punch_kick_plus_jump_punch;
@@ -1040,12 +1056,12 @@ void ModulePlayer_2::states(int speed)
 
 void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 {
-
-	last_input = IN_RECEIVE_DAMAGE;
-	HurtColliders[0]->Enabled = false;
-	HurtColliders[1]->Enabled = false;
-	HurtColliders[2]->Enabled = false;
-
+	
+		last_input = IN_RECEIVE_DAMAGE_FROM_IDLE;
+		HurtColliders[0]->Enabled = false;
+		HurtColliders[1]->Enabled = false;
+		HurtColliders[2]->Enabled = false;
+		//current_fx_animation = &starhit;
 	App->audio->Play_chunk(dmg);
 	if (Enemy.Player_Health_Value_p1 - AttackDamage <= 0)
 	{
