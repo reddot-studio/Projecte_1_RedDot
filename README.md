@@ -38,10 +38,10 @@ If time runs out and the two players have the same health amount the round will 
 * Replay Match -> Q
 
 ## Debug Controls
-* Enables/Disables Debug Mode -> F5
-* Shows/Hide Collisions -> F1 
-* Instakill Player 1 -> I
-* Instakill Player 2 -> O
+* Enables/Disables Debug Mode -> F1
+* Enables/Disables God Mode once in Debug Mode -> F1 
+* Instakill Player 1 while in God Mode-> I
+* Instakill Player 2 while in God Mode-> O
 * Move Camera Left -> LEFT ARROW
 * Move Camera Right -> RIGHT ARROW
 * Move Camera Up -> UP ARROW

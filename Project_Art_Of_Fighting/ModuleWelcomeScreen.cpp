@@ -131,7 +131,7 @@ bool ModuleWelcomeScreen::Start()
 
 update_status ModuleWelcomeScreen::Update()
 {
-
+	App->input->Paused = false;
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() -1)
 	{
 		finish_animation = 1;

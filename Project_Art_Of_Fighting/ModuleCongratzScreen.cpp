@@ -96,7 +96,7 @@ update_status ModuleCongratzScreen::Update()
 {
 	App->fonts->BlitText(220, 47, 1, "waiting for");
 	App->fonts->BlitText(215, 58, 1, "a challenger");
-
+	App->input->Paused = false;
 	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");
