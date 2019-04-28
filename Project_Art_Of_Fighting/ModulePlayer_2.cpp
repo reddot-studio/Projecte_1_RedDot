@@ -520,6 +520,7 @@ bool ModulePlayer_2::CleanUp()
 	App->audio->Unload_effects(kickfx);
 	App->audio->Unload_effects(kooukenfx);
 	App->audio->Unload_effects(jumpfx);
+	App->audio->Unload_effects(dmg);
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
 

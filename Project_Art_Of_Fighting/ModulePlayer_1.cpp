@@ -403,7 +403,7 @@ update_status ModulePlayer_1::Update()
 	}
 
 	//God Mode
-	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION && App->collision->debug)
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_PLAYER_COLLISION)
 	{
 
 		player_collider->type = COLLIDER_NONE;
@@ -411,7 +411,7 @@ update_status ModulePlayer_1::Update()
 		timer = SDL_GetTicks();
 		LOG("\nGod Mode ON");
 	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer) || !App->collision->debug)
+	if (App->input->keyboard_state[SDL_SCANCODE_F5] == KEY_DOWN && player_collider->type == COLLIDER_NONE && SDL_GetTicks() != timer)
 	{
 
 		player_collider->type = COLLIDER_PLAYER_COLLISION;
@@ -548,6 +548,7 @@ bool ModulePlayer_1::CleanUp()
 	App->audio->Unload_effects(kickfx);
 	App->audio->Unload_effects(kooukenfx);
 	App->audio->Unload_effects(jumpfx);
+	App->audio->Unload_effects(dmg);
 	App->textures->Unload(graphics);
 	App->textures->Unload(pivotTexture);
 
