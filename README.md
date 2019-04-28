@@ -15,25 +15,25 @@ Art of fighting is a fighting video game trilogy that were realsed for the Neo G
 Two players may simultaneously compete against each other. Each player has 4 keys to move and 3 atack buttons.
 
 ## Player 1:
-*Move Right -> D
-*Move Left -> A
-*Jump -> W
-*Crouch -> S
-*Punch -> E
-*Kick -> R
-*Ko'ou Ken -> F
-*Start -> Enter
-*There's diagonal jump
+* Move Right -> D
+* Move Left -> A
+* Jump -> W
+* Crouch -> S
+* Punch -> E
+* Kick -> R
+* Ko'ou Ken -> F
+* Start -> Enter
+* There's diagonal jump
 ## Player 2:
-*Move Right -> 3 (KeyPad)
-*Move Left -> 1 (KeyPad)
-*Jump -> 5 (KeyPad)
-*Crouch -> 2 (KeyPad)
-*Punch -> 4 (KeyPad)
-*Kick -> 7 (KeyPad)
-*Ko'ou Ken -> 0 (KeyPad)
-*Start -> Enter
-*There's diagonal jump
+* Move Right -> 3 (KeyPad)
+* Move Left -> 1 (KeyPad)
+* Jump -> 5 (KeyPad)
+* Crouch -> 2 (KeyPad)
+* Punch -> 4 (KeyPad)
+* Kick -> 7 (KeyPad)
+* Ko'ou Ken -> 0 (KeyPad)
+* Start -> Enter
+* There's diagonal jump
 
 There're 3 rounds. To win the fight, you have to defeat your opponent 2 rounds.
 
