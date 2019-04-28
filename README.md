@@ -1,8 +1,6 @@
-﻿
-CITM Project 1  
+﻿CITM Project 1  
 Team: RedDot
-Github Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
-Our old Github Repository where we started committing: https://github.com/reddot-studio/Project_Art_Of_Fighting <br>
+
 Members: 
 * Jordi Pardo Gutiérrez. Github User: @Kansas94. Responsibility: Art 
 * Bernat Casañas Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
@@ -29,10 +27,15 @@ If time runs out and the two players have the same health amount the round will 
 * Replay Match -> Q
 
 ## Debug Controls
-F1 -> Shows/Hide Collisions
-F5 -> Opens Debug Mode
-I -> Instakill Player 1
-O -> Instakill Player 2
+* Enables/Disables Debug Mode -> F5
+* Shows/Hide Collisions -> F1 
+* Instakill Player 1 -> I
+* Instakill Player 2 -> O
+* Move Camera Left -> LEFT ARROW
+* Move Camera Right -> RIGHT ARROW
+* Move Camera Up -> UP ARROW
+* Move Camera Down -> DOWN ARROW
+
 
 ## Player 1:
 * Move Right -> D
@@ -57,13 +60,44 @@ O -> Instakill Player 2
 * Ko'ou Ken -> 0 (KeyPad)
 * There's diagonal jump
 
-# VERSIONS:
+# CHANGELOG:
 
-# LIBRARIES WE USED:
+* [v0.0.1] Added First Scene
+* [v0.0.2] Added Congrats Screen
+* [v0.0.3] Added Welcome Screen
+* [v0.0.4] Added Intro Animation
+* [v0.0.5] Added Scenes Music and prepared SFX player
+* [v0.1.0] Added Ryo With Basic Movement
+* [v0.1.1] Added Ryo Kick
+* [v0.1.2] Added Ryo Punch
+* [v0.1.3] Added Ryo Jump
+* [v0.1.4] Added Ryo Koouken and Partciles
+* [v0.1.5] Added SFX to Ryo Attacks
+* [v0.2.0] Added Basic Colliders to Ryo
+* [v0.2.1] Added Basic Colliders to Map and Camera
+* [v0.2.2] Added Basic Debug Mode
+* [v0.3.0] Added Functional State Machine
+* [v0.3.1] Added Combined Jump + Attack
+* [v0.3.2] Divided Player Colliders into Hurtbox/Hitbox/Collider
+* [v0.3.3] Added a Basic UI + Health for each player
+* [v0.3.4] Replaced text Rects with fonts
+* [v0.3.5] Automatic Camera Movement
+* [v0.4.0] Added Player2 with it's own controls
+* [v0.4.1] Added Round Mechanics and win/lose condition
+* [v0.4.2] Added Definitive Collider System for players and camera
+* [v0.4.3] Added the proper animations for Player2
+* [v0.0.5] All memory Leaks Cleaned
+* [v0.5.0] Definitive Debug Mode implemented
+
+
+# LIBRARIES USED:
 
 * SDL: https://www.libsdl.org
 * SDL_Image: https://www.libsdl.org/projects/SDL_image/
 * SDL_Mixer: https://www.libsdl.org/projects/SDL_mixer/
 
+# Github Repositories
 
+Github CURRENT Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
+Our old Github Repository where we started committing: https://github.com/reddot-studio/Project_Art_Of_Fighting <br>
  
