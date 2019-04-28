@@ -73,17 +73,22 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()	
 {
 
-	if(App->input->keyboard_state[SDL_SCANCODE_UP] == KEY_REPEAT)
-		camera.y += speed;
+	if (App->collision->debug)
+	{
+		if (App->input->keyboard_state[SDL_SCANCODE_UP] == KEY_REPEAT)
+			camera.y += speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
-		camera.y -= speed;
+		if (App->input->keyboard[SDL_SCANCODE_DOWN] == 1)
+			camera.y -= speed;
 
-	if(App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
-		camera.x += speed;
+		if (App->input->keyboard[SDL_SCANCODE_LEFT] == 1)
+			camera.x += speed;
 
-	if(App->input->keyboard_state[SDL_SCANCODE_RIGHT] == KEY_REPEAT)
-		camera.x -= speed;
+		if (App->input->keyboard_state[SDL_SCANCODE_RIGHT] == KEY_REPEAT)
+			camera.x -= speed;
+	}
+
+
 	
 	CameraLimitL->rect.x = -(camera.x / speed);
 	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed) + 25);
