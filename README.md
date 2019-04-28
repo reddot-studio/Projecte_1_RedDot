@@ -39,9 +39,9 @@ If time runs out and the two players have the same health amount the round will 
 
 ## Debug Controls
 * Enables/Disables Debug Mode -> F1
-* Enables/Disables God Mode once in Debug Mode -> F1 
-* Instakill Player 1 while in God Mode-> I
-* Instakill Player 2 while in God Mode-> O
+* Enables/Disables God Mode once in Debug Mode -> F5
+* Instakill Player 2 while in God Mode-> I
+* Instakill Player 1 while in God Mode-> O
 * Move Camera Left -> LEFT ARROW
 * Move Camera Right -> RIGHT ARROW
 * Move Camera Up -> UP ARROW
