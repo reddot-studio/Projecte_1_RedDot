@@ -1,6 +1,8 @@
-﻿CITM Project 1  
+﻿
+CITM Project 1  
 Team: RedDot
 Github Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
+Our old Github Repository where we started committing: https://github.com/reddot-studio/Project_Art_Of_Fighting <br>
 Members: 
 * Jordi Pardo Gutiérrez. Github User: @Kansas94. Responsibility: Art 
 * Bernat Casañas Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
@@ -24,7 +26,7 @@ If time runs out and the two players have the same health amount the round will 
 ## Generic Controls
 
 * Start -> RETURN
-* Q -> REPLAY
+* Replay Match -> Q
 
 ## Debug Controls
 F1 -> Shows/Hide Collisions
