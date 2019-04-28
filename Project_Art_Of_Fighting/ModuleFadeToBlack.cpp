@@ -42,6 +42,8 @@ update_status ModuleFadeToBlack::Update()
 	{
 		case fade_step::fade_to_black:
 		{
+			App->input->Paused = true;
+
 			if(now >= total_time)
 			{
 				//Fades music for 1 sec
@@ -61,7 +63,6 @@ update_status ModuleFadeToBlack::Update()
 				
 				total_time += total_time;
 				start_time = SDL_GetTicks();
-				App->input->Paused = true;
 				current_step = fade_step::fade_from_black;
 			}
 		} break;
