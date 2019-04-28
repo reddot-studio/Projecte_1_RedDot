@@ -1,15 +1,15 @@
 CITM Project 1  
 Team: RedDot
-Github Repository: https://github.com/MayKoder/Projecte_1_RedDot
-Members: 
-*Jordi Pardo Gutiérrez. Github User: @Kansas94. Responsibility: Art 
-*Bernat Casañas Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
-*Miquel Suau González. Github User: @MayKoder. Responsibility: God Coder 
-*Eudald Garrofé Flix. Github User: @Hevne. Responsibility: Audio, General Analysis & Wiki Polisher 
+Github Repository: https://github.com/MayKoder/Projecte_1_RedDot <br>
+Members:  <br>
+*Jordi Pardo GutiÃ©rrez. Github User: @Kansas94. Responsibility: Art 
+*Bernat CasaÃ±as Masip. Github User: @BernatCasanas. Responsibility: Design & UI 
+*Miquel Suau GonzÃ¡lez. Github User: @MayKoder. Responsibility: God Coder 
+*Eudald GarrofÃ© Flix. Github User: @Hevne. Responsibility: Audio, General Analysis & Wiki Polisher 
 
 # ABOUT THE GAME:
 
-Art of fighting is a fighting video game trilogy that was realsed for the Neo Geo platform in the early 1990. Art of fighting follows the conventions of the time in the sense that theplayer faces a variety of opponents in best two-out-of three matches. Each of the game's characters have a unique fighting style and set of special techniques. The player has two basic attacks—punch and kick—as well as a utility button that switches between punches, kicks, and throws. A fourth button is used for taunting. Art of Fighting's contribution to the genre was the inclusion of a "spirit gauge" underneath the character's life bar. When characters perform special techniques, their spirit gauge is depleted and their special attacks become weaker. Players can also drain their opponent's spirit gauge by taunting them.
+Art of fighting is a fighting video game trilogy that was realsed for the Neo Geo platform in the early 1990. Art of fighting follows the conventions of the time in the sense that theplayer faces a variety of opponents in best two-out-of three matches. Each of the game's characters have a unique fighting style and set of special techniques. The player has two basic attacksâ€”punch and kickâ€”as well as a utility button that switches between punches, kicks, and throws. A fourth button is used for taunting. Art of Fighting's contribution to the genre was the inclusion of a "spirit gauge" underneath the character's life bar. When characters perform special techniques, their spirit gauge is depleted and their special attacks become weaker. Players can also drain their opponent's spirit gauge by taunting them.
 
 # HOW TO PLAY:
 
@@ -24,7 +24,7 @@ If time runs out and the two players have the same health amount the round will 
 
 * Start -> RETURN
 
-##Debug Controls
+## Debug Controls
 F1 -> Shows/Hide Collisions
 F5 -> Opens Debug Mode
 I -> Instakill Player 1
