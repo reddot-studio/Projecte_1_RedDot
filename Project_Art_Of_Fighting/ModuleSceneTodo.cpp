@@ -50,6 +50,7 @@ ModuleSceneTodo::~ModuleSceneTodo()
 
 bool ModuleSceneTodo::Start()
 {
+	current_animation = &nthng;
 	first_row = true;
 	//timeup.ResetCurrentFrame();
 	tick1 = 0;
@@ -140,14 +141,14 @@ update_status ModuleSceneTodo::Update()
 		{
 			current_animation = &winp2;
 		}
+		
 		if (App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)
 		{
 			current_animation = &winp1;
 		}
-		if (current_animation != &winp2 && current_animation != &winp1)
-		{
-			current_animation = &nthng;
-		}
+
+		
+		
 		App->player1->CheckHealth(*App->player2);
 		App->player2->CheckHealth(*App->player1);
 		
@@ -216,14 +217,16 @@ update_status ModuleSceneTodo::Update()
 
 		
 		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
-
-		if (App->player1->p2_win<2)
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
-		}
-		else
-		{
-			App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+			if (App->player1->p2_win < 2)
+			{
+				App->fade->FadeToBlack(App->scene_todo, App->scene_todo);
+			}
+			else
+			{
+				App->fade->FadeToBlack(App->scene_todo, App->scene_congratz);
+			}
 		}
 	}
 
