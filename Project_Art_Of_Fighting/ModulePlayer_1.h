@@ -6,15 +6,19 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "p2Qeue.h"
-#include"Application.h"
-#include"ModuleFadeToBlack.h"
-#include"ModuleCongratzScreen.h"
-#include"ModuleSceneJohn.h"
-#include"ModuleSceneTodo.h"
-#include"ModulePlayer_2.h"
+#include "Application.h"
+#include "ModuleFadeToBlack.h"
+#include "ModuleCongratzScreen.h"
+#include "ModuleSceneJohn.h"
+#include "ModuleSceneTodo.h"
+#include "ModulePlayer_2.h"
+#include "Character.h"
+#include "Ryo.h"
+
 
 struct SDL_Texture;
 struct Mix_Chunk;
+
 
 
 class ModulePlayer_1 : public Module
@@ -32,13 +36,6 @@ public:
 	void states(int speed);
 
 public:
-	Mix_Chunk *punchfx = NULL;
-	Mix_Chunk *kickfx = NULL;
-	Mix_Chunk *kooukenfx = NULL;
-	Mix_Chunk *jumpfx = NULL;
-	Mix_Chunk *dmg = NULL;
-
-
 	Collider * player_collider = nullptr;
 
 	player_state current_state = ST_UNKNOWN;
@@ -46,55 +43,17 @@ public:
 	inputs last_input = IN_UNKNOWN;
 	
 
-	Animation* current_animation = nullptr;
-	Animation* current_fx_animation = nullptr;
-	SDL_Texture* graphics = nullptr;
-	SDL_Texture* graphics2 = nullptr;
 	SDL_Texture* pivotTexture = nullptr;
 
 	RectSprites pivotRect;
 	iPoint offset;
 	iPoint pivot_player;
 
-	//Basic Moves
-	Animation idle;
-	Animation idle_player2;
-	Animation forward;
-	Animation backward;
-	Animation punch;
-	Animation kick;
-	Animation jump;
-	Animation fall;
-	Animation recover;
-	Animation jumpkick;
-	Animation jumppunch;
-	Animation jump_forward; 
-	Animation jump_backward;
-	Animation win;
-	Animation defeat;
-			
-	Animation pose_idle_receive_standing_punch_kick_plus_jump_punch;
-	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;
-	Animation pose_idle_receive_crouch_kick;
-	Animation pose_idle_receive_crouch_punch;
+	Animation* current_animation = nullptr;
+	Animation* current_fx_animation = nullptr;
 
-	Animation pose_crouch_receive_standing_crouch_kick; 
-	Animation pose_crouch_receive_crouch_punch; 
+	Character * character = nullptr;
 
-
-
-	Animation pose_jump_receive_dmg; //Not sure for prototype
-
-	
-	
-
-	//Crouch Moves
-	Animation crouch;
-	Animation crouch_punch;
-	Animation crouch_kick;
-
-	//Special moves
-	Animation koouKen;
 
 	SDL_Rect ActiveScene;
 	int timer;
