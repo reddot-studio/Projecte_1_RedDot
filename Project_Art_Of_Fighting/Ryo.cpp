@@ -5,9 +5,10 @@
 
 
 
-Ryo::Ryo()
+Ryo::Ryo(int player)
 {
-
+	this->player = player;
+	specialDmg = 15;
 	//idle animation (arcade sprite sheet)
 	//Rect Colliders
 	SDL_Rect rect1 = { -10,-40,25,20 };
@@ -117,14 +118,14 @@ Ryo::Ryo()
 
 	// punch animation (arcade sprite sheet)
 	punch.SetReverseOffset({ -19, -41 }, 2);
-	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, rect1, rect2, rect3, hit_punch_colllider);
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 2, rect1, rect2, rect3);
 	punch.SetReverseOffset({ -50, -41 }, 3);
 	punch.PushBack({ 546, 350, 89 , 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
 	punch.SetReverseOffset({ -19, -41 }, 3);
-	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 3, rect1, rect2, rect3, hit_punch_colllider);
+	punch.PushBack({ 488, 350, 58, 106 }, -29, -41, 3, rect1, rect2, rect3);
 	punch.speed = 0.5f;
 	punch.loop = false;
-	punch.damage = 20;
+	punch.damage = 10;
 
 	// kick animation (arcade sprite sheet)
 	kick.SetReverseOffset({ -15, -45 }, 4);
@@ -136,7 +137,7 @@ Ryo::Ryo()
 	kick.SetReverseOffset({ -13,-48 }, 4);
 	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.speed = 1.0f;
-	kick.damage = 30;
+	kick.damage = 10;
 	kick.loop = false;
 
 	//jump animation (arcade sprite sheet)
@@ -294,23 +295,63 @@ Ryo::Ryo()
 
 Ryo::~Ryo()
 {
-	App->textures->Unload(graphics);
 
-	App->audio->Unload_effects(punchfx);
-	App->audio->Unload_effects(kickfx);
-	App->audio->Unload_effects(kooukenfx);
-	App->audio->Unload_effects(jumpfx);
-	App->audio->Unload_effects(dmg);
 }
 
  bool Ryo::Start()
 {
-	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png"); // arcade version
-
-	punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");
-	kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
-	kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
-	jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
-	dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+	 if (player == 1) {
+		 if(graphics == nullptr)
+		 graphics = App->textures->Load("Assets/ryo_sprite_sheet.png");
+	 }
+	 else if (player == 2) {
+		 if(graphics == nullptr)
+		 graphics = App->textures->Load("Assets/ryo_sprite_sheet_2.png");
+	 }
+	 if(punchfx == nullptr)
+		punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");
+	 if (kickfx == nullptr)
+		kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
+	 if (kooukenfx == nullptr)
+		kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
+	 if (jumpfx == nullptr)
+		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
+	 if (dmg == nullptr)
+		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
 	return true;
 }
+
+ bool Ryo::CleanUp()
+ {
+	 	if (graphics != nullptr)
+	{
+		App->textures->Unload(graphics);
+		graphics = nullptr;
+	}
+	if (punchfx != nullptr)
+	{
+		App->audio->Unload_effects(punchfx);
+		punchfx = nullptr;
+	}
+	if (kickfx != nullptr)
+	{
+		App->audio->Unload_effects(kickfx);
+		kickfx = nullptr;
+	}
+	if (kooukenfx != nullptr)
+	{
+		App->audio->Unload_effects(kooukenfx);
+		kooukenfx = nullptr;
+	}
+	if (jumpfx != nullptr)
+	{
+		App->audio->Unload_effects(jumpfx);
+		jumpfx = nullptr;
+	}
+	if (dmg != nullptr)
+	{
+		App->audio->Unload_effects(dmg);
+		dmg = nullptr;
+	}
+	 return true;
+ }

@@ -6,18 +6,17 @@
 #include "Globals.h"
 #include "p2Point.h"
 #include "p2Qeue.h"
-#include"Application.h"
-#include"ModuleFadeToBlack.h"
-#include"ModuleCongratzScreen.h"
-#include"ModuleSceneJohn.h"
-#include"ModuleSceneTodo.h"
-#include"ModulePlayer_1.h"
+#include "Application.h"
+#include "ModuleFadeToBlack.h"
+#include "ModuleCongratzScreen.h"
+#include "ModuleSceneJohn.h"
+#include "ModuleSceneTodo.h"
+#include "ModulePlayer_1.h"
 #include "Character.h"
+#include "Ryo.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
-
-
 
 class ModulePlayer_2 : public Module
 {
@@ -55,7 +54,7 @@ public:
 
 	SDL_Rect ActiveScene;
 	int timer;
-	int p2_win = 0;
+	int p1_win = 0;
 	bool win_check = false;
 	bool isJumping = false;
 
@@ -72,6 +71,7 @@ public:
 	void CheckHealth(ModulePlayer_1&Enemy);
 
 	int Side;
+
 	SDL_Texture* Player_texture;
 	SDL_Texture* Player_Health_BG;
 	SDL_Texture* Player_Health_BG_Empty;
@@ -79,6 +79,7 @@ public:
 	SDL_Texture* Player_Spirit;
 	int speed;
 	bool WallColiding = false;
+
 	ModulePlayer_1* Enemy;
 
 	int tick1 = 0, tick2 = 0;

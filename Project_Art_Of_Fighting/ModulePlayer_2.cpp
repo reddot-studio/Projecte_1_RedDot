@@ -29,7 +29,7 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
-	character = new Ryo();
+	character = new Ryo(2);
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -44,7 +44,7 @@ bool ModulePlayer_2::Start()
 	HurtColliders[0] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 	HurtColliders[1] = App->collision->AddCollider({ { 0,0,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
 	HurtColliders[2] = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HURT, App->player2);
-	HitCollider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HIT);
+	HitCollider = App->collision->AddCollider({ { 50,50,50,50 },{ 0,0 },{ 0,0 } }, COLLIDER_ENEMY_HIT,App->player2);
 	HitCollider->Enabled = false;
 	pivot_player.x += 200;
 	Side = 2;
@@ -229,12 +229,15 @@ update_status ModulePlayer_2::Update()
 bool ModulePlayer_2::CleanUp()
 {
 	App->textures->Unload(pivotTexture);
-
+	if (character != nullptr) {
+		character->CleanUp();
+		delete character;
+		character = nullptr;
+	}
 	if (player_collider != nullptr)
 	{
 		player_collider->to_delete = true;
 	}
-
 	if (HitCollider != nullptr)
 	{
 		HitCollider->to_delete = true;
@@ -326,7 +329,14 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	//Hit Detection
 	if (c2->type == COLLIDER_PLAYER_HIT && (c2->Enabled && c1->Enabled))
 	{
+		int offsetX = 0;
 		Deal_Damage(*App->player1, c2->ColliderDamage);
+		if (Side == 2) {
+			offsetX = 35;
+		}
+		App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
+		App->audio->Play_chunk(character->dmg);
+		
 		c2->Enabled = false;
 	}
 
@@ -550,10 +560,6 @@ void ModulePlayer_2::states(int speed)
 	{
 	case ST_IDLE:
 		current_animation = &character->idle;
-		//if (player_collider->CheckCollision(App->player2->player_collider->rect) == false)
-		//{
-		//	player_collider->Enabled = true;
-		//}
 		HurtColliders[0]->Enabled = true;
 		HurtColliders[1]->Enabled = true;
 		HurtColliders[2]->Enabled = true;
@@ -624,7 +630,7 @@ void ModulePlayer_2::states(int speed)
 		{
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50,0,Side);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_ENEMY_HIT, 600, 30, Side);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side);
 			current_animation = &character->koouKen;
 			App->audio->Play_chunk(character->kooukenfx);
 		}
@@ -783,7 +789,6 @@ void ModulePlayer_2::states(int speed)
 			else {
 				offsetX = -5;
 			}
-			App->particles->AddParticle(App->particles->starhit, pivot_player.x - offsetX, pivot_player.y - 10, COLLIDER_NONE);
 
 		}
 		LOG("DAMAGE");
@@ -795,18 +800,17 @@ void ModulePlayer_2::states(int speed)
 
 void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 {
-		App->audio->Play_chunk(character->dmg);
+
 		last_input = IN_RECEIVE_DAMAGE_FROM_IDLE;
 		HurtColliders[0]->Enabled = false;
 		HurtColliders[1]->Enabled = false;
 		HurtColliders[2]->Enabled = false;
-		//current_fx_animation = &starhit;
 	
 	if (Enemy.Player_Health_Value_p1 - AttackDamage <= 0)
 	{
 		LOG("\n Someone died");
 		Enemy.Player_Health_Value_p1 = 0;
-		p2_win++;
+		p1_win++;
 		win_check = true;
 		Module *CurrentScene = nullptr;
 

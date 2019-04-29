@@ -12,9 +12,13 @@ public:
 	Character();
 	~Character() {};
 	virtual bool Start() { return true; };
+	virtual bool CleanUp() { return true; };
 
 public:
 
+	int player;
+
+	int specialDmg;
 	//Basic moves
 	Animation idle;
 	Animation forward;

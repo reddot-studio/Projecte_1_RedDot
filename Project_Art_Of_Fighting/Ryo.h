@@ -10,9 +10,10 @@ struct SDL_Texture;
 class Ryo : public Character
 {
 public:
-	Ryo();
+	Ryo(int player);
 	~Ryo();
-	bool Start();
+	bool Start() override;
+	bool CleanUp() override;
 };
 
 #endif // !__RYO_H__
