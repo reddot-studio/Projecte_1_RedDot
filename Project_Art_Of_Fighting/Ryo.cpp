@@ -287,10 +287,19 @@ Ryo::Ryo(int player)
 	pose_idle_receive_crouch_punch.PushBack({ 119,1146,55,106 }, 0, 0, 0);
 	pose_idle_receive_crouch_punch.PushBack({ 247,1149,46,158 }, 0, 0, 0);
 
-	pose_crouch_receive_standing_crouch_kick.PushBack({ 299,1178,73,73 }, 0, 0, 0);
+	//-----WHILE CROUCH-----//
+	//RECIEVE KICK
+	pose_crouch_receive_standing_crouch_kick.PushBack({ 299,1178,73,73 },0, 0,2);
+	pose_crouch_receive_standing_crouch_kick.speed = 0.5f;
+	pose_crouch_receive_standing_crouch_kick.loop = false;
 
-	pose_crouch_receive_crouch_punch.PushBack({ 376,1177,65,75 }, 0, 0, 0);
-	pose_crouch_receive_crouch_punch.PushBack({ 299,1178,73,73 }, 0, 0, 0);
+	//RECIEVE PUNCH
+	pose_crouch_receive_crouch_punch.SetReverseOffset({ -23, -10 }, 3);
+	pose_crouch_receive_crouch_punch.PushBack({ 376,1177,65,75 }, -32, -10, 3);
+	pose_crouch_receive_crouch_punch.SetReverseOffset({ -20, -8 }, 3);
+	pose_crouch_receive_crouch_punch.PushBack({ 299,1178,73,73 }, -43, -8, 3);
+	pose_crouch_receive_crouch_punch.speed = 0.5f;
+	pose_crouch_receive_crouch_punch.loop = false;
 }
 
 Ryo::~Ryo()

@@ -108,6 +108,10 @@ update_status ModulePlayer_1::Update()
 		{
 				last_input = IN_ATTACK_FINISH;	
 				HitCollider->Enabled = false;
+				HurtColliders[0]->Enabled = true;
+				HurtColliders[1]->Enabled = true;
+				HurtColliders[2]->Enabled = true;
+				player_collider->Enabled = true;
 		}
 	}
 
@@ -146,23 +150,12 @@ update_status ModulePlayer_1::Update()
 		Side = 2;
 	}
 
-	//if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)
-	//	App->player1->pivot_player = App->player2->pivot_player;
-	
 	//4 seconds without moving
 	tick2 = SDL_GetTicks();
 	if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->win_check != true && App->player2->win_check != true)
 	{
 		App->input->Paused = false;
 	}
-	/*else
-	{
-		if (App->input->Paused == true && App->sceneUI->time_over == false)
-		{
-
-			App->input->Paused = false;
-		}
-	}*/
 
 
 	// Draw everything --------------------------------------
@@ -254,7 +247,7 @@ update_status ModulePlayer_1::Update()
 	}
 	if (HitCollider != nullptr)
 		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
-	//App->render->Blit(pivotTexture, pivot_player.x - pivotRect.rect.w, pivot_player.y - pivotRect.rect.h, &pivotRect, 1, PlayerNumber);
+
 	return UPDATE_CONTINUE;
 }
 
@@ -394,7 +387,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -408,7 +401,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_JUMP_DOWN: state = ST_FORWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -422,7 +415,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_JUMP_DOWN: state = ST_BACKWARD_JUMP; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -552,11 +545,12 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_CROUCH:
 		switch (last_input)
 		{
+
 		case IN_CROUCH_UP: state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
 		case IN_KICK: state = ST_CROUCH_KICK; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
-		case IN_RECEIVE_DAMAGE_FROM_IDLE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_CROUCH_DAMAGE; break;
 		}
 		break;
 	case ST_CROUCH_PUNCH:
@@ -569,6 +563,12 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_CROUCH;  break;
+		}
+		break;
+	case ST_CROUCH_DAMAGE:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_CROUCH; break;
 		}
 		break;
 	case ST_IDLE_TO_DAMAGE:
@@ -809,6 +809,13 @@ void ModulePlayer_1::states(int speed)
 		}
 		LOG("CROUCH KICK");
 		break;
+	case ST_CROUCH_DAMAGE:
+		if (current_animation != &character->pose_crouch_receive_crouch_punch) {
+			character->pose_crouch_receive_crouch_punch.ResetCurrentFrame();
+			current_animation = &character->pose_crouch_receive_crouch_punch;
+		}
+		LOG("CROUCH DAMAGE");
+		break;
 	case ST_IDLE_TO_DAMAGE:
 		int offsetX = 0;
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
@@ -832,7 +839,7 @@ void ModulePlayer_1::states(int speed)
 void ModulePlayer_1::Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage)
 {
 
-	last_input = IN_RECEIVE_DAMAGE_FROM_IDLE;
+	last_input = IN_RECEIVE_DAMAGE;
 	HurtColliders[0]->Enabled = false;
 	HurtColliders[1]->Enabled = false;
 	HurtColliders[2]->Enabled = false;
