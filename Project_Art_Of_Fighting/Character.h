@@ -55,6 +55,10 @@ public:
 	//Special moves
 	Animation koouKen;
 
+	//Blocking moves
+	Animation standing_block;
+	Animation crouch_block;
+
 	//Textures
 	SDL_Texture* graphics = nullptr;
 

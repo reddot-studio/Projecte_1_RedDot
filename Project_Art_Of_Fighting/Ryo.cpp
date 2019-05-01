@@ -52,7 +52,7 @@ Ryo::Ryo(int player)
 	SDL_Rect hit_punch_colllider = { 20,-25,43,10 };
 	SDL_Rect hit_kick_collider = { 5,-45,60,40 };
 
-
+	//IDLE
 	idle.SetReverseOffset({ -27,-43 }, 2);
 	idle.PushBack({ 0, 8, 66, 108 }, -29, -43, 2, rect1, rect2, rect3);
 	idle.SetReverseOffset({ -28,-43 }, 2);
@@ -106,13 +106,13 @@ Ryo::Ryo(int player)
 	forward.speed = 0.25f;
 
 	// walk backward animation (arcade sprite sheet)
-	backward.SetReverseOffset({ -29, -42 }, 3);
+	backward.SetReverseOffset({ -21, -42 }, 3);
 	backward.PushBack({ 577, 479, 59 , 107 }, -29, -42, 3, rect1, rect2, rect3);
-	backward.SetReverseOffset({ -29, -44 }, 3);
+	backward.SetReverseOffset({ -21, -44 }, 3);
 	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3, rect1, rect2, rect3);
-	backward.SetReverseOffset({ -29, -42 }, 3);
+	backward.SetReverseOffset({ -21, -42 }, 3);
 	backward.PushBack({ 690, 478, 61 , 107 }, -32, -42, 3, rect1, rect2, rect3);
-	backward.SetReverseOffset({ -29, -44 }, 3);
+	backward.SetReverseOffset({ -21, -44 }, 3);
 	backward.PushBack({ 636, 477, 54 , 109 }, -25, -44, 3, rect1, rect2, rect3);
 	backward.speed = 0.25f;
 
@@ -300,6 +300,24 @@ Ryo::Ryo(int player)
 	pose_crouch_receive_crouch_punch.PushBack({ 299,1178,73,73 }, -43, -8, 3);
 	pose_crouch_receive_crouch_punch.speed = 0.5f;
 	pose_crouch_receive_crouch_punch.loop = false;
+
+	//BLOCKING ANIMATIONS
+	//Standing block
+	standing_block.SetReverseOffset({ -20,-37 }, 3);
+	standing_block.PushBack({671,1267,58,103},-32,-37,3);
+	standing_block.SetReverseOffset({ -20,-38 }, 5);
+	standing_block.PushBack({734,1266,58,104},-32,-38,5);
+	standing_block.speed = 0.3f;
+	standing_block.loop = false;
+
+	//Crouch block
+	crouch_block.SetReverseOffset({ -20,-5 }, 3);
+	crouch_block.PushBack({3,1181,54,71},-24,-5,3);
+	crouch_block.SetReverseOffset({ -19,-6 }, 4);
+	crouch_block.PushBack({59,1180,56,72},-27,-6,4);
+	crouch_block.speed = 0.3;
+	crouch_block.loop = false;
+	
 }
 
 Ryo::~Ryo()

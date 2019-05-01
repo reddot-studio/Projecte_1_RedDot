@@ -61,13 +61,32 @@ update_status ModulePlayer_2::Update()
 
 	states(speed);
 	//Move right
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT) last_input = IN_RIGHT_DOWN;
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_UP) last_input = IN_RIGHT_UP;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT) {
+		last_input = IN_RIGHT_DOWN;
+		if (Side == 1) {
+			isClose = false;
+		}
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) {
+		last_input = IN_RIGHT_UP;
 
+		if (Side == 2) {
+			isClose = false;
+		}
+	}
 	//Move Left
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT) last_input = IN_LEFT_DOWN;
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_UP) last_input = IN_LEFT_UP;
-
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT) {
+		last_input = IN_LEFT_DOWN;
+		if (Side == 2) {
+			isClose = false;
+		}
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_UP) {
+		last_input = IN_LEFT_UP;
+		if (Side == 1) {
+			isClose = false;
+		}
+	}
 	//Crouch
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_UP)
@@ -125,7 +144,9 @@ update_status ModulePlayer_2::Update()
 	{
 		Side = 2;
 	}
-
+	if ((App->player1->current_state == ST_STANDING_PUNCH || App->player1->current_state == ST_CROUCH_PUNCH || App->player1->current_state == ST_CROUCH_KICK) && isClose) {
+		last_input = IN_BLOCKING;
+	}
 
 	if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->win_check != true && App->player2->win_check != true)
 	{
@@ -135,6 +156,34 @@ update_status ModulePlayer_2::Update()
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
 
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT && Side == 1) {
+		int num = pivot_player.x - App->player1->GetPosition().x;
+		if (num < 0) {
+			num *= -1;
+		}
+		SDL_Log("%d", num);
+		if (num < 150) {
+			isClose = true;
+			LOG("CLOSE");
+		}
+		else {
+			isClose = false;
+		}
+	}
+	else if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT && Side == 2) {
+		int num = pivot_player.x - App->player1->GetPosition().x;
+		if (num < 0) {
+			num *= -1;
+		}
+		SDL_Log("%d", num);
+		if (num < 150) {
+			isClose = true;
+			LOG("CLOSE");
+		}
+		else {
+			isClose = false;
+		}
+	}
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH || current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK)
 	{
@@ -329,7 +378,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 			offsetX = 35;
 		}
 		App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
-		App->audio->Play_chunk(character->dmg);
+
 		
 		c2->Enabled = false;
 	}
@@ -369,6 +418,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -383,6 +433,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -517,6 +568,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_CROUCH_KICK; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_CROUCH_DAMAGE; break;
+		case IN_BLOCKING: state = ST_CROUCH_BLOCK; break;
 		}
 		break;
 	case ST_CROUCH_PUNCH:
@@ -543,6 +595,25 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
+	case ST_STANDING_BLOCK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH:
+			if (Side == 1) {
+				state = ST_WALK_BACKWARD;
+			}
+			else if (Side == 2) {
+				state = ST_WALK_FORWARD;
+			}
+			break;
+		}
+		break;
+	case ST_CROUCH_BLOCK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_CROUCH; break;
+		}
+		break;
 	}
 
 	last_input = IN_UNKNOWN;
@@ -564,7 +635,7 @@ void ModulePlayer_2::states(int speed)
 		HurtColliders[1]->Enabled = true;
 		HurtColliders[2]->Enabled = true;
 		player_collider->Enabled = true;
-		LOG("IDLE");
+		//LOG("IDLE");
 		break;
 	case ST_WALK_FORWARD:
 		pivot_player.x += speed;
@@ -603,7 +674,7 @@ void ModulePlayer_2::states(int speed)
 			App->audio->Play_chunk(character->punchfx);
 
 		}
-		LOG("PUNCH");
+		//LOG("PUNCH");
 		break;
 	case ST_STANDING_KICK:
 		if (current_animation != &character->kick)
@@ -781,14 +852,29 @@ void ModulePlayer_2::states(int speed)
 		if (current_animation != &character->pose_crouch_receive_crouch_punch) {
 			character->pose_crouch_receive_crouch_punch.ResetCurrentFrame();
 			current_animation = &character->pose_crouch_receive_crouch_punch;
+			App->audio->Play_chunk(character->dmg);
 		}
-		LOG("CROUCH DAMAGE");
+		//LOG("CROUCH DAMAGE");
+		break;
+	case ST_STANDING_BLOCK:
+		if (current_animation != &character->standing_block) {
+			character->standing_block.ResetCurrentFrame();
+			current_animation = &character->standing_block;
+		}
+		break;
+	case ST_CROUCH_BLOCK:
+		if (current_animation != &character->crouch_block) {
+			character->crouch_block.ResetCurrentFrame();
+			current_animation = &character->crouch_block;
+		}
 		break;
 	case ST_IDLE_TO_DAMAGE:
 		int offsetX = 0;
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
+			App->audio->Play_chunk(character->dmg);
+			
 			
 			if (Side == 2) {
 				offsetX = 5;
@@ -798,11 +884,16 @@ void ModulePlayer_2::states(int speed)
 			}
 
 		}
-		LOG("DAMAGE");
+		//LOG("DAMAGE");
 		break;
 	}
 	current_state = state;
 
+}
+
+iPoint ModulePlayer_2::GetPosition()
+{
+	return pivot_player;
 }
 
 void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)

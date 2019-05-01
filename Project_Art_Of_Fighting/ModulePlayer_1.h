@@ -35,6 +35,8 @@ public:
 	player_state ControlStates();
 	void states(int speed);
 
+	iPoint GetPosition();
+
 public:
 	Collider * player_collider = nullptr;
 
@@ -60,6 +62,7 @@ public:
 	int p2_win = 0;
 	bool win_check = false;
 	bool isJumping = false;
+	bool isClose = false;
 
 	//bool BackColision, FrontColision;
 	Collider* CurrentColider = nullptr;

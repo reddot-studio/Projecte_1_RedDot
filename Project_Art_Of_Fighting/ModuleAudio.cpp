@@ -33,7 +33,7 @@ bool ModuleAudio::Init()
 		else
 		{
 			LOG("Mix_Init correctly initialized!");
-			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 1024);
+			Mix_OpenAudio(48000, MIX_DEFAULT_FORMAT, 2, 512);
 		}
 	}
 	return ret;
@@ -96,11 +96,12 @@ bool ModuleAudio::Play_music(Mix_Music* track)
 
 bool ModuleAudio::Play_chunk(Mix_Chunk* track)
 {
-	if (Mix_PlayChannel(-1, track, 0) == -1)
-	{
-		SDL_Log("%s/n", SDL_GetError());
-		return false;
-	}
+	int num = Mix_PlayChannel(-1, track, 0);
+	SDL_Log("%i",num);
+	
+		//SDL_Log("%s/n", SDL_GetError());
+		//return false;
+	
 	return true;
 }
 
