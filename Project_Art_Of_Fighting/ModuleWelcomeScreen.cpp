@@ -164,6 +164,11 @@ update_status ModuleWelcomeScreen::Update()
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_congratz);
 	}
+	//Canviar al nivell de Cina
+	if (App->input->keyboard_state[SDL_SCANCODE_M]== KEY_DOWN)
+	{
+		App->fade->FadeToBlack(App->scene_welcome, App->scene_john);
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 

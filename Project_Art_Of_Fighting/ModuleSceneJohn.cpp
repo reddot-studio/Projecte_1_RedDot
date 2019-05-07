@@ -56,7 +56,7 @@ ModuleSceneJohn::ModuleSceneJohn()
 	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
 	morado.PushBack({ 0,274,50,43 }, 0, 0, 5);
 	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
-	morado.PushBack({ 0,274,50,43 }, 0, 0, 5);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 15);
 	morado.speed = 0.2f;
 
 }
