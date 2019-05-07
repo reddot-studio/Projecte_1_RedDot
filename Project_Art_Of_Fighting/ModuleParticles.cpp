@@ -54,7 +54,7 @@ bool ModuleParticles::Start()
 	koouKen.anim.PushBack({862,930,36,21},15,-11,5);
 	koouKen.anim.loop = true;
 	koouKen.life = 1500;
-	koouKen.speed = { 0,0 };
+	koouKen.speed = { 10,0 };
 	koouKen.anim.speed = 1.2f;
 
 
@@ -144,12 +144,10 @@ update_status ModuleParticles::Update()
 			if (p->Side == 2) 
 			{
 			App->render->Blit(graphics, p->position.x +r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
-			lastSide = p->Side;
 			}
 			else if (p->Side == 1) 
 			{
 			App->render->Blit(graphics, p->position.x +r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
-			lastSide = p->Side;
 			}
 			if(p->fx_played == false)
 			{
@@ -175,7 +173,11 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->Side = Side;
 			if (collider_type != COLLIDER_NONE) {
 				RectSprites r = p->anim.GetCurrentFrame();
+				r.rect.x = x;
+				r.rect.y = y;
 				p->collider = App->collision->AddCollider(r, collider_type, this, Damage);
+				p->collider->Side = p->Side;
+
 			}
 			active[i] = p;
 			break;
@@ -193,13 +195,13 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 		{
 			int offsetX = 0;
 
-			if (lastSide == 1) {
+			if (c1->Side == 1) {
 				offsetX = active[i]->collider->rect.w / 2;
 			}
-			else if (lastSide == 2) {
+			else if (c1->Side == 2) {
 				offsetX = -active[i]->collider->rect.w / 4;
 			}
-			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,lastSide);
+			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,c1->Side);
 
 			delete active[i];
 			active[i] = nullptr;
@@ -258,8 +260,14 @@ bool Particle::Update()
 			position.y -= speed.y;
 		}
 
-		if (collider != nullptr)
-			collider->SetPos(position.x, position.y -20);
+		if (collider != nullptr) {
+			if (Side == 1) {
+				collider->SetPos(position.x - collider->rect.w/10 , position.y - collider->rect.h / 2);
+			}
+			else {
+				collider->SetPos(position.x - collider->rect.w/10, position.y - collider->rect.h / 2);
+			}
+		}
 	}
 
 

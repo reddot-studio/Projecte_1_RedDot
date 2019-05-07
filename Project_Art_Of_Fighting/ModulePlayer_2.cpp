@@ -261,7 +261,15 @@ update_status ModulePlayer_2::Update()
 
 	for (int i = 0; i < 3; i++)
 	{
-		HurtColliders[i]->SetRect(r.hurtColliders[i], current_animation->damage, pivot_player);
+		SDL_Rect rect[3];
+		rect[i] = r.hurtColliders[i];
+		if (Side == 2) {
+				rect[0].x = rect[0].x + 5;
+				rect[1].x = rect[1].x + 5;
+				rect[2].x = rect[2].x + 10;
+			
+		}
+		HurtColliders[i]->SetRect(rect[i], current_animation->damage, pivot_player);
 	}
 	if (HitCollider != nullptr)
 		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
@@ -701,7 +709,7 @@ void ModulePlayer_2::states(int speed)
 		{
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50,0,Side);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x -10, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side);
 			current_animation = &character->koouKen;
 			App->audio->Play_chunk(character->kooukenfx);
 		}

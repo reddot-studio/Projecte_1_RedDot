@@ -25,6 +25,7 @@ struct Particle
 	int life = 0;
 	bool fx_played = false;
 	int Side;
+	int lastSide;
 
 
 
@@ -46,7 +47,7 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Sied = 1);
+	void AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
 
 private:
 
@@ -56,7 +57,6 @@ private:
 	uint last_particle = 0;
 
 public:
-	int lastSide;
 
 	Particle pre_koouKen;
 	Particle koouKen;

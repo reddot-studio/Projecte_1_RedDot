@@ -95,13 +95,13 @@ Ryo::Ryo(int player)
 	crouch_kick.loop = false;
 
 	// walk forward animation (arcade sprite sheet)
-	forward.SetReverseOffset({ -21, -43 }, 3);
+	forward.SetReverseOffset({ -25, -43 }, 3);
 	forward.PushBack({ 693, 348, 58 , 108 }, -21, -43, 3, rect1, rect2, rect3);
-	forward.SetReverseOffset({ -21, -43 }, 3);
+	forward.SetReverseOffset({ -25, -43 }, 3);
 	forward.PushBack({ 751, 348, 69 , 108 }, -32, -43, 3, rect1, rect2, rect3);
-	forward.SetReverseOffset({ -21, -43 }, 3);
+	forward.SetReverseOffset({ -25, -43 }, 3);
 	forward.PushBack({ 820, 348, 58 , 108 }, -21, -43, 3, rect1, rect2, rect3);
-	forward.SetReverseOffset({ -21, -43 }, 3);
+	forward.SetReverseOffset({ -28, -43 }, 3);
 	forward.PushBack({ 878, 348, 67 , 108 }, -29, -43, 3, rect1, rect2, rect3);
 	forward.speed = 0.25f;
 

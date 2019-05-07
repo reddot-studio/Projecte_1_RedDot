@@ -733,7 +733,7 @@ void ModulePlayer_1::states(int speed)
 		{
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+			App->particles->AddParticle(App->particles->koouKen, pivot_player.x -28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
 			current_animation = &character->koouKen;
 			App->audio->Play_chunk(character->kooukenfx);
 		}
