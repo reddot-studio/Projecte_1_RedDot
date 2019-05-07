@@ -232,11 +232,10 @@ update_status ModuleSceneTodo::Update()
 
 
 	//JOHN SCENE
-	//if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && !App->input->Paused)
-	//{
-	//	App->fade->FadeToBlack( App->scene_todo, App->scene_john);
-	//	App->input->Disable();
-	//}
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN && !App->input->Paused)
+	{
+		App->fade->FadeToBlack( App->scene_todo, App->scene_john);
+	}
 
 	tick2 = SDL_GetTicks();
 	return UPDATE_CONTINUE;

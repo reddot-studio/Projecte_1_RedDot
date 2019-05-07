@@ -13,14 +13,15 @@ class ModuleSceneJohn : public Module {
 public:
 	SDL_Texture * graphics = nullptr;
 	RectSprites rect_background;
-	Animation idle;
-	Animation soldiers;
-	Animation couple;
-	Animation soldierduo;
+	Animation rojoParpadeo;
+	Animation rotuloVerde;
+	Animation radio;
+	Animation szechu;
+	Animation morado;
 public:
 	ModuleSceneJohn();
 	~ModuleSceneJohn();
-	Mix_Music* john_music;
+	Mix_Music* lee_music;
 	bool Start() override;
 	update_status Update()override;
 	bool CleanUp();

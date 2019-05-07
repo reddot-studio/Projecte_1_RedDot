@@ -19,38 +19,46 @@
 ModuleSceneJohn::ModuleSceneJohn()
 {
 	//background//
-		rect_background.rect.w = 540;
-		rect_background.rect.h = 224;
+		rect_background.rect.w = 557;
+		rect_background.rect.h = 225;
 		rect_background.rect.x = 0;
 		rect_background.rect.y = 0;
 
-	//helicopter//
-	idle.PushBack({ 627, 0, 397, 47 });
-	idle.PushBack({ 627,61,397,47 });
-	idle.speed = 0.2f;
+	//rojo parpadeo//
+	rojoParpadeo.PushBack({ 174, 224, 24, 32 });
+	rojoParpadeo.PushBack({ 198,224,24,32 });
+	rojoParpadeo.speed = 0.2f;
 
 
-	//soldiers//
-	soldiers.PushBack({ 113,232,119,94 });
-	soldiers.PushBack({ 231,232,119,94 });
-	soldiers.PushBack({ 349,232,119,94 });
-	soldiers.PushBack({ 467,232,119,94 });
-	soldiers.PushBack({ 585,232,119,94 });
-	soldiers.PushBack({ 703,232,119,94 });
-	soldiers.PushBack({ 821,232,119,94 });
-	soldiers.speed = 0.2f;
+	//rotulo verde//
+	rotuloVerde.PushBack({ 113,232,119,94 });
+	rotuloVerde.PushBack({ 231,232,119,94 });
+	rotuloVerde.PushBack({ 349,232,119,94 });
+	rotuloVerde.PushBack({ 467,232,119,94 });
+	rotuloVerde.PushBack({ 585,232,119,94 });
+	rotuloVerde.PushBack({ 703,232,119,94 });
+	rotuloVerde.PushBack({ 821,232,119,94 });
+	rotuloVerde.speed = 0.2f;
 
-	//couple//
-	couple.PushBack({ 10,236,45,99 });
-	couple.PushBack({ 56,236,45,99 });
-	couple.speed = 0.2f;
+	//radio//
+	radio.PushBack({ 10,236,45,99 });
+	radio.PushBack({ 56,236,45,99 });
+	radio.speed = 0.2f;
 
-	//soldierduo//
-	soldierduo.PushBack({ 578,354,88,97 });
-	soldierduo.PushBack({ 578,460,88,97 });
-	soldierduo.speed = 0.2f;
+	//szechu//
+	szechu.PushBack({ 578,354,88,97 });
+	szechu.PushBack({ 578,460,88,97 });
+	szechu.speed = 0.2f;
 
-	
+	//Morado//
+	morado.PushBack({ 50,274,50,43 },0,0,5);
+	morado.PushBack({  0,274,50,43 }, 0, 0, 5);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 5);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 5);
+	morado.speed = 0.2f;
+
 }
 
 ModuleSceneJohn::~ModuleSceneJohn()
@@ -59,14 +67,15 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
-	LOG("Loading john scene");
-	john_music = App->audio->Load_music("Assets/Audio/038xKoukuu Bokaan!.ogg");
-	if ((graphics = App->textures->Load("Assets/backgrounds_karuta_guardian.png")) == NULL)
+
+	LOG("Loading lee scene");
+	lee_music = App->audio->Load_music("Assets/Audio/038xKoukuu Bokaan!.ogg");
+	if ((graphics = App->textures->Load("Assets/ChinaTown.png")) == NULL)
 	{
 		SDL_Log("Unable to load texture from path: /guardian.png");
 		return false;
 	}
-	App->audio->Play_music(john_music);
+	App->audio->Play_music(lee_music);
 
 	//Screen Limits
 	//BackPanel = App->collision->AddCollider({ { 0,0,25, SCREEN_HEIGHT },{ 0,0 }, {0, 0} }, COLLIDER_WALL, App->scene_john);
@@ -89,13 +98,16 @@ update_status ModuleSceneJohn::Update()
 		SDL_Log("Unable to [BLIT] texture: texture_background");
 		return update_status::UPDATE_STOP;
 	}
-	App->render->Blit(graphics, 115, 0, &idle.GetCurrentFrame());
+	App->input->Paused = false;
+	App->render->Blit(graphics, 115, 0, &rojoParpadeo.GetCurrentFrame());
 
-	App->render->Blit(graphics, 130, 100, &soldiers.GetCurrentFrame());
+	App->render->Blit(graphics, 130, 100, &rotuloVerde.GetCurrentFrame());
 
-	App->render->Blit(graphics, 440, 100, &couple.GetCurrentFrame());
+	App->render->Blit(graphics, 440, 100, &radio.GetCurrentFrame());
 
-	App->render->Blit(graphics, 315, 100, &soldierduo.GetCurrentFrame());
+	App->render->Blit(graphics, 315, 100, &szechu.GetCurrentFrame());
+
+	App->render->Blit(graphics, 55, 59, &morado.GetCurrentFrame());
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
@@ -114,7 +126,7 @@ bool ModuleSceneJohn::CleanUp()
 	}
 
 	App->sceneUI->Disable();
-	App->audio->Unload_music(john_music);
+	App->audio->Unload_music(lee_music);
 	App->textures->Unload(graphics);
 	App->player1->Disable();
 	App->player2->Disable();

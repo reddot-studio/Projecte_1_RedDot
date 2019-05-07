@@ -62,7 +62,6 @@ update_status ModuleFadeToBlack::Update()
 				
 				total_time += total_time;
 				start_time = SDL_GetTicks();
-				App->input->Paused = true;
 				current_step = fade_step::fade_from_black;
 			}
 		} break;
