@@ -54,7 +54,7 @@ bool ModuleParticles::Start()
 	koouKen.anim.PushBack({862,930,36,21},15,-11,5);
 	koouKen.anim.loop = true;
 	koouKen.life = 1500;
-	koouKen.speed = { 10,0 };
+	koouKen.speed = { 0,0 };
 	koouKen.anim.speed = 1.2f;
 
 
