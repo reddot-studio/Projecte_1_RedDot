@@ -19,10 +19,10 @@
 ModuleSceneJohn::ModuleSceneJohn()
 {
 	//background//
-		rect_background.rect.w = 557;
-		rect_background.rect.h = 225;
-		rect_background.rect.x = 0;
-		rect_background.rect.y = 0;
+	rect_background.rect.w = 557;
+	rect_background.rect.h = 225;
+	rect_background.rect.x = 0;
+	rect_background.rect.y = 0;
 
 	//rojo parpadeo//
 	rojoParpadeo.PushBack({ 174, 224, 24, 32 });
@@ -31,33 +31,75 @@ ModuleSceneJohn::ModuleSceneJohn()
 
 
 	//rotulo verde//
-	rotuloVerde.PushBack({ 113,232,119,94 });
-	rotuloVerde.PushBack({ 231,232,119,94 });
-	rotuloVerde.PushBack({ 349,232,119,94 });
-	rotuloVerde.PushBack({ 467,232,119,94 });
-	rotuloVerde.PushBack({ 585,232,119,94 });
-	rotuloVerde.PushBack({ 703,232,119,94 });
-	rotuloVerde.PushBack({ 821,232,119,94 });
-	rotuloVerde.speed = 0.2f;
+	rotuloVerde.PushBack({ 0,224,77,19 });
+	rotuloVerde.PushBack({ 77,224,77,19 });
+	rotuloVerde.speed = 0.1f;
 
 	//radio//
-	radio.PushBack({ 10,236,45,99 });
-	radio.PushBack({ 56,236,45,99 });
-	radio.speed = 0.2f;
+	radio.PushBack({ 0,242,36,31 });
+	radio.PushBack({ 36,242,36,31 });
+	radio.PushBack({ 72,242,36,31 });
+	radio.PushBack({ 108,242,36,31  });
+	radio.speed = 0.1f;
 
 	//szechu//
-	szechu.PushBack({ 578,354,88,97 });
-	szechu.PushBack({ 578,460,88,97 });
-	szechu.speed = 0.2f;
+	szechu.PushBack({ 154,224,10,73 });
+	szechu.PushBack({ 164,224,10,73 });
+	szechu.speed = 0.1f;
 
 	//Morado//
-	morado.PushBack({ 50,274,50,43 },0,0,5);
-	morado.PushBack({  0,274,50,43 }, 0, 0, 5);
-	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
-	morado.PushBack({ 0,274,50,43 }, 0, 0, 5);
-	morado.PushBack({ 50,274,50,43 }, 0, 0, 5);
-	morado.PushBack({ 0,274,50,43 }, 0, 0, 15);
+	morado.PushBack({ 50,274,50,43 },0,0,3);
+	morado.PushBack({  0,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 13);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 13);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 13);
+	morado.PushBack({ 50,274,50,43 }, 0, 0, 3);
+	morado.PushBack({ 0,274,50,43 }, 0, 0, 13);
 	morado.speed = 0.2f;
+
+	//Cuadrado//
+	cuadrado.PushBack({ 174,256,12,12 });
+	cuadrado.PushBack({ 186,256,12,12 });
+	cuadrado.speed = 0.05f;
+
+	//Luz Azul//
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 13);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 13);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 13);
+	luzAzul.PushBack({ 578,143,22,125 }, 0, 0, 3);
+	luzAzul.PushBack({ 556,143,22,125 }, 0, 0, 13);
+	luzAzul.speed = 0.2f;
+
+	//Cartel Azul//
+	cartelAzul.PushBack({ 556,12,24,131 });
+	cartelAzul.PushBack({ 580,12,24,131 });
+	cartelAzul.speed = 0.1f;
+
+
+	//Blanco//
+	blanco.PushBack({ 556,0,16,12 });
+	blanco.PushBack({ 572,0,16,12 });
+	blanco.speed = 0.1f;
 
 }
 
@@ -101,13 +143,21 @@ update_status ModuleSceneJohn::Update()
 	App->input->Paused = false;
 	App->render->Blit(graphics, 115, 0, &rojoParpadeo.GetCurrentFrame());
 
-	App->render->Blit(graphics, 130, 100, &rotuloVerde.GetCurrentFrame());
+	App->render->Blit(graphics, 0, 0, &rotuloVerde.GetCurrentFrame());
 
-	App->render->Blit(graphics, 440, 100, &radio.GetCurrentFrame());
+	App->render->Blit(graphics, 88, 0, &radio.GetCurrentFrame());
 
-	App->render->Blit(graphics, 315, 100, &szechu.GetCurrentFrame());
+	App->render->Blit(graphics, 195, 43, &szechu.GetCurrentFrame());
 
 	App->render->Blit(graphics, 55, 59, &morado.GetCurrentFrame());
+
+	App->render->Blit(graphics, 180, 102, &cuadrado.GetCurrentFrame());
+
+	App->render->Blit(graphics, 378, 0, &luzAzul.GetCurrentFrame());
+
+	App->render->Blit(graphics, 433, 7, &cartelAzul.GetCurrentFrame());
+
+	App->render->Blit(graphics, 314, 114, &blanco.GetCurrentFrame());
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{

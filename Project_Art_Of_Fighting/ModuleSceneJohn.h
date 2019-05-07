@@ -18,6 +18,10 @@ public:
 	Animation radio;
 	Animation szechu;
 	Animation morado;
+	Animation cuadrado;
+	Animation cartelAzul;
+	Animation luzAzul;
+	Animation blanco;
 public:
 	ModuleSceneJohn();
 	~ModuleSceneJohn();
