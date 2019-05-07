@@ -106,7 +106,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 }
 
 //Punch weak
-if (App->input->keyboard_state[SDL_SCANCODE_E] == KEY_DOWN)	last_input = IN_PUNCH;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN)	last_input = IN_PUNCH;
 
 //kick weak
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input = IN_KICK;

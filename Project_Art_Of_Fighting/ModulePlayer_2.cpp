@@ -61,13 +61,13 @@ update_status ModulePlayer_2::Update()
 
 	states(speed);
 	//Move right
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT) {
+	if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_REPEAT) {
 		last_input = IN_RIGHT_DOWN;
 		if (Side == 1) {
 			isClose = false;
 		}
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_UP) {
+	if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_UP) {
 		last_input = IN_RIGHT_UP;
 
 		if (Side == 2) {
@@ -75,21 +75,21 @@ update_status ModulePlayer_2::Update()
 		}
 	}
 	//Move Left
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT) {
+	if (App->input->keyboard_state[SDL_SCANCODE_J] == KEY_REPEAT) {
 		last_input = IN_LEFT_DOWN;
 		if (Side == 2) {
 			isClose = false;
 		}
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_UP) {
+	if (App->input->keyboard_state[SDL_SCANCODE_J] == KEY_UP) {
 		last_input = IN_LEFT_UP;
 		if (Side == 1) {
 			isClose = false;
 		}
 	}
 	//Crouch
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_2] == KEY_UP)
+	if (App->input->keyboard_state[SDL_SCANCODE_K] == KEY_REPEAT) last_input = IN_CROUCH_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_K] == KEY_UP)
 	{
 		last_input = IN_CROUCH_UP;
 		character->crouch.ResetCurrentFrame();
@@ -105,7 +105,7 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN)	last_input = IN_KOOU_KEN;
 
 	//Jump
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_5] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
 
 
 
