@@ -14,6 +14,7 @@
 #include "ModulePlayer_2.h"
 #include "Character.h"
 #include "Ryo.h"
+#include "ModuleParticles.h"
 
 
 struct SDL_Texture;
@@ -44,6 +45,7 @@ public:
 
 	inputs last_input = IN_UNKNOWN;
 	
+	bool isDamaged = false;
 
 	SDL_Texture* pivotTexture = nullptr;
 
@@ -55,6 +57,8 @@ public:
 	Animation* current_fx_animation = nullptr;
 
 	Character * character = nullptr;
+
+	Particle * currentParticle = nullptr;
 
 
 	SDL_Rect ActiveScene;

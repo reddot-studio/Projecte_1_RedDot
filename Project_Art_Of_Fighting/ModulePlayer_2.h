@@ -41,6 +41,7 @@ public:
 
 	inputs last_input = IN_UNKNOWN;
 	
+	bool isDamaged;
 
 	SDL_Texture* pivotTexture = nullptr;
 

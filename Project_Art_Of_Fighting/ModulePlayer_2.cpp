@@ -271,9 +271,14 @@ update_status ModulePlayer_2::Update()
 		}
 		HurtColliders[i]->SetRect(rect[i], current_animation->damage, pivot_player);
 	}
-	if (HitCollider != nullptr)
-		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
-
+	if (HitCollider != nullptr) 
+	{	
+		iPoint newPos = pivot_player;
+		if (Side == 2) {
+			newPos.x = newPos.x + 11;
+		}
+		HitCollider->SetRect(r.hitCollider, current_animation->damage, newPos, Side);
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -448,6 +453,7 @@ player_state ModulePlayer_2::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 
@@ -455,6 +461,7 @@ player_state ModulePlayer_2::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP:
@@ -520,6 +527,7 @@ player_state ModulePlayer_2::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP_PUNCH:

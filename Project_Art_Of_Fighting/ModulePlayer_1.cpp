@@ -134,6 +134,7 @@ if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()
 		HurtColliders[1]->Enabled = true;
 		HurtColliders[2]->Enabled = true;
 		player_collider->Enabled = true;
+
 	}
 }
 
@@ -473,6 +474,7 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 
@@ -480,6 +482,7 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP:
@@ -545,6 +548,7 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP_PUNCH:
@@ -733,7 +737,7 @@ void ModulePlayer_1::states(int speed)
 		{
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x -28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+			currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x -28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
 			current_animation = &character->koouKen;
 			App->audio->Play_chunk(character->kooukenfx);
 		}
@@ -906,6 +910,7 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
+			App->particles->DeleteLastParticle();
 
 
 			if (Side == 2) {

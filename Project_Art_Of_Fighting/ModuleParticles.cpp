@@ -21,6 +21,12 @@ ModuleParticles::ModuleParticles()
 ModuleParticles::~ModuleParticles()
 {}
 
+void ModuleParticles::DeleteLastParticle()
+{
+	delete active[last_particle];
+	active[last_particle] = nullptr;
+}
+
 // Load assets
 bool ModuleParticles::Start()
 {
@@ -160,7 +166,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
+Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -171,16 +177,26 @@ void ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLID
 			p->position.x = x;
 			p->position.y = y;
 			p->Side = Side;
+			last_particle++;
 			if (collider_type != COLLIDER_NONE) {
 				RectSprites r = p->anim.GetCurrentFrame();
-				r.rect.x = x;
+				if (p->Side == 1) {
+				r.rect.x = x - 1000;
+				r.rect.y = y - 1000;
+				}
+				else {
+				r.rect.x = x + 1000;
+				r.rect.y = y + 1000;
+
+				}
 				r.rect.y = y;
 				p->collider = App->collision->AddCollider(r, collider_type, this, Damage);
 				p->collider->Side = p->Side;
 
 			}
 			active[i] = p;
-			break;
+			
+			return p;
 		}
 	}
 }
@@ -230,6 +246,7 @@ anim(p.anim), position(p.position), speed(p.speed),
 fx(p.fx), born(p.born), life(p.life), Side(p.Side)
 {}
 
+
 bool Particle::Update()
 {
 	bool ret = true;
@@ -265,7 +282,7 @@ bool Particle::Update()
 				collider->SetPos(position.x - collider->rect.w/10 , position.y - collider->rect.h / 2);
 			}
 			else {
-				collider->SetPos(position.x - collider->rect.w/10, position.y - collider->rect.h / 2);
+				collider->SetPos(position.x - collider->rect.w/10 + 4, position.y - collider->rect.h / 2);
 			}
 		}
 	}
