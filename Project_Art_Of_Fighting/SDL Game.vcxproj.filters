@@ -98,15 +98,6 @@
     <ClInclude Include="Ryo.h">
       <Filter>Characters</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleScene.h">
-      <Filter>Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneTodo.h">
-      <Filter>Core</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -169,14 +160,11 @@
     <ClCompile Include="ModulePlayer_1.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Ryo.cpp">
+    <ClCompile Include="Character.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTodo.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="ModuleScene.cpp">
-      <Filter>Modules</Filter>
+    <ClCompile Include="Ryo.cpp">
+      <Filter>Characters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
