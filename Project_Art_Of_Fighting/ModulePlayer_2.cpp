@@ -717,7 +717,7 @@ void ModulePlayer_2::states(int speed)
 		{
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50,0,Side);
-			App->particles->AddParticle(App->particles->koouKen, pivot_player.x -10, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side);
+			currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x -10, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side);
 			current_animation = &character->koouKen;
 			App->audio->Play_chunk(character->kooukenfx);
 		}
@@ -890,6 +890,7 @@ void ModulePlayer_2::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
+			App->particles->DeleteLastParticle(currentParticle);
 			
 			
 			if (Side == 2) {

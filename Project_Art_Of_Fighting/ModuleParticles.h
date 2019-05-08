@@ -42,14 +42,14 @@ public:
 	ModuleParticles();
 	~ModuleParticles();
 
-	void DeleteLastParticle();
+	void DeleteLastParticle(int);
 	bool Start();
 	update_status Update();
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	Particle * AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
+	int AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
 
 private:
 

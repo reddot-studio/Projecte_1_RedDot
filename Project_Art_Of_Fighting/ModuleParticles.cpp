@@ -21,10 +21,12 @@ ModuleParticles::ModuleParticles()
 ModuleParticles::~ModuleParticles()
 {}
 
-void ModuleParticles::DeleteLastParticle()
+void ModuleParticles::DeleteLastParticle(int pos)
 {
-	delete active[last_particle];
-	active[last_particle] = nullptr;
+	if (active[pos] != nullptr) {
+		delete active[pos];
+		active[pos] = nullptr;
+	}
 }
 
 // Load assets
@@ -166,7 +168,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
+int ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -196,7 +198,7 @@ Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, 
 			}
 			active[i] = p;
 			
-			return p;
+			return i;
 		}
 	}
 }

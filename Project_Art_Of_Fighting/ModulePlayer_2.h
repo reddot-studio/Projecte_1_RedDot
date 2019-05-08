@@ -54,6 +54,7 @@ public:
 
 	Character * character = nullptr;
 
+	int currentParticle;
 
 	SDL_Rect ActiveScene;
 	int timer;

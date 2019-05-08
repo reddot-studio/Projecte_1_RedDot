@@ -58,7 +58,7 @@ public:
 
 	Character * character = nullptr;
 
-	Particle * currentParticle = nullptr;
+	int currentParticle;
 
 
 	SDL_Rect ActiveScene;

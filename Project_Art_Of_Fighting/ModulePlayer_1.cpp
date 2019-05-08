@@ -910,7 +910,7 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
-			App->particles->DeleteLastParticle();
+			App->particles->DeleteLastParticle(currentParticle);
 
 
 			if (Side == 2) {
