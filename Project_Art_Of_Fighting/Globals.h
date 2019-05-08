@@ -55,6 +55,7 @@ enum player_state
 	ST_CROUCH_DAMAGE,
 	ST_STANDING_BLOCK,
 	ST_CROUCH_BLOCK,
+	ST_STANDING_BLOCKED,
 };
 
 //Inputs
@@ -79,6 +80,7 @@ enum inputs
 	IN_RECOVER,
 	IN_RECEIVE_DAMAGE,
 	IN_BLOCKING,
+	IN_BLOCKED,
 };
 
 // Useful typedefs ---------

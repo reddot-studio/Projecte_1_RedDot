@@ -147,7 +147,8 @@ update_status ModulePlayer_2::Update()
 	if ((App->player1->current_state == ST_STANDING_PUNCH || App->player1->current_state == ST_CROUCH_PUNCH || App->player1->current_state == ST_CROUCH_KICK) && isClose) {
 		last_input = IN_BLOCKING;
 	}
-
+	//4 seconds without moving
+	tick2 = SDL_GetTicks();
 	if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->win_check != true && App->player2->win_check != true)
 	{
 		App->input->Paused = false;
@@ -156,7 +157,7 @@ update_status ModulePlayer_2::Update()
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
 
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_1] == KEY_REPEAT && Side == 1) {
+	if (App->input->keyboard_state[SDL_SCANCODE_J] == KEY_REPEAT && Side == 1) {
 		int num = pivot_player.x - App->player1->GetPosition().x;
 		if (num < 0) {
 			num *= -1;
@@ -170,7 +171,7 @@ update_status ModulePlayer_2::Update()
 			isClose = false;
 		}
 	}
-	else if (App->input->keyboard_state[SDL_SCANCODE_KP_3] == KEY_REPEAT && Side == 2) {
+	else if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_REPEAT && Side == 2) {
 		int num = pivot_player.x - App->player1->GetPosition().x;
 		if (num < 0) {
 			num *= -1;
@@ -885,20 +886,11 @@ void ModulePlayer_2::states(int speed)
 		}
 		break;
 	case ST_IDLE_TO_DAMAGE:
-		int offsetX = 0;
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
 			App->particles->DeleteLastParticle(currentParticle);
-			
-			
-			if (Side == 2) {
-				offsetX = 5;
-			}
-			else {
-				offsetX = -5;
-			}
 
 		}
 		//LOG("DAMAGE");

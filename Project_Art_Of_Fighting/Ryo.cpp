@@ -304,9 +304,9 @@ Ryo::Ryo(int player)
 	//BLOCKING ANIMATIONS
 	//Standing block
 	standing_block.SetReverseOffset({ -20,-37 }, 3);
-	standing_block.PushBack({671,1267,58,103},-32,-37,3);
+	standing_block.PushBack({671,1267,58,103},-32,-37,3,rect1,rect2,rect3);
 	standing_block.SetReverseOffset({ -20,-38 }, 5);
-	standing_block.PushBack({734,1266,58,104},-32,-38,5);
+	standing_block.PushBack({734,1266,58,104},-32,-38,5, rect1, rect2, rect3);
 	standing_block.speed = 0.3f;
 	standing_block.loop = false;
 
@@ -318,6 +318,29 @@ Ryo::Ryo(int player)
 	crouch_block.speed = 0.3;
 	crouch_block.loop = false;
 	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { 1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { 1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 1);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 2, {}, {}, {}, {}, { -1,0 });	
+	exitBlock.SetReverseOffset({ -20,-37 }, 6);
+	exitBlock.PushBack({ 671,1267,58,103 }, -32, -37, 6, {}, {}, {}, {}, { -1,0 });
+	exitBlock.SetReverseOffset({ -20,-38 }, 5);
+	exitBlock.PushBack({ 734,1266,58,104 }, -32, -38, 5);
+	exitBlock.speed = 0.5f;
+	exitBlock.loop = false;
+
 }
 
 Ryo::~Ryo()

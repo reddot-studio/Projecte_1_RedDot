@@ -18,6 +18,8 @@ public:
 
 	int player;
 
+	bool isBlocking = false;
+
 	int specialDmg;
 	//Basic moves
 	Animation idle;
@@ -43,7 +45,7 @@ public:
 	Animation pose_crouch_receive_standing_crouch_kick;
 	Animation pose_crouch_receive_crouch_punch;
 
-
+	Animation exitBlock;
 
 	Animation pose_jump_receive_dmg; //Not sure for prototype
 

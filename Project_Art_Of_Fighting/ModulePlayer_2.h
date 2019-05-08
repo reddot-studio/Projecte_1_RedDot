@@ -14,6 +14,7 @@
 #include "ModulePlayer_1.h"
 #include "Character.h"
 #include "Ryo.h"
+#include "ModuleParticles.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
@@ -54,7 +55,7 @@ public:
 
 	Character * character = nullptr;
 
-	int currentParticle;
+	Particle * currentParticle = nullptr;
 
 	SDL_Rect ActiveScene;
 	int timer;

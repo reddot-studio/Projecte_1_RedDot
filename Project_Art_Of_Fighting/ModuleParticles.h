@@ -42,20 +42,20 @@ public:
 	ModuleParticles();
 	~ModuleParticles();
 
-	void DeleteLastParticle(int);
+	void DeleteLastParticle(Particle *);
 	bool Start();
 	update_status Update();
 	bool CleanUp();
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	int AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
+	Particle * AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
 
 private:
 
+	Particle* active[MAX_ACTIVE_PARTICLES];
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* graphics2 = nullptr;
-	Particle* active[MAX_ACTIVE_PARTICLES];
 	uint last_particle = 0;
 
 public:

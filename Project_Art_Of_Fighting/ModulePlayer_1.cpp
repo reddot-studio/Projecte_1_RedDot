@@ -134,6 +134,7 @@ if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()
 		HurtColliders[1]->Enabled = true;
 		HurtColliders[2]->Enabled = true;
 		player_collider->Enabled = true;
+		character->isBlocking = false;
 
 	}
 }
@@ -175,6 +176,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->t
 
 	if ((App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH || App->player2->current_state == ST_CROUCH_KICK) && isClose) {
 		last_input = IN_BLOCKING;
+		character->isBlocking = true;
 	}
 
 //4 seconds without moving
@@ -220,7 +222,14 @@ if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && Side == 1) {
 		isClose = false;
 	}
 }
-
+if (current_state == ST_STANDING_BLOCKED) {
+	iPoint p = character->exitBlock.GetDisplacementFrame();
+	pivot_player += p;
+	if (character->exitBlock.GetDisplacementFramePos() == character->exitBlock.GetLastFrame() - 1)
+	{
+		character->exitBlock.ResetDisplacement();
+	}
+}
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH || current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK)
 	{
 		isJumping = true;
@@ -408,13 +417,20 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 	//Hit Detection
 	if (c2->type == COLLIDER_ENEMY_HIT && (c2->Enabled && c1->Enabled))
 	{
-		int offsetX = 0;
-		Deal_Damage(*App->player2, c2->ColliderDamage);
-		if (Side == 2) {
-			offsetX = 35;
+		if (!App->player1->character->isBlocking) {
+			int offsetX = 0;
+			Deal_Damage(*App->player2, c2->ColliderDamage);
+			if (Side == 2) {
+				offsetX = 35;
+			}
+			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
+			c2->Enabled = false;
 		}
-		App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
-		c2->Enabled = false;
+		else if (App->player1->character->isBlocking) {
+			c2->Enabled = false;
+			LOG("\nBLOCKED\n");
+			last_input = IN_BLOCKED;
+		}
 	}
 
 
@@ -635,6 +651,20 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_STANDING_BLOCK:
 		switch (last_input)
 		{
+		case IN_BLOCKED: state = ST_STANDING_BLOCKED; break;
+		case IN_ATTACK_FINISH:
+			if (Side == 1) {
+				state = ST_WALK_BACKWARD;
+			}
+			else if (Side == 2) {
+				state = ST_WALK_FORWARD;
+			}
+			break;
+		}
+		break;
+	case ST_STANDING_BLOCKED:
+		switch (last_input)
+		{
 		case IN_ATTACK_FINISH:
 			if (Side == 1) {
 				state = ST_WALK_BACKWARD;
@@ -724,8 +754,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_NEUTRAL_JUMP:
 		if (current_animation != &character->jump)
 		{
-			character->
-				jump.ResetCurrentFrame();
+			character->jump.ResetCurrentFrame();
 			current_animation = &character->jump;
 			App->audio->Play_chunk(character->jumpfx);
 			player_collider->Enabled = false;
@@ -897,6 +926,12 @@ void ModulePlayer_1::states(int speed)
 			character->standing_block.ResetCurrentFrame();
 			current_animation = &character->standing_block;
 		}
+		break;	
+	case ST_STANDING_BLOCKED:
+		if (current_animation != &character->exitBlock) {
+			character->exitBlock.ResetCurrentFrame();
+			current_animation = &character->exitBlock;
+		}
 		break;
 	case ST_CROUCH_BLOCK:
 		if (current_animation != &character->crouch_block) {
@@ -905,20 +940,11 @@ void ModulePlayer_1::states(int speed)
 		}
 		break;
 	case ST_IDLE_TO_DAMAGE:
-		int offsetX = 0;
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
 			App->particles->DeleteLastParticle(currentParticle);
-
-
-			if (Side == 2) {
-				offsetX = 5;
-			}
-			else {
-				offsetX = -5;
-			}
 
 		}
 		//LOG("DAMAGE");

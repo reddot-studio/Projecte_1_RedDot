@@ -21,11 +21,14 @@ ModuleParticles::ModuleParticles()
 ModuleParticles::~ModuleParticles()
 {}
 
-void ModuleParticles::DeleteLastParticle(int pos)
+void ModuleParticles::DeleteLastParticle(Particle * particle)
 {
-	if (active[pos] != nullptr) {
-		delete active[pos];
-		active[pos] = nullptr;
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; i++)
+	{
+		if (active[i] == particle) {
+			delete active[i];
+			active[i] = nullptr;
+		}
 	}
 }
 
@@ -168,7 +171,7 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-int ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
+Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -198,7 +201,7 @@ int ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDE
 			}
 			active[i] = p;
 			
-			return i;
+			return active[i];
 		}
 	}
 }
