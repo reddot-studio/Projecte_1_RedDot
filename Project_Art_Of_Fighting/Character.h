@@ -9,10 +9,10 @@ struct Mix_Chunk;
 class Character
 {
 public:
-	Character();
+	Character() {};
 	~Character() {};
-	virtual bool Start() { return true; };
-	virtual bool CleanUp() { return true; };
+	virtual bool Start() = 0;
+	virtual bool CleanUp() = 0;
 
 public:
 
