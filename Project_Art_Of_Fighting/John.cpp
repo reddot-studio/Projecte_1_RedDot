@@ -55,6 +55,68 @@ John::John(int player)
 	idle.SetReverseOffset({ -30,-43 }, 2);
 	idle.PushBack({ 135 , 8, 69, 108 }, -29, -43, 2, rect1, rect2, rect3);
 
-
 	idle.speed = 0.25f;
+
+	//JUMP
+	jump.PushBack({ 195,3,66,104 });
+	jump.PushBack({ 261,0,48,118 }); //suposo que no quadrara. el frame 1 es mes rapid que els altres. sha de testejar
+	jump.PushBack({ 309,30,57,77 });
+	jump.PushBack({ 261,0,48,118 });
+	jump.PushBack({ 195,3,66,104 });
+
+	jump.speed = 0.25f;
+
+	//CROUCH
+	crouch.PushBack({ 366,3,66,104 });
+	crouch.PushBack({ 432,3,66,104 });
+	crouch.PushBack({ 498,34,58,73 });
+
+	crouch.speed = 0.25f;
+
+	//CROUCH KICK
+	crouch_kick.PushBack({ 556,35,59,72 });
+	crouch_kick.PushBack({ 615,39,104,68 });
+
+	crouch_kick.speed = 0.25f;
+
+	//PUNCH
+	punch.PushBack({ 719,0,73,111 });
+	punch.PushBack({ 792,0,107,107 });
+
+	punch.speed = 0.25f;
+
+	//KICK
+	kick.PushBack({ 0,128,58,113 });
+	kick.PushBack({ 58,128,52,113 });
+	kick.PushBack({ 110,128,58,111 });
+	kick.PushBack({ 168,129,105,108 });
+	kick.PushBack({ 273,139,83,108 });
+	kick.PushBack({ 110,128,58,111 });
+	kick.PushBack({ 58,128,52,113 });
+	kick.PushBack({ 0,128,58,113 });
+
+	kick.speed = 0.25f;
+
+	//KOUKEN
+	koouKen.PushBack({ 366,149,69,98 });
+	koouKen.PushBack({ 435,155,67,92 });
+	koouKen.PushBack({ 502,145,71,101 });
+	koouKen.PushBack({ 573,155,108,92 });
+
+	koouKen.speed = 0.25f;
+
+	//FALL
+
+	//Falten frames//
+
+	//JUMP + KICK
+
+	//Falten frames//
+
+	//JUMP + PUNCH
+	jumppunch.PushBack({ 109,247,71,123 });
+
+	jumppunch.speed = 0.25f;
+
+	//falta jump forward i backward, win, defeat, combo amb 'D'
 }
