@@ -16,6 +16,7 @@
 #include"ModuleUI.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "ModuleFonts.h"
+#include "ModuleScene.h"
 
 
 
@@ -100,6 +101,7 @@ ModuleWelcomeScreen::~ModuleWelcomeScreen()
 
 bool ModuleWelcomeScreen::Init()
 {
+	App->scene->Disable();
 	App->scene_john->Disable();
 	App->scene_todo->Disable();
 	App->scene_congratz->Disable();
@@ -155,7 +157,7 @@ update_status ModuleWelcomeScreen::Update()
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
-		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
+		App->fade->FadeToBlack(App->scene_welcome, App->scene);
 		App->input->Enable();
 	}
 

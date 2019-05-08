@@ -16,6 +16,7 @@
 #include "ModuleCollision.h"
 #include"ModuleUI.h"
 #include "ModuleFonts.h"
+#include "ModuleScene.h"
 
 
 Application::Application()
@@ -30,6 +31,7 @@ Application::Application()
 	modules[num++] = scene_congratz = new ModuleCongratzScreen();
 	modules[num++] = scene_john = new ModuleSceneJohn();
 	modules[num++] = scene_todo = new ModuleSceneTodo();
+	modules[num++] = scene = new ModuleScene();
 	modules[num++] = player1 = new ModulePlayer_1();
 	modules[num++] = player2 = new ModulePlayer_2();
 	modules[num++] = sceneUI = new ModuleUI();

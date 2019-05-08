@@ -89,6 +89,7 @@
     <ClInclude Include="ModulePlayer_1.h" />
     <ClInclude Include="ModulePlayer_2.h" />
     <ClInclude Include="ModuleRender.h" />
+    <ClInclude Include="ModuleScene.h" />
     <ClInclude Include="ModuleSceneJohn.h" />
     <ClInclude Include="ModuleSceneTodo.h" />
     <ClInclude Include="ModuleTextures.h" />
@@ -99,10 +100,11 @@
     <ClInclude Include="p2Qeue.h" />
     <ClInclude Include="RectSprites.h" />
     <ClInclude Include="Ryo.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneTodo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Character.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -116,6 +118,7 @@
     <ClCompile Include="ModulePlayer_1.cpp" />
     <ClCompile Include="ModulePlayer_2.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
+    <ClCompile Include="ModuleScene.cpp" />
     <ClCompile Include="ModuleSceneJohn.cpp" />
     <ClCompile Include="ModuleSceneTodo.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
@@ -123,6 +126,7 @@
     <ClCompile Include="ModuleWelcomeScreen.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Ryo.cpp" />
+    <ClCompile Include="SceneTodo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
