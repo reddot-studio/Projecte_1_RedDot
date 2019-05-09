@@ -11,9 +11,9 @@ class John : public Character
 {
 public:
 	John(int player);
-	~John();
-	//bool Start() override;
-	//bool CleanUp() override;
+	~John() {};
+	bool Start() override;
+	bool CleanUp() override;
 };
 
 #endif // !__RYO_H__

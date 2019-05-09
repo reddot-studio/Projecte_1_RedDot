@@ -2,8 +2,6 @@
 #define __RYO_H__
 
 #include "Character.h"
-#include "Application.h"
-#include "ModuleTextures.h"
 
 struct SDL_Texture;
 

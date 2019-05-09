@@ -11,6 +11,7 @@
 #include "ModuleDebug.h"
 #include "ModuleUI.h"
 #include "ModuleCollision.h"
+#include "John.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -35,7 +36,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	character = new Ryo(1);
+	character = new John(1);
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;

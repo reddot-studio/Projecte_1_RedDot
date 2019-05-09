@@ -19,7 +19,7 @@ John::John(int player)
 	SDL_Rect head_jumppunch_collider = { -10,-55,25,20 };
 	SDL_Rect body_jumppunch_collider = { -25,-44,35,60 };
 	SDL_Rect legs_jumppunch_collider = { -30,5,37,30 };
-
+	
 
 	//Jump Kick Colliders
 	SDL_Rect head_jumpkick_collider = { -10,-50,25,20 };
@@ -49,13 +49,29 @@ John::John(int player)
 
 	//IDLE
 	idle.SetReverseOffset({ -27,-43 }, 2);
-	idle.PushBack({ 0, 0, 66, 104 }, -29, -43, 2, rect1, rect2, rect3);
-	idle.SetReverseOffset({ -28,-43 }, 2);
-	idle.PushBack({ 66, 0, 66, 106 }, -29, -43, 2, rect1, rect2, rect3);
+	idle.PushBack({ 0, 0, 66, 104 }, 0, -39, 2, rect1, rect2, rect3);
 	idle.SetReverseOffset({ -30,-43 }, 2);
-	idle.PushBack({ 135 , 8, 69, 108 }, -29, -43, 2, rect1, rect2, rect3);
+	idle.PushBack({ 129 , 0, 66, 107 }, 0, -42, 2, rect1, rect2, rect3);
+	idle.SetReverseOffset({ -28,-43 }, 2);
+	idle.PushBack({ 66, 0, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
 
-	idle.speed = 0.25f;
+	idle.speed = 0.26f;
+
+	//WALK FORWARD
+	forward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
+	forward.PushBack({ 502, 259, 63, 108 }, 2, -43, 5, rect1, rect2, rect3);
+	forward.PushBack({ 565, 259, 61, 110 }, 2, -45, 5, rect1, rect2, rect3);
+	forward.PushBack({ 626, 259, 63, 106 }, 0, -41, 5, rect1, rect2, rect3);
+	forward.PushBack({ 689, 259, 69, 109 }, -2, -44, 5, rect1, rect2, rect3);
+	forward.speed = 0.5f;
+	//WALK BACKWARD
+
+	backward.PushBack({ 435, 259, 67, 104 }, 0, -39, 2, rect1, rect2, rect3);
+	backward.PushBack({ 502, 259, 63, 108 }, 0, -43, 2, rect1, rect2, rect3);
+	backward.PushBack({ 565, 259, 61, 110 }, 0, -45, 2, rect1, rect2, rect3);
+	backward.PushBack({ 626, 259, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
+	backward.PushBack({ 689, 259, 69, 109 }, 0, -44, 2, rect1, rect2, rect3);
+	backward.speed = 0.5f;
 
 	//JUMP
 	jump.PushBack({ 195,3,66,104 });
@@ -119,4 +135,62 @@ John::John(int player)
 	jumppunch.speed = 0.25f;
 
 	//falta jump forward i backward, win, defeat, combo amb 'D'
+}
+
+bool John::Start()
+{
+	if (player == 1) {
+		if (graphics == nullptr)
+			graphics = App->textures->Load("Assets/john_sprite_sheet.png");
+	}
+	else if (player == 2) {
+		if (graphics == nullptr)
+			graphics = App->textures->Load("Assets/ryo_sprite_sheet_2.png");
+	}
+	if (punchfx == nullptr)
+		punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");
+	if (kickfx == nullptr)
+		kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
+	if (kooukenfx == nullptr)
+		kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
+	if (jumpfx == nullptr)
+		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
+	if (dmg == nullptr)
+		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+	return true;
+}
+
+bool John::CleanUp()
+{
+	if (graphics != nullptr)
+	{
+		App->textures->Unload(graphics);
+		graphics = nullptr;
+	}
+	if (punchfx != nullptr)
+	{
+		App->audio->Unload_effects(punchfx);
+		punchfx = nullptr;
+	}
+	if (kickfx != nullptr)
+	{
+		App->audio->Unload_effects(kickfx);
+		kickfx = nullptr;
+	}
+	if (kooukenfx != nullptr)
+	{
+		App->audio->Unload_effects(kooukenfx);
+		kooukenfx = nullptr;
+	}
+	if (jumpfx != nullptr)
+	{
+		App->audio->Unload_effects(jumpfx);
+		jumpfx = nullptr;
+	}
+	if (dmg != nullptr)
+	{
+		App->audio->Unload_effects(dmg);
+		dmg = nullptr;
+	}
+	return true;
 }

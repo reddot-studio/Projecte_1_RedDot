@@ -1,7 +1,11 @@
 #ifndef __CHARACTER_H__
 #define __CHARACTER_H__
 
+#include "Character.h"
+#include "Application.h"
+#include "ModuleTextures.h"
 #include "Animation.h"
+#include "ModuleAudio.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
