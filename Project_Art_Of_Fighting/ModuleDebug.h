@@ -16,7 +16,7 @@ public:
 	SDL_Texture * graphic_player;
 	iPoint square_pos;
 
-
+	char time[10];
 public:
 
 	bool Init() override;

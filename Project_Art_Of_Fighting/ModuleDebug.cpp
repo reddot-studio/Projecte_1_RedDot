@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
 #include "ModuleInput.h"
+#include <stdio.h>
 
 bool ModuleDebug::Init()
 {
@@ -34,7 +35,20 @@ update_status ModuleDebug::Update()
 	App->fonts->BlitText(5, 20, 0,"dpad");
 	App->fonts->BlitText(5, 29, 0, "left trigger"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 38, 0, "right thumb"); //ficar el right i que es tradueixi de float a string.
-	
+	App->fonts->BlitText(5, 50, 0, "hor asis"); //ficar el right i que es tradueixi de float a string.
+
+	if (App->input->GetHorizontalAxis() > App->input->deathZone)
+	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
+	else if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
+		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
+	}
+	if (App->input->GetHorizontalAxis() > App->input->deathZone || App->input->GetHorizontalAxis() < -App->input->deathZone) {
+		App->fonts->BlitText(85, 50, 0, time);
+	} //ficar el right i que es tradueixi de float a string.
+	else
+	{
+		App->fonts->BlitText(85, 50, 0, "0.0");
+	}
 
 
 //	LOG("- ModuleDebug Update");
