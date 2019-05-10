@@ -87,6 +87,7 @@ enum inputs
 typedef unsigned int uint;
 
 // Configuration -----------
+//To adjust fullscreen set SCREEN_SIZE to 1, else SCREEN_SIZE = 3
 #define SCREEN_SIZE 3
 #define SCREEN_WIDTH 384
 #define SCREEN_HEIGHT 224
@@ -97,4 +98,4 @@ typedef unsigned int uint;
 #define REN_VSYNC 1
 
 
-#endif // __GLOBALS_H__
+#endif // __GLOBALS_H__ s

@@ -376,8 +376,11 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 		//Camera is not under nor over the limit
 		if (-App->render->camera.x < 0)
 			App->render->camera.x = 0;
-		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44)
+
+		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44 && !WIN_FULLSCREEN_DESKTOP == 0)
 			App->render->camera.x = -(App->render->CurrentSceneLenght - 44);
+		if (-App->render->camera.x > App->render->CurrentSceneLenght - 385 && WIN_FULLSCREEN_DESKTOP == 1)
+			App->render->camera.x = -(App->render->CurrentSceneLenght - 385);
 
 		//Coliding with left side of the camera?
 		if (c2->LeftRight == false)
