@@ -12,6 +12,7 @@
 #include"ModuleCollision.h"
 #include"ModuleUI.h"
 #include "SDL/include/SDL.h"
+#include "ModuleDebug.h"
 
 
 // Reference at https://youtu.be/6OlenbCC4WI?t=382
@@ -125,6 +126,7 @@ bool ModuleSceneJohn::Start()
 	//BackPanel->LeftRight = false;
 	//FrontPanel->LeftRight = true;
 
+	App->debug->Enable();
 	App->player1->Enable();
 	App->player2->Enable();
 	App->sceneUI->Enable();

@@ -75,7 +75,7 @@ update_status ModuleUI::Update()
 	{
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "60", 2);
+		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, "60", 2);
 		tick3 = SDL_GetTicks();
 	}
 	else
@@ -99,14 +99,14 @@ update_status ModuleUI::Update()
 		if (timer >= 10)
 		{
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, time, 2);
 		}
 		else
 		{
 			timer = timer_float / 1000;
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "0", 2);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, "0", 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 1, time, 2);
 		}
 
 	}
