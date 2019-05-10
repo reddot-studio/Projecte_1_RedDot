@@ -33,8 +33,6 @@ bool ModuleInput::Init()
 		}
 	}
 
-	
-
 	for (int i = 4; i < 285; i++)
 	{
 		keyboard_state[i] = KEY_IDLE;
@@ -66,34 +64,7 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 	
-	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
-	Uint8 num = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
-	horizontalAxis /= 32767;
-	if (horizontalAxis > 0.1f) {
-		rightAxis = true;
-		leftAxis = false;
-	}
-	if (horizontalAxis < -0.1f) {
-		leftAxis = true;
-		rightAxis = false;
-	}
-	else {
-		rightAxis = false;
-		rightAxis = false;
-	}
-	if (rightAxis) {
-		LOG("Right axis true");
-	}
-	else {
-		LOG("Right axis false");
-	}	
-	if (leftAxis) {
-		LOG("Left axis true");
-	}
-	else {
-		LOG("Left axis false");
-	}
-	SDL_Log("Button: %d", num);
+
 	if (Paused) {
 		SDL_PumpEvents();
 	}
@@ -126,6 +97,10 @@ update_status ModuleInput::PreUpdate()
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 			return update_status::UPDATE_STOP;
 
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_BACK))
+			return update_status::UPDATE_STOP;
+
+
 	}
 
 	return update_status::UPDATE_CONTINUE;
@@ -143,4 +118,20 @@ bool ModuleInput::CleanUp()
 	LOG("Quitting SDL input event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
+}
+
+const float ModuleInput::GetHorizontalAxis()
+{
+	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+	horizontalAxis /= 32767;
+
+	return horizontalAxis;
+}
+
+const float ModuleInput::GetVerticalAxis()
+{
+	float verticalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
+	verticalAxis /= 32767;
+
+	return verticalAxis;
 }

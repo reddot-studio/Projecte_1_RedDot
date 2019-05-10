@@ -160,6 +160,10 @@ update_status ModuleWelcomeScreen::Update()
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
 		App->input->Enable();
 	}
+	if (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_START)) {
+		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
+		App->input->Enable();
+	}
 
 
 	if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN)

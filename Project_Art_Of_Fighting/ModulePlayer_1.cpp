@@ -69,18 +69,30 @@ update_status ModulePlayer_1::Update()
 	//Player1 Input
 	states(speed);
 //Move right
-	if (App->input->rightAxis) {
-		last_input = IN_RIGHT_DOWN;
-	}
-	else if (!App->input->rightAxis) {
-		last_input = IN_RIGHT_UP;
-	}
-	if (App->input->leftAxis) {
-		last_input = IN_LEFT_DOWN;
-	}
-	else if (!App->input->leftAxis) {
-		last_input = IN_LEFT_UP;
-	}
+
+		if (App->input->GetHorizontalAxis() > App->input->deathZone) {
+			last_input = IN_RIGHT_DOWN;
+		}
+
+		if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
+			last_input = IN_LEFT_DOWN;
+		}
+
+		if (App->input->GetVerticalAxis() < -App->input->jumpZone) {
+			last_input = IN_JUMP_DOWN;
+		}
+
+		//TODO: IMPLEMENT CROUCH WITH CONTROLLER
+
+		if (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_A)) {
+			last_input = IN_PUNCH;
+		}
+		if (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_X)) {
+			last_input = IN_KICK;
+		}
+	
+
+
 	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) {
 		last_input = IN_RIGHT_DOWN;
 		if (Side == 1) {

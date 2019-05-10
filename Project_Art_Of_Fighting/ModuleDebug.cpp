@@ -5,6 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleFonts.h"
+#include "ModuleInput.h"
 
 bool ModuleDebug::Init()
 {
@@ -33,6 +34,7 @@ update_status ModuleDebug::Update()
 	App->fonts->BlitText(5, 20, 0,"dpad");
 	App->fonts->BlitText(5, 29, 0, "left trigger"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 38, 0, "right thumb"); //ficar el right i que es tradueixi de float a string.
+	
 
 
 //	LOG("- ModuleDebug Update");

@@ -23,8 +23,15 @@ public:
 	const Uint8 *keyboard = nullptr;
 	SDL_GameController *controller = nullptr;
 	bool Paused = false;
-	bool leftAxis = false;
-	bool rightAxis = false;
+
+	bool jump = true;
+
+	float deathZone = 0.1f;
+	float jumpZone = 0.5f;
+	float crouchZone = 0.5f;
+
+	const float GetHorizontalAxis();
+	const float GetVerticalAxis();
 
 	key_state keyboard_state[285];
 
