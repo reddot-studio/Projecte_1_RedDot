@@ -40,10 +40,10 @@ bool ModuleRender::Init()
 	}
 
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
-
+	SDL_RenderSetLogicalSize(renderer, 384, 224);			
 	//Camera Limits
 	CameraLimitL = App->collision->AddCollider({ {0, 0, 25, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
-	CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH - 25, 0, 25, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
+	CameraLimitR = App->collision->AddCollider({ {SCREEN_WIDTH-25, 0, 25, SCREEN_HEIGHT}, {0, 0}, {0, 0} }, COLLIDER_WALL);
 	CameraLimitL->LeftRight = false;
 	CameraLimitR->LeftRight = true;
 	
@@ -58,6 +58,8 @@ bool ModuleRender::Init()
 		LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+
+
 
 	return ret;
 }
@@ -91,7 +93,7 @@ update_status ModuleRender::Update()
 
 	
 	CameraLimitL->rect.x = -(camera.x / speed);
-	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed) + 25);
+	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed)+25);
 
 
 	return update_status::UPDATE_CONTINUE;
