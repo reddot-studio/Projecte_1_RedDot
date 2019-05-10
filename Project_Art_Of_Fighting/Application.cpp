@@ -36,8 +36,8 @@ Application::Application()
 	modules[num++] = particles = new ModuleParticles();
 	modules[num++] = fade = new ModuleFadeToBlack();
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();
-	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = collision = new ModuleCollision();
+	modules[num++] = debug = new ModuleDebug();
 	
 	
 	

@@ -14,6 +14,7 @@
 #include "ModuleUI.h"
 #include "SDL/include/SDL.h"
 #include "ModuleFonts.h"
+#include "ModuleDebug.h"
 
 ModuleCongratzScreen::ModuleCongratzScreen()
 {
@@ -51,6 +52,7 @@ ModuleCongratzScreen::~ModuleCongratzScreen(){}
 
 bool ModuleCongratzScreen::Start()
 {
+	App->debug->Disable();
 	App->sceneUI->Disable();
 	LOG("Loading congratz scene");
 	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
@@ -94,8 +96,8 @@ bool ModuleCongratzScreen::Start()
 
 update_status ModuleCongratzScreen::Update()
 {
-	App->fonts->BlitText(220, 47, 1, "waiting for");
-	App->fonts->BlitText(215, 58, 1, "a challenger");
+	App->fonts->BlitText(220, 47, 2, "waiting for");
+	App->fonts->BlitText(215, 58, 2, "a challenger");
 	App->input->Paused = false;
 	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
 	{

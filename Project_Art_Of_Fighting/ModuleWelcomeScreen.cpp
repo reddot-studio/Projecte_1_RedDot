@@ -16,6 +16,7 @@
 #include"ModuleUI.h"
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "ModuleFonts.h"
+#include "ModuleDebug.h"
 
 
 
@@ -100,6 +101,7 @@ ModuleWelcomeScreen::~ModuleWelcomeScreen()
 
 bool ModuleWelcomeScreen::Init()
 {
+	App->debug->Disable();
 	App->scene_john->Disable();
 	App->scene_todo->Disable();
 	App->scene_congratz->Disable();
