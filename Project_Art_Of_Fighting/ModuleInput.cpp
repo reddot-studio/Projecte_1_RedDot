@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
+#include "SDL/include/SDL_joystick.h"
 
 ModuleInput::ModuleInput() : Module()
 {
@@ -18,16 +19,44 @@ bool ModuleInput::Init()
 	bool ret = true;
 	SDL_Init(0);
 
-	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
+	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
-		
+
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
+	SDL_Joystick * joy;
+	if (SDL_NumJoysticks() > 0) {
+		joy = SDL_JoystickOpen(0);
+		if (joy) {
+			LOG("\nOpened Joystick 0");
+		}
+	}
+
+	
 
 	for (int i = 4; i < 285; i++)
 	{
 		keyboard_state[i] = KEY_IDLE;
+	}
+
+	int num = SDL_NumJoysticks();
+	for (int i = 0; i < num; ++i) {
+		if (SDL_IsGameController(i)) {
+			controller = SDL_GameControllerOpen(i);
+			if (controller) {
+				break;
+			}
+			else {
+				SDL_Log("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+			}
+		}
+	}
+	if (SDL_GameControllerGetAttached(controller)) {
+		LOG("TRUE")
+	}
+	else {
+		LOG("FALSE");
 	}
 
 	return ret;
@@ -36,6 +65,35 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
+	
+	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+	Uint8 num = SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A);
+	horizontalAxis /= 32767;
+	if (horizontalAxis > 0.1f) {
+		rightAxis = true;
+		leftAxis = false;
+	}
+	if (horizontalAxis < -0.1f) {
+		leftAxis = true;
+		rightAxis = false;
+	}
+	else {
+		rightAxis = false;
+		rightAxis = false;
+	}
+	if (rightAxis) {
+		LOG("Right axis true");
+	}
+	else {
+		LOG("Right axis false");
+	}	
+	if (leftAxis) {
+		LOG("Left axis true");
+	}
+	else {
+		LOG("Left axis false");
+	}
+	SDL_Log("Button: %d", num);
 	if (Paused) {
 		SDL_PumpEvents();
 	}

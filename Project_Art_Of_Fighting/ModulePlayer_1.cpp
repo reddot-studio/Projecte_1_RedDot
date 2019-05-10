@@ -36,7 +36,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	character = new John(1);
+	character = new Ryo(1);
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -69,6 +69,18 @@ update_status ModulePlayer_1::Update()
 	//Player1 Input
 	states(speed);
 //Move right
+	if (App->input->rightAxis) {
+		last_input = IN_RIGHT_DOWN;
+	}
+	else if (!App->input->rightAxis) {
+		last_input = IN_RIGHT_UP;
+	}
+	if (App->input->leftAxis) {
+		last_input = IN_LEFT_DOWN;
+	}
+	else if (!App->input->leftAxis) {
+		last_input = IN_LEFT_UP;
+	}
 	if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT) {
 		last_input = IN_RIGHT_DOWN;
 		if (Side == 1) {
