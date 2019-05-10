@@ -83,6 +83,7 @@ update_status ModuleSceneTodo::Update()
 		return update_status::UPDATE_STOP;
 	}
 	if (tick2 - tick1 < 2000) {
+	
 		if (rounds_counter == 0)
 		{
 			indicator.rect.x = 0;
@@ -110,6 +111,7 @@ update_status ModuleSceneTodo::Update()
 	}
 	
 	if (tick2-tick1>2000 && tick2 - tick1 < 4000) {
+		
 		if (first_row == true)
 		{
 			App->audio->Play_chunk(fightfx);
@@ -126,6 +128,7 @@ update_status ModuleSceneTodo::Update()
 	if (App->sceneUI->time_over == true)
 	{
 		App->input->Paused = true;
+
 		if (App->player1->isJumping != true)
 		{
 			App->player1->current_state = ST_IDLE;
@@ -173,6 +176,7 @@ update_status ModuleSceneTodo::Update()
 		current_animation = &winp1;
 	
 		App->input->Paused = true;
+
 		if (App->player1->isJumping != true)
 		{
 			App->player1->current_state = ST_IDLE;
@@ -203,6 +207,7 @@ update_status ModuleSceneTodo::Update()
 		current_animation = &winp2;
 
 		App->input->Paused = true;
+
 		if (App->player2->isJumping != true)
 		{
 			App->player2->current_state = ST_IDLE;

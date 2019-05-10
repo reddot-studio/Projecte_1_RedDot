@@ -123,10 +123,6 @@ bool ModuleWelcomeScreen::Start()
 
 	//Load fonts
 	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
-
-	App->player1->Disable();
-	App->player2->Disable();
-
 	return true;
 }
 
@@ -181,11 +177,9 @@ update_status ModuleWelcomeScreen::Update()
 
 bool ModuleWelcomeScreen::CleanUp()
 {
+	App->fonts->UnLoad(0);
 	App->audio->Unload_music(start_music);
 	App->textures->Unload(graphics);
-	
-	App->fonts->UnLoad(0);
-
 	LOG("Unloading welcome scene");
 	return true;
 }

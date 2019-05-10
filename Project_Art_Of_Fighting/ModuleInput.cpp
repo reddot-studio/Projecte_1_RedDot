@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_joystick.h"
+#include "ModulePlayer_1.h"
 
 ModuleInput::ModuleInput() : Module()
 {
@@ -67,6 +68,15 @@ update_status ModuleInput::PreUpdate()
 
 	if (Paused) {
 		SDL_PumpEvents();
+		if (App->player1->isJumping != true)
+		{
+			App->player1->last_input = IN_UNKNOWN;
+		}
+		if (App->player2->isJumping != true)
+		{
+			App->player2->last_input = IN_UNKNOWN;
+		}
+
 	}
 
 	if (!Paused) 
