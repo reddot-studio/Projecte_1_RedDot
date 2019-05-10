@@ -18,10 +18,10 @@ ModulePlayer_2::ModulePlayer_2()
 	{
 		HurtColliders[i] = nullptr;
 	}
-
 	pivotRect.rect = { 0,0,10,10 };
-
+	ryoptr = new Ryo(2);
 }
+
 
 ModulePlayer_2::~ModulePlayer_2()
 {}
@@ -29,7 +29,7 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
-	character = new Ryo(2);
+	character = ryoptr;
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -288,7 +288,7 @@ bool ModulePlayer_2::CleanUp()
 	App->textures->Unload(pivotTexture);
 	if (character != nullptr) {
 		character->CleanUp();
-		delete character;
+		//delete character;
 		character = nullptr;
 	}
 	if (player_collider != nullptr)

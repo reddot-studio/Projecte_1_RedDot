@@ -334,36 +334,36 @@ Ryo::Ryo(int player)
 Ryo::~Ryo()
 {
 
-	if (graphics != nullptr)
-	{
-		App->textures->Unload(graphics);
-		graphics = nullptr;
-	}
-	if (punchfx != nullptr)
-	{
-		App->audio->Unload_effects(punchfx);
-		punchfx = nullptr;
-	}
-	if (kickfx != nullptr)
-	{
-		App->audio->Unload_effects(kickfx);
-		kickfx = nullptr;
-	}
-	if (kooukenfx != nullptr)
-	{
-		App->audio->Unload_effects(kooukenfx);
-		kooukenfx = nullptr;
-	}
-	if (jumpfx != nullptr)
-	{
-		App->audio->Unload_effects(jumpfx);
-		jumpfx = nullptr;
-	}
-	if (dmg != nullptr)
-	{
-		App->audio->Unload_effects(dmg);
-		dmg = nullptr;
-	}
+	//if (graphics != nullptr)
+	//{
+	//	App->textures->Unload(graphics);
+	//	graphics = nullptr;
+	//}
+	//if (punchfx != nullptr)
+	//{
+	//	App->audio->Unload_effects(punchfx);
+	//	punchfx = nullptr;
+	//}
+	//if (kickfx != nullptr)
+	//{
+	//	App->audio->Unload_effects(kickfx);
+	//	kickfx = nullptr;
+	//}
+	//if (kooukenfx != nullptr)
+	//{
+	//	App->audio->Unload_effects(kooukenfx);
+	//	kooukenfx = nullptr;
+	//}
+	//if (jumpfx != nullptr)
+	//{
+	//	App->audio->Unload_effects(jumpfx);
+	//	jumpfx = nullptr;
+	//}
+	//if (dmg != nullptr)
+	//{
+	//	App->audio->Unload_effects(dmg);
+	//	dmg = nullptr;
+	//}
 
 }
 

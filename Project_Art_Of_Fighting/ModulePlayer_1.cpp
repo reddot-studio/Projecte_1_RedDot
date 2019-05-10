@@ -26,7 +26,7 @@ ModulePlayer_1::ModulePlayer_1()
 	}
 
 	pivotRect.rect = { 0,0,10,10 };
-
+	ryoptr = new Ryo(1);
 
 }
 
@@ -36,7 +36,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	character = new Ryo(1);
+	character = ryoptr;
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -342,7 +342,7 @@ bool ModulePlayer_1::CleanUp()
 	App->textures->Unload(pivotTexture);
 	if (character != nullptr) {
 		character->CleanUp();
-		delete character;
+		//delete character;
 		character = nullptr;
 	}
 	if (player_collider != nullptr)
