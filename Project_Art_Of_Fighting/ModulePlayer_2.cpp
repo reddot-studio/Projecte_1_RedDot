@@ -322,7 +322,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		if (-App->render->camera.x < 0)
 			App->render->camera.x = 0;
 
-		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44 && !WIN_FULLSCREEN_DESKTOP)
+		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44 && WIN_FULLSCREEN_DESKTOP == 0)
 			App->render->camera.x = -(App->render->CurrentSceneLenght - 44);
 		if (-App->render->camera.x > App->render->CurrentSceneLenght - 385 && WIN_FULLSCREEN_DESKTOP == 1)
 			App->render->camera.x = -(App->render->CurrentSceneLenght - 385);
