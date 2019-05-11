@@ -27,6 +27,11 @@ bool ModuleDebug::Start() {
 
 update_status ModuleDebug::Update()
 {
+	if (App->input->keyboard_state[SDL_SCANCODE_F2] == KEY_DOWN){     //F2== amagar o enseñar debug
+		debug = !debug;
+	}
+	if (debug == false)
+		return update_status::UPDATE_CONTINUE;
 
 	App->fonts->BlitText(5, 2, 0, "pad 0 not detected press 1.2.3 for rumble");
 	App->fonts->BlitText(5, 11, 0, "pad 0 plugged press 1.2.3 for rumble");

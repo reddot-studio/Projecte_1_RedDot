@@ -9,7 +9,7 @@
 class ModuleDebug : public Module {
 public:
 	RectSprites point;
-	
+	bool debug = true;
 	Animation idle;
 	SDL_Texture * graphic;
 	SDL_Texture * graphic_player;
