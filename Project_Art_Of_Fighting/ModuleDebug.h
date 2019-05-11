@@ -11,7 +11,6 @@ public:
 	RectSprites point;
 	
 	Animation idle;
-
 	SDL_Texture * graphic;
 	SDL_Texture * graphic_player;
 	iPoint square_pos;

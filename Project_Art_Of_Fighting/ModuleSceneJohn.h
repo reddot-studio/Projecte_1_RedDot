@@ -22,6 +22,7 @@ public:
 	Animation cartelAzul;
 	Animation luzAzul;
 	Animation blanco;
+	bool show = false;
 public:
 	ModuleSceneJohn();
 	~ModuleSceneJohn();

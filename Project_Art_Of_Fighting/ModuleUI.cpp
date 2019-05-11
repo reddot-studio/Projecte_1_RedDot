@@ -11,6 +11,8 @@
 #include "ModuleCollision.h"
 #include "ModuleFonts.h"
 #include <stdio.h>
+#include "ModuleDebug.h"
+#include "ModuleInput.h"
 
 
 
@@ -26,6 +28,7 @@ ModuleUI::~ModuleUI()
 
 bool ModuleUI::Start()
 {
+
 	LOG("Loading UI");
 	tick1 = SDL_GetTicks();
 	//Load All UI
@@ -43,6 +46,9 @@ bool ModuleUI::Start()
 	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	timer = 60;
 	time[0] = 0;
+
+	App->debug->Enable();
+
 
 	//Animation winPOint
 	winpoint.PushBack({ 0,161,15,15 });
@@ -70,12 +76,14 @@ update_status ModuleUI::Update()
 	//Needs To sTop on fail bliT
 
 
+
+
 	//Timer renderer
 	if (tick2 - tick1 <= 4000)
 	{
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "60", 2);
+		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, "60", 2);
 		tick3 = SDL_GetTicks();
 	}
 	else
@@ -99,14 +107,14 @@ update_status ModuleUI::Update()
 		if (timer >= 10)
 		{
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, time, 2);
 		}
 		else
 		{
 			timer = timer_float / 1000;
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "0", 2);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 1, "0", 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 1, time, 2);
 		}
 
 	}

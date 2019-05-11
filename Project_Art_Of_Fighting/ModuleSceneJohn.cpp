@@ -166,6 +166,8 @@ update_status ModuleSceneJohn::Update()
 		App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
 	}
 
+
+
 	return UPDATE_CONTINUE;
 }
 

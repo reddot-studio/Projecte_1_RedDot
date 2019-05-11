@@ -21,7 +21,6 @@ public:
 
 public:
 
-
 	RectSprites RendPosition;
 	SDL_Texture* win_points;
 	SDL_Texture* TimerTexture;

@@ -10,7 +10,6 @@
 
 bool ModuleDebug::Init()
 {
-
 	square_pos.x = 0;
 	square_pos.y = 0;
 
@@ -23,12 +22,12 @@ bool ModuleDebug::Init()
 }
 bool ModuleDebug::Start() {
 	App->fonts->Load("Assets/fonts/small_white_font.png", " abcdefghiklmnoprstuwy!.0123456789", 2, 8, 8, 34);
-
 	return true;
 }
 
 update_status ModuleDebug::Update()
 {
+
 	App->fonts->BlitText(5, 2, 0, "pad 0 not detected press 1.2.3 for rumble");
 	App->fonts->BlitText(5, 11, 0, "pad 0 plugged press 1.2.3 for rumble");
 	App->fonts->BlitText(5, 20, 0, "buttons");
