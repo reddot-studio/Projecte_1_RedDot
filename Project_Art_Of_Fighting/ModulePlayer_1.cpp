@@ -26,7 +26,7 @@ ModulePlayer_1::ModulePlayer_1()
 	}
 
 	pivotRect.rect = { 0,0,10,10 };
-	ryoptr = new Ryo(1);
+	ryoptr = new John(1);
 
 }
 
