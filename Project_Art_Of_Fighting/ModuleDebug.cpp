@@ -27,31 +27,41 @@ bool ModuleDebug::Start() {
 
 update_status ModuleDebug::Update()
 {
+
+	for (int i = 0; i < 2; i++)
+	{
+		if (App->input->controller[i] != nullptr) {
+			numControllers++;
+		}
+	}
+
 	if (App->input->keyboard_state[SDL_SCANCODE_F2] == KEY_DOWN){     //F2== amagar o enseñar debug
 		debug = !debug;
 	}
 	if (debug == false)
 		return update_status::UPDATE_CONTINUE;
 
-	App->fonts->BlitText(5, 2, 1, "pad 0 not detected press 1.2.3 for rumble");
+
 	App->fonts->BlitText(5, 11, 1, "pad 0 plugged press 1.2.3 for rumble");
 	App->fonts->BlitText(5, 20, 1, "buttons");
-	App->fonts->BlitText(5, 29, 1,"dpad");
+	App->fonts->BlitText(5, 29, 1, "dpad");
 	App->fonts->BlitText(5, 38, 1, "left trigger"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 50, 1, "right thumb"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 59, 1, "hor asis"); //ficar el right i que es tradueixi de float a string.
 
+	sprintf_s(controllers, 10, "%d",numControllers);
+	App->fonts->BlitText(5, 2, 1,controllers);
 	if (App->input->GetHorizontalAxis() > App->input->deathZone)
 	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
 	else if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
 		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
 	}
 	if (App->input->GetHorizontalAxis() > App->input->deathZone || App->input->GetHorizontalAxis() < -App->input->deathZone) {
-		App->fonts->BlitText(85, 50, 1, time);
+		App->fonts->BlitText(85, 59, 1, time);
 	} //ficar el right i que es tradueixi de float a string.
 	else
 	{
-		App->fonts->BlitText(85, 50, 1, "0.0");
+		App->fonts->BlitText(85, 59, 1, "0.0");
 	}
 
 

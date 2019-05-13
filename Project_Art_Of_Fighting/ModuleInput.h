@@ -21,7 +21,7 @@ public:
 
 public:
 	const Uint8 *keyboard = nullptr;
-	SDL_GameController *controller = nullptr;
+	SDL_GameController *controller[2];
 	bool Paused = false;
 
 	bool jump = true;

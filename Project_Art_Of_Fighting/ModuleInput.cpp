@@ -16,6 +16,11 @@ ModuleInput::~ModuleInput()
 // Called before render is available
 bool ModuleInput::Init()
 {
+	for (int i = 0; i < 2; i++)
+	{
+		controller[i] = nullptr;
+	}
+
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
@@ -42,8 +47,8 @@ bool ModuleInput::Init()
 	int num = SDL_NumJoysticks();
 	for (int i = 0; i < num; ++i) {
 		if (SDL_IsGameController(i)) {
-			controller = SDL_GameControllerOpen(i);
-			if (controller) {
+			controller[i] = SDL_GameControllerOpen(i);
+			if (controller[i]) {
 				break;
 			}
 			else {
@@ -51,12 +56,16 @@ bool ModuleInput::Init()
 			}
 		}
 	}
-	if (SDL_GameControllerGetAttached(controller)) {
-		LOG("TRUE")
+	for (int i = 0; i < 2; i++)
+	{
+		if (SDL_GameControllerGetAttached(controller[i])) {
+			LOG("&d TRUE",i)
+		}
+		else {
+			LOG("&d FALSE", i);
+		}
 	}
-	else {
-		LOG("FALSE");
-	}
+
 
 	return ret;
 }
@@ -64,7 +73,29 @@ bool ModuleInput::Init()
 // Called every draw update
 update_status ModuleInput::PreUpdate()
 {
-	
+	if (SDL_NumJoysticks() == 2) {
+		LOG("2 PADS");
+	}
+	if (SDL_GameControllerGetAttached(controller[0])) {
+		LOG("TRUE")
+	}
+	else {
+		if (SDL_NumJoysticks() > 0) {
+
+			for (int i = 0; i < SDL_NumJoysticks(); ++i) {
+				if (SDL_IsGameController(i)) {
+					controller[i] = SDL_GameControllerOpen(i);
+					if (controller[i]) {
+						break;
+					}
+					else {
+						SDL_Log("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
+					}
+				}
+			}
+		}
+		LOG("FALSE");
+	}
 
 	if (Paused) {
 		SDL_PumpEvents();
@@ -107,7 +138,7 @@ update_status ModuleInput::PreUpdate()
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 			return update_status::UPDATE_STOP;
 
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_BACK))
+		if (SDL_GameControllerGetButton(controller[0], SDL_CONTROLLER_BUTTON_BACK))
 			return update_status::UPDATE_STOP;
 
 
@@ -132,7 +163,7 @@ bool ModuleInput::CleanUp()
 
 const float ModuleInput::GetHorizontalAxis()
 {
-	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
+	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller[0], SDL_CONTROLLER_AXIS_LEFTX);
 	horizontalAxis /= 32767;
 
 	return horizontalAxis;
@@ -140,7 +171,7 @@ const float ModuleInput::GetHorizontalAxis()
 
 const float ModuleInput::GetVerticalAxis()
 {
-	float verticalAxis = (float)SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
+	float verticalAxis = (float)SDL_GameControllerGetAxis(controller[0], SDL_CONTROLLER_AXIS_LEFTY);
 	verticalAxis /= 32767;
 
 	return verticalAxis;

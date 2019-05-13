@@ -84,10 +84,10 @@ update_status ModulePlayer_1::Update()
 
 		//TODO: IMPLEMENT CROUCH WITH CONTROLLER
 
-		if (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_A)) {
+		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_A)) {
 			last_input = IN_PUNCH;
 		}
-		if (SDL_GameControllerGetButton(App->input->controller, SDL_CONTROLLER_BUTTON_X)) {
+		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_X)) {
 			last_input = IN_KICK;
 		}
 	
