@@ -76,6 +76,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Character.h" />
     <ClInclude Include="John.h" />
+    <ClInclude Include="ModuleCharacter_Selection.h" />
     <ClInclude Include="ModuleFonts.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="MemLeaks.h" />
@@ -104,6 +105,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="John.cpp" />
+    <ClCompile Include="ModuleCharacter_Selection.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
     <ClCompile Include="Globals.cpp" />
     <ClCompile Include="Main.cpp" />

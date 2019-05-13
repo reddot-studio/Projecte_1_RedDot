@@ -101,6 +101,9 @@
     <ClInclude Include="John.h">
       <Filter>Characters</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleCharacter_Selection.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -168,6 +171,9 @@
     </ClCompile>
     <ClCompile Include="John.cpp">
       <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleCharacter_Selection.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 #include "ModuleTextures.h"
 #include "SDL/include/SDL.h"
 #include "SDL_image/include/SDL_image.h"
+#include "ModuleFonts.h"
 #pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
 
 ModuleTextures::ModuleTextures() : Module()
@@ -31,7 +32,10 @@ bool ModuleTextures::Init()
 		LOG("Could not initialize Image lib. IMG_Init: %s", IMG_GetError());
 		ret = false;
 	}
-
+	App->fonts->Load("Assets/fonts/big_orange_font.png", " abcdefghiklmnoprstuvwyz,:0123456789'!", 1, 8, 13, 38);
+	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
+	App->fonts->Load("Assets/fonts/small_white_font.png", " abcdefghiklmnoprstuwy!.0123456789", 2, 8, 8, 34);
+	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	return ret;
 }
 
@@ -43,6 +47,10 @@ bool ModuleTextures::CleanUp()
 	for (uint i = 0; i < MAX_TEXTURES; ++i)
 		if (textures[i] != nullptr)
 			SDL_DestroyTexture(textures[i]);
+	App->fonts->UnLoad(0);
+	App->fonts->UnLoad(1);
+	App->fonts->UnLoad(2);
+	App->fonts->UnLoad(3);
 
 	IMG_Quit();
 	return true;
