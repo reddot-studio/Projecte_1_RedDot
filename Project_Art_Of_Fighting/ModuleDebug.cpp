@@ -61,9 +61,9 @@ update_status ModuleDebug::Update()
 
 bool ModuleDebug::CleanUp()
 {
-	/*App->fonts->UnLoad(0);
+	App->fonts->UnLoad(0);
 	App->textures->Unload(graphic);
-	LOG("- ModuleDebug CleanUp");*/
+	LOG("- ModuleDebug CleanUp");
 	return true;
 }
 
