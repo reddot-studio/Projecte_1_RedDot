@@ -59,10 +59,10 @@ bool ModuleInput::Init()
 	for (int i = 0; i < 2; i++)
 	{
 		if (SDL_GameControllerGetAttached(controller[i])) {
-			LOG("&d TRUE",i)
+			//LOG("&d TRUE",i)
 		}
 		else {
-			LOG("&d FALSE", i);
+			//LOG("&d FALSE", i);
 		}
 	}
 
@@ -74,10 +74,10 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 	if (SDL_NumJoysticks() == 2) {
-		LOG("2 PADS");
+		//LOG("2 PADS");
 	}
 	if (SDL_GameControllerGetAttached(controller[0])) {
-		LOG("TRUE")
+		//LOG("TRUE")
 	}
 	else {
 		if (SDL_NumJoysticks() > 0) {
@@ -94,7 +94,7 @@ update_status ModuleInput::PreUpdate()
 				}
 			}
 		}
-		LOG("FALSE");
+		//LOG("FALSE");
 	}
 
 	if (Paused) {

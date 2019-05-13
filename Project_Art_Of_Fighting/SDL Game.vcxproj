@@ -101,9 +101,11 @@
     <ClInclude Include="p2Qeue.h" />
     <ClInclude Include="RectSprites.h" />
     <ClInclude Include="Ryo.h" />
+    <ClInclude Include="Special_Move.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="John.cpp" />
     <ClCompile Include="ModuleCharacter_Selection.cpp" />
     <ClCompile Include="ModuleFonts.cpp" />
@@ -126,6 +128,7 @@
     <ClCompile Include="ModuleWelcomeScreen.cpp" />
     <ClCompile Include="ModuleWindow.cpp" />
     <ClCompile Include="Ryo.cpp" />
+    <ClCompile Include="Special_Move.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

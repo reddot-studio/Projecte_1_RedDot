@@ -11,7 +11,13 @@ class John : public Character
 {
 public:
 	John(int player);
-	~John() {};
+	~John() {
+		for (int i = 0; i < SpecialLenght; i++)
+		{
+			if (PlayerSpecialMoves[i] != nullptr)
+				delete PlayerSpecialMoves[i];
+		}
+	};
 	bool Start() override;
 	bool CleanUp() override;
 };

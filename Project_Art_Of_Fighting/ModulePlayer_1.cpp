@@ -61,6 +61,14 @@ bool ModulePlayer_1::Start()
 	return ret;
 }
 
+update_status ModulePlayer_1::PreUpdate()
+{
+
+
+
+	return UPDATE_CONTINUE;
+}
+
 // Update: draw background
 update_status ModulePlayer_1::Update()
 {
@@ -225,10 +233,10 @@ if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && Side == 1) {
 	if (num < 0) {
 		num *= -1;
 	}
-	SDL_Log("%d", num);
+	//SDL_Log("%d", num);
 	if (num < 150){
 		isClose = true;
-		LOG("CLOSE");
+		//LOG("CLOSE");
 	}
 	else {
 		isClose = false;
@@ -238,10 +246,10 @@ if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && Side == 1) {
 	if (num < 0) {
 		num *= -1;
 	}
-	SDL_Log("%d", num);
+	//SDL_Log("%d", num);
 	if (num < 150){
 		isClose = true;
-		LOG("CLOSE");
+		//LOG("CLOSE");
 	}
 	else {
 		isClose = false;
@@ -348,6 +356,14 @@ if (current_state == ST_STANDING_BLOCKED) {
 	if (HitCollider != nullptr)
 		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
 
+
+	//TODO: Delete this line and move it to generic place
+	if (character->CheckCombos() != IN_EMPTY)
+	{
+		last_input = character->CheckCombos();
+	}
+
+
 	return UPDATE_CONTINUE;
 }
 
@@ -385,6 +401,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 {
 
 	//Camera limits
+	//TODO: Player shakes when is pussed to move a wall by other player
 	//Is Player coliding with wall?
 	if (c2->type == COLLIDER_WALL)
 	{
@@ -503,6 +520,8 @@ player_state ModulePlayer_1::ControlStates()
 {
 	static player_state state = ST_IDLE;
 
+	character->AddInput(last_input);
+
 	switch (current_state)
 	{
 	case ST_IDLE:
@@ -554,6 +573,7 @@ player_state ModulePlayer_1::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		}
 		break;
 
@@ -777,7 +797,7 @@ void ModulePlayer_1::states(int speed)
 			character->backward.ResetCurrentFrame();
 			current_animation = &character->backward;
 		}
-		LOG("FORWARD");
+		//LOG("FORWARD");
 		break;
 	case ST_WALK_BACKWARD:
 		pivot_player.x -= speed;
@@ -791,11 +811,12 @@ void ModulePlayer_1::states(int speed)
 			character->forward.ResetCurrentFrame();
 			current_animation = &character->forward;
 		}
-		LOG("BACKWARD");
+		//LOG("BACKWARD");
 		break;
 	case ST_STANDING_PUNCH:
 		if (current_animation != &character->punch)
 		{
+
 			character->punch.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->punch;

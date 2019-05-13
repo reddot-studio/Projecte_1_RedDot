@@ -81,6 +81,7 @@ enum inputs
 	IN_RECEIVE_DAMAGE,
 	IN_BLOCKING,
 	IN_BLOCKED,
+	IN_EMPTY
 };
 
 // Useful typedefs ---------

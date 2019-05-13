@@ -162,10 +162,10 @@ update_status ModulePlayer_2::Update()
 		if (num < 0) {
 			num *= -1;
 		}
-		SDL_Log("%d", num);
+		//SDL_Log("%d", num);
 		if (num < 150) {
 			isClose = true;
-			LOG("CLOSE");
+			//LOG("CLOSE");
 		}
 		else {
 			isClose = false;
@@ -176,10 +176,10 @@ update_status ModulePlayer_2::Update()
 		if (num < 0) {
 			num *= -1;
 		}
-		SDL_Log("%d", num);
+		//SDL_Log("%d", num);
 		if (num < 150) {
 			isClose = true;
-			LOG("CLOSE");
+			//LOG("CLOSE");
 		}
 		else {
 			isClose = false;
@@ -700,7 +700,7 @@ void ModulePlayer_2::states(int speed)
 			character->backward.ResetCurrentFrame();
 			current_animation = &character->backward;
 		}
-		LOG("FORWARD");
+		//LOG("FORWARD");
 		break;
 	case ST_WALK_BACKWARD:
 		pivot_player.x -= speed;
@@ -714,7 +714,7 @@ void ModulePlayer_2::states(int speed)
 			character->forward.ResetCurrentFrame();
 			current_animation = &character->forward;
 		}
-		LOG("BACKWARD");
+		//LOG("BACKWARD");
 		break;
 	case ST_STANDING_PUNCH:
 		if (current_animation != &character->punch)

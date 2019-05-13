@@ -6,14 +6,17 @@
 #include "ModuleTextures.h"
 #include "Animation.h"
 #include "ModuleAudio.h"
+#include "ModuleInput.h"
+#include "Special_Move.h"
 
 struct SDL_Texture;
 struct Mix_Chunk;
+class Special_Move;
 
 class Character
 {
 public:
-	Character() {};
+	Character();
 	~Character() {};
 	virtual bool Start() = 0;
 	virtual bool CleanUp() = 0;
@@ -23,6 +26,18 @@ public:
 	int player;
 
 	bool isBlocking = false;
+
+	//Special Move Settings
+	int SpecialLenght = 0;
+	Special_Move *PlayerSpecialMoves[20];
+	void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...);
+	inputs Input_Queue[30];
+	inputs *FirstInQueue = nullptr;
+	inputs *LastInQueue = nullptr;
+	int TopPosition = 0;
+	int BottomPosition = 0;
+	void AddInput(inputs);
+	inputs CheckCombos();
 
 	int specialDmg;
 	//Basic moves

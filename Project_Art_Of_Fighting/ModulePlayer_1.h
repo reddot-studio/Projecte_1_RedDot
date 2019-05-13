@@ -29,6 +29,7 @@ public:
 	~ModulePlayer_1();
 	int num = 100;
 	bool Start();
+	update_status PreUpdate() override;
 	update_status Update();
 	bool CleanUp() override;
 

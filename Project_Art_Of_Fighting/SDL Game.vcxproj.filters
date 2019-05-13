@@ -104,6 +104,9 @@
     <ClInclude Include="ModuleCharacter_Selection.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Special_Move.h">
+      <Filter>Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -174,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="ModuleCharacter_Selection.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Special_Move.cpp">
+      <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Characters</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
