@@ -182,6 +182,9 @@ John::John(int player)
 	jumppunch.speed = 0.25f;
 	jumppunch.loop = false;
 
+	//PUNCH + C
+
+
 	//falta jump forward i backward, win, defeat, combo amb 'D'
 }
 
