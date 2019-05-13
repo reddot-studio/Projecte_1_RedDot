@@ -330,9 +330,6 @@ Ryo::Ryo(int player)
 	exitBlock.speed = 0.5f;
 	exitBlock.loop = false;
 
-	AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
-
-
 }
 
 Ryo::~Ryo()
@@ -368,13 +365,6 @@ Ryo::~Ryo()
 	//	App->audio->Unload_effects(dmg);
 	//	dmg = nullptr;
 	//}
-
-	for (int i = 0; i < SpecialLenght; i++)
-	{
-		if (PlayerSpecialMoves[i] != nullptr)
-			delete PlayerSpecialMoves[i];
-	}
-
 }
 
  bool Ryo::Start()
@@ -397,6 +387,11 @@ Ryo::~Ryo()
 		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	 if (dmg == nullptr)
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+
+	 //Add Combos
+	 AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
+
+
 	return true;
 }
 
@@ -431,6 +426,12 @@ Ryo::~Ryo()
 	{
 		App->audio->Unload_effects(dmg);
 		dmg = nullptr;
+	}
+
+	for (int i = 0; i < SpecialLenght; i++)
+	{
+		if (PlayerSpecialMoves[i] != nullptr)
+			delete PlayerSpecialMoves[i];
 	}
 
 	 return true;
