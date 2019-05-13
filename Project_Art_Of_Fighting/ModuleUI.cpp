@@ -43,7 +43,6 @@ bool ModuleUI::Start()
 	App->player1->Player_Health_Value_p1 = 126;
 	App->player2->Player_Health_Value_p2 = 126;
 	
-	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
 	timer = 60;
 	time[0] = 0;
 
@@ -83,7 +82,7 @@ update_status ModuleUI::Update()
 	{
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
-		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "60", 2);
+		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 3, "60", 2);
 		tick3 = SDL_GetTicks();
 	}
 	else
@@ -107,14 +106,14 @@ update_status ModuleUI::Update()
 		if (timer >= 10)
 		{
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 3, time, 2);
 		}
 		else
 		{
 			timer = timer_float / 1000;
 			sprintf_s(time, 10, "%d", timer);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 0, "0", 2);
-			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 0, time, 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 3, "0", 2);
+			App->fonts->BlitText(SCREEN_WIDTH / 2 + 1, 10, 3, time, 2);
 		}
 
 	}
@@ -184,8 +183,9 @@ bool ModuleUI::CleanUp()
 		App->textures->Unload(App->player2->Player_Health_BG);
 		App->textures->Unload(App->player2->Player_Health);
 		App->textures->Unload(App->player2->Player_Health_BG_Empty);
-		App->fonts->UnLoad(0);
 	
+		
+
 
 	LOG("Unloading todo scene");
 	return true;

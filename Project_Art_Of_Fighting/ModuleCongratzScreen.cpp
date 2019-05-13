@@ -87,8 +87,7 @@ bool ModuleCongratzScreen::Start()
 	current_animation->ResetCurrentFrame();
 
 	//Load fonts
-	App->fonts->Load("Assets/fonts/big_orange_font.png", " abcdefghiklmnoprstuvwyz,:0123456789'!", 1, 8, 13, 38);
-	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
+
 
 
 	return true;
@@ -96,8 +95,8 @@ bool ModuleCongratzScreen::Start()
 
 update_status ModuleCongratzScreen::Update()
 {
-	App->fonts->BlitText(220, 47, 2, "waiting for");
-	App->fonts->BlitText(215, 58, 2, "a challenger");
+	App->fonts->BlitText(220, 47, 1, "waiting for");
+	App->fonts->BlitText(215, 58, 1, "a challenger");
 	App->input->Paused = false;
 	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
 	{
@@ -151,8 +150,6 @@ bool ModuleCongratzScreen::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->audio->Unload_music(ending_music);
-	App->fonts->UnLoad(0);
-	App->fonts->UnLoad(1);
 	App->player1->p2_win = 0;
 	App->player2->p1_win = 0;
 	App->sceneUI->counter1 = 0;

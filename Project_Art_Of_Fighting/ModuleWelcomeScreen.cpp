@@ -122,7 +122,6 @@ bool ModuleWelcomeScreen::Start()
 	App->audio->Play_music(start_music);
 
 	//Load fonts
-	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
 	return true;
 }
 
@@ -145,8 +144,8 @@ update_status ModuleWelcomeScreen::Update()
 
 		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
 		
-		App->fonts->BlitText(61, 205, 0, "snk home entertainment, inc.!1992");
-		App->fonts->BlitText(130, 150, 0, "push start button");
+		App->fonts->BlitText(61, 205, 1, "snk home entertainment, inc.!1992");
+		App->fonts->BlitText(130, 150, 1, "push start button");
 		App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}
 
