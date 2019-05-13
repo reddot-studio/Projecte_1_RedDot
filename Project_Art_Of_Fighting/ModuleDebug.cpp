@@ -28,12 +28,6 @@ bool ModuleDebug::Start() {
 update_status ModuleDebug::Update()
 {
 
-	for (int i = 0; i < 2; i++)
-	{
-		if (App->input->controller[i] != nullptr) {
-			numControllers++;
-		}
-	}
 
 	if (App->input->keyboard_state[SDL_SCANCODE_F2] == KEY_DOWN){     //F2== amagar o enseñar debug
 		debug = !debug;
@@ -49,7 +43,8 @@ update_status ModuleDebug::Update()
 	App->fonts->BlitText(5, 50, 1, "right thumb"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 59, 1, "hor asis"); //ficar el right i que es tradueixi de float a string.
 
-	sprintf_s(controllers, 10, "%d",numControllers);
+	numControllers = SDL_NumJoysticks();
+	sprintf_s(controllers, 40, "num controllers: %d",numControllers);
 	App->fonts->BlitText(5, 2, 1,controllers);
 	if (App->input->GetHorizontalAxis() > App->input->deathZone)
 	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
