@@ -191,6 +191,11 @@ update_status ModulePlayer_2::Update()
 		isJumping = true;
 		iPoint p = character->jump.GetDisplacementFrame();
 		pivot_player += p;
+		if (p.y > 0) 
+		{
+			//Falling
+			player_collider->Enabled = true;
+		}
 		if (character->jump.GetDisplacementFramePos() == character->jump.GetLastFrame() - 5)
 		{
 			character->jump.ResetDisplacement();
@@ -206,6 +211,11 @@ update_status ModulePlayer_2::Update()
 		isJumping = true;
 		iPoint p = character->jump_forward.GetDisplacementFrame();
 		pivot_player += p;
+		if (p.y > 0)
+		{
+			//Falling
+			player_collider->Enabled = true;
+		}
 		if (character->jump_forward.GetDisplacementFramePos() == character->jump_forward.GetLastFrame() - 5)
 		{
 			character->jump_forward.ResetDisplacement();
@@ -220,6 +230,11 @@ update_status ModulePlayer_2::Update()
 		isJumping = true;
 		iPoint p = character->jump_backward.GetDisplacementFrame();
 		pivot_player += p;
+		if (p.y > 0)
+		{
+			//Falling
+			player_collider->Enabled = true;
+		}
 		if (character->jump_backward.GetDisplacementFramePos() == character->jump_backward.GetLastFrame() - 5)
 		{
 			character->jump_backward.ResetDisplacement();
@@ -346,44 +361,60 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 	}
 
 	//Am I coliding with an enemy?
+	//if (c2->type == COLLIDER_PLAYER_COLLISION && (c1->Enabled && c2->Enabled))
+	//{
+
+	//	//Only if is moving
+	//	if (current_state != ST_IDLE)
+	//	{
+	//		//When can you move the enemy? I'm coliding from the right?
+	//		if (player_collider->rect.x + player_collider->rect.w - 5 < Enemy->player_collider->rect.x)
+	//		{
+	//			if (Enemy->player_collider->rect.x + Enemy->player_collider->rect.w < App->render->CameraLimitR->rect.x)
+	//			{
+	//				//Am i entering to the enemy by the left?
+	//				//eNEMY REPELED BY PLAYER
+	//				Enemy->pivot_player.x = player_collider->rect.x + player_collider->rect.w + (Enemy->pivot_player.x - Enemy->player_collider->rect.x);
+	//			}
+	//			else
+	//			{
+	//				//PLAYED REPELED BY ENEMY ON WALL COLISION
+	//				pivot_player.x = Enemy->pivot_player.x - (Enemy->pivot_player.x - Enemy->player_collider->rect.x) - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
+	//			}
+	//		}
+	//		else
+	//		{
+	//			if (Enemy->player_collider->rect.x > App->render->CameraLimitL->rect.x + App->render->CameraLimitL->rect.w)
+	//			{
+	//				//Am i entering to the enemy by the RIGHT?
+	//				//PLAYER PUSHING ENEMY BACKWARDS
+	//				Enemy->pivot_player.x = pivot_player.x - (pivot_player.x - player_collider->rect.x) - ((Enemy->player_collider->rect.x + Enemy->player_collider->rect.w) - Enemy->pivot_player.x);
+	//			}
+	//			else
+	//			{
+	//				pivot_player.x = Enemy->player_collider->rect.x + Enemy->player_collider->rect.w + (pivot_player.x - player_collider->rect.x);
+	//			}
+	//		}
+	//	}
+
+
+	//	LOG("");
+	//}
+
+
+	//New Player Collisions
 	if (c2->type == COLLIDER_PLAYER_COLLISION && (c1->Enabled && c2->Enabled))
 	{
-
-		//Only if is moving
-		if (current_state != ST_IDLE)
+		//Coliding from the right
+		if (c2->rect.x >= player_collider->rect.x)
 		{
-			//When can you move the enemy? I'm coliding from the right?
-			if (player_collider->rect.x + player_collider->rect.w - 5 < Enemy->player_collider->rect.x)
-			{
-				if (Enemy->player_collider->rect.x + Enemy->player_collider->rect.w < App->render->CameraLimitR->rect.x)
-				{
-					//Am i entering to the enemy by the left?
-					//eNEMY REPELED BY PLAYER
-					Enemy->pivot_player.x = player_collider->rect.x + player_collider->rect.w + (Enemy->pivot_player.x - Enemy->player_collider->rect.x);
-				}
-				else
-				{
-					//PLAYED REPELED BY ENEMY ON WALL COLISION
-					pivot_player.x = Enemy->pivot_player.x - (Enemy->pivot_player.x - Enemy->player_collider->rect.x) - ((player_collider->rect.x + player_collider->rect.w) - pivot_player.x);
-				}
-			}
-			else
-			{
-				if (Enemy->player_collider->rect.x > App->render->CameraLimitL->rect.x + App->render->CameraLimitL->rect.w)
-				{
-					//Am i entering to the enemy by the RIGHT?
-					//PLAYER PUSHING ENEMY BACKWARDS
-					Enemy->pivot_player.x = pivot_player.x - (pivot_player.x - player_collider->rect.x) - ((Enemy->player_collider->rect.x + Enemy->player_collider->rect.w) - Enemy->pivot_player.x);
-				}
-				else
-				{
-					pivot_player.x = Enemy->player_collider->rect.x + Enemy->player_collider->rect.w + (pivot_player.x - player_collider->rect.x);
-				}
-			}
+			App->player1->pivot_player.x += 1;
 		}
-
-
-		LOG("");
+		//Coliding from the left
+		if (c2->rect.x <= player_collider->rect.x)
+		{
+			App->player1->pivot_player.x -= 1;
+		}
 	}
 
 	//Hit Detection
