@@ -63,24 +63,69 @@ John::John(int player)
 	forward.PushBack({ 565, 259, 61, 110 }, 2, -45, 5, rect1, rect2, rect3);
 	forward.PushBack({ 626, 259, 63, 106 }, 0, -41, 5, rect1, rect2, rect3);
 	forward.PushBack({ 689, 259, 69, 109 }, -2, -44, 5, rect1, rect2, rect3);
-	forward.speed = 0.5f;
+	forward.speed = 0.7f;
 	//WALK BACKWARD
 
-	backward.PushBack({ 435, 259, 67, 104 }, 0, -39, 2, rect1, rect2, rect3);
-	backward.PushBack({ 502, 259, 63, 108 }, 0, -43, 2, rect1, rect2, rect3);
-	backward.PushBack({ 565, 259, 61, 110 }, 0, -45, 2, rect1, rect2, rect3);
-	backward.PushBack({ 626, 259, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
-	backward.PushBack({ 689, 259, 69, 109 }, 0, -44, 2, rect1, rect2, rect3);
-	backward.speed = 0.5f;
+	backward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
+	backward.PushBack({ 502, 259, 63, 108 }, 2, -43, 5, rect1, rect2, rect3);
+	backward.PushBack({ 565, 259, 61, 110 }, 2, -45, 5, rect1, rect2, rect3);
+	backward.PushBack({ 626, 259, 63, 106 }, 0, -41, 5, rect1, rect2, rect3);
+	backward.PushBack({ 689, 259, 69, 109 }, -2, -44, 5, rect1, rect2, rect3);
+	backward.speed = 0.7f;
 
 	//JUMP
-	jump.PushBack({ 195,3,66,104 });
-	jump.PushBack({ 261,0,48,118 }); //suposo que no quadrara. el frame 1 es mes rapid que els altres. sha de testejar
-	jump.PushBack({ 309,30,57,77 });
-	jump.PushBack({ 261,0,48,118 });
-	jump.PushBack({ 195,3,66,104 });
+	jump.loop = false;
+	jump.SetReverseOffset({ -23, -18 }, 4);
+	jump.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump.SetReverseOffset({ -23, -65 }, 5);
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 0,-7 });
+	jump.SetReverseOffset({ -23, -65 }, 5);
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 0,-3 });
+	jump.SetReverseOffset({ -23, -58 }, 7);
+	jump.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {});
+	jump.SetReverseOffset({ -23, -58 }, 7);
+	jump.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 0,1 });
+	jump.SetReverseOffset({ -20, -58 }, 10);
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
+	jump.speed = 0.9f;
+	
+	//Forward JUMP
+	jump_forward.loop = false;
+	jump_forward.SetReverseOffset({ -23, -18 }, 4);
+	jump_forward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump_forward.SetReverseOffset({ -23, -65 }, 5);
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 3,-7 });
+	jump_forward.SetReverseOffset({ -23, -65 }, 5);
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 3,-3 });
+	jump_forward.SetReverseOffset({ -23, -58 }, 7);
+	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { 3,0 });
+	jump_forward.SetReverseOffset({ -23, -58 }, 7);
+	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 3,1 });
+	jump_forward.SetReverseOffset({ -20, -58 }, 10);
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 3,6 });
+	jump_forward.speed = 0.9f;	
 
-	jump.speed = 0.25f;
+	//Backward JUMP
+	jump_backward.loop = false;
+	jump_backward.SetReverseOffset({ -23, -18 }, 4);
+	jump_backward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump_backward.SetReverseOffset({ -23, -65 }, 5);
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { -3,-7 });
+	jump_backward.SetReverseOffset({ -23, -65 }, 5);
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { -3,-3 });
+	jump_backward.SetReverseOffset({ -23, -58 }, 7);
+	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { -3,0 });
+	jump_backward.SetReverseOffset({ -23, -58 }, 7);
+	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { -3,1 });
+	jump_backward.SetReverseOffset({ -20, -58 }, 10);
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { -3,6 });
+	jump_backward.speed = 0.9f;
+
+	//Recover
+	recover.loop = false;
+	recover.SetReverseOffset({ -20, -58 }, 9);
+	recover.PushBack({ 195,3,66,104 }, 0, -39, 3);
+	recover.speed = 0.5f;
 
 	//CROUCH
 	crouch.PushBack({ 366,3,66,104 });
@@ -96,22 +141,24 @@ John::John(int player)
 	crouch_kick.speed = 0.25f;
 
 	//PUNCH
-	punch.PushBack({ 719,0,73,111 });
-	punch.PushBack({ 792,0,107,107 });
-
-	punch.speed = 0.25f;
+	punch.PushBack({ 719,0,73,111 },-3,-46,1);
+	punch.PushBack({ 792,0,107,107 },-2,-42,2);
+	punch.PushBack({ 719,0,73,111 },-3,-46,2);
+	punch.PushBack({ 0, 0, 66, 104 }, 0, -39, 4, rect1, rect2, rect3);
+	punch.loop = false;
+	punch.speed = 0.5f;
 
 	//KICK
-	kick.PushBack({ 0,128,58,113 });
-	kick.PushBack({ 58,128,52,113 });
-	kick.PushBack({ 110,128,58,111 });
-	kick.PushBack({ 168,129,105,108 });
-	kick.PushBack({ 273,139,83,108 });
-	kick.PushBack({ 110,128,58,111 });
-	kick.PushBack({ 58,128,52,113 });
-	kick.PushBack({ 0,128,58,113 });
-
-	kick.speed = 0.25f;
+	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
+	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.PushBack({ 110,128,58,111 }, 4, -46, 2);
+	kick.PushBack({ 168,129,105,108 }, 1, -43, 5);
+	kick.PushBack({ 273,139,83,108 }, 3, -43, 2);
+	kick.PushBack({ 110,128,58,111 }, 5, -46, 2);
+	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
+	kick.loop = false;
+	kick.speed = 0.7f;
 
 	//KOUKEN
 	koouKen.PushBack({ 366,149,69,98 });
@@ -130,9 +177,10 @@ John::John(int player)
 	//Falten frames//
 
 	//JUMP + PUNCH
-	jumppunch.PushBack({ 109,247,71,123 });
+	jumppunch.PushBack({ 109,247,71,123 },0,-48,10);
 
 	jumppunch.speed = 0.25f;
+	jumppunch.loop = false;
 
 	//falta jump forward i backward, win, defeat, combo amb 'D'
 }

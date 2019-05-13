@@ -18,7 +18,7 @@ public:
 	int numControllers;
 
 	char time[10];
-	char controllers[10];
+	char controllers[40];
 public:
 
 	bool Init() override;
