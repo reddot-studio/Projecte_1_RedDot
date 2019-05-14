@@ -36,27 +36,27 @@ update_status ModuleDebug::Update()
 		return update_status::UPDATE_CONTINUE;
 
 
-	App->fonts->BlitText(5, 11, 1, "pad 0 plugged press 1.2.3 for rumble");
-	App->fonts->BlitText(5, 20, 1, "buttons");
-	App->fonts->BlitText(5, 29, 1, "dpad");
-	App->fonts->BlitText(5, 38, 1, "left trigger"); //ficar el right i que es tradueixi de float a string.
-	App->fonts->BlitText(5, 50, 1, "right thumb"); //ficar el right i que es tradueixi de float a string.
-	App->fonts->BlitText(5, 59, 1, "hor asis"); //ficar el right i que es tradueixi de float a string.
+	App->fonts->BlitText(5, 11, 2, "pad 0 plugged press 1.2.3 for rumble");
+	App->fonts->BlitText(5, 20, 2, "buttons");
+	App->fonts->BlitText(5, 29, 2, "dpad");
+	App->fonts->BlitText(5, 38, 2, "left trigger"); //ficar el right i que es tradueixi de float a string.
+	App->fonts->BlitText(5, 50, 2, "right thumb"); //ficar el right i que es tradueixi de float a string.
+	App->fonts->BlitText(5, 59, 2, "hor asis"); //ficar el right i que es tradueixi de float a string.
 
 	numControllers = SDL_NumJoysticks();
 	sprintf_s(controllers, 40, "num controllers: %d",numControllers);
-	App->fonts->BlitText(5, 2, 1,controllers);
+	App->fonts->BlitText(5, 2, 2,controllers);
 	if (App->input->GetHorizontalAxis() > App->input->deathZone)
 	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
 	else if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
 		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
 	}
 	if (App->input->GetHorizontalAxis() > App->input->deathZone || App->input->GetHorizontalAxis() < -App->input->deathZone) {
-		App->fonts->BlitText(85, 59, 1, time);
+		App->fonts->BlitText(85, 59, 2, time);
 	} //ficar el right i que es tradueixi de float a string.
 	else
 	{
-		App->fonts->BlitText(85, 59, 1, "0.0");
+		App->fonts->BlitText(85, 59, 2, "0.0");
 	}
 
 
