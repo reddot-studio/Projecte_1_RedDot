@@ -112,8 +112,8 @@ update_status ModuleCongratzScreen::Update()
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
 		}
-		App->fonts->BlitText(58.5, 173, 0, "anytime, anywhere, cross my path");
-		App->fonts->BlitText(58.5, 188, 0, "again and you're mine!");
+		App->fonts->BlitText(58.5, 173, 1, "anytime, anywhere, cross my path");
+		App->fonts->BlitText(58.5, 188, 1, "again and you're mine!");
 
 		break;
 	default:
@@ -122,8 +122,8 @@ update_status ModuleCongratzScreen::Update()
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
 		}
-		App->fonts->BlitText(58.5, 173, 0, "i'll take you on anytime,");
-		App->fonts->BlitText(58.5, 188, 0, "taco breath!");
+		App->fonts->BlitText(58.5, 173, 1, "i'll take you on anytime,");
+		App->fonts->BlitText(58.5, 188, 1, "taco breath!");
 
 
 		break;

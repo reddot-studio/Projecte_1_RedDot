@@ -430,8 +430,8 @@ Ryo::~Ryo()
 
 	for (int i = 0; i < SpecialLenght; i++)
 	{
-		if (PlayerSpecialMoves[i] != nullptr)
-			delete PlayerSpecialMoves[i];
+		//if (PlayerSpecialMoves[i] != nullptr)
+			//delete PlayerSpecialMoves[i];
 	}
 
 	 return true;

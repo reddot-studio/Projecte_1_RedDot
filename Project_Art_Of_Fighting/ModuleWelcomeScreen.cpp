@@ -17,6 +17,7 @@
 #include "SDL_mixer/include/SDL_mixer.h"
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
+#include "ModuleCharacter_Selection.h"
 
 
 
@@ -105,6 +106,7 @@ bool ModuleWelcomeScreen::Init()
 	App->scene_john->Disable();
 	App->scene_todo->Disable();
 	App->scene_congratz->Disable();
+	App->character_selection->Disable();
 	App->sceneUI->Disable();
 	return true;
 }
@@ -121,7 +123,6 @@ bool ModuleWelcomeScreen::Start()
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
 	App->audio->Play_music(start_music);
 
-	//Load fonts
 	return true;
 }
 
@@ -152,7 +153,7 @@ update_status ModuleWelcomeScreen::Update()
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
-		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
+		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
 		App->input->Enable();
 	}
 	if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_START)) {
