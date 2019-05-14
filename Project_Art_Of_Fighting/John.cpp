@@ -183,9 +183,21 @@ John::John(int player)
 	jumppunch.loop = false;
 
 	//PUNCH + C
+	c_punch.PushBack({ 326,374,51,119 });
+	c_punch.PushBack({ 380,375,58,117 });
+	c_punch.PushBack({ 442,376,55,117 });
+	c_punch.PushBack({ 503,377,111,116 });
+	c_punch.PushBack({ 615,376,67,120 });
 
 
-	//falta jump forward i backward, win, defeat, combo amb 'D'
+	//KICK + C
+	c_kick.PushBack({ 195,3,66,104 });
+	c_kick.PushBack({ 137,370,74,123 });
+	c_kick.PushBack({ 213,376,111,117 });
+	c_kick.PushBack({ 137,370,74,123 });
+	c_kick.PushBack({ 195,3,66,104 });
+
+	//falta jump forward i backward, win, defeat
 }
 
 bool John::Start()

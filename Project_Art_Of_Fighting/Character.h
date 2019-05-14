@@ -80,6 +80,10 @@ public:
 	Animation standing_block;
 	Animation crouch_block;
 
+	//Strong Atacks
+	Animation c_punch;
+	Animation c_kick;
+
 	//Textures
 	SDL_Texture* graphics = nullptr;
 
