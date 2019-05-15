@@ -369,6 +369,7 @@ Ryo::~Ryo()
 
  bool Ryo::Start()
 {
+	 
 	 if (player == 1) {
 		 if(graphics == nullptr)
 		 graphics = App->textures->Load("Assets/ryo_sprite_sheet.png");
@@ -390,6 +391,9 @@ Ryo::~Ryo()
 
 	 //Add Combos
 	 AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
+	 AddCombo(4, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	 AddCombo(5, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	 AddCombo(3, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_PUNCH);
 
 
 	return true;

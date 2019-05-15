@@ -614,6 +614,8 @@ player_state ModulePlayer_2::ControlStates()
 	case ST_CROUCH:
 		switch (last_input)
 		{
+		case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
+		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 		case IN_CROUCH_UP: state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
 		case IN_KICK: state = ST_CROUCH_KICK; break;

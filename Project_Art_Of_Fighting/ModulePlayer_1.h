@@ -45,7 +45,7 @@ public:
 	player_state current_state = ST_UNKNOWN;
 
 	inputs last_input = IN_UNKNOWN;
-	
+
 	bool isDamaged = false;
 
 	SDL_Texture* pivotTexture = nullptr;
