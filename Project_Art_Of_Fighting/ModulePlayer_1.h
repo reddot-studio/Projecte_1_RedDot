@@ -58,7 +58,6 @@ public:
 	Animation* current_fx_animation = nullptr;
 
 	Character * character = nullptr;
-	Character *ryoptr = nullptr;
 
 	Particle * currentParticle = nullptr;
 

@@ -9,6 +9,9 @@
 #include "RectSprites.h"
 #include "ModuleFonts.h"
 #include <stdio.h>
+#include "ModulePlayer_1.h"
+#include "ModulePlayer_2.h"
+#include "John.h"
 
 ModuleScreenSelection::ModuleScreenSelection() {
 	back.w = SCREEN_WIDTH;
@@ -53,8 +56,10 @@ update_status ModuleScreenSelection::Update() {
 		time_int = (10000 + (tick1 - tick2)) / 1000;
 	}
 	sprintf_s(time_char, 10, "%.0i", time_int);
+
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
+		
 		App->fade->FadeToBlack(App->character_selection, App->scene_todo);
 	}
 	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2)+20, &characters); //Print Characters

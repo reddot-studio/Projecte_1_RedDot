@@ -8,7 +8,9 @@
 #include "ModuleAudio.h"
 #include "ModuleDebug.h"
 #include "ModuleUI.h"
-#include"ModuleCollision.h"
+#include "ModuleCollision.h"
+#include "ModuleCharacter_Selection.h"
+#include "John.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -19,7 +21,7 @@ ModulePlayer_2::ModulePlayer_2()
 		HurtColliders[i] = nullptr;
 	}
 	pivotRect.rect = { 0,0,10,10 };
-	ryoptr = new Ryo(2);
+
 }
 
 
@@ -29,7 +31,15 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
-	character = ryoptr;
+	if (App->character_selection->s2_pos_x == 2 && App->character_selection->s2_pos_y == 1) {
+		App->player2->character = new Ryo(1);
+	}
+	else if (App->character_selection->s2_pos_x == 4 && App->character_selection->s2_pos_y == 2) {
+		App->player2->character = new John(1);
+	}
+	else {
+		App->player2->character = new Ryo(1);
+	}
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -57,7 +67,7 @@ bool ModulePlayer_2::Start()
 update_status ModulePlayer_2::Update()
 {
 
-	speed = 1.5;
+	speed = 2;
 
 	states(speed);
 	//Move right
@@ -303,7 +313,7 @@ bool ModulePlayer_2::CleanUp()
 	App->textures->Unload(pivotTexture);
 	if (character != nullptr) {
 		character->CleanUp();
-		//delete character;
+		delete character;
 		character = nullptr;
 	}
 	if (player_collider != nullptr)

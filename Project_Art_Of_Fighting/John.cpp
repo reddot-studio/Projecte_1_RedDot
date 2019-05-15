@@ -128,17 +128,24 @@ John::John(int player)
 	recover.speed = 0.5f;
 
 	//CROUCH
-	crouch.PushBack({ 366,3,66,104 });
-	crouch.PushBack({ 432,3,66,104 });
-	crouch.PushBack({ 498,34,58,73 });
-
-	crouch.speed = 0.25f;
+	crouch.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	crouch.PushBack({ 498,34,58,73 },-3,-8,2);
+	crouch.loop = false;
+	crouch.speed = 0.5f;
 
 	//CROUCH KICK
-	crouch_kick.PushBack({ 556,35,59,72 });
-	crouch_kick.PushBack({ 615,39,104,68 });
+	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
+	crouch_kick.PushBack({ 615,39,104,68 },-4,-3,5);
+	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
+	crouch_kick.loop = false;
+	crouch_kick.speed = 0.35f;
 
-	crouch_kick.speed = 0.25f;
+	//CROUCH PUNCH
+	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	crouch_punch.PushBack({ 615,39,104,68 }, -4, -3, 5);
+	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	crouch_punch.loop = false;
+	crouch_punch.speed = 0.35f;
 
 	//PUNCH
 	punch.PushBack({ 719,0,73,111 },-3,-46,1);
@@ -169,17 +176,21 @@ John::John(int player)
 	koouKen.speed = 0.25f;
 
 	//FALL
-
-	//Falten frames//
+	fall.loop = false;
+	fall.SetReverseOffset({ -20, -58 }, 14);
+	fall.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
+	fall.speed = 0.5f;
 
 	//JUMP + KICK
 
 	//Falten frames//
 
 	//JUMP + PUNCH
-	jumppunch.PushBack({ 109,247,71,123 },0,-48,10);
+	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
+	jumppunch.PushBack({ 66,370,71,123 },5,-55,8);
+	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
 
-	jumppunch.speed = 0.25f;
+	jumppunch.speed = 0.5f;
 	jumppunch.loop = false;
 
 	//PUNCH + C
@@ -197,7 +208,7 @@ John::John(int player)
 	c_kick.PushBack({ 137,370,74,123 });
 	c_kick.PushBack({ 195,3,66,104 });
 
-	//falta jump forward i backward, win, defeat
+	//falta win, defeat
 }
 
 bool John::Start()
