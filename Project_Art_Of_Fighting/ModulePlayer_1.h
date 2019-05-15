@@ -29,7 +29,6 @@ public:
 	~ModulePlayer_1();
 	int num = 100;
 	bool Start();
-	update_status PreUpdate() override;
 	update_status Update();
 	bool CleanUp() override;
 
@@ -45,6 +44,7 @@ public:
 	player_state current_state = ST_UNKNOWN;
 
 	inputs last_input = IN_UNKNOWN;
+	inputs last_input_attack = IN_PUNCH;
 
 	bool isDamaged = false;
 

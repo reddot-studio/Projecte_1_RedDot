@@ -48,8 +48,6 @@ bool ModulePlayer_1::Start()
 	}
 
 
-
-
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -74,13 +72,6 @@ bool ModulePlayer_1::Start()
 	return ret;
 }
 
-update_status ModulePlayer_1::PreUpdate()
-{
-
-
-
-	return UPDATE_CONTINUE;
-}
 
 // Update: draw background
 update_status ModulePlayer_1::Update()
@@ -163,7 +154,14 @@ if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU
 //Jump
 if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
 
-
+//Power attack
+if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
+	switch (last_input_attack)
+	{
+	case IN_PUNCH: last_input = IN_STRONG_ATTACK; break;
+	case IN_KICK: last_input = IN_STRONG_ATTACK; break;
+	}
+}
 
 
 //Check duration of animation and reset state when it finishes
@@ -549,6 +547,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_STRONG_ATTACK: state = ST_STRONG_ATTACK; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -849,6 +848,31 @@ void ModulePlayer_1::states(int speed)
 			App->audio->Play_chunk(character->kickfx);
 		}
 		LOG("KICK");
+		break;
+	case ST_STRONG_ATTACK:
+		switch (last_input_attack)
+		{
+		case IN_PUNCH:
+			if (current_animation != &character->c_punch)
+			{
+				character->c_punch.ResetCurrentFrame();
+				HitCollider->Enabled = true;
+				current_animation = &character->c_punch;
+				App->audio->Play_chunk(character->punchfx);
+			}
+			break;	
+		case IN_KICK:
+			if (current_animation != &character->c_kick)
+			{
+				character->c_kick.ResetCurrentFrame();
+				HitCollider->Enabled = true;
+				current_animation = &character->c_kick;
+				App->audio->Play_chunk(character->kickfx);
+			}
+			break;
+		}
+
+		LOG("STRONG ATTACK");
 		break;
 	case ST_NEUTRAL_JUMP:
 		if (current_animation != &character->jump)
