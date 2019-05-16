@@ -33,7 +33,7 @@ int ModuleFonts::Load(const char* texture_path, const char* characters, uint row
 		return id;
 	}
 
-	id = 0;
+	id = 1;
 	for (; id < MAX_FONTS; ++id)
 		if (fonts[id].graphic == nullptr)
 			break;

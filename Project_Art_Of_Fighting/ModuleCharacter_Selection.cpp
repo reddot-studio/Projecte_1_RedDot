@@ -140,10 +140,10 @@ void ModuleScreenSelection::timer() {
 }
 void ModuleScreenSelection::draw() {
 	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 20, &characters); //Print Characters
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 20, 0, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 1, "time");
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 1, "0");
-	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, time_char);
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 20, 1, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 2, "time");
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 2, "0");
+	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, time_char);
 	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
 	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
 }

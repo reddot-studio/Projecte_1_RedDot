@@ -145,8 +145,8 @@ update_status ModuleWelcomeScreen::Update()
 
 		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
 		
-		App->fonts->BlitText(61, 205, 1, "snk home entertainment, inc.!1992");
-		App->fonts->BlitText(130, 150, 1, "push start button");
+		App->fonts->BlitText(61, 205, 2, "snk home entertainment, inc.!1992");
+		App->fonts->BlitText(130, 150, 2, "push start button");
 		App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}
 
