@@ -37,14 +37,11 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	if (App->character_selection->s1_pos_x == 2 && App->character_selection->s1_pos_y == 1) {
+	if (App->character_selection->SELECTOR_1 == 1) {
 		App->player1->character = new Ryo(1);
 	}
-	else if (App->character_selection->s1_pos_x == 4 && App->character_selection->s1_pos_y == 2) {
+	else if (App->character_selection->SELECTOR_1 == 2) {
 		App->player1->character = new John(1);
-	}
-	else {
-		App->player1->character = new Ryo(1);
 	}
 
 

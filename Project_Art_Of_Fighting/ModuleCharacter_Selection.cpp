@@ -24,15 +24,13 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	characters.rect.w = 112;
 	characters.rect.h = 56;
 
-	selector1.rect.x = 0;
-	selector1.rect.y = 194;
-	selector1.rect.h = 31;
-	selector1.rect.w = 28;
+	selector1.PushBack({ 0,194,28,31 });
+	selector1.PushBack({ 500,500,28,31 });
+	selector1.speed = 0.8f;
 
-	selector2.rect.x = 28;
-	selector2.rect.y = 194;
-	selector2.rect.h = 31;
-	selector2.rect.w = 28;
+	selector2.PushBack({ 28,194,28,31 });
+	selector2.PushBack({ 500,500,28,31 });
+	selector2.speed = 0.8f;
 
 	imageSelection1.rect.x = 0;
 	imageSelection1.rect.y = 0;
@@ -99,53 +97,35 @@ bool ModuleScreenSelection::CleanUp() {
 
 void ModuleScreenSelection::move() {
 	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN)) {
-		if (s1_pos_x < 4) {
-			X_SELECTOR_1 += 28;
-			s1_pos_x++;
+		if (SELECTOR_1 == 1) {
+			X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
+			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
+			SELECTOR_1 = 2;
 		}
+
 	}
 	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN)) {
-		if (s1_pos_x > 1) {
-			X_SELECTOR_1 -= 28;
-			s1_pos_x--;
+		if (SELECTOR_1 == 2) {
+			X_SELECTOR_1 = (SCREEN_WIDTH / 2) - 28;
+			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 47;
+			SELECTOR_1 = 1;
 		}
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_S] == KEY_DOWN)) {
-		if (s1_pos_y < 2) {
-			Y_SELECTOR_1 += 28;
-			s1_pos_y++;
-		}
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)) {
-		if (s1_pos_y > 1) {
-			Y_SELECTOR_1 -= 28;
-			s1_pos_y--;
-		}
+
 	}
 
 
 	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)) {
-		if (s2_pos_x < 4) {
-			X_SELECTOR_2 += 28;
-			s2_pos_x++;
+		if (SELECTOR_2 == 1) {
+			X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
+			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
+			SELECTOR_2 = 2;
 		}
 	}
 	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN)) {
-		if (s2_pos_x > 1) {
-			X_SELECTOR_2 -= 28;
-			s2_pos_x--;
-		}
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_K] == KEY_DOWN)) {
-		if (s2_pos_y < 2) {
-			Y_SELECTOR_2 += 28;
-			s2_pos_y++;
-		}
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN)) {
-		if (s2_pos_y > 1) {
-			Y_SELECTOR_2 -= 28;
-			s2_pos_y--;
+		if (SELECTOR_2 == 2) {
+			X_SELECTOR_2 = (SCREEN_WIDTH / 2) - 28;
+			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 50;
+			SELECTOR_2 = 1;
 		}
 	}
 }
@@ -160,46 +140,44 @@ void ModuleScreenSelection::timer() {
 	tick2 = SDL_GetTicks();
 }
 void ModuleScreenSelection::draw() {
-	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &characters); //Print Characters
-	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &not_available); //Print Characters
-	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
-	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 15, 1, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
+	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &characters); 
+	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &not_available); 
+	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1.GetCurrentFrame());
+	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2.GetCurrentFrame());
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 15, 1, "vs mode select player"); 
 	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 2, "time");
 	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 2, "0");
 	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, time_char);
 }
 void ModuleScreenSelection::choose() {
-	if (((s1_pos_x == 2 && s2_pos_x == 4) || (s1_pos_x == 4 && s2_pos_x == 2)) && App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		if ((s1_pos_y == 1 && s2_pos_y == 2) || (s1_pos_y == 2 && s2_pos_y == 1)) {
-			App->fade->FadeToBlack(App->character_selection, App->scene_john);
-		}
-	}
+
+	App->fade->FadeToBlack(App->character_selection, App->scene_john, 1.0f);
+
 	//RYO
-	if (s1_pos_x == 2 && s1_pos_y == 1) {
+	if (SELECTOR_1 == 1) {
 		App->render->Blit(graphics, 35, 15, &imageSelection1, 1.0f, 2);
 		App->render->Blit(graphics, 77, 140, &name2, 1.0f, 1);
-		if (s2_pos_x == 2 && s2_pos_y == 1) {
+		if (SELECTOR_2 == 1) {
 			App->render->Blit(graphics, SCREEN_WIDTH - 163, 15, &imageSelection1, 1.0f, 1);
 			App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
 		}
 	}
-	else if (s2_pos_x == 2 && s2_pos_y == 1) {
+	else if (SELECTOR_2==1) {
 		App->render->Blit(graphics, SCREEN_WIDTH - 165, 15, &imageSelection1, 1.0f, 1);
 		App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
 	}
 
 
 	//JOHN
-	if (s1_pos_x == 4 && s1_pos_y == 2) {
+	if (SELECTOR_1==2) {
 		App->render->Blit(graphics, 35, 10, &imageSelection2, 1.0f, 1);
 		App->render->Blit(graphics, 70, 140, &name1, 1.0f, 1);
-		if (s2_pos_x == 4 && s2_pos_y == 2) {
+		if (SELECTOR_2==2) {
 			App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
 			App->render->Blit(graphics, 35 + SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
 		}
 	}
-	else if (s2_pos_x == 4 && s2_pos_y == 2) {
+	else if (SELECTOR_2==2) {
 		App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
 		App->render->Blit(graphics, 35+ SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
 	}

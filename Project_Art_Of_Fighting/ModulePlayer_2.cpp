@@ -31,15 +31,14 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
-	if (App->character_selection->s2_pos_x == 2 && App->character_selection->s2_pos_y == 1) {
+
+	if (App->character_selection->SELECTOR_2 == 1) {
 		App->player2->character = new Ryo(1);
 	}
-	else if (App->character_selection->s2_pos_x == 4 && App->character_selection->s2_pos_y == 2) {
+	else if (App->character_selection->SELECTOR_2 == 2) {
 		App->player2->character = new John(1);
 	}
-	else {
-		App->player2->character = new Ryo(1);
-	}
+
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
