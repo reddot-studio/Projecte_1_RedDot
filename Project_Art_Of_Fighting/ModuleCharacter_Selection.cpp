@@ -33,6 +33,16 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	selector2.rect.y = 198;
 	selector2.rect.h = 31;
 	selector2.rect.w = 28;
+
+	imageSelection1.rect.x = 124;
+	imageSelection1.rect.y = 0;
+	imageSelection1.rect.w = 128;
+	imageSelection1.rect.h = 123;
+
+	imageSelection2.rect.x = 0;
+	imageSelection2.rect.y = 0;
+	imageSelection2.rect.w = 124;
+	imageSelection2.rect.h = 127;
 }
 ModuleScreenSelection::~ModuleScreenSelection() {
 
@@ -59,13 +69,9 @@ update_status ModuleScreenSelection::Update() {
 
 	sprintf_s(time_char, 10, "%.0i", time_int);
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
-	{
-		App->fade->FadeToBlack(App->character_selection, App->scene_todo);
-	}
-	
 	draw();
 	move();
+	choose();
 	timer();
 	
 
@@ -133,7 +139,7 @@ void ModuleScreenSelection::timer() {
 		tick1 = 0;
 		tick2 = 0;
 		no_zero = false;
-		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, "0");
+		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, "0");
 		App->fade->FadeToBlack(App->character_selection, App->scene_welcome);
 	}
 	tick2 = SDL_GetTicks();
@@ -146,4 +152,23 @@ void ModuleScreenSelection::draw() {
 	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, time_char);
 	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
 	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
+}
+void ModuleScreenSelection::choose() {
+	if (((s1_pos_x == 2 && s2_pos_x == 4) || (s1_pos_x == 4 && s2_pos_x == 2)) && App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+		if ((s1_pos_y == 1 && s2_pos_y == 2) || (s1_pos_y == 2 && s2_pos_y == 1)) {
+			App->fade->FadeToBlack(App->character_selection, App->scene_john);
+		}
+	}
+
+	if (s1_pos_x == 2 && s1_pos_y == 1) {
+		App->render->Blit(graphics, 0, 20, &imageSelection1, 1.0f, 2);
+		if (s2_pos_x == 2 && s2_pos_y == 1) {
+			App->render->Blit(graphics, SCREEN_WIDTH - 128, 20, &imageSelection1, 1.0f, 1);
+
+		}
+	}
+	else if (s2_pos_x == 2 && s2_pos_y == 1) {
+		App->render->Blit(graphics, SCREEN_WIDTH - 128, 20, &imageSelection1, 1.0f, 1);
+
+	}
 }

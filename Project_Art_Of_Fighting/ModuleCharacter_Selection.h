@@ -22,10 +22,13 @@ public:
 	void move();
 	void timer();
 	void draw();
+	void choose();
 
 	SDL_Rect back;
 	RectSprites selector1;
 	RectSprites selector2;
+	RectSprites imageSelection1;
+	RectSprites imageSelection2;
 	RectSprites characters;
 	SDL_Renderer* background;
 	SDL_Texture* graphics;
