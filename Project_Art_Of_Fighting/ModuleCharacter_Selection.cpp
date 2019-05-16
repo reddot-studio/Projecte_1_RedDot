@@ -66,8 +66,9 @@ update_status ModuleScreenSelection::Update() {
 	if (no_zero == true) {
 		time_int = (10000 + (tick1 - tick2)) / 1000;
 	}
-
 	sprintf_s(time_char, 10, "%.0i", time_int);
+
+
 
 	draw();
 	move();
