@@ -20,6 +20,8 @@ public:
 	update_status Update();
 	bool Start();
 	void move();
+	void timer();
+	void draw();
 
 	SDL_Rect back;
 	RectSprites selector1;
@@ -42,7 +44,7 @@ public:
 	int tick1 = 0, tick2 = 0;
 	char time_char[10];
 	int time_int;
-	bool no_zero = true;
+	bool no_zero;
 };
 
 #endif // !_MODULECHARACTERSELECTION_

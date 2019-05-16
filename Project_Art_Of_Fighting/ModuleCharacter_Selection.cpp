@@ -52,34 +52,22 @@ bool ModuleScreenSelection::Start() {
 	return true;
 }
 update_status ModuleScreenSelection::Update() {
+
 	if (no_zero == true) {
 		time_int = (10000 + (tick1 - tick2)) / 1000;
 	}
+
 	sprintf_s(time_char, 10, "%.0i", time_int);
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
-		
 		App->fade->FadeToBlack(App->character_selection, App->scene_todo);
 	}
-	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2)+20, &characters); //Print Characters
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 20, 0, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 1, "time");
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 1, "0");
-	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, time_char);
-	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
-	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
-
+	
+	draw();
 	move();
-
-	if (time_int <= 0) {
-		tick1 = 0;
-		tick2 = 0;
-		no_zero = false;
-		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, "0");
-		App->fade->FadeToBlack(App->character_selection, App->scene_welcome);
-	}
-	tick2 = SDL_GetTicks();
+	timer();
+	
 
 	return UPDATE_CONTINUE;
 }
@@ -139,4 +127,23 @@ void ModuleScreenSelection::move() {
 			s2_pos_y--;
 		}
 	}
+}
+void ModuleScreenSelection::timer() {
+	if (time_int <= 0) {
+		tick1 = 0;
+		tick2 = 0;
+		no_zero = false;
+		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, "0");
+		App->fade->FadeToBlack(App->character_selection, App->scene_welcome);
+	}
+	tick2 = SDL_GetTicks();
+}
+void ModuleScreenSelection::draw() {
+	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 20, &characters); //Print Characters
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 20, 0, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 1, "time");
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 1, "0");
+	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 1, time_char);
+	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
+	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
 }
