@@ -30,13 +30,16 @@ public:
 	RectSprites imageSelection1;
 	RectSprites imageSelection2;
 	RectSprites characters;
+	RectSprites name1;
+	RectSprites name2;
+	RectSprites not_available;
 	SDL_Renderer* background;
 	SDL_Texture* graphics;
 
 	int X_SELECTOR_1 = ((SCREEN_WIDTH / 2) - 28);
-	int Y_SELECTOR_1 = ((SCREEN_HEIGHT / 2) + 17);
+	int Y_SELECTOR_1 = ((SCREEN_HEIGHT / 2) + 47);
 	int X_SELECTOR_2 = ((SCREEN_WIDTH / 2) - 0);
-	int Y_SELECTOR_2 = ((SCREEN_HEIGHT / 2) + 20);
+	int Y_SELECTOR_2 = ((SCREEN_HEIGHT / 2) + 50);
 
 	int s1_pos_x = 2;
 	int s2_pos_x = 3;

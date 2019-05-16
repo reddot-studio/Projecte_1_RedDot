@@ -20,29 +20,44 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	back.y = 0;
 
 	characters.rect.x = 0;
-	characters.rect.y = 142;
+	characters.rect.y = 138;
 	characters.rect.w = 112;
 	characters.rect.h = 56;
 
 	selector1.rect.x = 0;
-	selector1.rect.y = 198;
+	selector1.rect.y = 194;
 	selector1.rect.h = 31;
 	selector1.rect.w = 28;
 
 	selector2.rect.x = 28;
-	selector2.rect.y = 198;
+	selector2.rect.y = 194;
 	selector2.rect.h = 31;
 	selector2.rect.w = 28;
 
-	imageSelection1.rect.x = 124;
+	imageSelection1.rect.x = 0;
 	imageSelection1.rect.y = 0;
 	imageSelection1.rect.w = 128;
 	imageSelection1.rect.h = 123;
 
-	imageSelection2.rect.x = 0;
+	imageSelection2.rect.x = 128;
 	imageSelection2.rect.y = 0;
-	imageSelection2.rect.w = 124;
-	imageSelection2.rect.h = 127;
+	imageSelection2.rect.w = 128;
+	imageSelection2.rect.h = 128;
+
+	name1.rect.x = 0;
+	name1.rect.y = 123;
+	name1.rect.w = 58;
+	name1.rect.h = 15;
+
+	name2.rect.x = 58;
+	name2.rect.y = 123;
+	name2.rect.w = 44;
+	name2.rect.h = 15;
+
+	not_available.rect.x = 0;
+	not_available.rect.y = 225;
+	not_available.rect.w = 112;
+	not_available.rect.h = 56;
 }
 ModuleScreenSelection::~ModuleScreenSelection() {
 
@@ -69,17 +84,16 @@ update_status ModuleScreenSelection::Update() {
 	sprintf_s(time_char, 10, "%.0i", time_int);
 
 
-
+	choose();
 	draw();
 	move();
-	choose();
 	timer();
 	
 
 	return UPDATE_CONTINUE;
 }
 bool ModuleScreenSelection::CleanUp() {
-
+	//App->textures->Unload(graphics);
 	return true;
 }
 
@@ -146,13 +160,14 @@ void ModuleScreenSelection::timer() {
 	tick2 = SDL_GetTicks();
 }
 void ModuleScreenSelection::draw() {
-	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 20, &characters); //Print Characters
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 20, 1, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
+	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &characters); //Print Characters
+	App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 56, (SCREEN_HEIGHT / 2) + 50, &not_available); //Print Characters
+	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
+	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 83, 15, 1, "vs mode select player"); //Imprimir font de adalt. bug. no carga la font.
 	App->fonts->BlitText((SCREEN_WIDTH / 2) - 16, SCREEN_HEIGHT / 2 - 40, 2, "time");
 	App->fonts->BlitText((SCREEN_WIDTH / 2) - 8, SCREEN_HEIGHT / 2 - 32, 2, "0");
 	App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, time_char);
-	App->render->Blit(graphics, X_SELECTOR_1, Y_SELECTOR_1, &selector1);
-	App->render->Blit(graphics, X_SELECTOR_2, Y_SELECTOR_2, &selector2);
 }
 void ModuleScreenSelection::choose() {
 	if (((s1_pos_x == 2 && s2_pos_x == 4) || (s1_pos_x == 4 && s2_pos_x == 2)) && App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
@@ -160,16 +175,32 @@ void ModuleScreenSelection::choose() {
 			App->fade->FadeToBlack(App->character_selection, App->scene_john);
 		}
 	}
-
+	//RYO
 	if (s1_pos_x == 2 && s1_pos_y == 1) {
-		App->render->Blit(graphics, 0, 20, &imageSelection1, 1.0f, 2);
+		App->render->Blit(graphics, 35, 15, &imageSelection1, 1.0f, 2);
+		App->render->Blit(graphics, 77, 140, &name2, 1.0f, 1);
 		if (s2_pos_x == 2 && s2_pos_y == 1) {
-			App->render->Blit(graphics, SCREEN_WIDTH - 128, 20, &imageSelection1, 1.0f, 1);
-
+			App->render->Blit(graphics, SCREEN_WIDTH - 163, 15, &imageSelection1, 1.0f, 1);
+			App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
 		}
 	}
 	else if (s2_pos_x == 2 && s2_pos_y == 1) {
-		App->render->Blit(graphics, SCREEN_WIDTH - 128, 20, &imageSelection1, 1.0f, 1);
+		App->render->Blit(graphics, SCREEN_WIDTH - 165, 15, &imageSelection1, 1.0f, 1);
+		App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
+	}
 
+
+	//JOHN
+	if (s1_pos_x == 4 && s1_pos_y == 2) {
+		App->render->Blit(graphics, 35, 10, &imageSelection2, 1.0f, 1);
+		App->render->Blit(graphics, 70, 140, &name1, 1.0f, 1);
+		if (s2_pos_x == 4 && s2_pos_y == 2) {
+			App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
+			App->render->Blit(graphics, 35 + SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
+		}
+	}
+	else if (s2_pos_x == 4 && s2_pos_y == 2) {
+		App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
+		App->render->Blit(graphics, 35+ SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
 	}
 }
