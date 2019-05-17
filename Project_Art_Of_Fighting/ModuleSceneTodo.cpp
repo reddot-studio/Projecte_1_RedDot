@@ -268,7 +268,7 @@ bool ModuleSceneTodo::CleanUp()
 	App->player1->win_check = false;
 	App->player2->win_check = false;
 	//ROUNDS_COUNTER
-	if (current_animation != &nthng)
+	if (current_animation != &nthng && current_animation != nullptr)
 	{
 		rounds_counter++;
 	}

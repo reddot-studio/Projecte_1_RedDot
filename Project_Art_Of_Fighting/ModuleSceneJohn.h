@@ -31,6 +31,22 @@ public:
 	update_status Update()override;
 	bool CleanUp();
 
+
+	//Round variables & stuff
+	SDL_Texture* indicator_fight;
+	Animation winp2;
+	Animation winp1;
+	int win_p1 = 0;
+	int win_p2 = 0;
+	bool first_row;
+	int collider_cleaning = 0;
+	Animation nthng;
+	RectSprites indicator;
+	RectSprites timeup;
+	Animation *current_animation = nullptr;
+	int tick1 = 0, tick2 = 0, tick3 = 0;
+	int rounds_counter = 0;
+
 	Collider* BackPanel;
 	Collider* FrontPanel;
 

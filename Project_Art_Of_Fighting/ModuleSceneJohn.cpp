@@ -102,6 +102,25 @@ ModuleSceneJohn::ModuleSceneJohn()
 	blanco.PushBack({ 572,0,16,12 });
 	blanco.speed = 0.1f;
 
+	indicator.rect.x = 0;
+	indicator.rect.y = 96;
+	indicator.rect.h = 16;
+	indicator.rect.w = 100;
+
+	timeup.rect.x = 0;
+	timeup.rect.y = 129;
+	timeup.rect.w = 104;
+	timeup.rect.h = 16;
+
+	nthng.PushBack({ 120,23,104,16 }, 0, 0, 30);
+	nthng.speed = 0.15f;
+
+	winp1.PushBack({ 0,40,116,40 }, 0, 0, 30);
+	winp1.speed = 0.15f;
+
+	winp2.PushBack({ 0,0,120,40 }, 0, 0, 30);
+	winp2.speed = 0.15f;
+
 }
 
 ModuleSceneJohn::~ModuleSceneJohn()
@@ -110,9 +129,12 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
-
+	current_animation = &nthng;
+	first_row = true;
 	LOG("Loading lee scene");
 	lee_music = App->audio->Load_music("Assets/Audio/038xKoukuu Bokaan!.ogg");
+	indicator_fight = App->textures->Load("Assets/UI_Sprites/indicator_fight.png");
+	//fightfx = App->audio->Load_effects("Assets/Audio/FX/Fight.wav");
 	if ((graphics = App->textures->Load("Assets/ChinaTown.png")) == NULL)
 	{
 		SDL_Log("Unable to load texture from path: /guardian.png");
@@ -120,6 +142,8 @@ bool ModuleSceneJohn::Start()
 	}
 	App->audio->Play_music(lee_music);
 
+	tick1 = 0;
+	tick1 = SDL_GetTicks();
 	//Screen Limits
 	//BackPanel = App->collision->AddCollider({ { 0,0,25, SCREEN_HEIGHT },{ 0,0 }, {0, 0} }, COLLIDER_WALL, App->scene_john);
 	//FrontPanel = App->collision->AddCollider({ { rect_background.rect.w-25, 0 , 25, SCREEN_HEIGHT },{ 0,0 } ,{ 0, 0 } }, COLLIDER_WALL, App->scene_john);
@@ -137,12 +161,14 @@ bool ModuleSceneJohn::Start()
 
 update_status ModuleSceneJohn::Update()
 {
+
+	//Render background
 	if ((App->render->Blit(graphics, 0, 0, &rect_background)) == false)
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");
 		return update_status::UPDATE_STOP;
 	}
-	App->input->Paused = false;
+	//App->input->Paused = false;
 	App->render->Blit(graphics, 115, 0, &rojoParpadeo.GetCurrentFrame());
 
 	App->render->Blit(graphics, 0, 0, &rotuloVerde.GetCurrentFrame());
@@ -161,13 +187,161 @@ update_status ModuleSceneJohn::Update()
 
 	App->render->Blit(graphics, 314, 114, &blanco.GetCurrentFrame());
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
-	{
-		App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
+	//Round mechanics
+	if (tick2 - tick1 < 2000) {
+
+		if (rounds_counter == 0)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 96;
+			indicator.rect.w = 100;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+		}
+		if (rounds_counter == 1)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 80;
+			indicator.rect.w = 104;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+		}
+		if (rounds_counter >1)
+		{
+			indicator.rect.x = 0;
+			indicator.rect.y = 145;
+			indicator.rect.w = 168;
+			indicator.rect.h = 16;
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator, 0);
+		}
 	}
 
+	if (tick2 - tick1>2000 && tick2 - tick1 < 4000) {
+
+		if (first_row == true)
+		{
+			//App->audio->Play_chunk(fightfx);
+		}
+		indicator.rect.x = 0;
+		indicator.rect.y = 113;
+		indicator.rect.h = 16;
+		indicator.rect.w = 80;
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+		first_row = false;
+	}
+
+	//TIME UP//
+	if (App->sceneUI->time_over == true)
+	{
+		App->input->Paused = true;
+
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
+
+		if (App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)
+		{
+			current_animation = &winp2;
+		}
+
+		if (App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)
+		{
+			current_animation = &winp1;
+		}
 
 
+
+		App->player1->CheckHealth(*App->player2);
+		App->player2->CheckHealth(*App->player1);
+
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup, 0);
+		App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame(), 0);
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+		{
+			if (App->player2->p1_win < 2 && App->player1->p2_win < 2)
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_john);
+			}
+			else
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
+			}
+		}
+
+	}
+
+	if (App->player2->win_check == true)
+	{
+		current_animation = &winp1;
+
+		App->input->Paused = true;
+
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+		{
+			if (App->player2->p1_win < 2)
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_john);
+			}
+			else
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
+			}
+		}
+	}
+
+	if (App->player1->win_check == true)
+	{
+		current_animation = &winp2;
+
+		App->input->Paused = true;
+
+		if (App->player2->isJumping != true)
+		{
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
+		}
+
+		if (App->player1->isJumping != true)
+		{
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
+		}
+
+
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
+		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+		{
+			if (App->player1->p2_win < 2)
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_john);
+			}
+			else
+			{
+				App->fade->FadeToBlack(App->scene_john, App->scene_congratz);
+			}
+		}
+	}
+
+	tick2 = SDL_GetTicks();
 	return UPDATE_CONTINUE;
 }
 
@@ -182,8 +356,17 @@ bool ModuleSceneJohn::CleanUp()
 	App->sceneUI->Disable();
 	App->audio->Unload_music(lee_music);
 	App->textures->Unload(graphics);
+	App->textures->Unload(indicator_fight);
 	App->player1->Disable();
 	App->player2->Disable();
+
+	App->sceneUI->time_over = false;
+	App->player1->win_check = false;
+	App->player2->win_check = false;
+	if (current_animation != &nthng && current_animation!=nullptr)
+	{
+		rounds_counter++;
+	}
 	LOG("Unloading john stage");
 	return true;
 }
