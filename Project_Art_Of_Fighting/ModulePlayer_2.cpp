@@ -32,6 +32,7 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
+	slowdownDuration = 10;
 
 	if (App->character_selection->SELECTOR_2 == 1) {
 		App->player2->character = new Ryo(1);
@@ -425,7 +426,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		{
 			App->player1->pivot_player.x -= 1;
 		}
-		App->slowdown->StartSlowdown(5, 60);
+		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}
 
 	//Hit Detection
@@ -440,7 +441,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 
 		
 		c2->Enabled = false;
-		App->slowdown->StartSlowdown(5, 60);
+		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}
 
 

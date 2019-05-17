@@ -50,6 +50,8 @@ public:
 
 	SDL_Texture* pivotTexture = nullptr;
 
+	float slowdownDuration;
+
 	RectSprites pivotRect;
 	iPoint offset;
 	iPoint pivot_player;

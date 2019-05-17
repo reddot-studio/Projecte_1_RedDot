@@ -38,6 +38,8 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
+	slowdownDuration = 10;
+
 	if (App->character_selection->SELECTOR_1 == 1) {
 		App->player1->character = new Ryo(1);
 	}
@@ -496,7 +498,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			App->player2->pivot_player.x -= 1;
 		}
 
-		App->slowdown->StartSlowdown(5, 60);
+		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}
 
 
@@ -520,7 +522,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			LOG("\nBLOCKED\n");
 			last_input = IN_BLOCKED;
 		}
-		App->slowdown->StartSlowdown(5, 60);
+		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}
 
 

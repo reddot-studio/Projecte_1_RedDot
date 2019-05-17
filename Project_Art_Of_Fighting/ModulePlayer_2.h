@@ -29,6 +29,8 @@ public:
 	update_status Update();
 	bool CleanUp() override;
 
+	float slowdownDuration;
+
 	void OnCollision(Collider*, Collider*);
 	player_state ControlStates();
 	void states(int speed);

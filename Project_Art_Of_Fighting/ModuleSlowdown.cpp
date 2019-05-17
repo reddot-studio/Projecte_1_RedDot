@@ -30,7 +30,7 @@ update_status ModuleSlowdown::PostUpdate()
 
 	return UPDATE_CONTINUE;
 }
-void ModuleSlowdown::StartSlowdown(int duration, int magnitude)
+void ModuleSlowdown::StartSlowdown(float duration, int magnitude)
 {
 	slowdown_timer = 0;
 	slowdown_duration = duration;
@@ -41,19 +41,22 @@ void ModuleSlowdown::StartSlowdown(int duration, int magnitude)
 
 void ModuleSlowdown::UpdateSlowdown()
 {
-	if (slowdown_timer <= slowdown_duration) {
+	time = slowdown_timer / slowdown_duration;
+	if (time < 0.25f) {
+		magnitude = slowdown_magnitude * time * 4;
+	}
+	else if (time > 0.75f) {
+		magnitude = slowdown_magnitude * (1 - time) * 4;
+	}
+	if (time < 1) {
 		slowdown_timer++;
-		time = (float)slowdown_timer / slowdown_duration;
-		if (magnitude <= 60) {
-			magnitude = slowdown_magnitude * time *2;
-		}
-		else {
-			magnitude = slowdown_magnitude * time/2;
-		}
 		SDL_Delay(magnitude);
-		SDL_Log("Time: %0.2f Magnitude: %i",time, magnitude);
 	}
 	else {
 		slowing_down = false;
 	}
+
+	SDL_Log("Time: %0.2f Magnitude: %i", slowdown_timer, magnitude);
 }
+
+
