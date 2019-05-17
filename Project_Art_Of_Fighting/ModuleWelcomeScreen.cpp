@@ -113,7 +113,6 @@ bool ModuleWelcomeScreen::Init()
 
 bool ModuleWelcomeScreen::Start()
 {
-
 	LOG("Loading intro scene");
 	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
 	{

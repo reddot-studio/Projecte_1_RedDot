@@ -91,7 +91,7 @@ update_status ModuleScreenSelection::Update() {
 	return UPDATE_CONTINUE;
 }
 bool ModuleScreenSelection::CleanUp() {
-	//App->textures->Unload(graphics);
+	App->textures->Unload(graphics);
 	return true;
 }
 
@@ -152,7 +152,7 @@ void ModuleScreenSelection::draw() {
 void ModuleScreenSelection::choose() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		App->fade->FadeToBlack(App->character_selection, App->scene_john, 1.0f);
+		App->fade->FadeToBlack(App->character_selection, App->scene_john, 0.7f);
 	}
 
 	//RYO
