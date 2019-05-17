@@ -110,6 +110,9 @@
     <ClInclude Include="ModuleSlowdown.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleNeoGeo.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -189,6 +192,9 @@
     </ClCompile>
     <ClCompile Include="ModuleSlowdown.cpp">
       <Filter>Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleNeoGeo.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

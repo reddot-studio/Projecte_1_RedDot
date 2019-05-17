@@ -21,8 +21,11 @@ private:
 
 	int slowdown_duration = 0;
 	int slowdown_timer = 0;
+	float time = 0;
+	int magnitude = 0;
 			
 	int slowdown_magnitude = 0;
+
 };
 
 #endif //__MODULEFADETOBLACK_H__
