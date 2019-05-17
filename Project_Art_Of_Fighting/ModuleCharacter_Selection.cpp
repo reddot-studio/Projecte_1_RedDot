@@ -135,7 +135,7 @@ void ModuleScreenSelection::timer() {
 		tick2 = 0;
 		no_zero = false;
 		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, "0");
-		App->fade->FadeToBlack(App->character_selection, App->scene_welcome);
+		App->fade->FadeToBlack(App->character_selection, App->scene_john);
 	}
 	tick2 = SDL_GetTicks();
 }
@@ -151,7 +151,9 @@ void ModuleScreenSelection::draw() {
 }
 void ModuleScreenSelection::choose() {
 
-	App->fade->FadeToBlack(App->character_selection, App->scene_john, 1.0f);
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+		App->fade->FadeToBlack(App->character_selection, App->scene_john, 1.0f);
+	}
 
 	//RYO
 	if (SELECTOR_1 == 1) {
