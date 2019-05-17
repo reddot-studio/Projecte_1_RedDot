@@ -13,6 +13,7 @@
 #include "ModuleCollision.h"
 #include "John.h"
 #include "ModuleCharacter_Selection.h"
+#include "ModuleSlowdown.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
@@ -495,7 +496,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			App->player2->pivot_player.x -= 1;
 		}
 
-
+		App->slowdown->StartSlowdown(5, 60);
 	}
 
 
@@ -519,6 +520,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			LOG("\nBLOCKED\n");
 			last_input = IN_BLOCKED;
 		}
+		App->slowdown->StartSlowdown(5, 60);
 	}
 
 
@@ -591,6 +593,12 @@ player_state ModulePlayer_1::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		}
+		break;
+	case ST_STRONG_ATTACK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP:
@@ -884,6 +892,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_KOOU_KEN:
 		if (current_animation != &character->koouKen)
 		{
+			App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
 			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
 			currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x -28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);

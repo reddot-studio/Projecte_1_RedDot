@@ -11,6 +11,7 @@
 #include "ModuleCollision.h"
 #include "ModuleCharacter_Selection.h"
 #include "John.h"
+#include "ModuleSlowdown.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -424,6 +425,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		{
 			App->player1->pivot_player.x -= 1;
 		}
+		App->slowdown->StartSlowdown(5, 60);
 	}
 
 	//Hit Detection
@@ -438,6 +440,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 
 		
 		c2->Enabled = false;
+		App->slowdown->StartSlowdown(5, 60);
 	}
 
 

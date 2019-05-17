@@ -9,6 +9,8 @@
 #include"ModuleCollision.h"
 #include "ModulePlayer_1.h"
 #include "ModulePlayer_2.h"
+#include <time.h>
+#include <cstdlib>
 
 ModuleRender::ModuleRender() : Module()
 {
@@ -17,9 +19,12 @@ ModuleRender::ModuleRender() : Module()
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
 
+	camera_offset.x = camera_offset.y = 0;
+
 	CameraLimitL = nullptr;
 	CameraLimitR = nullptr;
 
+	srand(time(NULL));
 
 }
 
@@ -91,10 +96,12 @@ update_status ModuleRender::Update()
 
 		if (App->input->keyboard_state[SDL_SCANCODE_RIGHT] == KEY_REPEAT)
 			camera.x -= speed;
+
 	}
 
+	if (shaking)
+		UpdateCameraShake();
 
-	
 	CameraLimitL->rect.x = -(camera.x / speed);
 	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed)+25);
 
@@ -130,8 +137,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 	SDL_RendererFlip facingPos;
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x  * SCREEN_SIZE;
-	rect.y = (int)(camera.y * speed) + y  * SCREEN_SIZE;
+	rect.x = (int)(camera.x + camera_offset.x * speed) + x  * SCREEN_SIZE;
+	rect.y = (int)(camera.y + camera_offset.y * speed) + y  * SCREEN_SIZE;
 
 	if(section != NULL)
 	{
@@ -180,8 +187,8 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	if (use_camera)
 	{
 
-		rec.x = (int)camera.x * speed + rect.x * SCREEN_SIZE;
-		rec.y = (int)camera.y * speed + rect.y * SCREEN_SIZE;
+		rec.x = (int)camera.x + camera_offset.x * speed + rect.x * SCREEN_SIZE;
+		rec.y = (int)camera.y + camera_offset.y * speed + rect.y * SCREEN_SIZE;
 		rec.w *= SCREEN_SIZE;
 		rec.h *= SCREEN_SIZE;
 	}
@@ -193,5 +200,30 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	}
 
 	return ret;
+}
+
+void ModuleRender::StartCameraShake(int duration, float magnitude)
+{
+	//TODO 1: Store the data and start the shake
+	shake_duration = duration;
+	shake_magnitude = magnitude;
+	shaking = true;
+	shake_timer = 0;
+}
+
+void ModuleRender::UpdateCameraShake()
+{
+	//TODO 2: Update the shake timer, stop shaking if we reach the full duration
+	//		  Generate a random value and set the camera offset
+
+	if (shake_timer < shake_duration) {
+		shake_timer++;
+		camera_offset.x = camera_offset.y = rand() % 2 * shake_magnitude;
+	}
+	else {
+		camera_offset.x = camera_offset.y = 0;
+		shaking = false;
+	}
+
 }
 

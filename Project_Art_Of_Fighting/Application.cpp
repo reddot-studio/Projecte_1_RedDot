@@ -17,6 +17,7 @@
 #include"ModuleUI.h"
 #include "ModuleFonts.h"
 #include "ModuleCharacter_Selection.h"
+#include "ModuleSlowdown.h"
 
 
 Application::Application()
@@ -40,6 +41,7 @@ Application::Application()
 	modules[num++] = collision = new ModuleCollision();
 	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = character_selection = new ModuleScreenSelection();
+	modules[num++] = slowdown = new ModuleSlowdown();
 	
 	
 }	

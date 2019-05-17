@@ -128,7 +128,7 @@ Ryo::Ryo(int player)
 	kick.SetReverseOffset({ -15, -45 }, 4);
 	kick.PushBack({ 669, 235, 60, 110 }, -35, -45, 4, head_kick_collider, body_kick_collider, legs_kick_collider);
 	kick.SetReverseOffset({ -13,-48 }, 4);
-	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
+	kick.PushBack({ 729, 235, 61 , 113 }, -38, -48, 4, head_kick_collider, body_kick_collider, legs_kick_collider);
 	kick.SetReverseOffset({ -49, -48 }, 8);
 	kick.PushBack({ 790, 235, 103, 113 }, -44, -48, 8, head_kick_collider, body_kick_collider, legs_kick_collider, hit_kick_collider);
 	kick.SetReverseOffset({ -13,-48 }, 4);

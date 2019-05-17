@@ -107,6 +107,9 @@
     <ClInclude Include="Special_Move.h">
       <Filter>Characters</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSlowdown.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -183,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSlowdown.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

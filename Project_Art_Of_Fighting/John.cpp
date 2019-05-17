@@ -199,6 +199,8 @@ John::John(int player)
 	c_punch.PushBack({ 442,376,55,117 });
 	c_punch.PushBack({ 503,377,111,116 });
 	c_punch.PushBack({ 615,376,67,120 });
+	c_punch.loop = false;
+	c_punch.speed = 0.5f;
 
 
 	//KICK + C

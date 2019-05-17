@@ -93,6 +93,7 @@
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneJohn.h" />
     <ClInclude Include="ModuleSceneTodo.h" />
+    <ClInclude Include="ModuleSlowdown.h" />
     <ClInclude Include="ModuleTextures.h" />
     <ClInclude Include="ModuleUI.h" />
     <ClInclude Include="ModuleWelcomeScreen.h" />
@@ -123,6 +124,7 @@
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneJohn.cpp" />
     <ClCompile Include="ModuleSceneTodo.cpp" />
+    <ClCompile Include="ModuleSlowdown.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />
     <ClCompile Include="ModuleUI.cpp" />
     <ClCompile Include="ModuleWelcomeScreen.cpp" />
