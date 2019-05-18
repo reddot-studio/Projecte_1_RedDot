@@ -132,7 +132,7 @@ bool ModuleSceneJohn::Start()
 	current_animation = &nthng;
 	first_row = true;
 	LOG("Loading lee scene");
-	lee_music = App->audio->Load_music("Assets/Audio/038xKoukuu Bokaan!.ogg");
+	lee_music = App->audio->Load_music("Assets/Audio/Chinatown_ost.ogg");
 	indicator_fight = App->textures->Load("Assets/UI_Sprites/indicator_fight.png");
 	//fightfx = App->audio->Load_effects("Assets/Audio/FX/Fight.wav");
 	if ((graphics = App->textures->Load("Assets/ChinaTown.png")) == NULL)
