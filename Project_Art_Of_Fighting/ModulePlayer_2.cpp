@@ -419,14 +419,14 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		//Coliding from the right
 		if (c2->rect.x >= player_collider->rect.x)
 		{
-			App->player1->pivot_player.x += 1;
+			App->player1->pivot_player.x += 2;
 		}
 		//Coliding from the left
 		if (c2->rect.x <= player_collider->rect.x)
 		{
-			App->player1->pivot_player.x -= 1;
+			App->player1->pivot_player.x -= 2;
 		}
-		App->slowdown->StartSlowdown(slowdownDuration, 60);
+
 	}
 
 	//Hit Detection

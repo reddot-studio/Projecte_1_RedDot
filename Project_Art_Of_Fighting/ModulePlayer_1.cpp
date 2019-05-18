@@ -490,15 +490,14 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 		//Coliding from the right
 		if (c2->rect.x >= player_collider->rect.x)
 		{
-			App->player2->pivot_player.x += 1;
+			App->player2->pivot_player.x += 2;
 		}
 		//Coliding from the left
 		if (c2->rect.x <= player_collider->rect.x)
 		{
-			App->player2->pivot_player.x -= 1;
+			App->player2->pivot_player.x -= 2;
 		}
 
-		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}
 
 

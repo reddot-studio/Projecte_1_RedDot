@@ -152,7 +152,7 @@ void ModuleScreenSelection::draw() {
 void ModuleScreenSelection::choose() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		App->fade->FadeToBlack(App->character_selection, App->scene_john, 0.7f);
+		App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
 
 	//RYO
