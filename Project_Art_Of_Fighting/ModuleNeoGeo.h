@@ -27,6 +27,8 @@ public:
 	bool CleanUp();
 	///////
 	Animation neogeo;
+	Animation* current_animation;
+	Animation final_neogeo;
 	SDL_Texture* graphics;
 };
 

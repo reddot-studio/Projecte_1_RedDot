@@ -194,7 +194,7 @@
       <Filter>Modules</Filter>
     </ClCompile>
     <ClCompile Include="ModuleNeoGeo.cpp">
-      <Filter>Core</Filter>
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
