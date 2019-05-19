@@ -18,6 +18,7 @@
 #include "ModuleFonts.h"
 #include "ModuleCharacter_Selection.h"
 #include "ModuleSlowdown.h"
+#include "ModuleNeoGeo.h"
 
 
 Application::Application()
@@ -37,6 +38,7 @@ Application::Application()
 	modules[num++] = player2 = new ModulePlayer_2();
 	modules[num++] = particles = new ModuleParticles();
 	modules[num++] = fade = new ModuleFadeToBlack();
+	modules[num++] = neogeo = new ModuleNeoGeo();
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();
 	modules[num++] = collision = new ModuleCollision();
 	modules[num++] = debug = new ModuleDebug();

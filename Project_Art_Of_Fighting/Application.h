@@ -3,7 +3,7 @@
 
 #include "Globals.h"
 
-#define NUM_MODULES 19
+#define NUM_MODULES 20
 
 class ModuleWindow;
 class ModuleInput;
@@ -25,6 +25,7 @@ class Module;
 class ModuleFonts;
 class ModuleScreenSelection;
 class ModuleSlowdown;
+class ModuleNeoGeo;
 
 class Application
 {
@@ -50,6 +51,7 @@ public:
 	ModuleFonts* fonts;
 	ModuleScreenSelection* character_selection;
 	ModuleSlowdown* slowdown;
+	ModuleNeoGeo* neogeo;
 
 public:
 
