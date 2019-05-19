@@ -30,6 +30,8 @@ public:
 	Animation* current_animation;
 	Animation final_neogeo;
 	SDL_Texture* graphics;
+
+	int tick1 = 0, tick2 = 0;
 };
 
 #endif // !_MODULENEOGEO_
