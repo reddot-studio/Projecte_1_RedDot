@@ -187,9 +187,6 @@
     <ClCompile Include="Special_Move.cpp">
       <Filter>Characters</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>Characters</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleSlowdown.cpp">
       <Filter>Modules</Filter>
     </ClCompile>
