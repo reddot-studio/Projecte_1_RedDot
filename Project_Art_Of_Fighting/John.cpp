@@ -284,6 +284,17 @@ bool John::Start()
 		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (dmg == nullptr)
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+
+	//Hadouken 
+	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
+	//AddCombo(4, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	//AddCombo(5, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	AddCombo(5, IN_KOOU_KEN, IN_CROUCH_DOWN, IN_UNKNOWN, IN_RIGHT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	AddCombo(4, IN_KOOU_KEN, IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	AddCombo(4, IN_KOOU_KEN, IN_UNKNOWN, IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_PUNCH);
+	AddCombo(6, IN_KOOU_KEN, IN_UNKNOWN,IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_LEFT_DOWN ,IN_UNKNOWN, IN_PUNCH);
+
+
 	return true;
 }
 
