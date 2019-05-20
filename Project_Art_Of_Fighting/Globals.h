@@ -86,6 +86,17 @@ enum inputs
 	IN_STRONG_ATTACK,
 };
 
+
+struct Timed_Inputs
+{
+
+
+	inputs Input;
+	float Time;
+
+
+};
+
 // Useful typedefs ---------
 typedef unsigned int uint;
 

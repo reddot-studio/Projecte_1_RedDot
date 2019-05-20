@@ -536,7 +536,7 @@ player_state ModulePlayer_1::ControlStates()
 {
 	static player_state state = ST_IDLE;
 
-	character->AddInput(last_input);
+	character->AddInput(last_input, SDL_GetTicks());
 
 	switch (current_state)
 	{
