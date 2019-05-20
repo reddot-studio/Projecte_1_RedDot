@@ -155,6 +155,7 @@ bool ModuleCongratzScreen::CleanUp()
 	App->sceneUI->counter1 = 0;
 	App->sceneUI->counter2 = 0;
 	App->scene_todo->rounds_counter = 0;
+	App->scene_john->rounds_counter = 0;
 		LOG("Unloading congratz scene");
 	return true;
 }
