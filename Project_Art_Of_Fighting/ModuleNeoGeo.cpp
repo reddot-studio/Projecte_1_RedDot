@@ -43,13 +43,21 @@ bool ModuleNeoGeo::Init() {
 }
 
 bool ModuleNeoGeo::Start() {
+	tick1 = SDL_GetTicks();
 	return true;
 }
 
 update_status ModuleNeoGeo::Update() {
+	tick2 = SDL_GetTicks();
+	if ((tick2 - tick1) >= 9000) {
+		App->fade->FadeToBlack(App->neogeo, App->scene_welcome);
+	}
+
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1) {
 		current_animation = &final_neogeo;
 	}
+
+
 	App->render->Blit(graphics, (SCREEN_WIDTH/2)-160, (SCREEN_HEIGHT/2)-112, &current_animation->GetCurrentFrame());
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
