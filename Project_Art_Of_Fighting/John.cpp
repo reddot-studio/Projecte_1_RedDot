@@ -138,7 +138,9 @@ John::John(int player)
 	recover.speed = 0.5f;
 
 	//CROUCH
+	crouch.SetReverseOffset({0, -39}, 3);
 	crouch.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	crouch.SetReverseOffset({ 11, -8}, 2);
 	crouch.PushBack({ 498,34,58,73 },-3,-8,2);
 	crouch.loop = false;
 	crouch.speed = 0.5f;
