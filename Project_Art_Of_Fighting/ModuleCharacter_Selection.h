@@ -39,7 +39,7 @@ public:
 	Animation selector1;
 	Animation selector2;
 
-
+	bool selected = false;
 
 	int SELECTOR_1 = 1;
 	int SELECTOR_2 = 2;

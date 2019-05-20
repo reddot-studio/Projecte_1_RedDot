@@ -75,18 +75,21 @@ bool ModuleScreenSelection::Start() {
 	return true;
 }
 update_status ModuleScreenSelection::Update() {
+	if (selected == false) {
+		if (no_zero == true) {
+			time_int = (10000 + (tick1 - tick2)) / 1000;
+		}
+		sprintf_s(time_char, 10, "%.0i", time_int);
 
-	if (no_zero == true) {
-		time_int = (10000 + (tick1 - tick2)) / 1000;
+
+		choose();
+		draw();
+		move();
+		timer();
 	}
-	sprintf_s(time_char, 10, "%.0i", time_int);
-
-
-	choose();
-	draw();
-	move();
-	timer();
-	
+	else {
+		LOG("polla");
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -152,6 +155,7 @@ void ModuleScreenSelection::draw() {
 void ModuleScreenSelection::choose() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+		selected = true;
 		App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
 
