@@ -108,8 +108,7 @@ bool ModuleScreenSelection::CleanUp() {
 }
 
 void ModuleScreenSelection::move() {
-	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN) || SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_DPAD_RIGHT))
-	{
+	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN)) {
 		if (SELECTOR_1 == 1) {
 			X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
 			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
@@ -117,7 +116,7 @@ void ModuleScreenSelection::move() {
 		}
 
 	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN) || SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_DPAD_LEFT)) {
+	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN)) {
 		if (SELECTOR_1 == 2) {
 			X_SELECTOR_1 = (SCREEN_WIDTH / 2) - 28;
 			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 47;
@@ -127,14 +126,14 @@ void ModuleScreenSelection::move() {
 	}
 
 
-	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN) || SDL_GameControllerGetButton(App->input->controller[1], SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) {
+	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)) {
 		if (SELECTOR_2 == 1) {
 			X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
 			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
 			SELECTOR_2 = 2;
 		}
 	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN) || SDL_GameControllerGetButton(App->input->controller[1], SDL_CONTROLLER_BUTTON_DPAD_LEFT)) {
+	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN)) {
 		if (SELECTOR_2 == 2) {
 			X_SELECTOR_2 = (SCREEN_WIDTH / 2) - 28;
 			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 50;
@@ -165,35 +164,9 @@ void ModuleScreenSelection::draw() {
 }
 void ModuleScreenSelection::choose() {
 
-<<<<<<< HEAD
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
 		selected = true;
 		//App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
-=======
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) 
-	{
-		//selected = true;
-		if (SELECTOR_1 == 1) 
-		{
-			App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
-		}
-		else
-		{
-			App->fade->FadeToBlack(App->character_selection, App->scene_john, 0.7f);
-		}
-	}
-
-	if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_START)) 
-	{
-		if (SELECTOR_1 == 1)
-		{
-			App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
-		}
-		else
-		{
-			App->fade->FadeToBlack(App->character_selection, App->scene_john, 0.7f);
-		}
->>>>>>> f80eaa48aff7c66854d7a347082ecd8260d5db58
 	}
 
 	//RYO
