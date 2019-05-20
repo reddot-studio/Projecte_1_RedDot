@@ -160,21 +160,33 @@ John::John(int player)
 	crouch_punch.speed = 0.35f;
 
 	//PUNCH
-	punch.PushBack({ 719,0,73,111 },-3,-46,1);
-	punch.PushBack({ 792,0,107,107 },-2,-42,2);
-	punch.PushBack({ 719,0,73,111 },-3,-46,2);
+	punch.SetReverseOffset({ -4,-46 }, 2);
+	punch.PushBack({ 719,0,73,111 }, -3, -46, 2);
+	punch.SetReverseOffset({ -39,-42 }, 2);
+	punch.PushBack({ 792,0,107,107 }, -2, -42, 2);
+	punch.SetReverseOffset({ -3,-46 }, 2);
+	punch.PushBack({ 719,0,73,111 }, -3, -46, 2);
+	punch.SetReverseOffset({ 0, -39 }, 4);
 	punch.PushBack({ 0, 0, 66, 104 }, 0, -39, 4, rect1, rect2, rect3);
 	punch.loop = false;
 	punch.speed = 0.5f;
 
 	//KICK
+	kick.SetReverseOffset({ 9, -48 },2 );
 	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
+	kick.SetReverseOffset({ 0, -49 }, 2);
 	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.SetReverseOffset({ 4, -46 },2 );
 	kick.PushBack({ 110,128,58,111 }, 4, -46, 2);
+	kick.SetReverseOffset({ -40, -43 }, 5);
 	kick.PushBack({ 168,129,105,108 }, 1, -43, 5);
+	kick.SetReverseOffset({ -20, -43 }, 2);
 	kick.PushBack({ 273,139,83,108 }, 3, -43, 2);
+	kick.SetReverseOffset({ 3, -46 }, 2);
 	kick.PushBack({ 110,128,58,111 }, 5, -46, 2);
+	kick.SetReverseOffset({ 0, -49 },2 );
 	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.SetReverseOffset({9, -48},2 );
 	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
 	kick.loop = false;
 	kick.speed = 0.7f;
