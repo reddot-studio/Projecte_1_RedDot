@@ -245,6 +245,13 @@ John::John(int player)
 	c_kick.loop = false;
 	c_kick.speed = 0.3f;
 
+	 //WIN
+	win.PushBack({ 419,760,94,145 }, 0, 0, 3);
+	win.PushBack({ 513,760,91,147 }, 0, 0, 3);
+	win.PushBack({ 603,760,84, 149 }, 0, 0, 3);
+	win.PushBack({ 687,760,102 ,151 }, 0, 0, 3);
+
+
 	//Combos
 	for (int i = 0; i < 30; i++)
 	{
