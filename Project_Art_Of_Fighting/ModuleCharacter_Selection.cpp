@@ -65,10 +65,10 @@ bool ModuleScreenSelection::Init() {
 	SDL_SetRenderDrawColor(background,0, 0, 0, 255);
 	SDL_RenderFillRect(background, &back);
 	SDL_RenderPresent;
-	graphics = App->textures->Load("Assets/character_selection.png");
 	return true;
 }
 bool ModuleScreenSelection::Start() {
+	graphics = App->textures->Load("Assets/character_selection.png");
 	App->input->Paused = false;
 	tick1 = SDL_GetTicks();
 	no_zero = true;
@@ -88,7 +88,7 @@ update_status ModuleScreenSelection::Update() {
 		timer();
 	}
 	else {
-		LOG("polla");
+
 	}
 
 	return UPDATE_CONTINUE;
@@ -139,6 +139,7 @@ void ModuleScreenSelection::timer() {
 		no_zero = false;
 		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, "0");
 		App->fade->FadeToBlack(App->character_selection, App->scene_john);
+		selected = true;
 	}
 	tick2 = SDL_GetTicks();
 }
@@ -155,7 +156,7 @@ void ModuleScreenSelection::draw() {
 void ModuleScreenSelection::choose() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		selected = true;
+		//selected = true;
 		App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
 
