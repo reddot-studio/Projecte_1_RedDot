@@ -29,7 +29,7 @@ public:
 	bool isBlocking = false;
 
 
-	virtual void AddInput(inputs) = 0;
+	virtual void AddInput(inputs, float) = 0;
 	virtual inputs CheckCombos() = 0;
 	virtual void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...) = 0;
 
