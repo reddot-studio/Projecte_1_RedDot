@@ -58,18 +58,28 @@ John::John(int player)
 	idle.speed = 0.05f;
 
 	//WALK FORWARD
+	forward.SetReverseOffset({ 0,-39 }, 5);
 	forward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
+	forward.SetReverseOffset({ 2,-43 }, 5);
 	forward.PushBack({ 502, 259, 63, 108 }, 2, -43, 5, rect1, rect2, rect3);
+	forward.SetReverseOffset({ 2,-45 }, 5);
 	forward.PushBack({ 565, 259, 61, 110 }, 2, -45, 5, rect1, rect2, rect3);
+	forward.SetReverseOffset({ 0,-41 }, 5);
 	forward.PushBack({ 626, 259, 63, 106 }, 0, -41, 5, rect1, rect2, rect3);
+	forward.SetReverseOffset({ -2,-44 }, 5);
 	forward.PushBack({ 689, 259, 69, 109 }, -2, -44, 5, rect1, rect2, rect3);
 	forward.speed = 0.7f;
-	//WALK BACKWARD
 
+	//WALK BACKWARD
+	backward.SetReverseOffset({ 0,-39 }, 5);
 	backward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
+	backward.SetReverseOffset({ 2,-43 }, 5);
 	backward.PushBack({ 502, 259, 63, 108 }, 2, -43, 5, rect1, rect2, rect3);
+	backward.SetReverseOffset({ 2,-45 }, 5);
 	backward.PushBack({ 565, 259, 61, 110 }, 2, -45, 5, rect1, rect2, rect3);
+	backward.SetReverseOffset({ 0,-41 }, 5);
 	backward.PushBack({ 626, 259, 63, 106 }, 0, -41, 5, rect1, rect2, rect3);
+	backward.SetReverseOffset({ -2,-44 }, 5);
 	backward.PushBack({ 689, 259, 69, 109 }, -2, -44, 5, rect1, rect2, rect3);
 	backward.speed = 0.7f;
 
