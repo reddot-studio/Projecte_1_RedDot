@@ -55,6 +55,7 @@ update_status ModuleNeoGeo::Update() {
 
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1) {
 		current_animation = &final_neogeo;
+		App->fade->FadeToBlack(App->neogeo, App->scene_welcome);
 	}
 
 
