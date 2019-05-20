@@ -255,11 +255,11 @@ John::John(int player)
 	//Combos
 	for (int i = 0; i < 30; i++)
 	{
-		Input_Queue[i] = IN_EMPTY;
+		Input_Queue[i].Input = IN_EMPTY;
 	}
 
-	FirstInQueue = &Input_Queue[0];
-	LastInQueue = &Input_Queue[0];
+	FirstInQueue = &Input_Queue[0].Input;
+	LastInQueue = &Input_Queue[0].Input;
 
 	//falta win, defeat
 }
@@ -284,6 +284,17 @@ bool John::Start()
 		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (dmg == nullptr)
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+
+	//Hadouken 
+	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
+	//AddCombo(4, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	//AddCombo(5, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	AddCombo(5, IN_KOOU_KEN, IN_CROUCH_DOWN, IN_UNKNOWN, IN_RIGHT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	AddCombo(4, IN_KOOU_KEN, IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	AddCombo(4, IN_KOOU_KEN, IN_UNKNOWN, IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_PUNCH);
+	AddCombo(6, IN_KOOU_KEN, IN_UNKNOWN,IN_CROUCH_DOWN, IN_RIGHT_DOWN, IN_LEFT_DOWN ,IN_UNKNOWN, IN_PUNCH);
+
+
 	return true;
 }
 
@@ -353,11 +364,11 @@ void John::AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...)
 
 }
 
-void John::AddInput(inputs Inp)
+void John::AddInput(inputs Inp, float time)
 {
 
 	//Is new Input diferent from last one, check to avoid multiframed input
-	if (Input_Queue[TopPosition - 1] != Inp)
+	if (Input_Queue[TopPosition - 1].Input != Inp)
 	{
 		//Then add input to queue
 		//TopPosition is now greater
@@ -365,16 +376,17 @@ void John::AddInput(inputs Inp)
 		if (TopPosition + 1 <= 30)
 		{
 
-			Input_Queue[TopPosition] = Inp;
-			LastInQueue = &Input_Queue[TopPosition];
+			Input_Queue[TopPosition].Input = Inp;
+			Input_Queue[TopPosition].Time = time;
+			LastInQueue = &Input_Queue[TopPosition].Input;
 
 			if (TopPosition + 1 == IN_EMPTY)
 			{
-				FirstInQueue = &Input_Queue[0];
+				FirstInQueue = &Input_Queue[0].Input;
 			}
 			else
 			{
-				FirstInQueue = &Input_Queue[TopPosition + 1];
+				FirstInQueue = &Input_Queue[TopPosition + 1].Input;
 			}
 
 			//SDL_Log("%d Num: %d", TopPosition, Input_Queue[TopPosition]);
@@ -387,8 +399,9 @@ void John::AddInput(inputs Inp)
 		else
 		{
 			TopPosition = 0;
-			Input_Queue[TopPosition] = Inp;
-			LastInQueue = &Input_Queue[TopPosition];
+			Input_Queue[TopPosition].Input = Inp;
+			Input_Queue[TopPosition].Time = time;
+			LastInQueue = &Input_Queue[TopPosition].Input;
 			TopPosition++;
 		}
 
@@ -416,9 +429,10 @@ inputs John::CheckCombos()
 			//Next move wont top out the queue
 			if (Check - 1 >= 0)
 			{
-				if (Input_Queue[Check - 1] == PlayerSpecialMoves[i]->InputsToCompleteMovement[j])
+				if (Input_Queue[Check - 1].Input == PlayerSpecialMoves[i]->InputsToCompleteMovement[j])
 				{
-					Completed++;
+					if(Input_Queue[Check - 1].Time - Input_Queue[Check - 2].Time <= 225)
+						Completed++;
 				}
 
 				Check--;

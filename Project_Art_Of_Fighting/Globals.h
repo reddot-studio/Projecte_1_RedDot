@@ -90,6 +90,17 @@ enum inputs
 	IN_DEFEAT
 };
 
+
+struct Timed_Inputs
+{
+
+
+	inputs Input;
+	float Time;
+
+
+};
+
 // Useful typedefs ---------
 typedef unsigned int uint;
 

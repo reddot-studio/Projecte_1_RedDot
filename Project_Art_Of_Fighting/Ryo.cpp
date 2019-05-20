@@ -332,11 +332,11 @@ Ryo::Ryo(int player)
 
 	for (int i = 0; i < 30; i++)
 	{
-		Input_Queue[i] = IN_EMPTY;
+		Input_Queue[i].Input = IN_EMPTY;
 	}
 
-	FirstInQueue = &Input_Queue[0];
-	LastInQueue = &Input_Queue[0];
+	FirstInQueue = &Input_Queue[0].Input;
+	LastInQueue = &Input_Queue[0].Input;
 
 }
 
@@ -472,11 +472,11 @@ Ryo::~Ryo()
 
  }
 
- void Ryo::AddInput(inputs Inp)
+ void Ryo::AddInput(inputs Inp, float time)
  {
 
 	 //Is new Input diferent from last one, check to avoid multiframed input
-	 if (Input_Queue[TopPosition - 1] != Inp)
+	 if (Input_Queue[TopPosition - 1].Input != Inp)
 	 {
 		 //Then add input to queue
 		 //TopPosition is now greater
@@ -484,16 +484,18 @@ Ryo::~Ryo()
 		 if (TopPosition + 1 <= 30)
 		 {
 
-			 Input_Queue[TopPosition] = Inp;
-			 LastInQueue = &Input_Queue[TopPosition];
+			 Input_Queue[TopPosition].Input = Inp;
+			 Input_Queue[TopPosition].Time = time;
+			 
+			 LastInQueue = &Input_Queue[TopPosition].Input;
 
 			 if (TopPosition + 1 == IN_EMPTY)
 			 {
-				 FirstInQueue = &Input_Queue[0];
+				 FirstInQueue = &Input_Queue[0].Input;
 			 }
 			 else
 			 {
-				 FirstInQueue = &Input_Queue[TopPosition + 1];
+				 FirstInQueue = &Input_Queue[TopPosition + 1].Input;
 			 }
 
 			 //SDL_Log("%d Num: %d", TopPosition, Input_Queue[TopPosition]);
@@ -506,8 +508,9 @@ Ryo::~Ryo()
 		 else
 		 {
 			 TopPosition = 0;
-			 Input_Queue[TopPosition] = Inp;
-			 LastInQueue = &Input_Queue[TopPosition];
+			 Input_Queue[TopPosition].Input = Inp;
+			 Input_Queue[TopPosition].Time = time;
+			 LastInQueue = &Input_Queue[TopPosition].Input;
 			 TopPosition++;
 		 }
 
@@ -535,9 +538,10 @@ Ryo::~Ryo()
 			 //Next move wont top out the queue
 			 if (Check - 1 >= 0)
 			 {
-				 if (Input_Queue[Check - 1] == PlayerSpecialMoves[i]->InputsToCompleteMovement[j])
+				 if (Input_Queue[Check - 1].Input == PlayerSpecialMoves[i]->InputsToCompleteMovement[j])
 				 {
-					 Completed++;
+					 if (Input_Queue[Check - 1].Time - Input_Queue[Check - 2].Time <= 225)
+						 Completed++;
 				 }
 
 				 Check--;

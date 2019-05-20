@@ -48,12 +48,6 @@ bool ModuleInput::Init()
 	for (int i = 0; i < num; ++i) {
 		if (SDL_IsGameController(i)) {
 			controller[i] = SDL_GameControllerOpen(i);
-			if (controller[i]) {
-				break;
-			}
-			else {
-				SDL_Log("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-			}
 		}
 	}
 	for (int i = 0; i < 2; i++)
@@ -85,12 +79,6 @@ update_status ModuleInput::PreUpdate()
 			for (int i = 0; i < SDL_NumJoysticks(); ++i) {
 				if (SDL_IsGameController(i)) {
 					controller[i] = SDL_GameControllerOpen(i);
-					if (controller[i]) {
-						break;
-					}
-					else {
-						SDL_Log("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-					}
 				}
 			}
 		}
