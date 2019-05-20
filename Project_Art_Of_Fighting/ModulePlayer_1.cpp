@@ -49,6 +49,7 @@ bool ModulePlayer_1::Start()
 	}
 
 
+
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -898,12 +899,23 @@ void ModulePlayer_1::states(int speed)
 	case ST_KOOU_KEN:
 		if (current_animation != &character->koouKen)
 		{
-			App->render->StartCameraShake(10,4.0f);
+			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
-			App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
-			currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x -28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
-			current_animation = &character->koouKen;
-			App->audio->Play_chunk(character->kooukenfx);
+			switch (character->characterType)
+			{
+			case RYO:
+				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
+				currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x - 28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+				current_animation = &character->koouKen;
+				App->audio->Play_chunk(character->kooukenfx);
+				break;
+			case JOHN:
+				//App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
+				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+				current_animation = &character->koouKen;
+				App->audio->Play_chunk(character->kooukenfx);
+				break;
+			}
 		}
 		break;
 	case ST_NEUTRAL_JUMP_PUNCH:

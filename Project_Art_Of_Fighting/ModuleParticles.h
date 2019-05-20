@@ -29,6 +29,7 @@ struct Particle
 
 
 
+
 	Particle();
 	~Particle();
 	Particle(const Particle& p);
@@ -49,20 +50,25 @@ public:
 
 	void OnCollision(Collider* c1, Collider* c2);
 
-	Particle * AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1);
+	Particle * AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type = COLLIDER_NONE, Uint32 delay = 0, int Damage = 0, int Side = 1, Characters type = JOHN);
 
 private:
 
 	Particle* active[MAX_ACTIVE_PARTICLES];
 	SDL_Texture* graphics = nullptr;
 	SDL_Texture* graphics2 = nullptr;
+	SDL_Texture* currentGraphics = nullptr;
 	uint last_particle = 0;
 
 public:
+	Characters characterType;
 
 	Particle pre_koouKen;
 	Particle koouKen;
-	Particle post_koouKen;
+	Particle post_koouKen;	
+	
+	Particle megaSmash;
+	Particle post_megaSmash;
 
 	Particle starhit;
 	Particle impactfloor;

@@ -17,6 +17,10 @@ enum update_status
 	UPDATE_ERROR
 };
 
+enum Characters {
+	RYO,
+	JOHN
+};
 enum key_state {
 	KEY_IDLE = 1,
 	KEY_UP,

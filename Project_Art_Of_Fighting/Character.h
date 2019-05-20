@@ -24,6 +24,7 @@ public:
 public:
 
 	int player;
+	Characters characterType;
 
 	bool isBlocking = false;
 

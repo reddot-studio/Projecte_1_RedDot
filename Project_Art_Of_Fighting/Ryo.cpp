@@ -4,6 +4,7 @@
 
 Ryo::Ryo(int player)
 {
+	characterType = RYO;
 	this->player = player;
 	specialDmg = 15;
 	//idle animation (arcade sprite sheet)

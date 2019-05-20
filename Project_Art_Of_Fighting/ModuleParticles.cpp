@@ -37,7 +37,9 @@ bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
 
+	
 	graphics = App->textures->Load("Assets/ryo_sprite_sheet.png");
+	graphics2 = App->textures->Load("Assets/john_sprite_sheet.png");
 
 	// Ko'ou Ken particle
 	//Charge energy
@@ -68,7 +70,14 @@ bool ModuleParticles::Start()
 	koouKen.speed = { 10,0 };
 	koouKen.anim.speed = 1.2f;
 
+	//Megasmash
 
+	megaSmash.anim.PushBack({681,139,83,27},0,0,5);
+	megaSmash.anim.PushBack({682,168,78,25},5,1,5);
+	megaSmash.life = 1500;
+	megaSmash.speed ={ 10,0 };
+	megaSmash.anim.speed = 0.5f;
+	
 	//Hitted particle
 	post_koouKen.anim.SetReverseOffset({ 10,-21 }, 2);
 	post_koouKen.anim.PushBack({942,612,30,37},10,-21,2);
@@ -152,13 +161,15 @@ update_status ModuleParticles::Update()
 		else if(SDL_GetTicks() >= p->born)
 		{
 			RectSprites r = p->anim.GetCurrentFrame();
-			if (p->Side == 2) 
+			if (p->Side == 2)
 			{
-			App->render->Blit(graphics, p->position.x +r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
+				App->render->Blit(currentGraphics, p->position.x + r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
 			}
-			else if (p->Side == 1) 
+	
+			else if (p->Side == 1)
 			{
-			App->render->Blit(graphics, p->position.x +r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+				App->render->Blit(currentGraphics, p->position.x + r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+
 			}
 			if(p->fx_played == false)
 			{
@@ -171,8 +182,18 @@ update_status ModuleParticles::Update()
 	return UPDATE_CONTINUE;
 }
 
-Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side)
+Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side, Characters type)
 {
+	switch (type)
+	{
+	case RYO:
+		currentGraphics = graphics;
+		break;
+	case JOHN:
+		currentGraphics = graphics2;
+		break;
+	}
+
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		if (active[i] == nullptr)

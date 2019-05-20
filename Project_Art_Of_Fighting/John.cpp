@@ -3,6 +3,7 @@
 John::John(int player)
 {
 	this->player = player;
+	characterType = JOHN;
 	specialDmg = 15;
 
 	//Rect Colliders
@@ -198,12 +199,12 @@ John::John(int player)
 	kick.speed = 0.7f;
 
 	//KOUKEN
-	koouKen.PushBack({ 366,149,69,98 });
-	koouKen.PushBack({ 435,155,67,92 });
-	koouKen.PushBack({ 502,145,71,101 });
-	koouKen.PushBack({ 573,155,108,92 });
-
-	koouKen.speed = 0.25f;
+	koouKen.PushBack({ 366,149,69,98 },-10,-34,3);
+	koouKen.PushBack({ 435,155,67,92 }, -7, -28, 3);
+	koouKen.PushBack({ 502,145,71,101 }, 2, -37 ,5);
+	koouKen.PushBack({ 573,155,108,92 }, -12, -27, 8);
+	koouKen.loop = false;
+	koouKen.speed = 0.5f;
 
 	//FALL
 	fall.loop = false;
