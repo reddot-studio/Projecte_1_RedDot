@@ -48,12 +48,6 @@ bool ModuleInput::Init()
 	for (int i = 0; i < num; ++i) {
 		if (SDL_IsGameController(i)) {
 			controller[i] = SDL_GameControllerOpen(i);
-			if (controller[i]) {
-				break;
-			}
-			else {
-				SDL_Log("Could not open gamecontroller %i: %s\n", i, SDL_GetError());
-			}
 		}
 	}
 	for (int i = 0; i < 2; i++)
@@ -74,7 +68,7 @@ bool ModuleInput::Init()
 update_status ModuleInput::PreUpdate()
 {
 	if (SDL_NumJoysticks() == 2) {
-		//LOG("2 PADS");
+		LOG("2 PADS");
 	}
 	if (SDL_GameControllerGetAttached(controller[0])) {
 		//LOG("TRUE")
