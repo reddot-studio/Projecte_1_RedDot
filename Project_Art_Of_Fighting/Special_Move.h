@@ -15,6 +15,7 @@ public:
 	inputs InputsToCompleteMovement[20];
 	int MovementLenght;
 	inputs Completed_Input;
+	int Combo_Side;
 
 };
 
