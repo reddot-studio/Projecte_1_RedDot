@@ -146,15 +146,21 @@ John::John(int player)
 	crouch.speed = 0.5f;
 
 	//CROUCH KICK
+	crouch_kick.SetReverseOffset({10, -7}, 2);
 	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
+	crouch_kick.SetReverseOffset({-34, -3}, 5);
 	crouch_kick.PushBack({ 615,39,104,68 },-4,-3,5);
+	crouch_kick.SetReverseOffset({9, -7}, 2);
 	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
 	crouch_kick.loop = false;
 	crouch_kick.speed = 0.35f;
 
 	//CROUCH PUNCH
+	crouch_punch.SetReverseOffset({ 10, -7 }, 2);
 	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	crouch_punch.SetReverseOffset({ -34, -3 }, 5);
 	crouch_punch.PushBack({ 615,39,104,68 }, -4, -3, 5);
+	crouch_punch.SetReverseOffset({ 9, -7 }, 2);
 	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
 	crouch_punch.loop = false;
 	crouch_punch.speed = 0.35f;
