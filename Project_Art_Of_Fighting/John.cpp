@@ -50,12 +50,12 @@ John::John(int player)
 	//IDLE
 	idle.SetReverseOffset({ 0, -39 }, 2);
 	idle.PushBack({ 0, 0, 66, 104 }, 0, -39, 2, rect1, rect2, rect3);
-	idle.SetReverseOffset({ -1, -42 }, 2);
+	idle.SetReverseOffset({ 0, -42 }, 2);
 	idle.PushBack({ 129 , 0, 66, 107 }, 0, -42, 2, rect1, rect2, rect3);
-	//idle.SetReverseOffset({ 1, -41 }, 2);
-	//idle.PushBack({ 66, 0, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
+	idle.SetReverseOffset({ 3, -41 }, 2);
+	idle.PushBack({ 66, 0, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
 
-	idle.speed = 0.05f;
+	idle.speed = 0.26f;
 
 	//WALK FORWARD
 	forward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
