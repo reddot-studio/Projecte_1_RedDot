@@ -57,6 +57,8 @@ enum player_state
 	ST_CROUCH_BLOCK,
 	ST_STANDING_BLOCKED,
 	ST_STRONG_ATTACK,
+	ST_WIN,
+	ST_DEFEAT,
 };
 
 //Inputs
@@ -84,6 +86,8 @@ enum inputs
 	IN_BLOCKED,
 	IN_EMPTY,
 	IN_STRONG_ATTACK,
+	IN_WIN,
+	IN_DEFEAT
 };
 
 // Useful typedefs ---------

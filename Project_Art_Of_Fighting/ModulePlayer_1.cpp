@@ -163,6 +163,12 @@ if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
 	case IN_KICK: last_input = IN_STRONG_ATTACK; break;
 	}
 }
+//win try
+if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN) last_input = IN_WIN;
+
+//defeat try
+
+if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DEFEAT;
 
 
 //Check duration of animation and reset state when it finishes
@@ -549,6 +555,8 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_STRONG_ATTACK: state = ST_STRONG_ATTACK; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -785,6 +793,21 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_CROUCH; break;
 		}
 		break;
+
+	case ST_WIN:
+		switch (last_input)
+		{
+		case IN_KICK: state = ST_IDLE; break;
+		}
+		break;
+
+	case ST_DEFEAT:
+	{
+		switch (last_input)
+		{
+		case IN_KICK:state = ST_IDLE; break;
+		}
+	}
 	}
 
 	last_input = IN_UNKNOWN;
@@ -1078,8 +1101,18 @@ void ModulePlayer_1::states(int speed)
 			App->particles->DeleteLastParticle(currentParticle);
 
 		}
-		//LOG("DAMAGE");
 		break;
+	case ST_WIN:
+		if (current_animation!=&character->win) {
+			character->win.ResetCurrentFrame();
+			current_animation = &character->win;
+		}
+		break;
+	case ST_DEFEAT:
+		if (current_animation != &character->defeat) {
+			character->defeat.ResetCurrentFrame();
+			current_animation = &character->defeat;
+		}break;
 	}
 	current_state = state;
 
