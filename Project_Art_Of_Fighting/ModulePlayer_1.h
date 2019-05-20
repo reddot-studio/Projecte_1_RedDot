@@ -44,7 +44,7 @@ public:
 	player_state current_state = ST_UNKNOWN;
 
 	inputs last_input = IN_UNKNOWN;
-	inputs last_input_attack = IN_PUNCH;
+	inputs last_input_attack = IN_KICK;
 
 	bool isDamaged = false;
 

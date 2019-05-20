@@ -48,14 +48,14 @@ John::John(int player)
 	SDL_Rect hit_kick_collider = { 5,-45,60,40 };
 
 	//IDLE
-	idle.SetReverseOffset({ -27,-43 }, 2);
+	idle.SetReverseOffset({ 0, -39 }, 2);
 	idle.PushBack({ 0, 0, 66, 104 }, 0, -39, 2, rect1, rect2, rect3);
-	idle.SetReverseOffset({ -30,-43 }, 2);
+	idle.SetReverseOffset({ -1, -42 }, 2);
 	idle.PushBack({ 129 , 0, 66, 107 }, 0, -42, 2, rect1, rect2, rect3);
-	idle.SetReverseOffset({ -28,-43 }, 2);
-	idle.PushBack({ 66, 0, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
+	//idle.SetReverseOffset({ 1, -41 }, 2);
+	//idle.PushBack({ 66, 0, 63, 106 }, 0, -41, 2, rect1, rect2, rect3);
 
-	idle.speed = 0.26f;
+	idle.speed = 0.05f;
 
 	//WALK FORWARD
 	forward.PushBack({ 435, 259, 67, 104 }, 0, -39, 5, rect1, rect2, rect3);
@@ -194,21 +194,23 @@ John::John(int player)
 	jumppunch.loop = false;
 
 	//PUNCH + C
-	c_punch.PushBack({ 326,374,51,119 });
-	c_punch.PushBack({ 380,375,58,117 });
-	c_punch.PushBack({ 442,376,55,117 });
-	c_punch.PushBack({ 503,377,111,116 });
-	c_punch.PushBack({ 615,376,67,120 });
+	c_punch.PushBack({ 326,374,51,119 },5,-53,3);
+	c_punch.PushBack({ 380,375,58,117 },-10, -53, 3);
+	c_punch.PushBack({ 442,376,55,117 },-10, -53, 3);
+	c_punch.PushBack({ 503,377,111,116 },-10, -52, 3);
+	c_punch.PushBack({ 615,376,67,120 },-10, -53, 3);
 	c_punch.loop = false;
-	c_punch.speed = 0.5f;
+	c_punch.speed = 0.3f;
 
 
 	//KICK + C
-	c_kick.PushBack({ 195,3,66,104 });
-	c_kick.PushBack({ 137,370,74,123 });
-	c_kick.PushBack({ 213,376,111,117 });
-	c_kick.PushBack({ 137,370,74,123 });
-	c_kick.PushBack({ 195,3,66,104 });
+	c_kick.PushBack({ 195,3,66,104 }, 0, -39, 3);
+	c_kick.PushBack({ 137,370,74,123 }, -40, -58, 3);
+	c_kick.PushBack({ 213,376,111,117 }, -34, -52, 3);
+	c_kick.PushBack({ 137,370,74,123 }, -40, -58, 3);
+	c_kick.PushBack({ 195,3,66,104 }, 0, -39, 3);
+	c_kick.loop = false;
+	c_kick.speed = 0.3f;
 
 	//Combos
 	for (int i = 0; i < 30; i++)
@@ -230,7 +232,7 @@ bool John::Start()
 	}
 	else if (player == 2) {
 		if (graphics == nullptr)
-			graphics = App->textures->Load("Assets/ryo_sprite_sheet_2.png");
+			graphics = App->textures->Load("Assets/john_sprite_sheet_2.png");
 	}
 	if (punchfx == nullptr)
 		punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");

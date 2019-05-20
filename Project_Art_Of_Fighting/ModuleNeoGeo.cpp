@@ -71,7 +71,7 @@ update_status ModuleNeoGeo::Update() {
 	if (App->input->keyboard_state[SDL_SCANCODE_P] == KEY_DOWN) {
 		
 		App->player1->character = new John(1);
-		App->player2->character = new John(1);
+		App->player2->character = new John(2);
 		App->fade->FadeToBlack(App->neogeo, App->scene_john);
 	}
 	return update_status::UPDATE_CONTINUE;

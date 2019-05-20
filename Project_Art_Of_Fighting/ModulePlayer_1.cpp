@@ -144,10 +144,10 @@ if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 }
 
 //Punch weak
-if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN)	last_input = IN_PUNCH;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN)	last_input_attack = last_input = IN_PUNCH;
 
 //kick weak
-if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input = IN_KICK;
+if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input_attack= last_input = IN_KICK;
 
 //Ko'ou Ken
 if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU_KEN;
