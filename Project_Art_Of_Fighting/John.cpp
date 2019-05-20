@@ -216,11 +216,14 @@ John::John(int player)
 	//Falten frames//
 
 	//JUMP + PUNCH
+	jumppunch.SetReverseOffset({5, -55}, 2);
 	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
+	jumppunch.SetReverseOffset({5, -55}, 8);
 	jumppunch.PushBack({ 66,370,71,123 },5,-55,8);
+	jumppunch.SetReverseOffset({5, -55}, 2);
 	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
-
 	jumppunch.speed = 0.5f;
+	//jumppunch.speed = 0.01f;
 	jumppunch.loop = false;
 
 	//PUNCH + C
