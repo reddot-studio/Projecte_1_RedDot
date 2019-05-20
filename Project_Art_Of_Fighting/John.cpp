@@ -85,55 +85,55 @@ John::John(int player)
 
 	//JUMP
 	jump.loop = false;
-	jump.SetReverseOffset({ -23, -18 }, 4);
+	jump.SetReverseOffset({ -0, -39 }, 3);
 	jump.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
-	jump.SetReverseOffset({ -23, -65 }, 5);
+	jump.SetReverseOffset({ 9, -48 }, 11);
 	jump.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 0,-7 });
-	jump.SetReverseOffset({ -23, -65 }, 5);
+	jump.SetReverseOffset({ 9, -48 }, 3);
 	jump.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 0,-3 });
-	jump.SetReverseOffset({ -23, -58 }, 7);
+	jump.SetReverseOffset({ 0, -35 }, 8);
 	jump.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {});
-	jump.SetReverseOffset({ -23, -58 }, 7);
+	jump.SetReverseOffset({ 0, -35 }, 7);
 	jump.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 0,1 });
-	jump.SetReverseOffset({ -20, -58 }, 10);
+	jump.SetReverseOffset({ 9, -48 }, 14);
 	jump.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
 	jump.speed = 0.9f;
 	
 	//Forward JUMP
 	jump_forward.loop = false;
-	jump_forward.SetReverseOffset({ -23, -18 }, 4);
+	jump_forward.SetReverseOffset({ 0, -39 }, 3);
 	jump_forward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
-	jump_forward.SetReverseOffset({ -23, -65 }, 5);
+	jump_forward.SetReverseOffset({ 9, -48 }, 11);
 	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 3,-7 });
-	jump_forward.SetReverseOffset({ -23, -65 }, 5);
+	jump_forward.SetReverseOffset({ 9, -48 }, 3);
 	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 3,-3 });
-	jump_forward.SetReverseOffset({ -23, -58 }, 7);
+	jump_forward.SetReverseOffset({ 0, -35 }, 8);
 	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { 3,0 });
-	jump_forward.SetReverseOffset({ -23, -58 }, 7);
+	jump_forward.SetReverseOffset({ 0, -35 }, 7);
 	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 3,1 });
-	jump_forward.SetReverseOffset({ -20, -58 }, 10);
+	jump_forward.SetReverseOffset({ 9, -48 }, 14);
 	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 3,6 });
 	jump_forward.speed = 0.9f;	
 
 	//Backward JUMP
 	jump_backward.loop = false;
-	jump_backward.SetReverseOffset({ -23, -18 }, 4);
+	jump_backward.SetReverseOffset({ 0, -39 }, 3);
 	jump_backward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
-	jump_backward.SetReverseOffset({ -23, -65 }, 5);
+	jump_backward.SetReverseOffset({ 9, -48 }, 11);
 	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { -3,-7 });
-	jump_backward.SetReverseOffset({ -23, -65 }, 5);
+	jump_backward.SetReverseOffset({ 9, -48 }, 3);
 	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { -3,-3 });
-	jump_backward.SetReverseOffset({ -23, -58 }, 7);
+	jump_backward.SetReverseOffset({ 0, -35 }, 8);
 	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { -3,0 });
-	jump_backward.SetReverseOffset({ -23, -58 }, 7);
+	jump_backward.SetReverseOffset({ 0, -35 }, 7);
 	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { -3,1 });
-	jump_backward.SetReverseOffset({ -20, -58 }, 10);
+	jump_backward.SetReverseOffset({ 9, -48 }, 14);
 	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { -3,6 });
 	jump_backward.speed = 0.9f;
 
 	//Recover
 	recover.loop = false;
-	recover.SetReverseOffset({ -20, -58 }, 9);
+	recover.SetReverseOffset({ 0, -39 }, 3);
 	recover.PushBack({ 195,3,66,104 }, 0, -39, 3);
 	recover.speed = 0.5f;
 
@@ -187,7 +187,7 @@ John::John(int player)
 
 	//FALL
 	fall.loop = false;
-	fall.SetReverseOffset({ -20, -58 }, 14);
+	fall.SetReverseOffset({ 9, -48 }, 14);
 	fall.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
 	fall.speed = 0.5f;
 
