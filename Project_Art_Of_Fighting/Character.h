@@ -30,7 +30,7 @@ public:
 	//Special Move Settings
 	int SpecialLenght = 0;
 	Special_Move *PlayerSpecialMoves[20];
-	void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...);
+	virtual void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...);
 	inputs Input_Queue[30];
 	inputs *FirstInQueue = nullptr;
 	inputs *LastInQueue = nullptr;
