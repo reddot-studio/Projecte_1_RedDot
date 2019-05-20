@@ -39,12 +39,13 @@ ModulePlayer_1::~ModulePlayer_1()
 bool ModulePlayer_1::Start()
 {
 	slowdownDuration = 10;
-
-	if (App->character_selection->SELECTOR_1 == 1) {
-		App->player1->character = new Ryo(1);
-	}
-	else if (App->character_selection->SELECTOR_1 == 2) {
-		App->player1->character = new John(1);
+	if (App->character_selection->IsEnabled()) {
+		if (App->character_selection->SELECTOR_1 == 1) {
+			App->player1->character = new Ryo(1);
+		}
+		else if (App->character_selection->SELECTOR_1 == 2) {
+			App->player1->character = new John(1);
+		}
 	}
 
 

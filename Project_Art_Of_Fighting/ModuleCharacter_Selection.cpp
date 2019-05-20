@@ -56,6 +56,15 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	not_available.rect.y = 225;
 	not_available.rect.w = 112;
 	not_available.rect.h = 56;
+
+
+	int x = 0, y = 281, w = 32, h = 50;
+	for (int i=0; i <= 15; i++) {
+		vs.PushBack({ x,y,w,h });
+		y += 50;
+	}
+	vs.loop = false;
+	vs.speed = 0.2f;
 }
 ModuleScreenSelection::~ModuleScreenSelection() {
 
@@ -88,7 +97,7 @@ update_status ModuleScreenSelection::Update() {
 		timer();
 	}
 	else {
-
+		App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 16, (SCREEN_HEIGHT / 2) - 25, &vs.GetCurrentFrame());
 	}
 
 	return UPDATE_CONTINUE;
@@ -156,8 +165,8 @@ void ModuleScreenSelection::draw() {
 void ModuleScreenSelection::choose() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		//selected = true;
-		App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
+		selected = true;
+		//App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
 
 	//RYO

@@ -32,6 +32,7 @@ public:
 	RectSprites name1;
 	RectSprites name2;
 	RectSprites not_available;
+	Animation vs;
 
 	SDL_Renderer* background;
 	SDL_Texture* graphics;

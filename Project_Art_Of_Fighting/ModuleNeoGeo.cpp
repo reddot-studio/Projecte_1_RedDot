@@ -1,4 +1,7 @@
 #include "ModuleNeoGeo.h"
+#include "ModulePlayer_1.h"
+#include "ModulePlayer_2.h"
+#include "John.h"
 
 
 ModuleNeoGeo::ModuleNeoGeo() {
@@ -25,6 +28,7 @@ ModuleNeoGeo::~ModuleNeoGeo() {
 }
 
 bool ModuleNeoGeo::Init() {
+	App->character_selection->Disable();
 	App->debug->Disable();
 	App->scene_john->Disable();
 	App->scene_todo->Disable();
@@ -63,6 +67,12 @@ update_status ModuleNeoGeo::Update() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->neogeo, App->scene_welcome);
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_P] == KEY_DOWN) {
+		
+		App->player1->character = new John(1);
+		App->player2->character = new John(1);
+		App->fade->FadeToBlack(App->neogeo, App->scene_john);
 	}
 	return update_status::UPDATE_CONTINUE;
 }
