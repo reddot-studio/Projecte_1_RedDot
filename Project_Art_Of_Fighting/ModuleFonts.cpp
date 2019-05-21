@@ -100,7 +100,7 @@ void ModuleFonts::BlitText(int x, int y, int font_id, const char* text, int spac
 				rect.rect.x = j * font->char_w;
 				rect.rect.y = 0;
 				if (font_id == 0 && j == 36) { y -= 2; }
-				App->render->Blit(font->graphic, x, y, &rect, 0);
+				App->render->Blit(font->graphic, x, y, &rect, 0,1,false);
 				y = y2;
 				x += font->char_w + space;
 				break;
