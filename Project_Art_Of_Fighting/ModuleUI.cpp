@@ -92,7 +92,7 @@ update_status ModuleUI::Update()
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
 		if (timer > 0 && App->player1->win_check==false && App->player2->win_check == false)
 		{
-			timer_float = 60000 - (tick2 - tick3);
+			timer_float = 6000000 - (tick2 - tick3);
 			timer = timer_float / 1000;
 		}
 		else
