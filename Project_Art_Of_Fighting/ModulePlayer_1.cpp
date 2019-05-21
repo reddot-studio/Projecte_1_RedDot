@@ -82,6 +82,15 @@ update_status ModulePlayer_1::Update()
 
 	//Player1 Input
 	states(speed);
+
+	//TESTING
+	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
+		App->render->isZoomed = true;
+	}
+	else {
+		App->render->isZoomed = false;
+	}
+
 //Move right
 
 		if (App->input->GetHorizontalAxis() > App->input->deathZone) {
@@ -350,7 +359,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 	}
 	else if (Side == 1)
 	{
-		App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+		App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side,true);
 
 	}
 

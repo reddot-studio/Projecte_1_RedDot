@@ -238,20 +238,20 @@ John::John(int player)
 
 
 	//KICK + C
-	c_kick.PushBack({ 195,3,66,104 }, 0, -39, 3);
-	c_kick.PushBack({ 137,370,74,123 }, -40, -58, 3);
-	c_kick.PushBack({ 213,376,111,117 }, -34, -52, 3);
-	c_kick.PushBack({ 137,370,74,123 }, -40, -58, 3);
-	c_kick.PushBack({ 195,3,66,104 }, 0, -39, 3);
+	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2);
+	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2);
+	c_kick.PushBack({ 212,388,103,108  }, -2, -43, 5);
+	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2);
+	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2);
 	c_kick.loop = false;
-	c_kick.speed = 0.3f;
+	c_kick.speed = 0.5f;
 
 	 //WIN
-	win.PushBack({ 419,760,94,145 }, 0, 0, 3);
-	win.PushBack({ 513,760,91,147 }, 0, 0, 3);
-	win.PushBack({ 603,760,84, 149 }, 0, 0, 3);
-	win.PushBack({ 687,760,102 ,151 }, 0, 0, 3);
-
+	win.PushBack({ 419,752,85,129 }, 0, -60, 2);
+	win.PushBack({ 508,752,79,129 }, 0, -60, 2);
+	win.PushBack({ 591,752,71, 129 }, 0, -60, 5);
+	win.PushBack({ 666,752,87 ,129 }, 0, -60, 30);
+	win.speed = 0.3f;
 
 	//Combos
 	for (int i = 0; i < 30; i++)
