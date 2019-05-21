@@ -251,7 +251,17 @@ John::John(int player)
 	win.PushBack({ 508,752,79,129 }, 0, -60, 2);
 	win.PushBack({ 591,752,71, 129 }, 0, -60, 5);
 	win.PushBack({ 666,752,87 ,129 }, 0, -60, 30);
-	win.speed = 0.3f;
+	win.speed = 0.05f;
+	win.loop = false;
+
+
+	//damage
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 236,261,58,107 },0 ,0 ,2 );
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 299,261,59,107 },0, 0 , 2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,0 ,2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
+	
 
 	//Combos
 	for (int i = 0; i < 30; i++)
