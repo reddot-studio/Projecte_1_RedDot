@@ -55,6 +55,9 @@ public:
 	char time_char[10];
 	int time_int;
 	bool no_zero;
+
+	int x_image1 = -140, x_image2 = SCREEN_WIDTH + 10;
+	int x_name1 = -140, x_name2 = SCREEN_WIDTH + 10;
 };
 
 #endif // !_MODULECHARACTERSELECTION_
