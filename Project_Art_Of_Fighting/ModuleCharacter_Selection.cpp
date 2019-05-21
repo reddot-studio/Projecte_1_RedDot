@@ -58,13 +58,14 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	not_available.rect.h = 56;
 
 
-	int x = 0, y = 281, w = 32, h = 50;
+	int x = 0, y = 281, w = 50, h = 32;
 	for (int i=0; i <= 15; i++) {
 		vs.PushBack({ x,y,w,h });
-		y += 50;
+		y += 32;
 	}
+	vs_final.PushBack({ 0,729,w,h });
 	vs.loop = false;
-	vs.speed = 0.2f;
+	vs.speed = 0.3f;
 }
 ModuleScreenSelection::~ModuleScreenSelection() {
 
@@ -98,6 +99,12 @@ update_status ModuleScreenSelection::Update() {
 	}
 	else {
 		App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 16, (SCREEN_HEIGHT / 2) - 25, &vs.GetCurrentFrame());
+		if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
+			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 16, (SCREEN_HEIGHT / 2) - 25, &vs_final.GetCurrentFrame());
+		}
+		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+			App->fade->FadeToBlack(App->character_selection, App->scene_john);
+		}
 	}
 
 	return UPDATE_CONTINUE;
