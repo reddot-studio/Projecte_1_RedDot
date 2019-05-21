@@ -81,7 +81,7 @@ update_status ModuleUI::Update()
 	if (tick2 - tick1 <= 4000)
 	{
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
-		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
+		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0,1,false);
 		App->fonts->BlitText(SCREEN_WIDTH / 2 - 13, 10, 4, "60", 2);
 		tick3 = SDL_GetTicks();
 	}
@@ -89,7 +89,7 @@ update_status ModuleUI::Update()
 	{
 
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
-		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0);
+		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0,1,false);
 		if (timer > 0 && App->player1->win_check==false && App->player2->win_check == false)
 		{
 			timer_float = 60000 - (tick2 - tick3);
@@ -124,21 +124,21 @@ update_status ModuleUI::Update()
 	//Player 1 Health
 	//Render order is really important
 	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health_BG_Empty, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player2->Player_Health_BG_Empty, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 	RendPosition = { { 0, 0, App->player2->Player_Health_Value_p2, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player2->Player_Health, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_Health_BG, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player2->Player_Health_BG, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 
 
 
 	//Player 2 Health BackGround
 	RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health_BG_Empty, (SCREEN_WIDTH / 2) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player1->Player_Health_BG_Empty, (SCREEN_WIDTH / 2) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 	RendPosition = { { 0, 0, App->player1->Player_Health_Value_p1, 6 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health, (SCREEN_WIDTH / 2 ) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player1->Player_Health, (SCREEN_WIDTH / 2 ) + 17, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0);
+	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 
 
 	//WinPoints

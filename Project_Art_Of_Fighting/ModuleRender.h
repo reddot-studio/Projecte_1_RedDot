@@ -22,8 +22,10 @@ public:
 
 	void StartCameraShake(int duration, float magnitude);
 	void UpdateCameraShake();
+	void ZoomIn();
+	void ZoomOut();
 
-	bool Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed = 1.0f, int FacingPosition = 1);
+	bool Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed = 1.0f, int FacingPosition = 1, bool zoom = true);
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a,bool use_camera = true, float speed = 1.0f);
 
 public:
@@ -34,6 +36,10 @@ public:
 
 	Collider* CameraLimitL;
 	Collider* CameraLimitR;
+
+	bool isZoomed = false;
+	float zoomValue = 1.0f;
+	float zoomIntensity = 1.0f;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake

@@ -99,6 +99,13 @@ update_status ModuleRender::Update()
 
 	}
 
+	if (isZoomed) {
+		ZoomIn();
+	}
+	else if(!isZoomed){
+		ZoomOut();
+	}
+
 	if (shaking)
 		UpdateCameraShake();
 
@@ -132,13 +139,20 @@ bool ModuleRender::CleanUp()
 }
 
 // Blit to screen
-bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed, int FacingPosition)
+bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed, int FacingPosition, bool zoom)
 {
 	SDL_RendererFlip facingPos;
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int)((camera.x + camera_offset.x) * speed) + x  * SCREEN_SIZE;
-	rect.y = (int)((camera.y + camera_offset.y) * speed) + y  * SCREEN_SIZE;
+
+	if (zoom && isZoomed) {
+		zoomIntensity = zoomValue;
+	}
+	else { ZoomOut();
+	zoomIntensity = 1.0f;
+	}
+	rect.x = (int)((camera.x + camera_offset.x) * speed) + x  * SCREEN_SIZE * zoomIntensity;
+	rect.y = (int)((camera.y + camera_offset.y) * speed) + y  * SCREEN_SIZE * zoomIntensity;
 
 	if(section != NULL)
 	{
@@ -150,8 +164,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
 	}
 
-	rect.w *= SCREEN_SIZE;
-	rect.h *= SCREEN_SIZE;
+	rect.w *= SCREEN_SIZE * zoomIntensity;
+	rect.h *= SCREEN_SIZE * zoomIntensity;
 
 	switch (FacingPosition)
 	{
@@ -225,5 +239,30 @@ void ModuleRender::UpdateCameraShake()
 		shaking = false;
 	}
 
+}
+
+void ModuleRender::ZoomIn()
+{
+	if (isZoomed) {
+		if (zoomValue < 1.3f) {
+			zoomValue += 0.01f;
+
+		}
+		if (camera.y > -200) {
+			camera.y -= 5;
+		}
+	}
+}
+
+void ModuleRender::ZoomOut()
+{
+	if (!isZoomed) {
+		if (zoomValue > 1.0f) {
+			zoomValue -= 0.05f;
+		}
+		else if (camera.y < 0) {
+			camera.y += 10;
+		}
+	}
 }
 
