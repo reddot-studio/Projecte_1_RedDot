@@ -97,12 +97,13 @@ update_status ModuleScreenSelection::Update() {
 		move();
 		timer();
 	}
-	else {
+	else { //Quan clicas intro
 		//VS//
 		App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs.GetCurrentFrame());
 		if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
 			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs_final.GetCurrentFrame());
 		}
+
 		//character image animation
 		if (SELECTOR_1 == 1) {
 			if (x_image1 == 20) {
@@ -118,6 +119,23 @@ update_status ModuleScreenSelection::Update() {
 			else {
 				x_name1 += 10;
 				App->render->Blit(graphics, x_name1, 145, &name2);
+			}
+		}
+
+		if (SELECTOR_1 == 2) {
+			if (x_image1 == 20) {
+				App->render->Blit(graphics, x_image1, 15, &imageSelection2, 1, 1);
+			}
+			else {
+				x_image1 += 10;
+				App->render->Blit(graphics, x_image1, 15, &imageSelection2, 1, 1);
+			}
+			if (x_name1 >= 58) {
+				App->render->Blit(graphics, x_name1-5, 145, &name1);
+			}
+			else {
+				x_name1 += 10;
+				App->render->Blit(graphics, x_name1-5, 145, &name1);
 			}
 		}
 		
@@ -138,6 +156,24 @@ update_status ModuleScreenSelection::Update() {
 				App->render->Blit(graphics, x_name2, 145, &name1);
 			}
 		}
+
+		if (SELECTOR_2 == 1) {
+			if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
+				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
+			}
+			else {
+				x_image2 -= 10;
+				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
+			}
+
+			if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
+				App->render->Blit(graphics, x_name2+7, 145, &name2);
+			}
+			else {
+				x_name2 -= 10;
+				App->render->Blit(graphics, x_name2+7, 145, &name2);
+			}
+		}
 		
 
 
@@ -145,7 +181,7 @@ update_status ModuleScreenSelection::Update() {
 		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
 			App->fade->FadeToBlack(App->character_selection, App->scene_john);
 		}
-	}
+	} 
 
 	return UPDATE_CONTINUE;
 }
