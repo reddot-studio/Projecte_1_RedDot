@@ -130,10 +130,10 @@ update_status ModuleScreenSelection::Update() {
 				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
 			}
 
-			if (x_name2 >= ((SCREEN_WIDTH / 2) + 85)) {
+			if (x_image2<=(SCREEN_WIDTH/2)+70) {
 				App->render->Blit(graphics, x_name2, 145, &name1); 
 			}
-			else {                                                                   //[BUG] No entra
+			else {                                                                   
 				x_name2 -= 10;
 				App->render->Blit(graphics, x_name2, 145, &name1);
 			}
