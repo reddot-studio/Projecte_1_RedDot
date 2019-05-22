@@ -216,10 +216,27 @@ John::John(int player)
 	fall.PushBack({ 261,0,48,118 }, 9, -48, 14, head_jump_collider,body_jump_collider, legs_jump_collider, {}, { 0,6 });
 	fall.speed = 0.5f;
 
+	//TAUNT
+	taunt.PushBack({ 0,496,110,96 }, -7, -28, 3, rect1, rect2 , rect3);
+	taunt.PushBack({ 111,496,105,96 }, -7, -28, 3, rect1, rect2, rect3);
+	taunt.PushBack({ 218,496,107,96 }, -7, -28, 3, rect1, rect2, rect3);
+	taunt.speed = 0.5f;
+	taunt.loop = false; 
+	
+
 	//JUMP + KICK
+	jumpkick.SetReverseOffset({ 5, -55 }, 2);
+	jumpkick.PushBack({ 10,371,56,113 }, 5, -55, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.SetReverseOffset({ 5, -55 }, 8); 
+	jumpkick.PushBack({ 0,247,109,112 }, 5, -55, 8, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.SetReverseOffset({ 5, -55 }, 2);
+	jumpkick.PushBack({ 116,249,91,121 }, 5, -55, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.speed = 0.5f;
+	jumpkick.loop = false;
+
 
 	//Falten frames//
-
+	   
 	//JUMP + PUNCH
 	jumppunch.SetReverseOffset({5, -55}, 2);
 	jumppunch.PushBack({ 10,371,56,113 },5,-55,2,head_jumppunch_collider,body_jumppunch_collider,legs_jumppunch_collider);
@@ -228,27 +245,38 @@ John::John(int player)
 	jumppunch.SetReverseOffset({5, -55}, 2);
 	jumppunch.PushBack({ 10,371,56,113 },5,-55,2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
-	//jumppunch.speed = 0.01f;
 	jumppunch.loop = false;
 
 	//PUNCH + C
-	c_punch.PushBack({ 326,374,51,119 },5,-53,3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 380,375,58,117 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 442,376,55,117 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 503,377,111,116 },-10, -52, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 615,376,67,120 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 320,382,48,109 },5,-42,3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 376,382,55,109 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 434,382,52,110 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 495 ,382,105,108 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 605,382,63,110 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
 	c_punch.loop = false;
-	c_punch.speed = 0.3f;
+	c_punch.speed = 0.05f;
 
 
 	//KICK + C
-	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
-	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
-	c_kick.PushBack({ 212,388,103,108  }, -2, -43, 5, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
-	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 825,261,67,110 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 213,382,102,107  }, -2, -43, 5, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_kick.PushBack({ 140,382,67,110 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
 	c_kick.loop = false;
 	c_kick.speed = 0.5f;
+
+	//THROWN
+
+	thrown.PushBack({ 556,610,71,107 }, 0, 0, 3);
+	thrown.PushBack({ 635,610,102,86 }, 0, 0, 3);
+	thrown.PushBack({ 743,610,120,43 }, 0, 0, 3);
+	thrown.PushBack({ 905,610,56,106 }, 0, 0, 3);
+	thrown.PushBack({ 0,772,67,109 }, 0, 0, 3);
+	thrown.PushBack({ 84,772,72,109 }, 0, 0, 3);
+	thrown.PushBack({ 178,820,121,74 }, 0, 0, 3);
+	thrown.PushBack({ 187,772,122,45 }, 0, 0, 3);
+	thrown.speed = 0.5f;
+	thrown.loop = false; 
 
 	 //WIN
 	win.PushBack({ 419,752,85,129 }, 0, -60, 2);

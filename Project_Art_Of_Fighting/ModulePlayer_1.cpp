@@ -49,7 +49,7 @@ bool ModulePlayer_1::Start()
 	}
 
 
-
+ 
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 30;

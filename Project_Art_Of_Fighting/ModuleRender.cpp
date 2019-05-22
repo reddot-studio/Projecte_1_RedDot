@@ -89,7 +89,6 @@ update_status ModuleRender::Update()
 	//Zoom Behav
 	if (App->player1->IsEnabled()) {
 		int distance = App->player2->GetPosition().x - App->player1->GetPosition().x;
-		SDL_Log("%i", distance);
 		if (distance < 150) {
 			isZoomed = true;
 		}
@@ -113,13 +112,6 @@ update_status ModuleRender::Update()
 			camera.x -= speed;
 
 	}
-
-	//if (isZoomed) {
-	//	ZoomIn();
-	//}
-	//else if(!isZoomed){
-	//	ZoomOut();
-	//}
 
 	if (shaking)
 		UpdateCameraShake();
@@ -283,7 +275,6 @@ void ModuleRender::ZoomIn()
 				}
 			}
 		}
-		SDL_Log("%0.2f", timer);
 	}
 	
 }
