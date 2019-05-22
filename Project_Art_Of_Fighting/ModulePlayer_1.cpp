@@ -39,14 +39,14 @@ ModulePlayer_1::~ModulePlayer_1()
 bool ModulePlayer_1::Start()
 {
 	slowdownDuration = 10;
-	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
+	if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_1 == 1) {
 			App->player1->character = new Ryo(1);
 		}
 		else if (App->character_selection->SELECTOR_1 == 2) {
 			App->player1->character = new John(1);
 		}
-	//}
+	}
 
 
 
@@ -86,6 +86,7 @@ update_status ModulePlayer_1::Update()
 	//TESTING
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
 		App->render->isZoomed = true;
+		App->render->Timer = SDL_GetTicks();
 	}
 	else {
 		App->render->isZoomed = false;

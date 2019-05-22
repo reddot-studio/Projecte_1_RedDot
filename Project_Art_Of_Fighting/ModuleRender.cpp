@@ -99,12 +99,12 @@ update_status ModuleRender::Update()
 
 	}
 
-	if (isZoomed) {
-		ZoomIn();
-	}
-	else if(!isZoomed){
-		ZoomOut();
-	}
+	//if (isZoomed) {
+	//	ZoomIn();
+	//}
+	//else if(!isZoomed){
+	//	ZoomOut();
+	//}
 
 	if (shaking)
 		UpdateCameraShake();
@@ -145,11 +145,20 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 	bool ret = true;
 	SDL_Rect rect;
 
-	if (zoom && isZoomed) {
-		zoomIntensity = zoomValue;
+	if (zoom) {
+		if (isZoomed) {
+			ZoomIn();
+		}
+
+		else if (!isZoomed) {
+			ZoomOut();
+		}
 	}
-	else { ZoomOut();
-	zoomIntensity = 1.0f;
+	if (!zoom) {
+		zoomIntensity = 1.0f;
+	}
+	else {
+		zoomIntensity = zoomValue;
 	}
 	rect.x = (int)((camera.x + camera_offset.x) * speed) + x  * SCREEN_SIZE * zoomIntensity;
 	rect.y = (int)((camera.y + camera_offset.y) * speed) + y  * SCREEN_SIZE * zoomIntensity;
@@ -243,26 +252,42 @@ void ModuleRender::UpdateCameraShake()
 
 void ModuleRender::ZoomIn()
 {
-	if (isZoomed) {
-		if (zoomValue < 1.3f) {
-			zoomValue += 0.01f;
+	if (isZoomed) 
+	{
+		if (zoomValue < 1.3f) 
+		{
+			zoomValue += 0.001f;
 
 		}
-		if (camera.y > -200) {
-			camera.y -= 5;
+		if (camera.y > -200) 
+		{
+			int ticks = SDL_GetTicks();
+			if (ticks - Timer > 5000) 
+			{
+				camera.y -= 5;
+				//Timer = SDL_GetTicks();
+			}
+
+			//currentTime += timerSpeed;
+			//camera.y -= (int)currentTime;
 		}
 	}
+	
 }
 
 void ModuleRender::ZoomOut()
 {
+	timerSpeed = 0.0001f;
 	if (!isZoomed) {
 		if (zoomValue > 1.0f) {
-			zoomValue -= 0.05f;
+			zoomValue -= 0.001f;
 		}
 		else if (camera.y < 0) {
-			camera.y += 10;
+			currentTime += timerSpeed;
+			camera.y += (int)currentTime;
+			SDL_Log("%i", camera.y);
 		}
 	}
 }
+
 

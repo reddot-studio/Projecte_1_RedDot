@@ -25,6 +25,11 @@ public:
 	void ZoomIn();
 	void ZoomOut();
 
+	int IncreaseTimer(float speed);
+	float currentTime =  0.0f;
+	float timerSpeed  = 0.001f;
+	int Timer;
+
 	bool Blit(SDL_Texture* texture, int x, int y, RectSprites* section, float speed = 1.0f, int FacingPosition = 1, bool zoom = true);
 	bool DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a,bool use_camera = true, float speed = 1.0f);
 
