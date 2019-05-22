@@ -52,7 +52,7 @@ bool ModulePlayer_1::Start()
 
 	character->Start();
 	current_animation = &character->idle;
-	pivot_player.x = 90;
+	pivot_player.x = 30;
 	pivot_player.y = 150;
 	Player_Health_Value_p1 = 126;
 	LOG("Loading player textures");
@@ -83,14 +83,6 @@ update_status ModulePlayer_1::Update()
 	//Player1 Input
 	states(speed);
 
-	//TESTING
-	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_REPEAT) {
-		App->render->isZoomed = true;
-		App->render->Timer = SDL_GetTicks();
-	}
-	else {
-		App->render->isZoomed = false;
-	}
 
 //Move right
 
@@ -367,19 +359,18 @@ if (current_state == ST_STANDING_BLOCKED) {
 
 	if (isJumping)
 	{
-
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 45);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y - 45);
 
 	}
 	else if (current_state == ST_CROUCH || current_state == ST_CROUCH_PUNCH || current_state == ST_CROUCH_KICK)
 	{
 		player_collider->rect.h = 65;
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y);
 	}
 	else
 	{
 		player_collider->rect.h = 90;
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 25);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y - 25);
 	}
 
 	for (int i = 0; i < 3; i++)

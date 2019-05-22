@@ -19,6 +19,9 @@ ModuleRender::ModuleRender() : Module()
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
 
+	timer = 0.0f;
+	timerSpeed = 0.2f;
+
 	camera_offset.x = camera_offset.y = 0;
 
 	CameraLimitL = nullptr;
@@ -82,6 +85,18 @@ update_status ModuleRender::PreUpdate()
 
 update_status ModuleRender::Update()	
 {
+
+	//Zoom Behav
+	if (App->player1->IsEnabled()) {
+		int distance = App->player2->GetPosition().x - App->player1->GetPosition().x;
+		SDL_Log("%i", distance);
+		if (distance < 150) {
+			isZoomed = true;
+		}
+		else {
+			isZoomed = false;
+		}
+	}
 
 	if (App->collision->debug)
 	{
@@ -210,10 +225,10 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	if (use_camera)
 	{
 
-		rec.x = (int)((camera.x + camera_offset.x) * speed) + rect.x * SCREEN_SIZE;
-		rec.y = (int)((camera.y + camera_offset.y) * speed) + rect.y * SCREEN_SIZE;
-		rec.w *= SCREEN_SIZE;
-		rec.h *= SCREEN_SIZE;
+		rec.x = (int)((camera.x + camera_offset.x) * speed) + rect.x * SCREEN_SIZE * zoomIntensity;
+		rec.y = (int)((camera.y + camera_offset.y) * speed) + rect.y * SCREEN_SIZE * zoomIntensity;
+		rec.w *= SCREEN_SIZE * zoomIntensity;
+		rec.h *= SCREEN_SIZE * zoomIntensity;
 	}
 
 	if (SDL_RenderFillRect(renderer, &rec) != 0)
@@ -254,38 +269,38 @@ void ModuleRender::ZoomIn()
 {
 	if (isZoomed) 
 	{
-		if (zoomValue < 1.3f) 
+		
+		if (zoomValue < 1.3f)
 		{
 			zoomValue += 0.001f;
 
-		}
-		if (camera.y > -200) 
-		{
-			int ticks = SDL_GetTicks();
-			if (ticks - Timer > 5000) 
+			if (camera.y > -200)
 			{
-				camera.y -= 5;
-				//Timer = SDL_GetTicks();
+				timer += timerSpeed;
+				if (timer > 0.5f) {
+					camera.y -= 2;
+					timer = 0.0f;
+				}
 			}
-
-			//currentTime += timerSpeed;
-			//camera.y -= (int)currentTime;
 		}
+		SDL_Log("%0.2f", timer);
 	}
 	
 }
 
 void ModuleRender::ZoomOut()
 {
-	timerSpeed = 0.0001f;
 	if (!isZoomed) {
 		if (zoomValue > 1.0f) {
 			zoomValue -= 0.001f;
-		}
-		else if (camera.y < 0) {
-			currentTime += timerSpeed;
-			camera.y += (int)currentTime;
-			SDL_Log("%i", camera.y);
+
+			if (camera.y < 0) {
+				timer += timerSpeed;
+				if (timer > 0.5f) {
+					camera.y += 2;
+					timer = 0.0f;
+				}
+			}
 		}
 	}
 }

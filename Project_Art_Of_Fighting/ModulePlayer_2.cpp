@@ -33,14 +33,14 @@ ModulePlayer_2::~ModulePlayer_2()
 bool ModulePlayer_2::Start()
 {
 	slowdownDuration = 10;
-	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
+	if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_2 == 1) {
 			App->player2->character = new Ryo(1);
 		}
 		else if (App->character_selection->SELECTOR_2 == 2) {
 			App->player2->character = new John(1);
 		}
-	//}
+	}
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -270,18 +270,18 @@ update_status ModulePlayer_2::Update()
 	if (isJumping)
 	{
 
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 45);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y - 45);
 
 	}
 	else if (current_state == ST_CROUCH || current_state == ST_CROUCH_PUNCH || current_state == ST_CROUCH_KICK)
 	{
 		player_collider->rect.h = 65;
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y);
 	}
 	else
 	{
 		player_collider->rect.h = 90;
-		player_collider->SetPos(pivot_player.x - 15, pivot_player.y - 25);
+		player_collider->SetPos(pivot_player.x - character->colliderOffsetX, pivot_player.y - 25);
 	}
 
 

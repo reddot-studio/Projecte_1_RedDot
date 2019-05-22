@@ -6,38 +6,42 @@ John::John(int player)
 	characterType = JOHN;
 	specialDmg = 15;
 
-	//Rect Colliders
-	SDL_Rect rect1 = { -10,-40,25,20 };
-	SDL_Rect rect2 = { -20,-20,45,60 };
-	SDL_Rect rect3 = { -25,40,50,30 };
+	colliderOffsetX = -15;
+	
+
+
+	SDL_Rect rect1 = { 18,-40,25,20 };
+	SDL_Rect rect2 = { 5,-20,45,60 };
+	SDL_Rect rect3 = { 0,40,50,30 };
+	
 
 	//Jump Colliders
-	SDL_Rect head_jump_collider = { -10,-55,25,20 };
-	SDL_Rect body_jump_collider = { -20,-40,45,60 };
-	SDL_Rect legs_jump_collider = { -25,10,50,30 };
+	SDL_Rect head_jump_collider = { 18,-55,25,20 };
+	SDL_Rect body_jump_collider = { 5,-40,45,60 };
+	SDL_Rect legs_jump_collider = { 0,10,50,30 };
 
 	//Jump Punch Colliders
-	SDL_Rect head_jumppunch_collider = { -10,-55,25,20 };
-	SDL_Rect body_jumppunch_collider = { -25,-44,35,60 };
-	SDL_Rect legs_jumppunch_collider = { -30,5,37,30 };
+	SDL_Rect head_jumppunch_collider = { 18,-55,25,20 };
+	SDL_Rect body_jumppunch_collider = { 10,-44,35,60 };
+	SDL_Rect legs_jumppunch_collider = { 15,10,45,30 };
 	
 
 	//Jump Kick Colliders
-	SDL_Rect head_jumpkick_collider = { -10,-50,25,20 };
-	SDL_Rect body_jumpkick_collider = { -25,-44,35,45 };
-	SDL_Rect legs_jumpkick_collider = { -30,-5,47,30 };
+	SDL_Rect head_jumpkick_collider = { 18,-50,25,20 };
+	SDL_Rect body_jumpkick_collider = { 5,-44,35,45 };
+	SDL_Rect legs_jumpkick_collider = { 0,-5,47,30 };
 
 	//Crouch Rect Colliders
-	SDL_Rect head_crouch_collider = { -10,-8,25,20 };
-	SDL_Rect body_crouch_collider = { -20,8,50,58 };
+	SDL_Rect head_crouch_collider = { 20,-8,25,20 };
+	SDL_Rect body_crouch_collider = { 3,8,50,52 };
 
 	//Crouch Punch Rect Colliders
-	SDL_Rect head_crouchPunch_collider = { 5,-8,25,20 };
-	SDL_Rect body_crouchPunch_collider = { -10,8,50,58 };
+	SDL_Rect head_crouchPunch_collider = { 20,-8,25,20 };
+	SDL_Rect body_crouchPunch_collider = { 3,8,50,58 };
 
 	//Recover Colliders
-	SDL_Rect head_recover_collider = { -10,-19,25,27 };
-	SDL_Rect body_recover_collider = { -29,8,55,58 };
+	SDL_Rect head_recover_collider = { 18,-19,25,27 };
+	SDL_Rect body_recover_collider = { 10,8,55,58 };
 
 	//Kick Colliders
 	SDL_Rect head_kick_collider = { -30,-50,25,20 };
@@ -45,7 +49,7 @@ John::John(int player)
 	SDL_Rect legs_kick_collider = { -27,30,30,40 };
 
 	//Hit Collider
-	SDL_Rect hit_punch_colllider = { 20,-25,43,10 };
+	SDL_Rect hit_punch_colllider = { 50,-25,43,10 };
 	SDL_Rect hit_kick_collider = { 5,-45,60,40 };
 
 	//IDLE
@@ -87,92 +91,92 @@ John::John(int player)
 	//JUMP
 	jump.loop = false;
 	jump.SetReverseOffset({ -0, -39 }, 3);
-	jump.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump.PushBack({ 195,3,66,104 }, 0, -39, 3, head_jump_collider, body_jump_collider,legs_jump_collider);
 	jump.SetReverseOffset({ 9, -48 }, 11);
-	jump.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 0,-7 });
-	jump.SetReverseOffset({ 9, -48 }, 3);
-	jump.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 0,-3 });
-	jump.SetReverseOffset({ 0, -35 }, 8);
-	jump.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {});
-	jump.SetReverseOffset({ 0, -35 }, 7);
-	jump.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 0,1 });
-	jump.SetReverseOffset({ 9, -48 }, 14);
-	jump.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 11,head_jump_collider, body_jump_collider,legs_jump_collider, {}, { 0,-7 });
+	jump.SetReverseOffset({ 9, -48 }, 3);	   	
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 3, head_jump_collider, body_jump_collider,legs_jump_collider, {}, { 0,-3 });
+	jump.SetReverseOffset({ 0, -35 }, 8);	   	
+	jump.PushBack({ 309,30,57,77 }, 0, -35, 8, head_jump_collider, body_jump_collider,legs_jump_collider);
+	jump.SetReverseOffset({ 0, -35 }, 7);	   	
+	jump.PushBack({ 309,30,57,77 }, 0, -35, 7, head_jump_collider, body_jump_collider,legs_jump_collider, {}, { 0,1 });
+	jump.SetReverseOffset({ 9, -48 }, 14);	   	
+	jump.PushBack({ 261,0,48,118 }, 9, -48, 14,head_jump_collider, body_jump_collider,legs_jump_collider, {}, { 0,6 });
 	jump.speed = 0.9f;
 	
 	//Forward JUMP
 	jump_forward.loop = false;
 	jump_forward.SetReverseOffset({ 0, -39 }, 3);
-	jump_forward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump_forward.PushBack({ 195,3,66,104 }, 0, -39, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump_forward.SetReverseOffset({ 9, -48 }, 11);
-	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { 3,-7 });
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 11,head_jump_collider, body_jump_collider, legs_jump_collider, {}, { 3,-7 });
 	jump_forward.SetReverseOffset({ 9, -48 }, 3);
-	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { 3,-3 });
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 3, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { 3,-3 });
 	jump_forward.SetReverseOffset({ 0, -35 }, 8);
-	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { 3,0 });
+	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 8, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { 3,0 });
 	jump_forward.SetReverseOffset({ 0, -35 }, 7);
-	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { 3,1 });
+	jump_forward.PushBack({ 309,30,57,77 }, 0, -35, 7, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { 3,1 });
 	jump_forward.SetReverseOffset({ 9, -48 }, 14);
-	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 3,6 });
+	jump_forward.PushBack({ 261,0,48,118 }, 9, -48, 14,head_jump_collider, body_jump_collider, legs_jump_collider, {}, { 3,6 });
 	jump_forward.speed = 0.9f;	
 
 	//Backward JUMP
 	jump_backward.loop = false;
 	jump_backward.SetReverseOffset({ 0, -39 }, 3);
-	jump_backward.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	jump_backward.PushBack({ 195,3,66,104 }, 0, -39, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
 	jump_backward.SetReverseOffset({ 9, -48 }, 11);
-	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 11, {}, {}, {}, {}, { -3,-7 });
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 11,head_jump_collider, body_jump_collider, legs_jump_collider, {}, { -3,-7 });
 	jump_backward.SetReverseOffset({ 9, -48 }, 3);
-	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 3, {}, {}, {}, {}, { -3,-3 });
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 3, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { -3,-3 });
 	jump_backward.SetReverseOffset({ 0, -35 }, 8);
-	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 8, {}, {}, {}, {}, { -3,0 });
+	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 8, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { -3,0 });
 	jump_backward.SetReverseOffset({ 0, -35 }, 7);
-	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 7, {}, {}, {}, {}, { -3,1 });
+	jump_backward.PushBack({ 309,30,57,77 }, 0, -35, 7, head_jump_collider, body_jump_collider, legs_jump_collider, {}, { -3,1 });
 	jump_backward.SetReverseOffset({ 9, -48 }, 14);
-	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { -3,6 });
+	jump_backward.PushBack({ 261,0,48,118 }, 9, -48, 14,head_jump_collider, body_jump_collider, legs_jump_collider, {}, { -3,6 });
 	jump_backward.speed = 0.9f;
 
 	//Recover
 	recover.loop = false;
 	recover.SetReverseOffset({ 0, -39 }, 3);
-	recover.PushBack({ 195,3,66,104 }, 0, -39, 3);
+	recover.PushBack({ 195,3,66,104 }, 0, -39, 3,head_recover_collider,body_recover_collider);
 	recover.speed = 0.5f;
 
 	//CROUCH
 	crouch.SetReverseOffset({0, -39}, 3);
-	crouch.PushBack({ 195,3,66,104 }, 0, -39, 3, {}, {}, {}, {});
+	crouch.PushBack({ 195,3,66,104 }, 0, -39, 3, head_crouch_collider, body_crouch_collider);
 	crouch.SetReverseOffset({ 11, -8}, 2);
-	crouch.PushBack({ 498,34,58,73 },-3,-8,2);
+	crouch.PushBack({ 498,34,58,73 },-3,-8,2,head_crouch_collider,body_crouch_collider);
 	crouch.loop = false;
 	crouch.speed = 0.5f;
 
 	//CROUCH KICK
 	crouch_kick.SetReverseOffset({10, -7}, 2);
-	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
+	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2,{ -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_kick.SetReverseOffset({-34, -3}, 5);
-	crouch_kick.PushBack({ 615,39,104,68 },-4,-3,5);
+	crouch_kick.PushBack({ 615,39,104,68 }, -4, -3, 5, { -5,-8,25,20 }, body_crouchPunch_collider, {}, { 50, 48, 50, 18 });
 	crouch_kick.SetReverseOffset({9, -7}, 2);
-	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2);
+	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_kick.loop = false;
 	crouch_kick.speed = 0.35f;
 
 	//CROUCH PUNCH
 	crouch_punch.SetReverseOffset({ 10, -7 }, 2);
-	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_punch.SetReverseOffset({ -34, -3 }, 5);
-	crouch_punch.PushBack({ 615,39,104,68 }, -4, -3, 5);
+	crouch_punch.PushBack({ 615,39,104,68 }, -4, -3, 5, head_crouchPunch_collider, body_crouchPunch_collider, {}, { 50, 48, 50, 18 });
 	crouch_punch.SetReverseOffset({ 9, -7 }, 2);
-	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_punch.loop = false;
 	crouch_punch.speed = 0.35f;
 
 	//PUNCH
 	punch.SetReverseOffset({ -4,-46 }, 2);
-	punch.PushBack({ 719,0,73,111 }, -3, -46, 2);
+	punch.PushBack({ 719,0,73,111 }, -3, -46, 2,rect1,rect2,rect3);
 	punch.SetReverseOffset({ -39,-42 }, 2);
-	punch.PushBack({ 792,0,107,107 }, -2, -42, 2);
+	punch.PushBack({ 792,0,107,107 }, -2, -42, 2, rect1, rect2, rect3,hit_punch_colllider);
 	punch.SetReverseOffset({ -3,-46 }, 2);
-	punch.PushBack({ 719,0,73,111 }, -3, -46, 2);
+	punch.PushBack({ 719,0,73,111 }, -3, -46, 2, rect1, rect2, rect3);
 	punch.SetReverseOffset({ 0, -39 }, 4);
 	punch.PushBack({ 0, 0, 66, 104 }, 0, -39, 4, rect1, rect2, rect3);
 	punch.loop = false;
@@ -180,36 +184,36 @@ John::John(int player)
 
 	//KICK
 	kick.SetReverseOffset({ 9, -48 },2 );
-	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
+	kick.PushBack({ 0,128,58,113 }, -1, -48, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ 0, -49 }, 2);
-	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.PushBack({ 58,128,52,113 }, 14, -49, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ 4, -46 },2 );
-	kick.PushBack({ 110,128,58,111 }, 4, -46, 2);
+	kick.PushBack({ 110,128,58,111 }, 4, -46, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ -40, -43 }, 5);
-	kick.PushBack({ 168,129,105,108 }, 1, -43, 5);
+	kick.PushBack({ 168,129,105,108 }, 1, -43, 5, rect1, rect2, rect3);
 	kick.SetReverseOffset({ -20, -43 }, 2);
-	kick.PushBack({ 273,139,83,108 }, 3, -43, 2);
+	kick.PushBack({ 273,139,83,108 }, 3, -43, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ 3, -46 }, 2);
-	kick.PushBack({ 110,128,58,111 }, 5, -46, 2);
+	kick.PushBack({ 110,128,58,111 }, 5, -46, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ 0, -49 },2 );
-	kick.PushBack({ 58,128,52,113 }, 14, -49, 2);
+	kick.PushBack({ 58,128,52,113 }, 14, -49, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({9, -48},2 );
-	kick.PushBack({ 0,128,58,113 }, -1, -48, 2);
+	kick.PushBack({ 0,128,58,113 }, -1, -48, 2, rect1, rect2, rect3);
 	kick.loop = false;
 	kick.speed = 0.7f;
 
 	//KOUKEN
-	koouKen.PushBack({ 366,149,69,98 },-10,-34,3);
-	koouKen.PushBack({ 435,155,67,92 }, -7, -28, 3);
-	koouKen.PushBack({ 502,145,71,101 }, 2, -37 ,5);
-	koouKen.PushBack({ 573,155,108,92 }, -12, -27, 8);
+	koouKen.PushBack({ 366,149,69,98 },-10,-34,3, rect1, rect2, rect3);
+	koouKen.PushBack({ 435,155,67,92 }, -7, -28, 3, rect1, rect2, rect3);
+	koouKen.PushBack({ 502,145,71,101 }, 2, -37 ,5, rect1, rect2, rect3);
+	koouKen.PushBack({ 573,155,108,92 }, -12, -27, 8, rect1, rect2, rect3);
 	koouKen.loop = false;
 	koouKen.speed = 0.5f;
 
 	//FALL
 	fall.loop = false;
 	fall.SetReverseOffset({ 9, -48 }, 14);
-	fall.PushBack({ 261,0,48,118 }, 9, -48, 14, {}, {}, {}, {}, { 0,6 });
+	fall.PushBack({ 261,0,48,118 }, 9, -48, 14, head_jump_collider,body_jump_collider, legs_jump_collider, {}, { 0,6 });
 	fall.speed = 0.5f;
 
 	//JUMP + KICK
@@ -218,31 +222,31 @@ John::John(int player)
 
 	//JUMP + PUNCH
 	jumppunch.SetReverseOffset({5, -55}, 2);
-	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
+	jumppunch.PushBack({ 10,371,56,113 },5,-55,2,head_jumppunch_collider,body_jumppunch_collider,legs_jumppunch_collider);
 	jumppunch.SetReverseOffset({5, -55}, 8);
-	jumppunch.PushBack({ 66,370,71,123 },5,-55,8);
+	jumppunch.PushBack({ 66,370,71,123 },5,-55,8, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.SetReverseOffset({5, -55}, 2);
-	jumppunch.PushBack({ 10,371,56,113 },5,-55,2);
+	jumppunch.PushBack({ 10,371,56,113 },5,-55,2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
 	//jumppunch.speed = 0.01f;
 	jumppunch.loop = false;
 
 	//PUNCH + C
-	c_punch.PushBack({ 326,374,51,119 },5,-53,3);
-	c_punch.PushBack({ 380,375,58,117 },-10, -53, 3);
-	c_punch.PushBack({ 442,376,55,117 },-10, -53, 3);
-	c_punch.PushBack({ 503,377,111,116 },-10, -52, 3);
-	c_punch.PushBack({ 615,376,67,120 },-10, -53, 3);
+	c_punch.PushBack({ 326,374,51,119 },5,-53,3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 380,375,58,117 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 442,376,55,117 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 503,377,111,116 },-10, -52, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 615,376,67,120 },-10, -53, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
 	c_punch.loop = false;
 	c_punch.speed = 0.3f;
 
 
 	//KICK + C
-	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2);
-	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2);
-	c_kick.PushBack({ 212,388,103,108  }, -2, -43, 5);
-	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2);
-	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2);
+	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 212,388,103,108  }, -2, -43, 5, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_kick.PushBack({ 142,390,64,106 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 792,260,53,106 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
 	c_kick.loop = false;
 	c_kick.speed = 0.5f;
 

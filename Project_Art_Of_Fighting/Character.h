@@ -28,6 +28,7 @@ public:
 
 	bool isBlocking = false;
 
+	int colliderOffsetX;
 
 	virtual void AddInput(inputs, float) = 0;
 	virtual inputs CheckCombos() = 0;

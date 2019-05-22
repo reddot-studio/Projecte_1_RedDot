@@ -7,6 +7,8 @@ Ryo::Ryo(int player)
 	characterType = RYO;
 	this->player = player;
 	specialDmg = 15;
+
+	colliderOffsetX = 15;
 	//idle animation (arcade sprite sheet)
 	//Rect Colliders
 	SDL_Rect rect1 = { -10,-40,25,20 };
