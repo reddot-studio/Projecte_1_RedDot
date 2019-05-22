@@ -33,14 +33,14 @@ ModulePlayer_2::~ModulePlayer_2()
 bool ModulePlayer_2::Start()
 {
 	slowdownDuration = 10;
-	if (App->character_selection->IsEnabled()) {
+	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_2 == 1) {
 			App->player2->character = new Ryo(1);
 		}
 		else if (App->character_selection->SELECTOR_2 == 2) {
 			App->player2->character = new John(1);
 		}
-	}
+	//}
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
