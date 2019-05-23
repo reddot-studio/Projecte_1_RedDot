@@ -65,7 +65,7 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	}
 	vs_final.PushBack({ 0,729,w,h });
 	vs.loop = false;
-	vs.speed = 0.3f;
+	vs.speed = 0.5f;
 }
 ModuleScreenSelection::~ModuleScreenSelection() {
 
@@ -98,10 +98,18 @@ update_status ModuleScreenSelection::Update() {
 		timer();
 	}
 	else { //Quan clicas intro
+
+		if (timer_init == false) {
+			tick1 = SDL_GetTicks();
+			timer_init = true;
+		}
+		tick2 = SDL_GetTicks();
 		//VS//
-		App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs.GetCurrentFrame());
-		if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
-			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs_final.GetCurrentFrame());
+		if (tick2 - tick1 > 1200) {
+			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs.GetCurrentFrame());
+			if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
+				App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs_final.GetCurrentFrame());
+			}
 		}
 
 		//character image animation
@@ -113,12 +121,14 @@ update_status ModuleScreenSelection::Update() {
 				x_image1 += 10;
 				App->render->Blit(graphics, x_image1, 20, &imageSelection1, 1, 2);
 			}
-			if (x_name1 >= 58) {
-				App->render->Blit(graphics, x_name1, 145, &name2);
-			}
-			else {
-				x_name1 += 10;
-				App->render->Blit(graphics, x_name1, 145, &name2);
+			if (tick2 - tick1 > 50) {
+				if (x_name1 >= 58) {
+					App->render->Blit(graphics, x_name1, 145, &name2);
+				}
+				else {
+					x_name1 += 10;
+					App->render->Blit(graphics, x_name1, 145, &name2);
+				}
 			}
 		}
 
@@ -130,48 +140,53 @@ update_status ModuleScreenSelection::Update() {
 				x_image1 += 10;
 				App->render->Blit(graphics, x_image1, 15, &imageSelection2, 1, 1);
 			}
-			if (x_name1 >= 58) {
-				App->render->Blit(graphics, x_name1-5, 145, &name1);
-			}
-			else {
-				x_name1 += 10;
-				App->render->Blit(graphics, x_name1-5, 145, &name1);
-			}
-		}
-		
-		if (SELECTOR_2 == 2) {
-			if (x_image2 <= (SCREEN_WIDTH/2)+50) {
-				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
-			}
-			else {
-				x_image2 -= 10;
-				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
-			}
-
-			if (x_image2<=(SCREEN_WIDTH/2)+70) {
-				App->render->Blit(graphics, x_name2, 145, &name1); 
-			}
-			else {                                                                   
-				x_name2 -= 10;
-				App->render->Blit(graphics, x_name2, 145, &name1);
+			if (tick2 - tick1 > 50) {
+				if (x_name1 >= 58) {
+					App->render->Blit(graphics, x_name1 - 5, 145, &name1);
+				}
+				else {
+					x_name1 += 10;
+					App->render->Blit(graphics, x_name1 - 5, 145, &name1);
+				}
 			}
 		}
+		if (tick2 - tick1 > 2400) {
+			if (SELECTOR_2 == 2) {
+				if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
+					App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
+				}
+				else {
+					x_image2 -= 10;
+					App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
+				}
+				if (tick2 - tick1 > 2500) {
+					if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
+						App->render->Blit(graphics, x_name2-50, 145, &name1);
+					}
+					else {
+						x_name2 -= 10;
+						App->render->Blit(graphics, x_name2-50, 145, &name1);
+					}
+				}
+			}
 
-		if (SELECTOR_2 == 1) {
-			if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
-				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
-			}
-			else {
-				x_image2 -= 10;
-				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
-			}
-
-			if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
-				App->render->Blit(graphics, x_name2+7, 145, &name2);
-			}
-			else {
-				x_name2 -= 10;
-				App->render->Blit(graphics, x_name2+7, 145, &name2);
+			if (SELECTOR_2 == 1) {
+				if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
+					App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
+				}
+				else {
+					x_image2 -= 10;
+					App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1);
+				}
+				if (tick2 - tick1 > 2650) {
+					if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
+						App->render->Blit(graphics, x_name2-140, 145, &name2);
+					}
+					else {
+						x_name2 -= 10;
+						App->render->Blit(graphics, x_name2-140, 145, &name2); //BUG
+					}
+				}
 			}
 		}
 		

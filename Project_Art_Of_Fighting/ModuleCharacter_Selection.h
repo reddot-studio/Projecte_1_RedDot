@@ -42,6 +42,7 @@ public:
 	Animation selector2;
 
 	bool selected = false;
+	bool timer_init = false;
 
 	int SELECTOR_1 = 1;
 	int SELECTOR_2 = 2;
