@@ -277,16 +277,16 @@ John::John(int player)
 
 
 	//KICK + C
-	c_kick.SetReverseOffset({ 3,-42 },3 );
+	c_kick.SetReverseOffset({ 3,-42 },2 );
 	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
-	c_kick.SetReverseOffset({ 0,-46 }, 3);
+	c_kick.SetReverseOffset({ 0,-46 }, 2);
 	c_kick.PushBack({ 825,261,67,110 }, -4, -46, 2, rect1, rect2, rect3);
-	c_kick.SetReverseOffset({ -30,-43 },3 );
+	c_kick.SetReverseOffset({ -40,-43 },5 );
 	c_kick.PushBack({ 213,382,102,107  }, -1, -43, 5, rect1, rect2, rect3);
-	//c_kick.SetReverseOffset({ , }, );
-	//c_kick.PushBack({ 140,382,67,110 }, -4, -46, 2, rect1, rect2, rect3);
-	//c_kick.SetReverseOffset({ , }, );
-	//c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
+	c_kick.SetReverseOffset({ -1,-46 }, 2);
+	c_kick.PushBack({ 140,382,67,110 }, -4, -46, 2, rect1, rect2, rect3);
+	c_kick.SetReverseOffset({3,-42 }, 2);
+	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
 	c_kick.speed = 0.05f;
 	c_kick.damage = 20;
