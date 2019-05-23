@@ -253,6 +253,9 @@ if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->wi
 // Draw everything --------------------------------------
 RectSprites r = current_animation->GetCurrentFrame();
 
+if (App->render->spriteShaking) {
+	App->render->UpdateSpriteShake(&r.offset);
+}
 
 player_collider->rect.x = pivot_player.x;
 player_collider->rect.h = 90;
@@ -531,7 +534,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			if (Side == 2) {
 				offsetX = 35;
 			}
-			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
+			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE,0,0,Side,RYO);
 			c2->Enabled = false;
 		}
 		else if (App->player1->character->isBlocking) {
@@ -840,10 +843,10 @@ void ModulePlayer_1::states(int speed)
 	switch (state)
 	{
 	case ST_TEST:
-		if (current_animation != &character->taunt)
+		if (current_animation != &character->jumpkick)
 		{
-			character->taunt.ResetCurrentFrame();
-			current_animation = &character->taunt;
+			character->jumpkick.ResetCurrentFrame();
+			current_animation = &character->jumpkick;
 		}
 		break;
 	case ST_IDLE:
@@ -947,14 +950,13 @@ void ModulePlayer_1::states(int speed)
 			switch (character->characterType)
 			{
 			case RYO:
-				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
-				currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x - 28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side,RYO);
+				currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x - 28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,character->characterType);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				break;
 			case JOHN:
-				//App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side);
-				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side);
+				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,character->characterType);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				break;
@@ -1120,7 +1122,9 @@ void ModulePlayer_1::states(int speed)
 	case ST_STANDING_BLOCKED:
 		if (current_animation != &character->exitBlock) {
 			character->exitBlock.ResetCurrentFrame();
+			character->exitBlock.ResetDisplacement();
 			current_animation = &character->exitBlock;
+			App->render->StartSpriteShake(10, 1, character->exitBlock.frames[0].offset);
 		}
 		break;
 	case ST_CROUCH_BLOCK:

@@ -437,7 +437,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		if (Side == 2) {
 			offsetX = 35;
 		}
-		App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE);
+		App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE, RYO);
 
 		
 		c2->Enabled = false;

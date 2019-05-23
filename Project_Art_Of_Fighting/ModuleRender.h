@@ -21,7 +21,9 @@ public:
 	bool CleanUp();
 
 	void StartCameraShake(int duration, float magnitude);
+	void StartSpriteShake(int duration, float magnitude,iPoint);
 	void UpdateCameraShake();
+	void UpdateSpriteShake(iPoint * offset);
 	void ZoomIn();
 	void ZoomOut();
 
@@ -43,6 +45,13 @@ public:
 	bool isZoomed = false;
 	float zoomValue = 1.0f;
 	float zoomIntensity = 1.0f;
+
+	bool spriteShaking = false;
+	int sprite_shake_duration = 0.0f;
+	int sprite_shake_timer = 0.0f;
+	float sprite_shake_magnitude = 0.0f;
+	iPoint sprite_offset;
+	iPoint start_sprite_offset;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake

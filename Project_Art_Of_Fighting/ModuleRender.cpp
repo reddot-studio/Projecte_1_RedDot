@@ -240,7 +240,6 @@ void ModuleRender::StartCameraShake(int duration, float magnitude)
 	shaking = true;
 	shake_timer = 0;
 }
-
 void ModuleRender::UpdateCameraShake()
 {
 	//TODO 2: Update the shake timer, stop shaking if we reach the full duration
@@ -255,6 +254,29 @@ void ModuleRender::UpdateCameraShake()
 		shaking = false;
 	}
 
+}
+void ModuleRender::StartSpriteShake(int duration, float magnitude,iPoint startOffset)
+{
+	start_sprite_offset = startOffset;
+	sprite_shake_duration = duration;
+	sprite_shake_magnitude = magnitude;
+	spriteShaking = true;
+	sprite_shake_timer = 0;
+	
+}
+
+
+void ModuleRender::UpdateSpriteShake(iPoint* offset)
+{
+	
+	if (sprite_shake_timer < sprite_shake_duration) {
+		sprite_shake_timer++;
+		offset->x = rand() % 2 * sprite_shake_magnitude;
+	}
+	else {
+		*offset = start_sprite_offset;
+		spriteShaking = false;
+	}
 }
 
 void ModuleRender::ZoomIn()

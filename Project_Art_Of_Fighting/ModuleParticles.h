@@ -26,6 +26,7 @@ struct Particle
 	bool fx_played = false;
 	int Side;
 	int lastSide;
+	Characters characterType;
 
 
 

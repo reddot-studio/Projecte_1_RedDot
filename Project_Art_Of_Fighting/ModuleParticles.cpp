@@ -149,7 +149,7 @@ update_status ModuleParticles::Update()
 	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* p = active[i];
-
+		
 		if(p == nullptr)
 			continue;
 
@@ -161,15 +161,29 @@ update_status ModuleParticles::Update()
 		else if(SDL_GetTicks() >= p->born)
 		{
 			RectSprites r = p->anim.GetCurrentFrame();
-			if (p->Side == 2)
-			{
-				App->render->Blit(currentGraphics, p->position.x + r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
-			}
-	
-			else if (p->Side == 1)
-			{
-				App->render->Blit(currentGraphics, p->position.x + r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+			if (p->characterType == RYO) {
+				if (p->Side == 2)
+				{
+					App->render->Blit(graphics, p->position.x + r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
+				}
 
+				else if (p->Side == 1)
+				{
+					App->render->Blit(graphics, p->position.x + r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+
+				}
+			}		
+			else if (p->characterType == JOHN) {
+				if (p->Side == 2)
+				{
+					App->render->Blit(graphics2, p->position.x + r.offset_reverse.x, p->position.y + r.offset_reverse.y, &r, 1, p->Side);
+				}
+
+				else if (p->Side == 1)
+				{
+					App->render->Blit(graphics2, p->position.x + r.offset.x, p->position.y + r.offset.y, &r, 1, p->Side);
+
+				}
 			}
 			if(p->fx_played == false)
 			{
@@ -184,21 +198,13 @@ update_status ModuleParticles::Update()
 
 Particle * ModuleParticles::AddParticle(const Particle& particle, int x, int y, COLLIDER_TYPE collider_type, Uint32 delay, int Damage, int Side, Characters type)
 {
-	switch (type)
-	{
-	case RYO:
-		currentGraphics = graphics;
-		break;
-	case JOHN:
-		currentGraphics = graphics2;
-		break;
-	}
 
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		if (active[i] == nullptr)
 		{
 			Particle* p = new Particle(particle);
+			p->characterType = type;
 			p->born = SDL_GetTicks() + delay;
 			p->position.x = x;
 			p->position.y = y;
@@ -243,7 +249,7 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 			else if (c1->Side == 2) {
 				offsetX = -active[i]->collider->rect.w / 4;
 			}
-			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,c1->Side);
+			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,c1->Side,RYO);
 
 			delete active[i];
 			active[i] = nullptr;

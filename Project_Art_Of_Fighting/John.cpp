@@ -219,21 +219,26 @@ John::John(int player)
 	fall.speed = 0.5f;
 
 	//TAUNT
-	taunt.PushBack({ 0,496,110,96 }, -7, -28, 3, rect1, rect2 , rect3);
-	taunt.PushBack({ 111,496,105,96 }, -7, -28, 3, rect1, rect2, rect3);
-	taunt.PushBack({ 218,496,107,96 }, -7, -28, 3, rect1, rect2, rect3);
-	taunt.speed = 0.5f;
+	taunt.PushBack({ 0,496,110,96 }, -22, -30, 3, rect1, rect2 , rect3);
+	taunt.PushBack({ 111,496,105,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.PushBack({ 218,496,107,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.PushBack({ 0,496,110,96 }, -22, -30, 3, rect1, rect2 , rect3);
+	taunt.PushBack({ 111,496,105,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.PushBack({ 218,496,107,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.speed = 0.4f;
 	taunt.loop = false; 
 	
 
 	//JUMP + KICK
-	jumpkick.SetReverseOffset({ 5, -55 }, 2);
-	jumpkick.PushBack({ 10,371,56,113 }, 5, -55, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
-	jumpkick.SetReverseOffset({ 5, -55 }, 8); 
-	jumpkick.PushBack({ 0,247,109,112 }, 5, -55, 8, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
-	jumpkick.SetReverseOffset({ 5, -55 }, 2);
-	jumpkick.PushBack({ 116,249,91,121 }, 5, -55, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
-	jumpkick.speed = 0.5f;
+	jumpkick.SetReverseOffset({ -4, -50 }, 2);
+	jumpkick.PushBack({ 10,371,56,113 }, -4, -50, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.SetReverseOffset({ -6, -50 }, 4); 
+	jumpkick.PushBack({ 0,247,109,112 }, -6, -50, 4, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.SetReverseOffset({ -13, -52 }, 2);
+	jumpkick.PushBack({ 116,249,91,121 }, -13, -52, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.SetReverseOffset({ -4, -50 }, 2);
+	jumpkick.PushBack({ 10,371,56,113 }, -4, -50, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumpkick.speed = 0.45f;
 	jumpkick.loop = false;
 	jumpkick.damage = 10;
 
@@ -241,12 +246,12 @@ John::John(int player)
 	//Falten frames//
 	   
 	//JUMP + PUNCH
-	jumppunch.SetReverseOffset({5, -55}, 2);
-	jumppunch.PushBack({ 10,371,56,113 },5,-55,2,head_jumppunch_collider,body_jumppunch_collider,legs_jumppunch_collider);
-	jumppunch.SetReverseOffset({5, -55}, 8);
-	jumppunch.PushBack({ 66,370,71,123 },5,-55,8, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
-	jumppunch.SetReverseOffset({5, -55}, 2);
-	jumppunch.PushBack({ 10,371,56,113 },5,-55,2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumppunch.SetReverseOffset({7, -52}, 2);
+	jumppunch.PushBack({ 10,371,56,113 },7,-52,2,head_jumppunch_collider,body_jumppunch_collider,legs_jumppunch_collider);
+	jumppunch.SetReverseOffset({5, -65}, 8);
+	jumppunch.PushBack({ 66,370,71,123 },5,-65,8, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
+	jumppunch.SetReverseOffset({7, -52}, 2);
+	jumppunch.PushBack({ 10,371,56,113 },7,-52,2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
 	jumppunch.loop = false;
 	jumppunch.damage = 10;
@@ -273,7 +278,7 @@ John::John(int player)
 
 	//THROWN
 
-	thrown.PushBack({ 556,610,71,107 }, 0, 0, 3);
+	thrown.PushBack({ 556,610,71,107 }, 0, -40, 3);
 	thrown.PushBack({ 635,610,102,86 }, 0, 0, 3);
 	thrown.PushBack({ 743,610,120,43 }, 0, 0, 3);
 	thrown.PushBack({ 905,610,56,106 }, 0, 0, 3);
@@ -281,15 +286,15 @@ John::John(int player)
 	thrown.PushBack({ 84,772,72,109 }, 0, 0, 3);
 	thrown.PushBack({ 178,820,121,74 }, 0, 0, 3);
 	thrown.PushBack({ 187,772,122,45 }, 0, 0, 3);
-	thrown.speed = 0.5f;
+	thrown.speed = 0.05f;
 	thrown.loop = false; 
 
 	 //WIN
 	win.PushBack({ 419,752,85,129 }, 0, -60, 2);
 	win.PushBack({ 508,752,79,129 }, 0, -60, 2);
 	win.PushBack({ 591,752,71, 129 }, 0, -60, 5);
-	win.PushBack({ 666,752,87 ,129 }, 0, -60, 30);
-	win.speed = 0.05f;
+	win.PushBack({ 666,752,87 ,129 }, 0, -60, 5);
+	win.speed = 0.2f;
 	win.loop = false;
 
 
@@ -307,6 +312,7 @@ John::John(int player)
 
 	//Succesfull block
 	exitBlock.PushBack({ 338,772,60,110 }, -5, -44, 5, rect1, rect2, rect3);
+	exitBlock.PushBack({ 338,772,60,110 }, -5, -44, 3, rect1, rect2, rect3, {}, {-2,0});
 	exitBlock.speed = 0.3f;
 	exitBlock.loop = false;
 
