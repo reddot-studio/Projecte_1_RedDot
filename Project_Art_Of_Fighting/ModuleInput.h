@@ -22,6 +22,10 @@ public:
 public:
 	const Uint8 *keyboard = nullptr;
 	SDL_GameController *controller[2];
+
+	
+	int effect_id;
+
 	bool Paused = false;
 
 	bool jump = true;
@@ -32,6 +36,8 @@ public:
 
 	const float GetHorizontalAxis();
 	const float GetVerticalAxis();
+
+	void StartEffect();
 
 	key_state keyboard_state[285];
 

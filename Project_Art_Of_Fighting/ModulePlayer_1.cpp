@@ -106,6 +106,7 @@ update_status ModulePlayer_1::Update()
 
 		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_A)) {
 			last_input = IN_PUNCH;
+			App->input->StartEffect();
 		}
 		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_X)) {
 			last_input = IN_KICK;

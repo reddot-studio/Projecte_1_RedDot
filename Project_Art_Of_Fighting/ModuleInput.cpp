@@ -25,18 +25,34 @@ bool ModuleInput::Init()
 	bool ret = true;
 	SDL_Init(0);
 
+	SDL_InitSubSystem(SDL_INIT_HAPTIC);
+
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
 	}
-	SDL_Joystick * joy;
+	SDL_Joystick * joy = SDL_JoystickOpen(0);
 	if (SDL_NumJoysticks() > 0) {
 		joy = SDL_JoystickOpen(0);
 		if (joy) {
 			LOG("\nOpened Joystick 0");
 		}
+	}
+	if (SDL_JoystickIsHaptic(joy) == 1) {
+		LOG("IS HAPTIC");
+	}
+	//Open the device
+	SDL_Haptic* haptic = nullptr;
+		haptic = SDL_HapticOpenFromJoystick(joy);
+		if (haptic == nullptr) {
+			return -1;
+		}
+	// See if it can do sine waves
+	if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0) {
+		SDL_HapticClose(haptic); // No sine effect
+		return -1;
 	}
 
 	for (int i = 4; i < 285; i++)
@@ -163,4 +179,10 @@ const float ModuleInput::GetVerticalAxis()
 	verticalAxis /= 32767;
 
 	return verticalAxis;
+}
+
+void ModuleInput::StartEffect()
+{
+		// Test the effect
+
 }

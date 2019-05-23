@@ -474,7 +474,7 @@ inputs John::CheckCombos()
 			{
 				if (Input_Queue[Check - 1].Input == PlayerSpecialMoves[i]->InputsToCompleteMovement[j])
 				{
-					if(Input_Queue[Check - 1].Time - Input_Queue[Check - 2].Time <= 225)
+					if(Input_Queue[Check - 1].Time - Input_Queue[Check - 2].Time <= 400)
 						Completed++;
 				}
 
