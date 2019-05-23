@@ -215,7 +215,7 @@ void ModuleScreenSelection::choose() {
 		App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
 	}
 
-
+	
 
 	//JOHN
 	if (SELECTOR_1==2) {
