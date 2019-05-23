@@ -83,6 +83,10 @@ update_status ModulePlayer_1::Update()
 	//Player1 Input
 	states(speed);
 
+	//TESTING BUTTON
+	if (App->input->keyboard_state[SDL_SCANCODE_H] == KEY_DOWN) {
+		last_input = IN_TEST;
+	}
 
 //Move right
 
@@ -549,9 +553,16 @@ player_state ModulePlayer_1::ControlStates()
 
 	switch (current_state)
 	{
+	case ST_TEST:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
 	case ST_IDLE:
 		switch (last_input)
 		{
+		case IN_TEST: state = ST_TEST; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_LEFT_DOWN: state = ST_WALK_BACKWARD; break;
 		case IN_RIGHT_DOWN: state = ST_WALK_FORWARD; break;
@@ -828,6 +839,13 @@ void ModulePlayer_1::states(int speed)
 	// Control state
 	switch (state)
 	{
+	case ST_TEST:
+		if (current_animation != &character->taunt)
+		{
+			character->taunt.ResetCurrentFrame();
+			current_animation = &character->taunt;
+		}
+		break;
 	case ST_IDLE:
 		current_animation = &character->idle;
 		HurtColliders[0]->Enabled = true;

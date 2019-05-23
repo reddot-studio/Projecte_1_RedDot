@@ -181,6 +181,7 @@ John::John(int player)
 	punch.PushBack({ 0, 0, 66, 104 }, 0, -39, 4, rect1, rect2, rect3);
 	punch.loop = false;
 	punch.speed = 0.5f;
+	punch.damage = 10;
 
 	//KICK
 	kick.SetReverseOffset({ 9, -48 },2 );
@@ -201,6 +202,7 @@ John::John(int player)
 	kick.PushBack({ 0,128,58,113 }, -1, -48, 2, rect1, rect2, rect3);
 	kick.loop = false;
 	kick.speed = 0.7f;
+	kick.damage = 10;
 
 	//KOUKEN
 	koouKen.PushBack({ 366,149,69,98 },-10,-34,3, rect1, rect2, rect3);
@@ -233,6 +235,7 @@ John::John(int player)
 	jumpkick.PushBack({ 116,249,91,121 }, 5, -55, 2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumpkick.speed = 0.5f;
 	jumpkick.loop = false;
+	jumpkick.damage = 10;
 
 
 	//Falten frames//
@@ -246,24 +249,27 @@ John::John(int player)
 	jumppunch.PushBack({ 10,371,56,113 },5,-55,2, head_jumppunch_collider, body_jumppunch_collider, legs_jumppunch_collider);
 	jumppunch.speed = 0.5f;
 	jumppunch.loop = false;
+	jumppunch.damage = 10;
 
 	//PUNCH + C
-	c_punch.PushBack({ 320,382,48,109 },5,-42,3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 376,382,55,109 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 434,382,52,110 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 495 ,382,105,108 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_punch.PushBack({ 605,382,63,110 },-10, -42, 3, head_jump_collider, body_jump_collider, legs_jump_collider);
+	c_punch.PushBack({ 320,382,48,109 },5,-42,3, rect1, rect2, rect3);
+	c_punch.PushBack({ 376,382,55,109 },-10, -42, 3, rect1, rect2, rect3);
+	c_punch.PushBack({ 434,382,52,110 },-10, -42, 3, rect1, rect2, rect3);
+	c_punch.PushBack({ 495 ,382,105,108 },-10, -42, 3, rect1, rect2, rect3);
+	c_punch.PushBack({ 605,382,63,110 },-10, -42, 3, rect1, rect2, rect3);
 	c_punch.loop = false;
 	c_punch.speed = 0.05f;
+	c_punch.damage = 20;
 
 
 	//KICK + C
-	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
-	c_kick.PushBack({ 825,261,67,110 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
-	c_kick.PushBack({ 213,382,102,107  }, -2, -43, 5, head_jump_collider, body_jump_collider, legs_jump_collider);
-	c_kick.PushBack({ 140,382,67,110 }, -4, -41, 2,head_jump_collider,body_jump_collider,legs_jump_collider);
+	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
+	c_kick.PushBack({ 825,261,67,110 }, -4, -41, 2, rect1, rect2, rect3);
+	c_kick.PushBack({ 213,382,102,107  }, -2, -43, 5, rect1, rect2, rect3);
+	c_kick.PushBack({ 140,382,67,110 }, -4, -41, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
 	c_kick.speed = 0.5f;
+	c_kick.damage = 20;
 
 	//THROWN
 
@@ -288,12 +294,21 @@ John::John(int player)
 
 
 	//damage
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 236,261,58,107 },0 ,0 ,2 );
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 299,261,59,107 },0, 0 , 2);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,0 ,2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 236,261,58,107 },0 ,-42 ,2 );
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 299,261,59,107 },-3, -42 , 2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,-42 ,2);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
 	
+	//BLOCK
+	standing_block.PushBack({338,772,60,110}, -5, -44, 5,rect1,rect2,rect3);
+	standing_block.speed = 0.3f;
+	standing_block.loop = false;
+
+	//Succesfull block
+	exitBlock.PushBack({ 338,772,60,110 }, -5, -44, 5, rect1, rect2, rect3);
+	exitBlock.speed = 0.3f;
+	exitBlock.loop = false;
 
 	//Combos
 	for (int i = 0; i < 30; i++)

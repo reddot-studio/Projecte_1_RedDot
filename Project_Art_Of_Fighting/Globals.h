@@ -31,6 +31,7 @@ enum key_state {
 //States
 enum player_state
 {
+	ST_TEST,
 	ST_UNKNOWN,
 	ST_IDLE,
 	ST_WALK_FORWARD,
@@ -63,11 +64,13 @@ enum player_state
 	ST_STRONG_ATTACK,
 	ST_WIN,
 	ST_DEFEAT,
+	
 };
 
 //Inputs
 enum inputs
 {
+	IN_TEST,
 	IN_UNKNOWN,
 	IN_LEFT_UP,
 	IN_LEFT_DOWN,
@@ -91,7 +94,8 @@ enum inputs
 	IN_EMPTY,
 	IN_STRONG_ATTACK,
 	IN_WIN,
-	IN_DEFEAT
+	IN_DEFEAT,
+	
 };
 
 
