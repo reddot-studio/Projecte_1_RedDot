@@ -334,6 +334,19 @@ John::John(int player)
 	exitBlock.speed = 0.3f;
 	exitBlock.loop = false;
 
+
+	//Defeat
+	defeat.SetReverseOffset({-5, -45}, 3);
+	defeat.PushBack({783, 772, 79, 109}, -9, -45, 3);
+	defeat.SetReverseOffset({12, -16}, 3);
+	defeat.PushBack({864, 801, 49, 80}, 4, -16, 3);
+	defeat.SetReverseOffset({-15, -14}, 3);
+	defeat.PushBack({918, 803, 78, 78}, 3, -14, 3);
+	defeat.SetReverseOffset({-45, 21}, 3);
+	defeat.PushBack({769, 881, 108, 44}, 2, 21, 3);
+	defeat.speed = 0.07f;
+	defeat.loop = false;
+
 	//Combos
 	for (int i = 0; i < 30; i++)
 	{
