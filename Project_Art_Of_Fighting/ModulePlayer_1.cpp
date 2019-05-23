@@ -167,7 +167,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN)	last_input = IN_KOOU
 //Jump
 if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
 
-//Power attack
+//STRONG attack
 if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
 	switch (last_input_attack)
 	{
@@ -176,7 +176,9 @@ if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
 	}
 }
 //win try
-if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN) last_input = IN_WIN;
+if (App->input->keyboard_state[SDL_SCANCODE_1] == KEY_DOWN) last_input = IN_WIN;
+//defeat try
+if (App->input->keyboard_state[SDL_SCANCODE_2] == KEY_DOWN) last_input = IN_DEFEAT;
 
 //defeat try
 
@@ -574,10 +576,10 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_STRONG_ATTACK: state = ST_STRONG_ATTACK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:

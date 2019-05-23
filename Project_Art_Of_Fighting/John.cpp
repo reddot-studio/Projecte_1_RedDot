@@ -281,18 +281,18 @@ John::John(int player)
 	c_kick.speed = 0.5f;
 	c_kick.damage = 20;
 
-	//THROWN
+	//THROWN NOT NEEDED YET
 
-	thrown.PushBack({ 556,610,71,107 }, 0, -40, 3);
-	thrown.PushBack({ 635,610,102,86 }, 0, 0, 3);
-	thrown.PushBack({ 743,610,120,43 }, 0, 0, 3);
-	thrown.PushBack({ 905,610,56,106 }, 0, 0, 3);
-	thrown.PushBack({ 0,772,67,109 }, 0, 0, 3);
-	thrown.PushBack({ 84,772,72,109 }, 0, 0, 3);
-	thrown.PushBack({ 178,820,121,74 }, 0, 0, 3);
-	thrown.PushBack({ 187,772,122,45 }, 0, 0, 3);
-	thrown.speed = 0.05f;
-	thrown.loop = false; 
+	//thrown.PushBack({ 556,610,71,107 }, 0, -40, 3);
+	//thrown.PushBack({ 635,610,102,86 }, 0, 0, 3);
+	//thrown.PushBack({ 743,610,120,43 }, 0, 0, 3);
+	//thrown.PushBack({ 905,610,56,106 }, 0, 0, 3);
+	//thrown.PushBack({ 0,772,67,109 }, 0, 0, 3);
+	//thrown.PushBack({ 84,772,72,109 }, 0, 0, 3);
+	//thrown.PushBack({ 178,820,121,74 }, 0, 0, 3);
+	//thrown.PushBack({ 187,772,122,45 }, 0, 0, 3);
+	//thrown.speed = 0.05f;
+	//thrown.loop = false; 
 
 	 //WIN
 	win.PushBack({ 419,752,85,129 }, 0, -60, 2);
