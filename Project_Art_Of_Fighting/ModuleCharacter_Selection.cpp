@@ -57,6 +57,16 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	not_available.rect.w = 112;
 	not_available.rect.h = 56;
 
+	ryo_other.rect.x = 112;
+	ryo_other.rect.y = 128;
+	ryo_other.rect.w = 128;
+	ryo_other.rect.h = 123;
+
+	john_other.rect.x = 256;
+	john_other.rect.y = 0;
+	john_other.rect.w = 128;
+	john_other.rect.h = 128;
+
 
 	int x = 0, y = 281, w = 50, h = 32;
 	for (int i=0; i <= 15; i++) {
@@ -196,7 +206,7 @@ void ModuleScreenSelection::choose() {
 		App->render->Blit(graphics, 35, 15, &imageSelection1, 1.0f, 2);
 		App->render->Blit(graphics, 77, 140, &name2, 1.0f, 1);
 		if (SELECTOR_2 == 1) {
-			App->render->Blit(graphics, SCREEN_WIDTH - 163, 15, &imageSelection1, 1.0f, 1);
+			App->render->Blit(graphics, SCREEN_WIDTH - 163, 15, &ryo_other, 1.0f, 1);
 			App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1);
 		}
 	}
@@ -206,12 +216,13 @@ void ModuleScreenSelection::choose() {
 	}
 
 
+
 	//JOHN
 	if (SELECTOR_1==2) {
 		App->render->Blit(graphics, 35, 10, &imageSelection2, 1.0f, 1);
 		App->render->Blit(graphics, 70, 140, &name1, 1.0f, 1);
 		if (SELECTOR_2==2) {
-			App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
+			App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &john_other, 1.0f, 1);
 			App->render->Blit(graphics, 35 + SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
 		}
 	}
@@ -219,6 +230,7 @@ void ModuleScreenSelection::choose() {
 		App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2);
 		App->render->Blit(graphics, 35+ SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1);
 	}
+
 }
 void ModuleScreenSelection::characters_enter() {
 	if (SELECTOR_1 == 1) {

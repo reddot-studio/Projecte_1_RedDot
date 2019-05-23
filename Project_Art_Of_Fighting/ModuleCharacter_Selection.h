@@ -29,6 +29,7 @@ public:
 
 	RectSprites imageSelection1;
 	RectSprites imageSelection2;
+	RectSprites ryo_other, john_other;
 	RectSprites characters;
 	RectSprites name1;
 	RectSprites name2;
