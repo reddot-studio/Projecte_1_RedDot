@@ -261,29 +261,34 @@ John::John(int player)
 	jumppunch.damage = 10;
 
 	//PUNCH + C
-	c_punch.SetReverseOffset({ 5,-45 },3 );
+	c_punch.SetReverseOffset({ 15,-42 },3 );
 	c_punch.PushBack({ 320,382,48,109 },5,-42,3, rect1, rect2, rect3);
-	//c_punch.SetReverseOffset({ ,, }, );
-	//c_punch.PushBack({ 376,382,55,109 },-4, -42, 3, rect1, rect2, rect3);
-	//c_punch.SetReverseOffset({ ,, }, );
-	//c_punch.PushBack({ 434,382,52,110 },-3, -45, 3, rect1, rect2, rect3);
-	//c_punch.SetReverseOffset({ ,, }, );
-	//c_punch.PushBack({ 495 ,382,105,108 },-3, -43, 5, rect1, rect2, rect3);
-	//c_punch.SetReverseOffset({ ,, }, );
-	//c_punch.PushBack({ 605,382,63,110 },-6, -44, 3, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ -12,-42 },3 );
+	c_punch.PushBack({ 376,382,55,109 },-4, -42, 3, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ -11,-43 }, 3);
+	c_punch.PushBack({ 434,382,52,110 },-3, -43, 3, rect1, rect2, rect3);	
+	c_punch.SetReverseOffset({ -64,-41 }, 5);
+	c_punch.PushBack({ 495 ,382,105,108 },-3, -41, 5, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ 0,-42 }, 3);
+	c_punch.PushBack({ 605,382,63,110 },-6, -44, 3, rect1, rect2, rect3);
 	c_punch.loop = false;
-	c_punch.speed = 0.05f;
+	c_punch.speed = 0.5f;
 	c_punch.damage = 20;
 
 
 	//KICK + C
+	c_kick.SetReverseOffset({ 3,-42 },3 );
 	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
+	c_kick.SetReverseOffset({ 0,-46 }, 3);
 	c_kick.PushBack({ 825,261,67,110 }, -4, -46, 2, rect1, rect2, rect3);
+	c_kick.SetReverseOffset({ -30,-43 },3 );
 	c_kick.PushBack({ 213,382,102,107  }, -1, -43, 5, rect1, rect2, rect3);
-	c_kick.PushBack({ 140,382,67,110 }, -4, -46, 2, rect1, rect2, rect3);
-	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
+	//c_kick.SetReverseOffset({ , }, );
+	//c_kick.PushBack({ 140,382,67,110 }, -4, -46, 2, rect1, rect2, rect3);
+	//c_kick.SetReverseOffset({ , }, );
+	//c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
-	c_kick.speed = 0.5f;
+	c_kick.speed = 0.05f;
 	c_kick.damage = 20;
 
 	//THROWN NOT NEEDED YET
