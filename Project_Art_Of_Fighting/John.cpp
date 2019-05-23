@@ -204,10 +204,14 @@ John::John(int player)
 	kick.speed = 0.7f;
 	kick.damage = 10;
 
-	//KOUKEN
-	koouKen.PushBack({ 366,149,69,98 },-10,-34,3, rect1, rect2, rect3);
+	//KOUKEN reversed completed
+	koouKen.SetReverseOffset({7, -34}, 3);
+	koouKen.PushBack({ 366,149,69,98 },-10,-34, 3, rect1, rect2, rect3);
+	koouKen.SetReverseOffset({7, -28}, 3);
 	koouKen.PushBack({ 435,155,67,92 }, -7, -28, 3, rect1, rect2, rect3);
+	koouKen.SetReverseOffset({-7, -37}, 5);
 	koouKen.PushBack({ 502,145,71,101 }, 2, -37 ,5, rect1, rect2, rect3);
+	koouKen.SetReverseOffset({-30, -27}, 8);
 	koouKen.PushBack({ 573,155,108,92 }, -12, -27, 8, rect1, rect2, rect3);
 	koouKen.loop = false;
 	koouKen.speed = 0.5f;
