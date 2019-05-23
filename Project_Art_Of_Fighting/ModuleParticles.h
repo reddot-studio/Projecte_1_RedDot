@@ -72,6 +72,7 @@ public:
 	Particle post_megaSmash;
 
 	Particle starhit;
+	Particle blue_starhit;
 	Particle impactfloor;
 	Particle vomit;
 	Particle blood;

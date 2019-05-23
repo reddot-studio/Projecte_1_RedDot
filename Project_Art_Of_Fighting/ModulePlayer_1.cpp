@@ -541,9 +541,15 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			c2->Enabled = false;
 		}
 		else if (App->player1->character->isBlocking) {
+			int offsetX = 0;
+			if (Side == 2) {
+				offsetX = 35;
+			}
 			c2->Enabled = false;
 			LOG("\nBLOCKED\n");
+			App->particles->AddParticle(App->particles->blue_starhit, c2->rect.x+ offsetX, c2->rect.y, COLLIDER_NONE, 0, 0, Side,JOHN);
 			last_input = IN_BLOCKED;
+
 		}
 		App->slowdown->StartSlowdown(slowdownDuration, 60);
 	}

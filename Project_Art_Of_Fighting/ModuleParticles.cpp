@@ -101,7 +101,15 @@ bool ModuleParticles::Start()
 	starhit.anim.SetReverseOffset({-5,-8}, 2);
 	starhit.anim.PushBack({ 1008 ,879,29,36 }, -5, -8, 2);
 	starhit.anim.speed = 0.5f;
-	starhit.anim.loop = false;
+	starhit.anim.loop = false;	
+	
+	//blue starhit animation
+	blue_starhit.anim.SetReverseOffset({0,0}, 2);
+	blue_starhit.anim.PushBack({ 877 ,143,12,12 }, 0, 0, 2);
+	blue_starhit.anim.SetReverseOffset({-5,-8}, 2);
+	blue_starhit.anim.PushBack({ 904 ,138,19,22 }, -5, -8, 2);
+	blue_starhit.anim.speed = 0.5f;
+	blue_starhit.anim.loop = false;
 
 	//impact floor animation
 	impactfloor.anim.PushBack({ 977 ,923,16,12 }, 0, 0, 0);
