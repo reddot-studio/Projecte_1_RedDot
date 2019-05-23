@@ -23,6 +23,7 @@ public:
 	void timer();
 	void draw();
 	void choose();
+	void characters_enter();
 
 	SDL_Rect back;
 
