@@ -25,7 +25,6 @@ bool ModuleInput::Init()
 	bool ret = true;
 	SDL_Init(0);
 
-	SDL_InitSubSystem(SDL_INIT_HAPTIC);
 
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{

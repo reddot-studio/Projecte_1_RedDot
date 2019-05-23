@@ -196,7 +196,7 @@ update_status ModuleSceneJohn::Update()
 			indicator.rect.y = 96;
 			indicator.rect.w = 100;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		}
 		if (rounds_counter == 1)
 		{
@@ -204,7 +204,7 @@ update_status ModuleSceneJohn::Update()
 			indicator.rect.y = 80;
 			indicator.rect.w = 104;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		}
 		if (rounds_counter >1)
 		{
@@ -212,7 +212,7 @@ update_status ModuleSceneJohn::Update()
 			indicator.rect.y = 145;
 			indicator.rect.w = 168;
 			indicator.rect.h = 16;
-			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator, 0);
+			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator, 0,1,false);
 		}
 	}
 
@@ -226,7 +226,7 @@ update_status ModuleSceneJohn::Update()
 		indicator.rect.y = 113;
 		indicator.rect.h = 16;
 		indicator.rect.w = 80;
-		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0);
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		first_row = false;
 	}
 
@@ -261,8 +261,8 @@ update_status ModuleSceneJohn::Update()
 		App->player1->CheckHealth(*App->player2);
 		App->player2->CheckHealth(*App->player1);
 
-		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup, 0);
-		App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame(), 0);
+		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT) / 2 - 8, &timeup, 0,1,false);
+		App->render->Blit(indicator_fight, 145, 45, &current_animation->GetCurrentFrame(), 0,1,false);
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
 			if (App->player2->p1_win < 2 && App->player1->p2_win < 2)
@@ -285,16 +285,16 @@ update_status ModuleSceneJohn::Update()
 
 		if (App->player1->isJumping != true)
 		{
-			App->player1->current_state = ST_IDLE;
-			App->player1->last_input = IN_UNKNOWN;
+			//App->player1->current_state = ST_IDLE;
+			//App->player1->last_input = IN_UNKNOWN;
 		}
 
 		if (App->player2->isJumping != true)
 		{
-			App->player2->current_state = ST_IDLE;
-			App->player2->last_input = IN_UNKNOWN;
+			//App->player2->current_state = ST_IDLE;
+			//App->player2->last_input = IN_UNKNOWN;
 		}
-		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0,1,false);
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
 			if (App->player2->p1_win < 2)
@@ -316,18 +316,18 @@ update_status ModuleSceneJohn::Update()
 
 		if (App->player2->isJumping != true)
 		{
-			App->player2->current_state = ST_IDLE;
-			App->player2->last_input = IN_UNKNOWN;
+			//App->player2->current_state = ST_IDLE;
+			//App->player2->last_input = IN_UNKNOWN;
 		}
 
 		if (App->player1->isJumping != true)
 		{
-			App->player1->current_state = ST_IDLE;
-			App->player1->last_input = IN_UNKNOWN;
+			//App->player1->current_state = ST_IDLE;
+			//App->player1->last_input = IN_UNKNOWN;
 		}
 
 
-		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0);
+		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0,1,false);
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 		{
 			if (App->player1->p2_win < 2)

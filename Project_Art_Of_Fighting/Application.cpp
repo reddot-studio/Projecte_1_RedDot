@@ -33,7 +33,6 @@ Application::Application()
 	modules[num++] = scene_congratz = new ModuleCongratzScreen();
 	modules[num++] = scene_john = new ModuleSceneJohn();
 	modules[num++] = scene_todo = new ModuleSceneTodo();
-	modules[num++] = sceneUI = new ModuleUI();
 	modules[num++] = player1 = new ModulePlayer_1();
 	modules[num++] = player2 = new ModulePlayer_2();
 	modules[num++] = particles = new ModuleParticles();
@@ -44,6 +43,7 @@ Application::Application()
 	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = character_selection = new ModuleScreenSelection();
 	modules[num++] = slowdown = new ModuleSlowdown();
+	modules[num++] = sceneUI = new ModuleUI();
 	
 	
 }	

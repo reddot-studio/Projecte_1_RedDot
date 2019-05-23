@@ -32,7 +32,8 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
-	slowdownDuration = 10;
+	last_input = IN_UNKNOWN;
+	slowdownDuration = 5;
 	if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_2 == 1) {
 			App->player2->character = new Ryo(1);
