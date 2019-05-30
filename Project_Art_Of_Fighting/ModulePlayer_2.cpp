@@ -124,8 +124,8 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_8] == KEY_DOWN) {
 		switch (last_input_attack)
 		{
-		case IN_PUNCH: last_input = IN_STRONG_ATTACK; break;
-		case IN_KICK: last_input = IN_STRONG_ATTACK; break;
+		case IN_PUNCH: last_input = IN_STRONG_PUNCH; break;
+		case IN_KICK: last_input = IN_STRONG_PUNCH; break;
 		}
 	}
 
@@ -319,7 +319,7 @@ update_status ModulePlayer_2::Update()
 	{	
 		iPoint newPos = pivot_player;
 		if (Side == 2) {
-			newPos.x = newPos.x + 11;
+			//newPos.x = newPos.x + 11;
 		}
 		HitCollider->SetRect(r.hitCollider, current_animation->damage, newPos, Side);
 	}
@@ -387,7 +387,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 			pivot_player.x = c2->rect.x + (pivot_player.x - player_collider->rect.x) - player_collider->rect.w;
 		}
 	}
-
+	
 	//Am I coliding with an enemy?
 	//if (c2->type == COLLIDER_PLAYER_COLLISION && (c1->Enabled && c2->Enabled))
 	//{
@@ -481,7 +481,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_STANDING_KICK; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
-		case IN_STRONG_ATTACK: state = ST_STRONG_ATTACK; break;
+		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
@@ -532,7 +532,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
-	case ST_STRONG_ATTACK:
+	case ST_STRONG_PUNCH:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
@@ -792,7 +792,7 @@ void ModulePlayer_2::states(int speed)
 		}
 		LOG("KICK");
 		break;
-	case ST_STRONG_ATTACK:
+	case ST_STRONG_PUNCH:
 		switch (last_input_attack)
 		{
 		case IN_PUNCH:

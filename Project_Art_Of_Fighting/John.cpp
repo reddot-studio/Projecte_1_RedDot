@@ -261,18 +261,18 @@ John::John(int player)
 	jumppunch.damage = 10;
 
 	//PUNCH + C
-	c_punch.SetReverseOffset({ 15,-42 },3 );
-	c_punch.PushBack({ 320,382,48,109 },5,-42,3, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ -12,-42 },3 );
-	c_punch.PushBack({ 376,382,55,109 },-4, -42, 3, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ -11,-43 }, 3);
-	c_punch.PushBack({ 434,382,52,110 },-3, -43, 3, rect1, rect2, rect3);	
-	c_punch.SetReverseOffset({ -64,-41 }, 5);
-	c_punch.PushBack({ 495 ,382,105,108 },-3, -41, 5, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ 0,-42 }, 3);
-	c_punch.PushBack({ 605,382,63,110 },-6, -44, 3, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ 15,-45 },3 );
+	c_punch.PushBack({ 320,382,48,109 },5,-45,3, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ -12,-45 },3 );
+	c_punch.PushBack({ 376,382,55,109 },-4, -45, 3, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ -11,-46 }, 3);
+	c_punch.PushBack({ 434,382,52,110 },-3, -46, 3, rect1, rect2, rect3);	
+	c_punch.SetReverseOffset({ -64,-44 }, 5);
+	c_punch.PushBack({ 495 ,382,105,108 },-3, -44, 5, rect1, rect2, rect3);
+	c_punch.SetReverseOffset({ 0,-47 }, 3);
+	c_punch.PushBack({ 605,382,63,110 },-6, -47, 3, rect1, rect2, rect3);
 	c_punch.loop = false;
-	c_punch.speed = 0.5f;
+	c_punch.speed = 0.6f;
 	c_punch.damage = 20;
 
 
@@ -288,7 +288,7 @@ John::John(int player)
 	c_kick.SetReverseOffset({3,-42 }, 2);
 	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
-	c_kick.speed = 0.05f;
+	c_kick.speed = 0.5f;
 	c_kick.damage = 20;
 
 	//THROWN NOT NEEDED YET
@@ -344,7 +344,7 @@ John::John(int player)
 	defeat.PushBack({918, 803, 78, 78}, 3, -14, 3);
 	defeat.SetReverseOffset({-45, 21}, 3);
 	defeat.PushBack({769, 881, 108, 44}, 2, 21, 3);
-	defeat.speed = 0.07f;
+	defeat.speed = 0.2f;
 	defeat.loop = false;
 
 	//Combos

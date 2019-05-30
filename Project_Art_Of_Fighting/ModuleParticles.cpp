@@ -257,7 +257,7 @@ void ModuleParticles::OnCollision(Collider * c1, Collider * c2)
 			else if (c1->Side == 2) {
 				offsetX = -active[i]->collider->rect.w / 4;
 			}
-			AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,c1->Side,RYO);
+			//AddParticle(post_koouKen, c1->rect.x + offsetX, c1->rect.y  + c1->rect.y/7,COLLIDER_NONE,0,0,c1->Side,RYO);
 
 			delete active[i];
 			active[i] = nullptr;
