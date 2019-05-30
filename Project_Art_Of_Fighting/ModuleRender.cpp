@@ -89,7 +89,9 @@ update_status ModuleRender::Update()
 	//Zoom Behav
 	if (App->player1->IsEnabled()) {
 		int distance = App->player2->GetPosition().x - App->player1->GetPosition().x;
-		if (distance < 150) {
+		if (distance < 0) distance *= -1;
+
+		if (distance < 175) {
 			isZoomed = true;
 		}
 		else {
