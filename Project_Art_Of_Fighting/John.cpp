@@ -354,6 +354,11 @@ John::John(int player)
 	defeat.speed = 0.2f;
 	defeat.loop = false;
 
+	//Recharge
+	recharge.SetReverseOffset({ 7, -34 }, 5);
+	recharge.PushBack({ 366,149,69,98 }, -10, -34, 5, rect1, rect2, rect3);
+	recharge.speed = 0.5f;
+
 	//Combos
 	for (int i = 0; i < 30; i++)
 	{

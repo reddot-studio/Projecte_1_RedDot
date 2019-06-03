@@ -159,14 +159,18 @@ if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 
 //Punch weak
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN) last_input_attack = last_input = IN_PUNCH;
-if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT)
+
+else if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT)
 {	
-	if (time < 50) {
-		time++;
-	}
-	else {
-		last_input = IN_RECHARGE;
-		time = 0;
+	if (current_state != ST_RECHARGE) {
+		if (time < 50) {
+			time++;
+		}
+		else {
+			last_input = IN_RECHARGE;
+			time = 0;
+			LOG("\nIN");
+		}
 	}
 }
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHARGE_UP;
@@ -204,7 +208,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DEFE
 
 
 //Check duration of animation and reset state when it finishes
-if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH)
+if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH != ST_RECHARGE)
 {
 	if (current_animation == &character->recover) {
 		last_input = IN_RECOVER_FINISH;
@@ -878,10 +882,12 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_RECHARGE_UP:state = ST_IDLE; break;
+		case IN_PUNCH: state = ST_IDLE; break;
 		}
+		break;
 
 	}
-
+	SDL_Log("Last input: %d", last_input);
 	last_input = IN_UNKNOWN;
 
 	return state;
@@ -1205,10 +1211,12 @@ void ModulePlayer_1::states(int speed)
 			current_animation = &character->defeat;
 		}break;
 	case ST_RECHARGE:
-		if (current_animation != &character->win) {
-			character->win.ResetCurrentFrame();
-			current_animation = &character->win;
-		}break;
+		if (current_animation != &character->recharge) {
+			character->recharge.ResetCurrentFrame();
+			current_animation = &character->recharge;
+		}
+		LOG("RECHARGE");
+		break;
 	}
 	current_state = state;
 
