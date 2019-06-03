@@ -47,6 +47,7 @@ public:
 	inputs last_input_attack = IN_KICK;
 
 	bool isDamaged = false;
+	float time = 0.0f;
 
 	SDL_Texture* pivotTexture = nullptr;
 

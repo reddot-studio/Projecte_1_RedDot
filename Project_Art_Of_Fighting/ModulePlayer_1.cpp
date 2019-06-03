@@ -159,10 +159,17 @@ if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 
 //Punch weak
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN) last_input_attack = last_input = IN_PUNCH;
-if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT) last_input = IN_RECHARGE;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT)
+{	
+	if (time < 50) {
+		time++;
+	}
+	else {
+		last_input = IN_RECHARGE;
+		time = 0;
+	}
+}
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHARGE_UP;
-
-	
 
 
 //kick weak
