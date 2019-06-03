@@ -376,7 +376,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		{
 			//Move camera
 			if (-App->render->camera.x > 0)
-				App->render->camera.x += App->render->speed;
+				App->render->camera.x += App->render->speed * 2;
 			//Limit player inside camera
 			pivot_player.x = c2->rect.x + c2->rect.w + (pivot_player.x - player_collider->rect.x);
 		}
@@ -384,7 +384,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 		if (c2->LeftRight == true)
 		{
 			//Move camera and limit player
-			App->render->camera.x -= App->render->speed;
+			App->render->camera.x -= App->render->speed * 2;
 			pivot_player.x = c2->rect.x + (pivot_player.x - player_collider->rect.x) - player_collider->rect.w;
 		}
 	}

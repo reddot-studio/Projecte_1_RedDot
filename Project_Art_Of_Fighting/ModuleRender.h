@@ -52,6 +52,8 @@ public:
 	float sprite_shake_magnitude = 0.0f;
 	iPoint sprite_offset;
 	iPoint start_sprite_offset;
+	iPoint MiddlePointOfPlayers;
+	Collider *Borrar;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake

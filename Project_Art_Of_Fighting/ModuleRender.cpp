@@ -70,7 +70,7 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
-
+	Borrar = App->collision->AddCollider({ { 20, 20, 20, 20 }, {0, 0} }, COLLIDER_WALL);
 
 	return ret;
 }
@@ -118,8 +118,22 @@ update_status ModuleRender::Update()
 	if (shaking)
 		UpdateCameraShake();
 
-	CameraLimitL->rect.x = -(camera.x / speed);
-	CameraLimitR->rect.x = -(((camera.x - camera.w * SCREEN_SIZE) / speed)+25);
+	CameraLimitL->rect.x = (-(camera.x / speed)) / zoomValue;
+	CameraLimitR->rect.x = (-(((camera.x - camera.w * SCREEN_SIZE) / speed) + 25)) / zoomValue;
+
+	if (App->player1->Side == 1) 
+	{
+		MiddlePointOfPlayers.x = (App->player1->pivot_player.x + ((App->player2->pivot_player.x - App->player1->pivot_player.x) / 2)) + 31;
+	}
+	else
+	{
+		MiddlePointOfPlayers.x = (App->player2->pivot_player.x + ((App->player1->pivot_player.x - App->player2->pivot_player.x) / 2)) + 31;
+	}
+
+	Borrar->SetPos(MiddlePointOfPlayers.x - 10, App->player1->pivot_player.y);
+	/*camera.x = -((MiddlePointOfPlayers.x / 2) * speed);*/
+
+	LOG("\n %d", CameraLimitL->rect.x);
 
 
 	return update_status::UPDATE_CONTINUE;
@@ -293,7 +307,8 @@ void ModuleRender::ZoomIn()
 			if (camera.y > -200)
 			{
 				timer += timerSpeed;
-				if (timer > 0.5f) {
+				if (timer > 0.5f) 
+				{
 					camera.y -= 2;
 					timer = 0.0f;
 				}
