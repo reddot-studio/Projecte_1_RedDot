@@ -223,13 +223,20 @@ John::John(int player)
 	fall.speed = 0.5f;
 
 	//TAUNT
-	taunt.PushBack({ 0,496,110,96 }, -22, -30, 3, rect1, rect2 , rect3);
+	taunt.SetReverseOffset({ -23, -30 }, 3);
+	taunt.PushBack({ 0,496,110,96 }, -21, -30, 3, rect1, rect2 , rect3);
+	taunt.SetReverseOffset({ -17,-30 }, 3);
 	taunt.PushBack({ 111,496,105,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.SetReverseOffset({ -19,-30 }, 3);
 	taunt.PushBack({ 218,496,107,96 }, -22, -30, 3, rect1, rect2, rect3);
-	taunt.PushBack({ 0,496,110,96 }, -22, -30, 3, rect1, rect2 , rect3);
+	taunt.SetReverseOffset({ -23, -30 }, 3);
+	taunt.PushBack({ 0,496,110,96 }, -21, -30, 3, rect1, rect2 , rect3);
+	taunt.SetReverseOffset({ -17,-30 }, 3);
 	taunt.PushBack({ 111,496,105,96 }, -22, -30, 3, rect1, rect2, rect3);
+	taunt.SetReverseOffset({ -19,-30 }, 3);
 	taunt.PushBack({ 218,496,107,96 }, -22, -30, 3, rect1, rect2, rect3);
-	taunt.speed = 0.4f;
+	
+	taunt.speed = 0.05f;
 	taunt.loop = false; 
 	
 

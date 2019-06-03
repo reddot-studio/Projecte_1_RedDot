@@ -129,6 +129,7 @@ update_status ModulePlayer_2::Update()
 		}
 	}
 
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_DIVIDE] == KEY_DOWN)	last_input = IN_TAUNT;
 	//win try
 	if (App->input->keyboard_state[SDL_SCANCODE_3] == KEY_DOWN) last_input = IN_WIN;
 	//defeat try
@@ -485,6 +486,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_TAUNT: state = ST_TAUNT; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -500,6 +502,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
+		case IN_TAUNT: state = ST_TAUNT; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -515,6 +518,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
+		case IN_TAUNT: state = ST_TAUNT; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -704,6 +708,12 @@ player_state ModulePlayer_2::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_CROUCH; break;
+		}
+		break;
+	case ST_TAUNT:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
 	case ST_WIN:
@@ -1005,6 +1015,12 @@ void ModulePlayer_2::states(int speed)
 			App->audio->Play_chunk(character->dmg);
 			App->particles->DeleteLastParticle(currentParticle);
 
+		}
+		break;
+	case ST_TAUNT:
+		if (current_animation != &character->taunt) {
+			character->taunt.ResetCurrentFrame();
+			current_animation = &character->taunt;
 		}
 		break;
 	case ST_WIN:

@@ -158,7 +158,12 @@ if (App->input->keyboard_state[SDL_SCANCODE_S] == KEY_UP)
 }
 
 //Punch weak
-if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN)	last_input_attack = last_input = IN_PUNCH;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_DOWN) last_input_attack = last_input = IN_PUNCH;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT) last_input = IN_RECHARGE;
+if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHARGE_UP;
+
+	
+
 
 //kick weak
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input_attack= last_input = IN_KICK;
@@ -594,6 +599,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
+		case IN_RECHARGE : state = ST_RECHARGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -610,6 +616,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
+		case IN_RECHARGE: state = ST_RECHARGE; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -626,6 +633,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
+		case IN_RECHARGE: state = ST_RECHARGE; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -859,6 +867,11 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
+	case ST_RECHARGE:
+		switch (last_input)
+		{
+		case IN_RECHARGE_UP:state = ST_IDLE; break;
+		}
 
 	}
 
@@ -1183,6 +1196,11 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->defeat) {
 			character->defeat.ResetCurrentFrame();
 			current_animation = &character->defeat;
+		}break;
+	case ST_RECHARGE:
+		if (current_animation != &character->win) {
+			character->win.ResetCurrentFrame();
+			current_animation = &character->win;
 		}break;
 	}
 	current_state = state;

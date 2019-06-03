@@ -101,6 +101,7 @@ enum inputs
 	IN_DEFEAT,
 	IN_TAUNT,
 	IN_RECHARGE,
+	IN_RECHARGE_UP,
 	
 };
 
