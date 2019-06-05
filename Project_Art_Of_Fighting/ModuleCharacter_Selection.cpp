@@ -128,7 +128,7 @@ update_status ModuleScreenSelection::Update() {
 
 
 
-		if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+		if (tick2 - tick1 > 5000) {
 			App->fade->FadeToBlack(App->character_selection, App->scene_john);
 		}
 	} 
