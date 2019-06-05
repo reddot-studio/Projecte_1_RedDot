@@ -37,6 +37,9 @@ bool ModuleUI::Start()
 	App->player1->Player_Health_BG = App->player2->Player_Health_BG = App->textures->Load("Assets/UI_Sprites/Health.png");
 	App->player1->Player_Health = App->player2->Player_Health = App->textures->Load("Assets/UI_Sprites/Health_Value.png");
 	App->player1->Player_Health_BG_Empty = App->player2->Player_Health_BG_Empty = App->textures->Load("Assets/UI_Sprites/HealthBar_Empty.png");
+	App->player1->Player_SpiritGreen = App->player2->Player_SpiritGreen = App->textures->Load("Assets/UI_Sprites/SpiritGreen.png");
+	App->player1->Player_SpiritYellow = App->player2->Player_SpiritYellow = App->textures->Load("Assets/UI_Sprites/SpiritYellow.png");
+	App->player1->Player_SpiritRed = App->player2->Player_SpiritRed = App->textures->Load("Assets/UI_Sprites/SpiritRed.png");
 
 	//126 = player health texture lenght
 	//Do same with App.player2
@@ -101,7 +104,7 @@ update_status ModuleUI::Update()
 			time_over = true;
 		}
 
-		//timer to string time and it will work ********************************************************************
+		
 
 		if (timer >= 10)
 		{
@@ -140,6 +143,10 @@ update_status ModuleUI::Update()
 	RendPosition = { { 0, 0, 128, 8 },{ 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 
+	//Player 1 Spirit
+
+
+	//Player 2 Spirit
 
 	//WinPoints
 	if (App->player1->Player_Health_Value_p1 == 0 || (time_over==true&& App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)) {

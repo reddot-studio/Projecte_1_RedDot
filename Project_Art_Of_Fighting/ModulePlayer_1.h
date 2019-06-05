@@ -89,7 +89,9 @@ public:
 	SDL_Texture* Player_Health_BG;
 	SDL_Texture* Player_Health_BG_Empty;
 	SDL_Texture* Player_Health;
-	SDL_Texture* Player_Spirit;
+	SDL_Texture* Player_SpiritGreen;
+	SDL_Texture* Player_SpiritYellow;
+	SDL_Texture* Player_SpiritRed;
 	int speed;
 	bool WallColiding = false;
 	ModulePlayer_2* Enemy;
