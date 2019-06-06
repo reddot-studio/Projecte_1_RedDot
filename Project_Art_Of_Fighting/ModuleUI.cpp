@@ -102,10 +102,10 @@ update_status ModuleUI::Update()
 		App->player2->Player_Spirit_Value_p2 += 2;
 		spriteTimer2 = SDL_GetTicks();
 	}
-	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 124) {
+	if (spriteTimer1 - spriteTimer3 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 124) {
 		App->player1->Player_Spirit_Value_p1 += 2;
 		x_spirit_1 -= 2;
-		spriteTimer2 = SDL_GetTicks();
+		spriteTimer3 = SDL_GetTicks();
 	}
 	//beat by
 	if (counter1 == 2) {
