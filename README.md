@@ -23,7 +23,7 @@ opponent's spirit gauge by taunting them.
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg" width=600>
 <br>
 <br>
-![](https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg)
+<br>
 # Gameplay Video:
 
 INSERTAR VIDEO XD
