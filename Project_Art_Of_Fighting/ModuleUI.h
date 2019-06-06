@@ -35,6 +35,7 @@ public:
 	char time[10];
 	int dont_pass = 1;
 	int timeKouKen_Spirit = 0;
+	int x_spirit_1 = (SCREEN_WIDTH / 2) - 142;
 };
 
 #endif // __MODULESCENEKEN_H__

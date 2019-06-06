@@ -86,10 +86,25 @@ update_status ModuleUI::Update()
 			App->player2->spiritKouKen = false;
 		}
 	}
+	if (App->player1->spiritKouKen == true) {
+		timeKouKen_Spirit++;
+		App->player1->Player_Spirit_Value_p1 -= 1;
+		x_spirit_1 += 1;
+		if (timeKouKen_Spirit >= 23) {
+			timeKouKen_Spirit = 0;
+			App->player1->spiritKouKen = false;
+		}
+	}
+
 	//SPIRIT REGEN
 	spriteTimer1 = SDL_GetTicks();
-	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 124) {
+	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 125) {
 		App->player2->Player_Spirit_Value_p2 += 2;
+		spriteTimer2 = SDL_GetTicks();
+	}
+	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 125) {
+		App->player1->Player_Spirit_Value_p1 += 2;
+		x_spirit_1 -= 2;
 		spriteTimer2 = SDL_GetTicks();
 	}
 
@@ -159,17 +174,25 @@ update_status ModuleUI::Update()
 
 	//Player 1 Spirit
 	RendPosition = { {0,0,App->player1->Player_Spirit_Value_p1,6}, { 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player1->Player_SpiritGreen, (SCREEN_WIDTH / 2) - 141, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+	if (App->player1->Player_Spirit_Value_p1 >= 62) {
+		App->render->Blit(App->player1->Player_SpiritGreen, x_spirit_1, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
+	}
+	else if (App->player1->Player_Spirit_Value_p1 >= 30) {
+		App->render->Blit(App->player1->Player_SpiritYellow, x_spirit_1, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
+	}
+	else {
+		App->render->Blit(App->player1->Player_SpiritRed, x_spirit_1, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
+	}
 	//Player 2 Spirit
 	RendPosition = { {0,0,App->player2->Player_Spirit_Value_p2,6}, { 0, 0 } ,{ 0, 0 } };
 	if (App->player2->Player_Spirit_Value_p2 >= 62) {
-		App->render->Blit(App->player2->Player_SpiritGreen, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+		App->render->Blit(App->player2->Player_SpiritGreen, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
 	}
 	else if (App->player2->Player_Spirit_Value_p2 >= 30) {
-		App->render->Blit(App->player2->Player_SpiritYellow, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+		App->render->Blit(App->player2->Player_SpiritYellow, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
 	}
 	else {
-		App->render->Blit(App->player2->Player_SpiritRed, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+		App->render->Blit(App->player2->Player_SpiritRed, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1, false);
 	}
 
 	//WinPoints
