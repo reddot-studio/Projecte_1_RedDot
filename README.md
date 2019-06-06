@@ -18,15 +18,19 @@ opponent's spirit gauge by taunting them.
 * Bernat Casañas Masip. Github User: @BernatCasanas.  
 * Miquel Suau González. Github User: @MayKoder.
 * Eudald Garrofé Flix. Github User: @Hevne. 
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg" width=600>
+<br>
 
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg" width=600>
+<br>
+<br>
+![](https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg)
 # Gameplay Video:
 
 INSERTAR VIDEO XD
 
 # Latest Release Of Our Project:
-
-https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/0.7.1
+<br>
+[Click here!](https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/0.7.1)
 
 
 
