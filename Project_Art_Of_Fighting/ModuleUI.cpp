@@ -77,7 +77,15 @@ update_status ModuleUI::Update()
 
 	//Needs To sTop on fail bliT
 
-
+	//SPIRIT
+	if (App->player2->spiritKouKen == true) {
+		timeKouKen_Spirit++;
+		App->player2->Player_Spirit_Value_p2 -= 1;
+		if (timeKouKen_Spirit >= 23) {
+			timeKouKen_Spirit = 0;
+			App->player2->spiritKouKen = false;
+		}
+	}
 
 
 	//Timer renderer
@@ -144,10 +152,19 @@ update_status ModuleUI::Update()
 	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 
 	//Player 1 Spirit
-	RendPosition = { {0,0,125,6}, { 0, 0 } ,{ 0, 0 } };
-	App->render->Blit(App->player2->Player_SpiritGreen, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition,0,1);
+	RendPosition = { {0,0,App->player1->Player_Spirit_Value_p1,6}, { 0, 0 } ,{ 0, 0 } };
 	App->render->Blit(App->player1->Player_SpiritGreen, (SCREEN_WIDTH / 2) - 141, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
 	//Player 2 Spirit
+	RendPosition = { {0,0,App->player2->Player_Spirit_Value_p2,6}, { 0, 0 } ,{ 0, 0 } };
+	if (App->player2->Player_Spirit_Value_p2 >= 62) {
+		App->render->Blit(App->player2->Player_SpiritGreen, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+	}
+	else if (App->player2->Player_Spirit_Value_p2 >= 30) {
+		App->render->Blit(App->player2->Player_SpiritYellow, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+	}
+	else {
+		App->render->Blit(App->player2->Player_SpiritRed, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
+	}
 
 	//WinPoints
 	if (App->player1->Player_Health_Value_p1 == 0 || (time_over==true&& App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)) {

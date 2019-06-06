@@ -95,6 +95,7 @@ public:
 	SDL_Texture* Player_SpiritRed;
 	int speed;
 	bool WallColiding = false;
+	bool spiritKouKen = false;
 	ModulePlayer_2* Enemy;
 
 	int tick1 = 0, tick2 = 0;

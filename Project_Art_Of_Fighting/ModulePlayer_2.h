@@ -75,7 +75,7 @@ public:
 
 	//PlayerStats
 	int Player_Health_Value_p2;
-
+	int Player_Spirit_Value_p2;
 	void Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage);
 	void CheckHealth(ModulePlayer_1&Enemy);
 
@@ -90,6 +90,7 @@ public:
 	SDL_Texture* Player_SpiritRed;
 	int speed;
 	bool WallColiding = false;
+	bool spiritKouKen = false;
 
 	ModulePlayer_1* Enemy;
 

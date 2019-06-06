@@ -33,6 +33,7 @@ public:
 	int counter1 = 0, counter2 = 0;
 	char time[10];
 	int dont_pass = 1;
+	int timeKouKen_Spirit = 0;
 };
 
 #endif // __MODULESCENEKEN_H__

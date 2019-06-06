@@ -47,6 +47,7 @@ bool ModulePlayer_2::Start()
 	pivot_player.x = 90;
 	pivot_player.y = 150;
 	Player_Health_Value_p2 = 126;
+	Player_Spirit_Value_p2 = 125;
 	LOG("Loading player textures");
 	bool ret = true;
 
@@ -114,7 +115,10 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_DOWN)	last_input_attack = last_input = IN_KICK;
 
 	//Ko'ou Ken
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN)	last_input = IN_KOOU_KEN;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN) {
+		last_input = IN_KOOU_KEN;
+		spiritKouKen = true;
+	}
 
 	//Jump
 	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
