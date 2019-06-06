@@ -15,6 +15,7 @@
 #include "SDL/include/SDL.h"
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
+#include "ModuleCharacter_Selection.h"
 
 ModuleCongratzScreen::ModuleCongratzScreen()
 {
@@ -135,13 +136,13 @@ update_status ModuleCongratzScreen::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN)
 	{
 
-		App->fade->FadeToBlack(App->scene_congratz, App->scene_todo);
+		App->fade->FadeToBlack(App->scene_congratz, App->character_selection);
 	}
 
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()-1)
 	{	
 		current_animation = &zero;
-		App->fade->FadeToBlack(App->scene_congratz, App->scene_welcome);
+		App->fade->FadeToBlack(App->scene_congratz, App->character_selection);
 	}
 	return update_status::UPDATE_CONTINUE;
 }

@@ -107,7 +107,17 @@ update_status ModuleUI::Update()
 		x_spirit_1 -= 2;
 		spriteTimer2 = SDL_GetTicks();
 	}
-
+	//beat by
+	if (counter1 == 2) {
+		beatby1++;
+	}
+	if (counter2 == 2) {
+		beatby2++;
+	}
+	sprintf_s(beatby_str1, 10, "beat by %d", beatby1);
+	sprintf_s(beatby_str2, 10, "beat by %d", beatby2);
+	App->fonts->BlitText(65, 6 - (RendPosition.rect.h / 2),1, beatby_str1);
+	App->fonts->BlitText(50+(SCREEN_WIDTH/2), 6 - (RendPosition.rect.h / 2), 1, beatby_str2);
 
 	//Timer renderer
 	if (tick2 - tick1 <= 4000)
