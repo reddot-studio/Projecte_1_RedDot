@@ -80,6 +80,7 @@ public:
 
 	//PlayerStats
 	int Player_Health_Value_p1;
+	int Player_Spirit_Value_p1;
 
 	void Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage);
 	void CheckHealth(ModulePlayer_2&Enemy);

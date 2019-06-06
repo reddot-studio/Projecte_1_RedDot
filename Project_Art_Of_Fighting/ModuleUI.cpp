@@ -144,8 +144,9 @@ update_status ModuleUI::Update()
 	App->render->Blit(App->player1->Player_Health_BG, (SCREEN_WIDTH / 2) + 16, 20 - (RendPosition.rect.h / 2), &RendPosition, 0,1,false);
 
 	//Player 1 Spirit
-
-
+	RendPosition = { {0,0,125,6}, { 0, 0 } ,{ 0, 0 } };
+	App->render->Blit(App->player2->Player_SpiritGreen, (SCREEN_WIDTH / 2) + 16, 27 - (RendPosition.rect.h / 2), &RendPosition,0,1);
+	App->render->Blit(App->player1->Player_SpiritGreen, (SCREEN_WIDTH / 2) - 141, 27 - (RendPosition.rect.h / 2), &RendPosition, 0, 1);
 	//Player 2 Spirit
 
 	//WinPoints
