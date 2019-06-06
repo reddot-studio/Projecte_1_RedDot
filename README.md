@@ -13,11 +13,20 @@ When characters perform special techniques, their spirit gauge is depleted
 and their special attacks become weaker. Players can also drain their 
 opponent's spirit gauge by taunting them.
 
-Members: 
+## Members: 
 * Jordi Pardo Gutiérrez. Github User: @Kansas94. 
 * Bernat Casañas Masip. Github User: @BernatCasanas.  
 * Miquel Suau González. Github User: @MayKoder.
 * Eudald Garrofé Flix. Github User: @Hevne. 
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg" width=600>
+
+# Gameplay Video:
+
+INSERTAR VIDEO XD
+
+# Latest Release Of Our Project:
+
+https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/0.7.1
 
 
 
