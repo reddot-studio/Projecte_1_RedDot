@@ -98,11 +98,11 @@ update_status ModuleUI::Update()
 
 	//SPIRIT REGEN
 	spriteTimer1 = SDL_GetTicks();
-	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 125) {
+	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 124) { //NO entra als 2 [BUG]
 		App->player2->Player_Spirit_Value_p2 += 2;
 		spriteTimer2 = SDL_GetTicks();
 	}
-	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 125) {
+	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 124) {
 		App->player1->Player_Spirit_Value_p1 += 2;
 		x_spirit_1 -= 2;
 		spriteTimer2 = SDL_GetTicks();
