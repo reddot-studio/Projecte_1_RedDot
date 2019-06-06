@@ -115,7 +115,7 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_DOWN)	last_input_attack = last_input = IN_KICK;
 
 	//Ko'ou Ken
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN && Player_Spirit_Value_p2>=23) {
 		last_input = IN_KOOU_KEN;
 		spiritKouKen = true;
 	}

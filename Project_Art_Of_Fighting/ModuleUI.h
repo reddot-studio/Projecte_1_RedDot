@@ -28,6 +28,7 @@ public:
 	bool time_over = false;
 	float timer_float;
 	int tick1 = 0, tick2 = 0, tick3 = 0;
+	int spriteTimer1 = 0, spriteTimer2 = 0;
 	Animation winpoint;
 	Animation* current_animation;
 	int counter1 = 0, counter2 = 0;

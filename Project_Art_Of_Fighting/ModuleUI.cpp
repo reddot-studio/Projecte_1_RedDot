@@ -86,6 +86,11 @@ update_status ModuleUI::Update()
 			App->player2->spiritKouKen = false;
 		}
 	}
+	spriteTimer1 = SDL_GetTicks();
+	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 124) {
+		App->player2->Player_Spirit_Value_p2 += 1;
+		spriteTimer2 = SDL_GetTicks();
+	}
 
 
 	//Timer renderer
