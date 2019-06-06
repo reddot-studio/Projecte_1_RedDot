@@ -30,7 +30,7 @@ opponent's spirit gauge by taunting them.
 INSERTAR VIDEO XD
 
 # Latest Release Of Our Project:
-<br>
+
 [Click here!](https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/0.7.1)
 
 
