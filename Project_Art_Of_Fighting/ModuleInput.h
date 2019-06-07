@@ -21,6 +21,7 @@ public:
 
 public:
 	const Uint8 *keyboard = nullptr;
+	Uint8 pad;
 	SDL_GameController *controller[2];
 
 	
@@ -40,6 +41,8 @@ public:
 	void StartEffect();
 
 	key_state keyboard_state[285];
+	GamePad pad_state[285];
+	SDL_GameControllerButton pads_button[16];
 
 };
 
