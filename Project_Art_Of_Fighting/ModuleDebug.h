@@ -18,6 +18,7 @@ public:
 	int numControllers;
 
 	char time[10];
+	char time2[10];
 	char controllers[40];
 public:
 

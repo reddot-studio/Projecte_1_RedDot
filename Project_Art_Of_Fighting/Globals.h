@@ -27,6 +27,12 @@ enum key_state {
 	KEY_DOWN,
 	KEY_REPEAT,
 };
+enum GamePad {
+	PAD_IDLE = 1,
+	PAD_UP,
+	PAD_DOWN,
+	PAD_REPEAT,
+};
 
 //States
 enum player_state
