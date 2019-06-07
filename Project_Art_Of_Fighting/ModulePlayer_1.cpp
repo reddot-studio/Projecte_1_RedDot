@@ -211,7 +211,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DAMA
 
 
 //Check duration of animation and reset state when it finishes
-if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH != ST_RECHARGE)
+if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH && current_state != ST_RECHARGE)
 {
 	if (current_animation == &character->recover) {
 		last_input = IN_RECOVER_FINISH;
