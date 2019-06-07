@@ -284,8 +284,8 @@ Ryo::Ryo(int player)
 	pose_idle_receive_crouch_kick.PushBack({ 745,1144,64,109 }, 0, 0, 0);
 	pose_idle_receive_crouch_kick.PushBack({ 586,1144,68,108 }, 0, 0, 0);
 
-	pose_idle_receive_crouch_punch.PushBack({ 119,1146,55,106 }, 0, 0, 0);
-	pose_idle_receive_crouch_punch.PushBack({ 247,1149,46,158 }, 0, 0, 0);
+	/*pose_idle_receive_crouch_punch.PushBack({ 119,1146,55,106 }, 0, 0, 0);
+	pose_idle_receive_crouch_punch.PushBack({ 247,1149,46,158 }, 0, 0, 0);*/
 
 	//-----WHILE CROUCH-----//
 	//RECIEVE KICK

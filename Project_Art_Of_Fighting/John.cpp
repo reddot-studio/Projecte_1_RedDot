@@ -329,6 +329,14 @@ John::John(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,-42 ,2);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
+
+	//damage in aire
+	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
+	air_damage.PushBack({ 772,657,115,60 }, 0, 0,2 );
+	air_damage.PushBack({ 892,628,101,89 }, 0,0 ,2 );
+	air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
+	air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
+	air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
 	
 	//BLOCK
 	standing_block.PushBack({338,772,60,110}, -5, -44, 5,rect1,rect2,rect3);

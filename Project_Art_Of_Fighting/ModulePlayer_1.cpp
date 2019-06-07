@@ -206,10 +206,8 @@ if (App->input->keyboard_state[SDL_SCANCODE_Y] == KEY_DOWN)	last_input = IN_TAUN
 if (App->input->keyboard_state[SDL_SCANCODE_1] == KEY_DOWN) last_input = IN_WIN;
 //defeat try
 if (App->input->keyboard_state[SDL_SCANCODE_2] == KEY_DOWN) last_input = IN_DEFEAT;
-
-//defeat try
-
-if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DEFEAT;
+//damage try
+if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DAMAGE_IN_AIR;
 
 
 //Check duration of animation and reset state when it finishes
@@ -613,6 +611,8 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
+		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
+		
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_RECHARGE : state = ST_RECHARGE; break;
@@ -881,6 +881,12 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_DAMAGE_IN_AIR:
+		switch (last_input)
+		{
+		case IN_KICK: state = ST_IDLE; break;
 		}
 		break;
 	case ST_RECHARGE:
@@ -1196,6 +1202,12 @@ void ModulePlayer_1::states(int speed)
 			App->audio->Play_chunk(character->dmg);
 			//App->particles->DeleteLastParticle(currentParticle);
 
+		}
+		break;
+	case ST_DAMAGE_IN_AIR:
+		if (current_animation != &character->air_damage) {
+			character->air_damage.ResetCurrentFrame();
+			current_animation = &character->air_damage;
 		}
 		break;
 	case ST_TAUNT:

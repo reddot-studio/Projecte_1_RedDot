@@ -66,7 +66,8 @@ enum player_state
 	ST_WIN,
 	ST_DEFEAT,
 	ST_TAUNT,
-	ST_RECHARGE
+	ST_RECHARGE,
+	ST_DAMAGE_IN_AIR
 	
 };
 
@@ -102,6 +103,7 @@ enum inputs
 	IN_TAUNT,
 	IN_RECHARGE,
 	IN_RECHARGE_UP,
+	IN_DAMAGE_IN_AIR,
 	
 };
 
