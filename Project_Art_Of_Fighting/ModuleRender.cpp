@@ -304,12 +304,12 @@ void ModuleRender::ZoomIn()
 		{
 			zoomValue += 0.001f;
 
-			if (camera.y > -200)
+			if (camera.y > -90)
 			{
 				timer += timerSpeed;
-				if (timer > 0.5f) 
+				if (timer > 0.80f) 
 				{
-					camera.y -= 2;
+					camera.y -= 1;
 					timer = 0.0f;
 				}
 			}
@@ -326,8 +326,8 @@ void ModuleRender::ZoomOut()
 
 			if (camera.y < 0) {
 				timer += timerSpeed;
-				if (timer > 0.5f) {
-					camera.y += 2;
+				if (timer > 0.80f) {
+					camera.y += 1;
 					timer = 0.0f;
 				}
 			}

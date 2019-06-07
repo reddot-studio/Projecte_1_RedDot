@@ -54,6 +54,8 @@ bool ModuleInput::Init()
 		return -1;
 	}
 
+	
+
 	for (int i = 4; i < 285; i++)
 	{
 		keyboard_state[i] = KEY_IDLE;
@@ -118,7 +120,7 @@ update_status ModuleInput::PreUpdate()
 		SDL_PumpEvents();
 
 		keyboard = SDL_GetKeyboardState(NULL);
-
+		
 		for (int i = 4; i < 285; i++)
 		{
 			if (keyboard[i] == 1)
@@ -135,7 +137,8 @@ update_status ModuleInput::PreUpdate()
 				else
 					keyboard_state[i] = KEY_IDLE;
 			}
-		}
+		}	
+		
 
 
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
