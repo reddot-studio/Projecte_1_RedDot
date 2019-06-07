@@ -42,6 +42,7 @@ update_status ModuleDebug::Update()
 	App->fonts->BlitText(5, 38, 3, "left trigger"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 50, 3, "right thumb"); //ficar el right i que es tradueixi de float a string.
 	App->fonts->BlitText(5, 59, 3, "hor asis"); //ficar el right i que es tradueixi de float a string.
+	App->fonts->BlitText(120, 59, 3, "ver asis"); //ficar el right i que es tradueixi de float a string.
 
 	numControllers = SDL_NumJoysticks();
 	sprintf_s(controllers, 40, "num controllers: %d",numControllers);
@@ -50,15 +51,26 @@ update_status ModuleDebug::Update()
 	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
 	else if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
 		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
+	}	
+	if (App->input->GetVerticalAxis() > App->input->deathZone)
+	sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis());
+	else if (App->input->GetVerticalAxis() < -App->input->deathZone) {
+		sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis());
 	}
 	if (App->input->GetHorizontalAxis() > App->input->deathZone || App->input->GetHorizontalAxis() < -App->input->deathZone) {
 		App->fonts->BlitText(85, 59, 3, time);
-	} //ficar el right i que es tradueixi de float a string.
+	}
 	else
 	{
 		App->fonts->BlitText(85, 59, 3, "0.0");
 	}
-
+	if (App->input->GetVerticalAxis() > App->input->deathZone || App->input->GetVerticalAxis() < -App->input->deathZone) {
+		App->fonts->BlitText(200, 59, 3, time2);
+	} //ficar el right i que es tradueixi de float a string.
+	else
+	{
+		App->fonts->BlitText(200, 59, 3, "0.0");
+	}
 
 //	LOG("- ModuleDebug Update");
 	return update_status::UPDATE_CONTINUE;
