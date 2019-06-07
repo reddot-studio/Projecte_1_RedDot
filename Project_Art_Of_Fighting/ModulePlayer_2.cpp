@@ -138,6 +138,10 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_3] == KEY_DOWN) last_input = IN_WIN;
 	//defeat try
 	if (App->input->keyboard_state[SDL_SCANCODE_4] == KEY_DOWN) last_input = IN_DEFEAT;
+	//damage air try
+	if (App->input->keyboard_state[SDL_SCANCODE_8] == KEY_DOWN) last_input = IN_DAMAGE_IN_AIR;
+	//ultrakick try
+	if (App->input->keyboard_state[SDL_SCANCODE_B] == KEY_DOWN)last_input = IN_ULTRA_KICK;
 
 
 
@@ -487,10 +491,14 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
+		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
+		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
+		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
+		case IN_RECHARGE: state = ST_RECHARGE; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -728,12 +736,35 @@ player_state ModulePlayer_2::ControlStates()
 		break;
 
 	case ST_DEFEAT:
-	{
 		switch (last_input)
 		{
 		case IN_KICK:state = ST_IDLE; break;
 		}
-	}
+		break;
+
+	case ST_RECHARGE:
+		switch (last_input)
+		{
+		case IN_RECHARGE_UP:state = ST_IDLE; break;
+		case IN_PUNCH: state = ST_IDLE; break;
+		}
+		break;
+
+	case ST_DAMAGE_IN_AIR:
+		switch (last_input)
+		{
+		case IN_KICK: state = ST_IDLE; break;
+		}
+		break;
+
+	case ST_ULTRA_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		}
+		break;
+
 	}
 
 	last_input = IN_UNKNOWN;
@@ -1038,6 +1069,14 @@ void ModulePlayer_2::states(int speed)
 			character->defeat.ResetCurrentFrame();
 			current_animation = &character->defeat;
 		}break;
+
+	case ST_ULTRA_KICK:
+		if (current_animation != &character->ultrakick)
+		{
+			character->ultrakick.ResetCurrentFrame();
+			current_animation = &character->ultrakick;
+		}
+		break;
 	}
 	current_state = state;
 
@@ -1061,6 +1100,8 @@ void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 		LOG("\n Someone died");
 		Enemy.Player_Health_Value_p1 = 0;
 		p1_win++;
+		last_input = IN_DEFEAT;
+		App->player1->last_input = IN_WIN;
 		win_check = true;
 		Module *CurrentScene = nullptr;
 

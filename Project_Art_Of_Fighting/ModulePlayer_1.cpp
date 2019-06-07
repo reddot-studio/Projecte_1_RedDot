@@ -208,6 +208,8 @@ if (App->input->keyboard_state[SDL_SCANCODE_1] == KEY_DOWN) last_input = IN_WIN;
 if (App->input->keyboard_state[SDL_SCANCODE_2] == KEY_DOWN) last_input = IN_DEFEAT;
 //damage try
 if (App->input->keyboard_state[SDL_SCANCODE_9] == KEY_DOWN) last_input = IN_DAMAGE_IN_AIR;
+//ultrakick try
+if (App->input->keyboard_state[SDL_SCANCODE_V] == KEY_DOWN)last_input = IN_ULTRA_KICK;
 
 
 //Check duration of animation and reset state when it finishes
@@ -611,10 +613,10 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
-		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
-		
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
+		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
+		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		case IN_RECHARGE : state = ST_RECHARGE; break;
 		}
 		break;
@@ -894,6 +896,13 @@ player_state ModulePlayer_1::ControlStates()
 		{
 		case IN_RECHARGE_UP:state = ST_IDLE; break;
 		case IN_PUNCH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_ULTRA_KICK:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		}
 		break;
 
@@ -1234,6 +1243,13 @@ void ModulePlayer_1::states(int speed)
 		}
 		LOG("RECHARGE");
 		break;
+	case ST_ULTRA_KICK:
+		if (current_animation != &character->ultrakick)
+		{
+			character->ultrakick.ResetCurrentFrame();
+			current_animation = &character->ultrakick;
+		}
+		break;
 	}
 	current_state = state;
 
@@ -1261,7 +1277,8 @@ void ModulePlayer_1::Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage)
 		p2_win++;
 		win_check = true;
 		last_input = IN_DEFEAT;
-		App->slowdown->StartSlowdown(200, 100);
+		App->player2->last_input = IN_WIN;
+		//App->slowdown->StartSlowdown(200, 100);
 		Module *CurrentScene = nullptr;
 
 		if (App->scene_todo->IsEnabled())

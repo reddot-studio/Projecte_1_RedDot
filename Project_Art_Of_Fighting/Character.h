@@ -53,7 +53,7 @@ public:
 	Animation taunt;
 	Animation thrown;
 	Animation recharge;
-
+	Animation ultrakick;
 	Animation pose_idle_receive_standing_punch_kick_plus_jump_punch;
 	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;
 	Animation pose_idle_receive_crouch_kick;

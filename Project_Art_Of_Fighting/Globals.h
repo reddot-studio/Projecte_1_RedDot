@@ -73,7 +73,8 @@ enum player_state
 	ST_DEFEAT,
 	ST_TAUNT,
 	ST_RECHARGE,
-	ST_DAMAGE_IN_AIR
+	ST_DAMAGE_IN_AIR,
+	ST_ULTRA_KICK
 	
 };
 
@@ -110,6 +111,7 @@ enum inputs
 	IN_RECHARGE,
 	IN_RECHARGE_UP,
 	IN_DAMAGE_IN_AIR,
+	IN_ULTRA_KICK,
 	
 };
 

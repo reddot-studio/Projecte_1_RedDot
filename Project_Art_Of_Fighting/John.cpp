@@ -268,15 +268,15 @@ John::John(int player)
 	jumppunch.damage = 10;
 
 	//PUNCH + C
-	c_punch.SetReverseOffset({ 15,-45 },3 );
+	c_punch.SetReverseOffset({ 15,-45 }, 3);
 	c_punch.PushBack({ 320,382,48,109 },5,-45,3, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ -12,-45 },3 );
+	c_punch.SetReverseOffset({ 16,-45 }, 3);
 	c_punch.PushBack({ 376,382,55,109 },-4, -45, 3, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ -11,-46 }, 3);
+	c_punch.SetReverseOffset({ 18,-46 }, 3);
 	c_punch.PushBack({ 434,382,52,110 },-3, -46, 3, rect1, rect2, rect3);	
-	c_punch.SetReverseOffset({ -64,-44 }, 5);
+	c_punch.SetReverseOffset({ -37,-44 }, 5);
 	c_punch.PushBack({ 495 ,382,105,108 },-3, -44, 5, rect1, rect2, rect3);
-	c_punch.SetReverseOffset({ 0,-47 }, 3);
+	c_punch.SetReverseOffset({ 21,-47 }, 3);
 	c_punch.PushBack({ 605,382,63,110 },-6, -47, 3, rect1, rect2, rect3);
 	c_punch.loop = false;
 	c_punch.speed = 0.6f;
@@ -289,13 +289,13 @@ John::John(int player)
 	c_kick.SetReverseOffset({ 0,-46 }, 2);
 	c_kick.PushBack({ 825,261,67,110 }, -4, -46, 2, rect1, rect2, rect3);
 	c_kick.SetReverseOffset({ -40,-43 },5 );
-	c_kick.PushBack({ 213,382,102,107  }, -1, -43, 5, rect1, rect2, rect3);
+	c_kick.PushBack({ 213,382,102,107 }, -1, -43, 5, rect1, rect2, rect3);
 	c_kick.SetReverseOffset({ -1,-46 }, 2);
 	c_kick.PushBack({ 140,382,67,110 }, -4, -46, 2, rect1, rect2, rect3);
 	c_kick.SetReverseOffset({3,-42 }, 2);
 	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
-	c_kick.speed = 0.5f;
+	c_kick.speed = 0.05f;
 	c_kick.damage = 20;
 
 	//THROWN NOT NEEDED YET
@@ -312,13 +312,62 @@ John::John(int player)
 	//thrown.loop = false; 
 
 	 //WIN
-	win.PushBack({ 419,752,85,129 }, 0, -60, 2);
-	win.PushBack({ 508,752,79,129 }, 0, -60, 2);
+	win.SetReverseOffset({ -17,-60 }, 3);
+	win.PushBack({ 419,752,85,129 }, 0, -60, 3);
+	win.SetReverseOffset({ -11,-60 }, 3);
+	win.PushBack({ 508,752,79,129 }, 0, -60, 3);
+	win.SetReverseOffset({ -2,-60 }, 5);
 	win.PushBack({ 591,752,71, 129 }, 0, -60, 5);
+	win.SetReverseOffset({ -19,-60 }, 5);
 	win.PushBack({ 666,752,87 ,129 }, 0, -60, 5);
 	win.speed = 0.2f;
 	win.loop = false;
 
+	//ULTRAKICK
+	ultrakick.SetReverseOffset({ 3, -42 }, 2);
+	ultrakick.PushBack({ 769,261, 52,107 }, 10, -42, 2);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 3);
+	ultrakick.SetReverseOffset({ -33,-46 }, 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0,-46 , 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 3);
+	ultrakick.SetReverseOffset({ -40,-43 }, 3);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ -33,-46 }, 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ -40,-43 }, 3);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ -33,-46 }, 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ -40,-43 }, 3);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ -33,-46 }, 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
+	ultrakick.SetReverseOffset({ 6, -46 }, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.SetReverseOffset({ 15,-45 }, 3);
+	ultrakick.PushBack({ 320,382,48,109 }, 5, -45, 3);
+	ultrakick.SetReverseOffset({ 16,-45 }, 3);
+	ultrakick.PushBack({ 376,382,55,109 }, -4, -45, 3);
+	ultrakick.SetReverseOffset({ 18,-46 }, 3);
+	ultrakick.PushBack({ 434,382,52,110 }, -3, -46, 3);
+	ultrakick.SetReverseOffset({ -37,-44 }, 10);
+	ultrakick.PushBack({ 495 ,382,105,108 },-3, -44, 3);
+	ultrakick.SetReverseOffset({ 21,-47 }, 3);
+	ultrakick.PushBack({ 605,382,63,110 }, -6, -47, 3);
+	ultrakick.speed = 0.5f; 
+	ultrakick.loop = false;
 
 	//damage reversed completed
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({6, -42}, 2);
@@ -330,7 +379,7 @@ John::John(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
 
-	//damage in aire
+	//damage in air
 	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
 	air_damage.PushBack({ 772,657,115,60 }, 0, 0,2 );
 	air_damage.PushBack({ 892,628,101,89 }, 0,0 ,2 );
