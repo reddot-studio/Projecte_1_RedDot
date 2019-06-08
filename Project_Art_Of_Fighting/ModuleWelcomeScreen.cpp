@@ -97,6 +97,9 @@ ModuleWelcomeScreen::ModuleWelcomeScreen()
 
 	black.rect = { 100,150,120,10 };
 	current_animation = &logo_transition;
+
+	
+
 }
 
 ModuleWelcomeScreen::~ModuleWelcomeScreen()
@@ -115,6 +118,7 @@ bool ModuleWelcomeScreen::Init()
 
 bool ModuleWelcomeScreen::Start()
 {
+
 	onlyonce = 0;
 	LOG("Loading intro scene");
 	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
@@ -135,7 +139,6 @@ bool ModuleWelcomeScreen::Start()
 	color.h = SCREEN_HEIGHT;
 
 
-
 	return true;
 }
 
@@ -153,6 +156,7 @@ update_status ModuleWelcomeScreen::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) coins++;
 	sprintf_s(coinsText, 11, "coins   %d", coins);
 	App->fonts->BlitText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10, 2, coinsText);
+
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -197,9 +201,8 @@ void ModuleWelcomeScreen::thirdScreen() {
 		}
 		//App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}	
-	//if()
-	sprintf_s(time, 3, "%d", 30-((timer2 - timer1)/1000));
-	App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 160, 5, time);
+
+
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
@@ -220,6 +223,11 @@ void ModuleWelcomeScreen::thirdScreen() {
 	if (App->input->keyboard_state[SDL_SCANCODE_M] == KEY_DOWN)
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_john);
+	}
+	if (timer2 - timer1 > 2000) {
+		sprintf_s(time, 3, "%d", 30 - ((timer2 - timer1) / 1000));
+		App->fonts->BlitText((SCREEN_WIDTH / 2) - 12, 160, 5, "time");
+		App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 170, 5,time);
 	}
 }
 void ModuleWelcomeScreen::secondScreen() {

@@ -36,7 +36,7 @@ bool ModuleTextures::Init()
 	App->fonts->Load("Assets/fonts/small_orange_font.png", " abcdefghiklmnoprstuwy!.0123456789", 1, 8, 8, 34);
 	App->fonts->Load("Assets/fonts/small_white_font.png", " abcdefghiklmnoprstuwy!.0123456789", 2, 8, 8, 34);
 	App->fonts->Load("Assets/fonts/timer.png", "1234567890", 1, 12, 20, 10);
-	App->fonts->Load("Assets/fonts/time_white.png", "1234567890", 1, 6, 7, 10);
+	App->fonts->Load("Assets/fonts/timer_white.png", "1234567890time", 1, 6, 7, 12);
 	return ret;
 }
 
