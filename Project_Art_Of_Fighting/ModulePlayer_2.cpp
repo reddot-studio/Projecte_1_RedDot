@@ -285,6 +285,12 @@ update_status ModulePlayer_2::Update()
 		}
 	}
 
+	//Waits defeat to end
+	if (current_state == ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+	{
+		App->player1->last_input = IN_WIN;
+	}
+
 
 	if (Side == 2) {
 
@@ -831,9 +837,19 @@ void ModulePlayer_2::states(int speed)
 	case ST_STANDING_PUNCH:
 		if (current_animation != &character->punch)
 		{
+			punchrandomizer++;
 			character->punch.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->punch;
+			if (punchrandomizer % 2 == 0)
+			{
+				App->audio->Play_chunk(character->punch1fx);
+			}
+			else
+			{
+				App->audio->Play_chunk(character->punch2fx);
+			}
+			App->audio->Play_chunk(character->punchfx);
 			App->audio->Play_chunk(character->punchfx);
 
 		}
@@ -1057,12 +1073,14 @@ void ModulePlayer_2::states(int speed)
 		break;
 	case ST_IDLE_TO_DAMAGE:
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
+			App->audio->Play_chunk(character->dmg);
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
-			App->audio->Play_chunk(character->dmg);
+			
 			App->particles->DeleteLastParticle(currentParticle);
 
 		}
+		break;
 		break;
 	case ST_TAUNT:
 		if (current_animation != &character->taunt) {
@@ -1075,12 +1093,14 @@ void ModulePlayer_2::states(int speed)
 		if (current_animation != &character->win) {
 			character->win.ResetCurrentFrame();
 			current_animation = &character->win;
+			App->audio->Play_chunk(character->winfx);
 		}
 		break;
 	case ST_DEFEAT:
 		if (current_animation != &character->defeat) {
 			character->defeat.ResetCurrentFrame();
 			current_animation = &character->defeat;
+			App->audio->Play_chunk(character->defeatfx);
 		}break;
 
 	case ST_ULTRA_KICK:
@@ -1115,6 +1135,8 @@ void ModulePlayer_2::Deal_Damage(ModulePlayer_1& Enemy, int AttackDamage)
 		p1_win++;
 		last_input = IN_DEFEAT;
 		App->player1->last_input = IN_WIN;
+		App->slowdown->StartSlowdown(40, 100);
+		App->audio->Play_chunk(character->lasthit);
 		win_check = true;
 		Module *CurrentScene = nullptr;
 

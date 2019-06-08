@@ -39,6 +39,7 @@ public:
 	iPoint GetPosition();
 
 public:
+	int punchrandomizer = 0;
 	Collider * player_collider = nullptr;
 
 	player_state current_state = ST_UNKNOWN;

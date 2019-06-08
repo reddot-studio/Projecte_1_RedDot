@@ -85,13 +85,18 @@ public:
 	//Textures
 	SDL_Texture* graphics = nullptr;
 
+	Mix_Chunk *punch1fx = NULL;
+	Mix_Chunk *punch2fx = NULL;
 	Mix_Chunk *punchfx = NULL;
 	Mix_Chunk *kickfx = NULL;
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
 	Mix_Chunk *dmg = NULL;
 	Mix_Chunk *tauntfx = NULL;
-
+	Mix_Chunk *lasthit = NULL;
+	Mix_Chunk *rechargefx = NULL;
+	Mix_Chunk *defeatfx = NULL;
+	Mix_Chunk *winfx = NULL;
 
 };
 

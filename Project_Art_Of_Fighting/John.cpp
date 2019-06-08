@@ -440,6 +440,10 @@ bool John::Start()
 	}
 	if (punchfx == nullptr)
 		punchfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punch.wav");
+	if(punch1fx==nullptr)
+		punch1fx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punchvoice.wav");
+	if (punch2fx == nullptr)
+		punch2fx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punchvoice2.wav");
 	if (kickfx == nullptr)
 		kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
 	if (kooukenfx == nullptr)
@@ -450,6 +454,15 @@ bool John::Start()
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
 	if(tauntfx==nullptr)
 	tauntfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Taunt.wav");
+	if (lasthit == nullptr)
+		lasthit = App->audio->Load_effects("Assets/audio/FX/ryo/FinalHit.wav");
+	if(rechargefx==nullptr)
+	rechargefx=App->audio->Load_effects("Assets/Audio/FX/ryo/Recharge.wav");
+	if(defeatfx==nullptr)
+	defeatfx= App->audio->Load_effects("Assets/Audio/FX/ryo/Defeat.wav");
+	if(winfx==nullptr)
+	winfx=App->audio->Load_effects("Assets/Audio/FX/ryo/Win.wav");
+	
 
 	//Hadouken 
 	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
@@ -476,6 +489,16 @@ bool John::CleanUp()
 		App->audio->Unload_effects(punchfx);
 		punchfx = nullptr;
 	}
+	if (punch1fx != nullptr)
+	{
+		App->audio->Unload_effects(punch1fx);
+		punch1fx = nullptr;
+	}
+	if (punch2fx != nullptr)
+	{
+		App->audio->Unload_effects(punch2fx);
+		punch2fx = nullptr;
+	}
 	if (kickfx != nullptr)
 	{
 		App->audio->Unload_effects(kickfx);
@@ -501,6 +524,28 @@ bool John::CleanUp()
 		App->audio->Unload_effects(tauntfx);
 		tauntfx = nullptr;
 	}
+	if (lasthit != nullptr)
+	{
+		App->audio->Unload_effects(lasthit);
+		lasthit = nullptr;
+	}
+	if (rechargefx != nullptr)
+	{
+		App->audio->Unload_effects(rechargefx);
+		rechargefx = nullptr;
+	}
+	if (defeatfx != nullptr)
+	{
+		App->audio->Unload_effects(defeatfx);
+		defeatfx = nullptr;
+	}
+	if (winfx != nullptr)
+	{
+		App->audio->Unload_effects(defeatfx);
+		winfx = nullptr;
+	}
+
+	
 	for (int i = 0; i < SpecialLenght; i++)
 	{
 		if (PlayerSpecialMoves[i] != nullptr)
@@ -514,7 +559,6 @@ bool John::CleanUp()
 
 void John::AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...)
 {
-
 	va_list args;
 	va_start(args, Inp);
 

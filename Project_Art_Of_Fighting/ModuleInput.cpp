@@ -106,11 +106,11 @@ update_status ModuleInput::PreUpdate()
 		SDL_PumpEvents();
 		if (App->player1->isJumping != true)
 		{
-			App->player1->last_input = IN_UNKNOWN;
+			//App->player1->last_input = IN_UNKNOWN;
 		}
 		if (App->player2->isJumping != true)
 		{
-			App->player2->last_input = IN_UNKNOWN;
+			//App->player2->last_input = IN_UNKNOWN;
 		}
 
 	}

@@ -42,10 +42,10 @@ bool ModulePlayer_1::Start()
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_1 == 1) {
-			App->player1->character = new John(1);
+			App->player1->character = new John(2);
 		}
 		else if (App->character_selection->SELECTOR_1 == 2) {
-			App->player1->character = new John(2);
+			App->player1->character = new John(1);
 		}
 	
 
@@ -239,6 +239,7 @@ if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()
 
 
 
+
 //DEBUG CONTROLS, Direct win/lose when pressing I or O
 if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN && player_collider->type == COLLIDER_NONE && !App->fade->IsFading)
 {
@@ -370,6 +371,12 @@ if (current_state == ST_STANDING_BLOCKED) {
 		}
 
 	}
+	//Waits defeat to end
+	if (current_state==ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+	{
+		App->player2->last_input = IN_WIN;
+	}
+
 	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH || current_state == ST_BACKWARD_FALL || current_state == ST_BACKWARD_JUMP_KICK)
 	{
 		isJumping = true;
@@ -980,10 +987,18 @@ void ModulePlayer_1::states(int speed)
 	case ST_STANDING_PUNCH:
 		if (current_animation != &character->punch)
 		{
-
+			punchrandomizer++;
 			character->punch.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->punch;
+			if (punchrandomizer % 2 == 0)
+			{
+				App->audio->Play_chunk(character->punch1fx);
+			}
+			else
+			{
+				App->audio->Play_chunk(character->punch2fx);
+			}
 			App->audio->Play_chunk(character->punchfx);
 
 		}
@@ -1224,7 +1239,7 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
-			//App->particles->DeleteLastParticle(currentParticle);
+			App->particles->DeleteLastParticle(currentParticle);
 
 		}
 		break;
@@ -1245,17 +1260,20 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation!=&character->win) {
 			character->win.ResetCurrentFrame();
 			current_animation = &character->win;
+			App->audio->Play_chunk(character->winfx);
 		}
 		break;
 	case ST_DEFEAT:
 		if (current_animation != &character->defeat) {
 			character->defeat.ResetCurrentFrame();
 			current_animation = &character->defeat;
+			App->audio->Play_chunk(character->defeatfx);
 		}break;
 	case ST_RECHARGE:
 		if (current_animation != &character->recharge) {
 			character->recharge.ResetCurrentFrame();
 			current_animation = &character->recharge;
+			App->audio->Play_chunk(character->rechargefx);
 		}
 		LOG("RECHARGE");
 		break;
@@ -1293,8 +1311,8 @@ void ModulePlayer_1::Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage)
 		p2_win++;
 		win_check = true;
 		last_input = IN_DEFEAT;
-		App->player2->last_input = IN_WIN;
-		//App->slowdown->StartSlowdown(200, 100);
+		App->slowdown->StartSlowdown(40, 100);
+		App->audio->Play_chunk(character->lasthit);
 		Module *CurrentScene = nullptr;
 
 		if (App->scene_todo->IsEnabled())
