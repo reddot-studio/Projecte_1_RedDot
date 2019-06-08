@@ -18,6 +18,7 @@
 #include "ModuleFonts.h"
 #include "ModuleDebug.h"
 #include "ModuleCharacter_Selection.h"
+#include "RectSprites.h"
 
 
 
@@ -137,12 +138,16 @@ update_status ModuleWelcomeScreen::Update()
 {
 	App->input->Paused = false;
 
+
+	
 	SDL_SetRenderDrawColor(render, 64, 16, 0, 255);
-	//SDL_RenderClear(render);
-	SDL_RenderDrawRect(render, &color);
+	SDL_RenderFillRect(render, &color);
 	SDL_RenderPresent(render);
 	RendPosition = { {0,0,304,224},{0,0},{0,0} };
 	App->render->Blit(cuadro, (SCREEN_WIDTH/2) - 152, (SCREEN_HEIGHT/2) - 112, &RendPosition, 1, 1, false);
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
+	}
 
 	tick2 = SDL_GetTicks();
 	
@@ -155,6 +160,9 @@ bool ModuleWelcomeScreen::CleanUp()
 	App->fonts->UnLoad(0);
 	App->audio->Unload_music(start_music);
 	App->textures->Unload(graphics);
+	App->textures->Unload(cuadro);
+	App->textures->Unload(cuadroRoto);
+
 	LOG("Unloading welcome scene");
 	return true;
 }
