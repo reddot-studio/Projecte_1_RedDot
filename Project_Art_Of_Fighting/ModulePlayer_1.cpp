@@ -392,6 +392,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 		}
 		if (character->jump.GetDisplacementFramePos() == character->jump.GetLastFrame() - 5)
 		{
+			App->audio->Play_chunk(character->fallfx);
 			character->jump.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
@@ -412,19 +413,14 @@ if (current_state == ST_STANDING_BLOCKED) {
 		}
 		if (character->jump_forward.GetDisplacementFramePos() == character->jump_forward.GetLastFrame() - 5)
 		{
+			App->audio->Play_chunk(character->fallfx);
 			character->jump_forward.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
 			isJumping = false;
 		}
+	}
 
-	}
-	//Waits defeat to end
-	if (current_state==ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
-	{
-		App->input->Paused = true;
-		App->player2->last_input = IN_WIN;
-	}
 
 	if (current_state == ST_BACKWARD_JUMP || current_state == ST_BACKWARD_JUMP_PUNCH || current_state == ST_BACKWARD_FALL || current_state == ST_BACKWARD_JUMP_KICK)
 	{
@@ -438,6 +434,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 		}
 		if (character->jump_backward.GetDisplacementFramePos() == character->jump_backward.GetLastFrame() - 5)
 		{
+			App->audio->Play_chunk(character->fallfx);
 			character->jump_backward.ResetDisplacement();
 			pivot_player.y = 150;
 			last_input = IN_RECOVER;
@@ -450,7 +447,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 	if (current_state == ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 	{
 		App->input->Paused = true;
-		App->player1->last_input = IN_WIN;
+		App->player2->last_input = IN_WIN;
 	}
 
 	if (Side == 2) {
@@ -636,7 +633,6 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			}
 			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE, 0, 0, Side, RYO);
 			c2->Enabled = false;
-			
 		}
 		else if (App->player1->character->isBlocking) {
 			int offsetX = 0;
@@ -649,7 +645,6 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			last_input = IN_BLOCKED;
 
 		}
-		App->input->StartHaptic(App->input->haptic1);
 
 	}
 
@@ -1082,7 +1077,7 @@ void ModulePlayer_1::states(int speed)
 			character->kick.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->kick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->punch2fx);
 		}
 		LOG("KICK");
 		break;
@@ -1093,6 +1088,7 @@ void ModulePlayer_1::states(int speed)
 				HitCollider->Enabled = true;
 				current_animation = &character->c_punch;
 				App->audio->Play_chunk(character->punchfx);
+				App->audio->Play_chunk(character->punch1fx);
 			}
 		LOG("STRONG PUNCH");
 		break;
@@ -1102,7 +1098,8 @@ void ModulePlayer_1::states(int speed)
 			character->c_kick.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->c_kick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 		}
 		LOG("STRONG KICK");
 		break;
@@ -1143,7 +1140,10 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->jumppunch.ResetCurrentFrame();
 			current_animation = &character->jumppunch;
-			App->audio->Play_chunk(character->punchfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("NEUTRAL JUMP PUNCH");
@@ -1154,7 +1154,10 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->jumpkick.ResetCurrentFrame();
 			current_animation = &character->jumpkick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("NEUTRAL JUMP KIcK");
@@ -1175,7 +1178,10 @@ void ModulePlayer_1::states(int speed)
 			character->jumpkick.ResetCurrentFrame();
 			HitCollider->Enabled = true;
 			current_animation = &character->jumpkick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("FORWARD JUMP KICK");
@@ -1186,7 +1192,10 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->jumppunch.ResetCurrentFrame();
 			current_animation = &character->jumppunch;
-			App->audio->Play_chunk(character->punchfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("FORWARD JUMP PUNCH");
@@ -1207,7 +1216,10 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->jumppunch.ResetCurrentFrame();
 			current_animation = &character->jumppunch;
-			App->audio->Play_chunk(character->punchfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("BACKWARD JUMP PUNCH");
@@ -1218,7 +1230,10 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->jumpkick.ResetCurrentFrame();
 			current_animation = &character->jumpkick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 			player_collider->Enabled = false;
 		}
 		LOG("BACKWARD JUMP KICK");
@@ -1266,7 +1281,8 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->crouch_punch.ResetCurrentFrame();
 			current_animation = &character->crouch_punch;
-			App->audio->Play_chunk(character->punchfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 		}
 		LOG("CROUCH PUNCH");
 		break;
@@ -1275,15 +1291,26 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			character->crouch_kick.ResetCurrentFrame();
 			current_animation = &character->crouch_kick;
-			App->audio->Play_chunk(character->kickfx);
+			App->audio->Play_chunk(character->jumpattackfx);
+			App->audio->Play_chunk(character->punch2fx);
 		}
 		LOG("CROUCH KICK");
 		break;
 	case ST_CROUCH_DAMAGE:
-		if (current_animation != &character->pose_crouch_receive_crouch_punch) {
-			character->pose_crouch_receive_crouch_punch.ResetCurrentFrame();
-			current_animation = &character->pose_crouch_receive_crouch_punch;
-			App->audio->Play_chunk(character->dmg);
+		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
+			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
+			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
+			if (App->player2->current_state == ST_STANDING_KICK)
+			{
+				App->audio->Play_chunk(character->kickfx);
+				App->audio->Play_chunk(character->kickfx);
+			}
+			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH)
+			{
+				App->audio->Play_chunk(character->dmg);
+				App->audio->Play_chunk(character->dmg);
+			}
+			App->particles->DeleteLastParticle(currentParticle);
 		}
 		break;
 	case ST_STANDING_BLOCK:
@@ -1310,8 +1337,18 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
-			App->audio->Play_chunk(character->dmg);
-			//App->particles->DeleteLastParticle(currentParticle);
+			//App->audio->Play_chunk(character->dmg);
+			if (App->player2->current_state == ST_STANDING_KICK)
+			{
+				App->audio->Play_chunk(character->kickfx);
+				App->audio->Play_chunk(character->kickfx);
+			}
+			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH)
+			{
+				App->audio->Play_chunk(character->dmg);
+				App->audio->Play_chunk(character->dmg);
+			}
+			App->particles->DeleteLastParticle(currentParticle);
 
 		}
 		break;
