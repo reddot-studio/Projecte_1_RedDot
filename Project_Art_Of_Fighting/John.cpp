@@ -462,7 +462,10 @@ bool John::Start()
 	defeatfx= App->audio->Load_effects("Assets/Audio/FX/ryo/Defeat.wav");
 	if(winfx==nullptr)
 	winfx=App->audio->Load_effects("Assets/Audio/FX/ryo/Win.wav");
-	
+	if (fallfx == nullptr)
+		fallfx = App->audio->Load_effects("Assets/Audio/FX/Fall.wav");
+	if (jumpattackfx == nullptr)
+		jumpattackfx = App->audio->Load_effects("Assets/Audio/FX/ryo/JumpAttack.wav");
 
 	//Hadouken 
 	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
@@ -541,8 +544,18 @@ bool John::CleanUp()
 	}
 	if (winfx != nullptr)
 	{
-		App->audio->Unload_effects(defeatfx);
+		App->audio->Unload_effects(winfx);
 		winfx = nullptr;
+	}
+	if (fallfx != nullptr)
+	{
+		App->audio->Unload_effects(fallfx);
+		fallfx = nullptr;
+	}
+	if (jumpattackfx != nullptr)
+	{
+		App->audio->Unload_effects(jumpattackfx);
+		jumpattackfx = nullptr;
 	}
 
 	

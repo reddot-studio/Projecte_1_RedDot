@@ -97,6 +97,8 @@ public:
 	Mix_Chunk *rechargefx = NULL;
 	Mix_Chunk *defeatfx = NULL;
 	Mix_Chunk *winfx = NULL;
+	Mix_Chunk *fallfx = NULL;
+	Mix_Chunk *jumpattackfx = NULL;
 
 };
 
