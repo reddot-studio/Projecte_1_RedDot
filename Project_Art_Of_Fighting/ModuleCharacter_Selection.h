@@ -45,6 +45,7 @@ public:
 	Animation selector1;
 	Animation selector2;
 	Mix_Music* selection_music;
+	Mix_Music* character_music;
 	Mix_Chunk* player1_john;
 	Mix_Chunk* player2_john;
 	Mix_Chunk* versus;

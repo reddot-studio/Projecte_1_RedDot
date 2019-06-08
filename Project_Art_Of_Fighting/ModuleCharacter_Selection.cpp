@@ -93,6 +93,7 @@ bool ModuleScreenSelection::Start() {
 	versuscounter = 0;
 	graphics = App->textures->Load("Assets/character_selection.png");
 	selection_music = App->audio->Load_music("Assets/Audio/Donokagoshi.ogg");
+	character_music = App->audio->Load_music("Assets/Audio/058x200yen Arigatou.ogg");
 	player1_john = App->audio->Load_effects("Assets/Audio/FX/John_1.wav");
 	player2_john = App->audio->Load_effects("Assets/Audio/FX/John_2.wav");
 	versus = App->audio->Load_effects("Assets/Audio/FX/Versus.wav");
@@ -136,7 +137,7 @@ update_status ModuleScreenSelection::Update() {
 
 
 
-		if (tick2 - tick1 > 5000) {
+		if (tick2 - tick1 > 2500) {
 			App->fade->FadeToBlack(App->character_selection, App->scene_john);
 		}
 	} 
@@ -145,7 +146,7 @@ update_status ModuleScreenSelection::Update() {
 }
 bool ModuleScreenSelection::CleanUp() {
 	App->textures->Unload(graphics);
-	App->audio->Unload_music(selection_music);
+	App->audio->Unload_music(character_music);
 	return true;
 }
 void ModuleScreenSelection::move() {
@@ -242,8 +243,10 @@ void ModuleScreenSelection::choose() {
 
 }
 void ModuleScreenSelection::characters_enter() {
+	App->audio->Unload_music(selection_music);
 	if (john1counter == 0)
 	{
+		App->audio->Play_music(character_music);
 		App->audio->Play_chunk(player1_john);
 		john1counter++;
 	}
