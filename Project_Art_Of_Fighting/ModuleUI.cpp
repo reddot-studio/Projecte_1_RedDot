@@ -62,6 +62,12 @@ bool ModuleUI::Start()
 	winpoint.speed = 0.2f;
 	current_animation = &winpoint;
 
+	App->player1->Player_Spirit_Value_p1 = 0;
+	App->player2->Player_Spirit_Value_p2 = 0;
+	x_spirit_1 = (SCREEN_WIDTH / 2) - 16;;
+	initSpirit = true;
+
+
 	return true;
 }
 

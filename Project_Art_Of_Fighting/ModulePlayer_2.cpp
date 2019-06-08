@@ -47,7 +47,7 @@ bool ModulePlayer_2::Start()
 	pivot_player.x = 90;
 	pivot_player.y = 150;
 	Player_Health_Value_p2 = 126;
-	Player_Spirit_Value_p2 = 126;
+	Player_Spirit_Value_p2 = 0;
 	LOG("Loading player textures");
 	bool ret = true;
 
