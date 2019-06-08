@@ -401,11 +401,16 @@ Ryo::~Ryo()
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
 
 	 //Add Combos
-	 AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
-	 AddCombo(4, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
-	 AddCombo(5, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
-	 AddCombo(3, IN_KOOU_KEN, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_PUNCH);
+	 AddCombo(6, IN_KOOU_KEN, 1, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
+	 AddCombo(4, IN_KOOU_KEN, 1, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	 AddCombo(5, IN_KOOU_KEN, 1, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_PUNCH);
+	 AddCombo(3, IN_KOOU_KEN, 1, IN_CROUCH_UP, IN_RIGHT_DOWN, IN_PUNCH);
 
+
+	 AddCombo(5, IN_KOOU_KEN, 2, IN_CROUCH_DOWN, IN_UNKNOWN, IN_LEFT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	 AddCombo(4, IN_KOOU_KEN, 2, IN_CROUCH_DOWN, IN_LEFT_DOWN, IN_UNKNOWN, IN_PUNCH);
+	 AddCombo(4, IN_KOOU_KEN, 2, IN_UNKNOWN, IN_CROUCH_DOWN, IN_LEFT_DOWN, IN_PUNCH);
+	 AddCombo(6, IN_KOOU_KEN, 2, IN_UNKNOWN, IN_CROUCH_DOWN, IN_LEFT_DOWN, IN_RIGHT_DOWN, IN_UNKNOWN, IN_PUNCH);
 
 	return true;
 }
@@ -452,7 +457,7 @@ Ryo::~Ryo()
 	 return true;
  }
 
- void Ryo::AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...)
+ void Ryo::AddCombo(int NumberOfInputs, inputs EndState, int ComboSide,inputs Inp...)
  {
 
 	 va_list args;
@@ -468,6 +473,7 @@ Ryo::~Ryo()
 
 	 Combo->MovementLenght = NumberOfInputs;
 	 Combo->Completed_Input = EndState;
+	 Combo->Combo_Side = ComboSide;
 	 PlayerSpecialMoves[SpecialLenght] = Combo;
 	 SpecialLenght++;
 
@@ -523,7 +529,7 @@ Ryo::~Ryo()
 
  }
 
- inputs Ryo::CheckCombos()
+ inputs Ryo::CheckCombos(ModulePlayer_1* P1, ModulePlayer_2* P2)
  {
 
 	 int Check = TopPosition;
@@ -561,9 +567,15 @@ Ryo::~Ryo()
 
 		 if (Completed == PlayerSpecialMoves[i]->MovementLenght)
 		 {
-			 LOG("\n Combo Completed");
-
-			 return PlayerSpecialMoves[i]->Completed_Input;
+			 if ((P1 && P1->Side == PlayerSpecialMoves[i]->Combo_Side) || (P2 && P2->Side == PlayerSpecialMoves[i]->Combo_Side)) 
+			 {
+				 LOG("\n Combo Completed");
+				 return PlayerSpecialMoves[i]->Completed_Input;
+			 }
+			 else
+			 {
+				 return IN_EMPTY;
+			 }
 		 }
 
 	 }

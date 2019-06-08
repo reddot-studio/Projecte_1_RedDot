@@ -487,9 +487,9 @@ if (current_state == ST_STANDING_BLOCKED) {
 
 
 	//TODO: Delete this line and move it to generic place
-	if (character->CheckCombos() != IN_EMPTY)
+	if (character->CheckCombos(App->player1, nullptr) != IN_EMPTY)
 	{
-		last_input = character->CheckCombos();
+		last_input = character->CheckCombos(App->player1, nullptr);
 	}
 
 

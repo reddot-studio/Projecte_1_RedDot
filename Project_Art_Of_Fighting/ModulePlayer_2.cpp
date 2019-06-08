@@ -455,9 +455,9 @@ update_status ModulePlayer_2::Update()
 	}
 
 	//TODO: Delete this line and move it to generic place
-	if (character->CheckCombos() != IN_EMPTY)
+	if (character->CheckCombos(nullptr, App->player2) != IN_EMPTY)
 	{
-		last_input = character->CheckCombos();
+		last_input = character->CheckCombos(nullptr, App->player2);
 	}
 
 	return UPDATE_CONTINUE;

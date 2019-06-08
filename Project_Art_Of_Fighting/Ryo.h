@@ -2,6 +2,7 @@
 #define __RYO_H__
 
 #include "Character.h"
+#include"ModulePlayer_1.h"
 
 struct SDL_Texture;
 
@@ -22,8 +23,8 @@ public:
 	int TopPosition = 0;
 	int BottomPosition = 0;
 	virtual void AddInput(inputs, float);
-	virtual inputs CheckCombos();
-	virtual void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...);
+	virtual inputs CheckCombos(ModulePlayer_1* P1 = nullptr, ModulePlayer_2* P2 = nullptr);
+	virtual void AddCombo(int NumberOfInputs, inputs EndState, int ComboSide,inputs Inp...)override;
 };
 
 #endif // !__RYO_H__

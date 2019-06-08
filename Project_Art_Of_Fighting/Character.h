@@ -31,8 +31,8 @@ public:
 	int colliderOffsetX;
 
 	virtual void AddInput(inputs, float) = 0;
-	virtual inputs CheckCombos() = 0;
-	virtual void AddCombo(int NumberOfInputs, inputs EndState, inputs Inp...) = 0;
+	virtual inputs CheckCombos(ModulePlayer_1*, ModulePlayer_2*) = 0;
+	virtual void AddCombo(int NumberOfInputs, inputs EndState,int ComboSide, inputs Inp...) = 0;
 
 	int specialDmg;
 	//Basic moves
