@@ -46,7 +46,10 @@ public:
 	RectSprites snk;
 	RectSprites black;
 
-	int tick1 = 0, tick2 = 0;
+	int fadeSlow = 255;
+	int tick1 = 0, tick2 = 0, tick3 = 0, tick4 = 0;
+	char coinsText[10];
+	int coins = 0;
 };
 
 
