@@ -663,6 +663,8 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_RECHARGE: state = ST_RECHARGE; break;
 		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -682,6 +684,8 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_RECHARGE: state = ST_RECHARGE; break;
 		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -690,6 +694,8 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 
@@ -698,18 +704,24 @@ player_state ModulePlayer_2::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_STRONG_PUNCH:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_STRONG_KICK:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP:
@@ -835,6 +847,8 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_CROUCH_DAMAGE; break;
 		case IN_BLOCKING: state = ST_CROUCH_BLOCK; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_CROUCH_PUNCH:
