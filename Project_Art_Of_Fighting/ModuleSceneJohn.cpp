@@ -283,7 +283,7 @@ update_status ModuleSceneJohn::Update()
 		}
 
 
-		tick1 = SDL_GetTicks();
+		//tick1 = SDL_GetTicks();
 
 		App->player1->CheckHealth(*App->player2);
 		App->player2->CheckHealth(*App->player1);

@@ -1350,9 +1350,10 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
 			}
-			if (koukenenabled == true)
+			if (App->player2->koukenenabled == true)
 			{
-				koukenenabled = false;
+				App->audio->Play_chunk(character->koukenimpactfx);
+				App->player2->koukenenabled = false;
 			}
 			App->particles->DeleteLastParticle(currentParticle);
 
