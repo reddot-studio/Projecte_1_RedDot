@@ -636,7 +636,6 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			}
 			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE, 0, 0, Side, RYO);
 			c2->Enabled = false;
-			
 		}
 		else if (App->player1->character->isBlocking) {
 			int offsetX = 0;
@@ -649,7 +648,6 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			last_input = IN_BLOCKED;
 
 		}
-		App->input->StartHaptic(App->input->haptic1);
 
 	}
 
@@ -1311,7 +1309,8 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
-			//App->particles->DeleteLastParticle(currentParticle);
+
+			App->particles->DeleteLastParticle(currentParticle);
 
 		}
 		break;

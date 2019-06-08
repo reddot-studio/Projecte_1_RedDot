@@ -603,7 +603,6 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 			last_input = IN_BLOCKED;
 
 		}
-		App->input->StartHaptic(App->input->haptic);
 	
 	}
 
