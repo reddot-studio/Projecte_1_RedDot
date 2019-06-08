@@ -139,14 +139,22 @@ update_status ModuleInput::PreUpdate()
 			}
 		}	
 		
-		if (controller[0] != nullptr) inputGamepad(controller[0]);
-		if (controller[1] != nullptr) inputGamepad(controller[1]);
+		if (controller[0] != nullptr) inputGamepad(1,controller[0]);
+		if (controller[1] != nullptr) inputGamepad(2,controller[1]);
 
-		joystick_right =  (GetHorizontalAxis() > deathZone) ? true : false;
-		joystick_left =  (GetHorizontalAxis() < -deathZone) ? true : false;
+		//Joystick 01
+		joystick_right_p1 =  (GetHorizontalAxis_p1() > deathZone) ? true : false;
+		joystick_left_p1 =  (GetHorizontalAxis_p1() < -deathZone) ? true : false;
 
-		joystick_up = (GetVerticalAxis() < -jumpZone) ? true : false;
-		joystick_down = (GetVerticalAxis() > crouchZone) ? true : false;
+		joystick_up_p1 = (GetVerticalAxis_p1() < -jumpZone) ? true : false;
+		joystick_down_p1 = (GetVerticalAxis_p1() > crouchZone) ? true : false;
+		
+		//Joystick 02
+		joystick_right_p2 =  (GetHorizontalAxis_p2() > deathZone) ? true : false;
+		joystick_left_p2 =  (GetHorizontalAxis_p2() < -deathZone) ? true : false;
+
+		joystick_up_p2 = (GetVerticalAxis_p2() < -jumpZone) ? true : false;
+		joystick_down_p2 = (GetVerticalAxis_p2() > crouchZone) ? true : false;
 
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 			return update_status::UPDATE_STOP;
@@ -174,7 +182,7 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
-const float ModuleInput::GetHorizontalAxis()
+const float ModuleInput::GetHorizontalAxis_p1()
 {
 	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller[0], SDL_CONTROLLER_AXIS_LEFTX);
 	horizontalAxis /= 32767;
@@ -182,9 +190,24 @@ const float ModuleInput::GetHorizontalAxis()
 	return horizontalAxis;
 }
 
-const float ModuleInput::GetVerticalAxis()
+const float ModuleInput::GetVerticalAxis_p1()
 {
 	float verticalAxis = (float)SDL_GameControllerGetAxis(controller[0], SDL_CONTROLLER_AXIS_LEFTY);
+	verticalAxis /= 32767;
+
+	return verticalAxis;
+}
+const float ModuleInput::GetHorizontalAxis_p2()
+{
+	float horizontalAxis = (float)SDL_GameControllerGetAxis(controller[1], SDL_CONTROLLER_AXIS_LEFTX);
+	horizontalAxis /= 32767;
+
+	return horizontalAxis;
+}
+
+const float ModuleInput::GetVerticalAxis_p2()
+{
+	float verticalAxis = (float)SDL_GameControllerGetAxis(controller[1], SDL_CONTROLLER_AXIS_LEFTY);
 	verticalAxis /= 32767;
 
 	return verticalAxis;
@@ -195,65 +218,128 @@ void ModuleInput::StartEffect()
 		// Test the effect
 
 }
-void ModuleInput::inputGamepad(SDL_GameController * controller) {
-	//BUTTON A
-	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
-		if (gamepad.A == BUTTON_IDLE)
-			gamepad.A = BUTTON_DOWN;
+void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller) {
+	if (numJoystick == 1) {
+		//BUTTON A
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+			if (gamepad01.A == BUTTON_IDLE)
+				gamepad01.A = BUTTON_DOWN;
+			else
+				gamepad01.A = BUTTON_REPEAT;
+		}
 		else
-			gamepad.A = BUTTON_REPEAT;
-	}
-	else
-	{
-		if (gamepad.A == BUTTON_REPEAT || (gamepad.A == BUTTON_DOWN))
-			gamepad.A = BUTTON_UP;
-		else
-			gamepad.A = BUTTON_IDLE;
-	}	
-	
-	//BUTTON X
-	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
-		if (gamepad.X == BUTTON_IDLE)
-			gamepad.X = BUTTON_DOWN;
-		else
-			gamepad.X = BUTTON_REPEAT;
-	}
-	else
-	{
-		if (gamepad.X == BUTTON_REPEAT || (gamepad.X == BUTTON_DOWN))
-			gamepad.X = BUTTON_UP;
-		else
-			gamepad.X = BUTTON_IDLE;
-	}	
+		{
+			if (gamepad01.A == BUTTON_REPEAT || (gamepad01.A == BUTTON_DOWN))
+				gamepad01.A = BUTTON_UP;
+			else
+				gamepad01.A = BUTTON_IDLE;
+		}
 
-	//BUTTON B
-	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
-		if (gamepad.B == BUTTON_IDLE)
-			gamepad.B = BUTTON_DOWN;
+		//BUTTON X
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
+			if (gamepad01.X == BUTTON_IDLE)
+				gamepad01.X = BUTTON_DOWN;
+			else
+				gamepad01.X = BUTTON_REPEAT;
+		}
 		else
-			gamepad.B = BUTTON_REPEAT;
-	}
-	else
-	{
-		if (gamepad.B == BUTTON_REPEAT || (gamepad.B == BUTTON_DOWN))
-			gamepad.B = BUTTON_UP;
-		else
-			gamepad.B = BUTTON_IDLE;
-	}
+		{
+			if (gamepad01.X == BUTTON_REPEAT || (gamepad01.X == BUTTON_DOWN))
+				gamepad01.X = BUTTON_UP;
+			else
+				gamepad01.X = BUTTON_IDLE;
+		}
 
-	//BUTTON START
-	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START) == 1) {
-		if (gamepad.START == BUTTON_IDLE)
-			gamepad.START = BUTTON_DOWN;
+		//BUTTON B
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
+			if (gamepad01.B == BUTTON_IDLE)
+				gamepad01.B = BUTTON_DOWN;
+			else
+				gamepad01.B = BUTTON_REPEAT;
+		}
 		else
-			gamepad.START = BUTTON_REPEAT;
+		{
+			if (gamepad01.B == BUTTON_REPEAT || (gamepad01.B == BUTTON_DOWN))
+				gamepad01.B = BUTTON_UP;
+			else
+				gamepad01.B = BUTTON_IDLE;
+		}
+
+		//BUTTON START
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START) == 1) {
+			if (gamepad01.START == BUTTON_IDLE)
+				gamepad01.START = BUTTON_DOWN;
+			else
+				gamepad01.START = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad01.START == BUTTON_REPEAT || (gamepad01.START == BUTTON_DOWN))
+				gamepad01.START = BUTTON_UP;
+			else
+				gamepad01.START = BUTTON_IDLE;
+		}
 	}
-	else
-	{
-		if (gamepad.START == BUTTON_REPEAT || (gamepad.START == BUTTON_DOWN))
-			gamepad.START = BUTTON_UP;
+	if (numJoystick == 2) {
+		//BUTTON A
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+			if (gamepad02.A == BUTTON_IDLE)
+				gamepad02.A = BUTTON_DOWN;
+			else
+				gamepad02.A = BUTTON_REPEAT;
+		}
 		else
-			gamepad.START = BUTTON_IDLE;
+		{
+			if (gamepad02.A == BUTTON_REPEAT || (gamepad02.A == BUTTON_DOWN))
+				gamepad02.A = BUTTON_UP;
+			else
+				gamepad02.A = BUTTON_IDLE;
+		}
+
+		//BUTTON X
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
+			if (gamepad02.X == BUTTON_IDLE)
+				gamepad02.X = BUTTON_DOWN;
+			else
+				gamepad02.X = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad02.X == BUTTON_REPEAT || (gamepad02.X == BUTTON_DOWN))
+				gamepad02.X = BUTTON_UP;
+			else
+				gamepad02.X = BUTTON_IDLE;
+		}
+
+		//BUTTON B
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
+			if (gamepad02.B == BUTTON_IDLE)
+				gamepad02.B = BUTTON_DOWN;
+			else
+				gamepad02.B = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad02.B == BUTTON_REPEAT || (gamepad02.B == BUTTON_DOWN))
+				gamepad02.B = BUTTON_UP;
+			else
+				gamepad02.B = BUTTON_IDLE;
+		}
+
+		//BUTTON START
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START) == 1) {
+			if (gamepad02.START == BUTTON_IDLE)
+				gamepad02.START = BUTTON_DOWN;
+			else
+				gamepad02.START = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad02.START == BUTTON_REPEAT || (gamepad02.START == BUTTON_DOWN))
+				gamepad02.START = BUTTON_UP;
+			else
+				gamepad02.START = BUTTON_IDLE;
+		}
 	}
 
 }

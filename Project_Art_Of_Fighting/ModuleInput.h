@@ -16,7 +16,7 @@ public:
 	ModuleInput();
 	~ModuleInput();
 
-	void inputGamepad(SDL_GameController *);
+	void inputGamepad(int numJoystick,SDL_GameController *);
 
 	bool Init();
 	update_status PreUpdate();
@@ -37,22 +37,31 @@ public:
 	float jumpZone = 0.7f;
 	float crouchZone = 0.8f;
 
-	const float GetHorizontalAxis();
-	const float GetVerticalAxis();
+	const float GetHorizontalAxis_p1();
+	const float GetVerticalAxis_p1();
+	const float GetHorizontalAxis_p2();
+	const float GetVerticalAxis_p2();
 
 	void StartEffect();
 
 	key_state keyboard_state[285];
-	GamePad gamepad;
+	GamePad gamepad01;
+	GamePad gamepad02;
 	SDL_Haptic* haptic = nullptr;
 
-	bool joystick_up;
-	bool joystick_down;
-	bool joystick_left;
-	bool joystick_right;
+	bool joystick_up_p1;
+	bool joystick_down_p1;
+	bool joystick_left_p1;
+	bool joystick_right_p1;
+	bool joystick_left_repeat_p1;
+	bool joystick_right_repeatp1;
 
-	bool joystick_left_repeat;
-	bool joystick_right_repeat;
+	bool joystick_up_p2;
+	bool joystick_down_p2;
+	bool joystick_left_p2;
+	bool joystick_right_p2;
+	bool joystick_left_repeat_p2;
+	bool joystick_right_repeatp2;
 
 
 
