@@ -40,14 +40,14 @@ bool ModulePlayer_1::Start()
 {
 	last_input = IN_UNKNOWN;
 	slowdownDuration = 5;
-	if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
+	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_1 == 1) {
-			App->player1->character = new Ryo(1);
-		}
-		else if (App->character_selection->SELECTOR_1 == 2) {
 			App->player1->character = new John(1);
 		}
-	}
+		else if (App->character_selection->SELECTOR_1 == 2) {
+			App->player1->character = new John(2);
+		}
+	
 
 
  
@@ -177,6 +177,8 @@ else if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT)
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 
+
+
 //kick weak
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input_attack= last_input = IN_KICK;
 
@@ -200,7 +202,11 @@ if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
 }
 
 //Taunt
-if (App->input->keyboard_state[SDL_SCANCODE_Y] == KEY_DOWN)	last_input = IN_TAUNT;
+if (App->input->keyboard_state[SDL_SCANCODE_Y] == KEY_DOWN)
+{
+	last_input = IN_TAUNT;
+	
+}
 
 //win try
 if (App->input->keyboard_state[SDL_SCANCODE_1] == KEY_DOWN) last_input = IN_WIN;
@@ -392,6 +398,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 		App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side,true);
 
 	}
+
 
 
 	if (isJumping)
@@ -868,7 +875,11 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_WIN:
 		switch (last_input)
 		{
-		case IN_KICK: state = ST_IDLE; break;
+		case IN_UNKNOWN:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
 		}
 		break;
 
@@ -876,7 +887,11 @@ player_state ModulePlayer_1::ControlStates()
 
 		switch (last_input)
 		{
-		case IN_KICK:state = ST_IDLE; break;
+		case IN_UNKNOWN:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
 		}
 		break;
 	case ST_TAUNT:
@@ -1223,6 +1238,7 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->taunt) {
 			character->taunt.ResetCurrentFrame();
 			current_animation = &character->taunt;
+			App->audio->Play_chunk(character->tauntfx);
 		}
 		break;
 	case ST_WIN:

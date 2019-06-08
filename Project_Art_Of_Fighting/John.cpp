@@ -236,7 +236,7 @@ John::John(int player)
 	taunt.SetReverseOffset({ -19,-30 }, 3);
 	taunt.PushBack({ 218,496,107,96 }, -22, -30, 3, rect1, rect2, rect3);
 	
-	taunt.speed = 0.05f;
+	taunt.speed = 0.4f;
 	taunt.loop = false; 
 	
 
@@ -295,7 +295,7 @@ John::John(int player)
 	c_kick.SetReverseOffset({3,-42 }, 2);
 	c_kick.PushBack({ 769,261, 52,107 }, 10, -42, 2, rect1, rect2, rect3);
 	c_kick.loop = false;
-	c_kick.speed = 0.05f;
+	c_kick.speed = 0.5f;
 	c_kick.damage = 20;
 
 	//THROWN NOT NEEDED YET
@@ -448,6 +448,8 @@ bool John::Start()
 		jumpfx = App->audio->Load_effects("Assets/Audio/FX/Jump.wav");
 	if (dmg == nullptr)
 		dmg = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_dmg.wav");
+	if(tauntfx==nullptr)
+	tauntfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Taunt.wav");
 
 	//Hadouken 
 	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
@@ -493,6 +495,11 @@ bool John::CleanUp()
 	{
 		App->audio->Unload_effects(dmg);
 		dmg = nullptr;
+	}
+	if (tauntfx != nullptr)
+	{
+		App->audio->Unload_effects(tauntfx);
+		tauntfx = nullptr;
 	}
 	for (int i = 0; i < SpecialLenght; i++)
 	{

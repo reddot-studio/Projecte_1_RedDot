@@ -130,7 +130,7 @@ struct Timed_Inputs
 typedef unsigned int uint;
 
 // Configuration -----------
-//To adjust fullscreen set SCREEN_SIZE to 1, else SCREEN_SIZE = 3
+//To adjust fullscreen set SCREEN_SIZE & FULLSCREEN DESKTOP to 1, else SCREEN_SIZE = 3
 #define SCREEN_SIZE 3
 #define SCREEN_WIDTH 384
 #define SCREEN_HEIGHT 224

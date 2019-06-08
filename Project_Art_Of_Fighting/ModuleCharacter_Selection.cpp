@@ -88,10 +88,18 @@ bool ModuleScreenSelection::Init() {
 	return true;
 }
 bool ModuleScreenSelection::Start() {
+	john1counter = 0;
+	john2counter = 0;
+	versuscounter = 0;
 	graphics = App->textures->Load("Assets/character_selection.png");
+	selection_music = App->audio->Load_music("Assets/Audio/Donokagoshi.ogg");
+	player1_john = App->audio->Load_effects("Assets/Audio/FX/John_1.wav");
+	player2_john = App->audio->Load_effects("Assets/Audio/FX/John_2.wav");
+	versus = App->audio->Load_effects("Assets/Audio/FX/Versus.wav");
 	App->input->Paused = false;
 	tick1 = SDL_GetTicks();
 	no_zero = true;
+	App->audio->Play_music(selection_music);
 	return true;
 }
 update_status ModuleScreenSelection::Update() {
@@ -137,6 +145,7 @@ update_status ModuleScreenSelection::Update() {
 }
 bool ModuleScreenSelection::CleanUp() {
 	App->textures->Unload(graphics);
+	App->audio->Unload_music(selection_music);
 	return true;
 }
 void ModuleScreenSelection::move() {
@@ -179,7 +188,7 @@ void ModuleScreenSelection::timer() {
 		tick2 = 0;
 		no_zero = false;
 		App->fonts->BlitText((SCREEN_WIDTH / 2), SCREEN_HEIGHT / 2 - 32, 2, "0");
-		App->fade->FadeToBlack(App->character_selection, App->scene_john);
+		//App->fade->FadeToBlack(App->character_selection, App->scene_john);
 		selected = true;
 	}
 	tick2 = SDL_GetTicks();
@@ -233,6 +242,11 @@ void ModuleScreenSelection::choose() {
 
 }
 void ModuleScreenSelection::characters_enter() {
+	if (john1counter == 0)
+	{
+		App->audio->Play_chunk(player1_john);
+		john1counter++;
+	}
 	if (SELECTOR_1 == 1) {
 		if (x_image1 == 20) {
 			App->render->Blit(graphics, x_image1, 20, &imageSelection1, 1, 2);
@@ -270,7 +284,16 @@ void ModuleScreenSelection::characters_enter() {
 			}
 		}
 	}
+	if (tick2 - tick1 > 1600)
+	{
+		if (versuscounter == 0)
+		{
+			App->audio->Play_chunk(versus);
+			versuscounter++;
+		}
+	}
 	if (tick2 - tick1 > 2400) {
+
 		if (SELECTOR_2 == 2) {
 			if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
 				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
@@ -280,6 +303,7 @@ void ModuleScreenSelection::characters_enter() {
 				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2);
 			}
 			if (tick2 - tick1 > 2500) {
+
 				if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
 					App->render->Blit(graphics, x_name2 - 50, 145, &name1);
 				}
@@ -308,5 +332,14 @@ void ModuleScreenSelection::characters_enter() {
 				}
 			}
 		}
+	}
+	if (tick2 - tick1 > 2600) {
+
+		if (john2counter == 0)
+		{
+			App->audio->Play_chunk(player2_john);
+			john2counter++;
+		}
+
 	}
 }

@@ -6,6 +6,7 @@
 #include "Animation.h"
 
 struct Mix_Music;
+struct Mix_Chunk;
 struct SDL_Texture;
 struct SDL_Rect;
 
@@ -27,6 +28,10 @@ public:
 	ModuleSceneJohn();
 	~ModuleSceneJohn();
 	Mix_Music* lee_music;
+	Mix_Chunk* fightfx = NULL;
+	Mix_Chunk* first_round = NULL;
+	Mix_Chunk* second_round = NULL;
+	Mix_Chunk* last_round = NULL;
 	bool Start() override;
 	update_status Update()override;
 	bool CleanUp();
@@ -36,6 +41,8 @@ public:
 	SDL_Texture* indicator_fight;
 	Animation winp2;
 	Animation winp1;
+	int roundcnt = 0;
+	bool resetstage = false;
 	int win_p1 = 0;
 	int win_p2 = 0;
 	bool first_row;

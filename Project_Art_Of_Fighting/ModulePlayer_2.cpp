@@ -34,14 +34,14 @@ bool ModulePlayer_2::Start()
 {
 	last_input = IN_UNKNOWN;
 	slowdownDuration = 5;
-	if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
+	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_2 == 1) {
-			App->player2->character = new Ryo(1);
-		}
-		else if (App->character_selection->SELECTOR_2 == 2) {
 			App->player2->character = new John(1);
 		}
-	}
+		else if (App->character_selection->SELECTOR_2 == 2) {
+			App->player2->character = new John(2);
+		}
+	
 	character->Start();
 	current_animation = &character->idle;
 	pivot_player.x = 90;
@@ -133,7 +133,11 @@ update_status ModulePlayer_2::Update()
 		}
 	}
 
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_DIVIDE] == KEY_DOWN)	last_input = IN_TAUNT;
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_DIVIDE] == KEY_DOWN)	
+	{
+		last_input = IN_TAUNT;
+
+	}
 	//win try
 	if (App->input->keyboard_state[SDL_SCANCODE_3] == KEY_DOWN) last_input = IN_WIN;
 	//defeat try
@@ -731,14 +735,22 @@ player_state ModulePlayer_2::ControlStates()
 	case ST_WIN:
 		switch (last_input)
 		{
-		case IN_KICK: state = ST_IDLE; break;
+		case IN_UNKNOWN:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
 		}
 		break;
 
 	case ST_DEFEAT:
 		switch (last_input)
 		{
-		case IN_KICK:state = ST_IDLE; break;
+		case IN_UNKNOWN:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
 		}
 		break;
 
@@ -1056,6 +1068,7 @@ void ModulePlayer_2::states(int speed)
 		if (current_animation != &character->taunt) {
 			character->taunt.ResetCurrentFrame();
 			current_animation = &character->taunt;
+			App->audio->Play_chunk(character->tauntfx);
 		}
 		break;
 	case ST_WIN:

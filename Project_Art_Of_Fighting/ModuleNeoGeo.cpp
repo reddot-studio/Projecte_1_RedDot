@@ -36,12 +36,14 @@ bool ModuleNeoGeo::Init() {
 	App->character_selection->Disable();
 	App->sceneUI->Disable();
 	App->scene_welcome->Disable();
+	neogeologo = App->audio->Load_music("Assets/Audio/002xNeo-Geo Logo.ogg");
 	LOG("Loading intro scene");
 	if ((graphics = App->textures->Load("Assets/neo_geo_intro.png")) == NULL)
 	{
 		SDL_Log("Could not load image from path! SDL_Error: %s", SDL_GetError());
 		return false;
 	}
+	App->audio->Play_music(neogeologo);
 
 	return true;
 }
@@ -52,6 +54,7 @@ bool ModuleNeoGeo::Start() {
 }
 
 update_status ModuleNeoGeo::Update() {
+
 	tick2 = SDL_GetTicks();
 	if ((tick2 - tick1) >= 9000) {
 		App->fade->FadeToBlack(App->neogeo, App->scene_welcome);
@@ -82,5 +85,6 @@ update_status ModuleNeoGeo::Update() {
 
 bool ModuleNeoGeo::CleanUp() {
 	App->textures->Unload(graphics);
+	App->audio->Unload_music(neogeologo);
 	return true;
 }

@@ -9,6 +9,8 @@
 #include "SDL/include/SDL.h"
 #include "RectSprites.h"
 
+struct Mix_Music;
+struct Mix_Chunk;
 
 
 class ModuleScreenSelection : public Module {
@@ -42,12 +44,20 @@ public:
 
 	Animation selector1;
 	Animation selector2;
+	Mix_Music* selection_music;
+	Mix_Chunk* player1_john;
+	Mix_Chunk* player2_john;
+	Mix_Chunk* versus;
 
 	bool selected = false;
 	bool timer_init = false;
 
 	int SELECTOR_1 = 1;
 	int SELECTOR_2 = 2;
+
+	int john1counter;
+	int john2counter;
+	int versuscounter;
 
 	int X_SELECTOR_1 = ((SCREEN_WIDTH / 2) - 28);
 	int Y_SELECTOR_1 = ((SCREEN_HEIGHT / 2) + 47);

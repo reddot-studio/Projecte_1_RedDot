@@ -17,6 +17,9 @@
 #include "ModuleRender.h"
 #include "ModuleWelcomeScreen.h"
 
+struct Mix_Music;
+
+
 class ModuleNeoGeo :public Module {
 public:
 	ModuleNeoGeo();
@@ -26,6 +29,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	///////
+	Mix_Music* neogeologo;
 	Animation neogeo;
 	Animation* current_animation;
 	Animation final_neogeo;

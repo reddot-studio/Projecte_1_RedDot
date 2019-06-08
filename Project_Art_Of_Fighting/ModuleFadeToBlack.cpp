@@ -68,7 +68,7 @@ update_status ModuleFadeToBlack::Update()
 
 		case fade_step::fade_from_black:
 		{
-			
+		//	App->scene_john->resetstage = true;
 			normalized = 1.0f - normalized;
 			if (now >= total_time) 
 			{

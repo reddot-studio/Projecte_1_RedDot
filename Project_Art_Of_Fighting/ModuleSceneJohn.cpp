@@ -121,6 +121,8 @@ ModuleSceneJohn::ModuleSceneJohn()
 	winp2.PushBack({ 0,0,120,40 }, 0, 0, 30);
 	winp2.speed = 0.15f;
 
+	
+
 }
 
 ModuleSceneJohn::~ModuleSceneJohn()
@@ -129,12 +131,17 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
+
+	roundcnt = 0;
 	current_animation = &nthng;
 	first_row = true;
 	LOG("Loading lee scene");
 	lee_music = App->audio->Load_music("Assets/Audio/Chinatown_ost.ogg");
 	indicator_fight = App->textures->Load("Assets/UI_Sprites/indicator_fight.png");
-	//fightfx = App->audio->Load_effects("Assets/Audio/FX/Fight.wav");
+	fightfx = App->audio->Load_effects("Assets/Audio/FX/Fight.wav");
+	first_round = App->audio->Load_effects("Assets/Audio/FX/Round1.wav");
+	second_round = App->audio->Load_effects("Assets/Audio/FX/Round2.wav");
+	last_round = App->audio->Load_effects("Assets/Audio/FX/LastRound.wav");
 	if ((graphics = App->textures->Load("Assets/ChinaTown.png")) == NULL)
 	{
 		SDL_Log("Unable to load texture from path: /guardian.png");
@@ -161,7 +168,7 @@ bool ModuleSceneJohn::Start()
 
 update_status ModuleSceneJohn::Update()
 {
-
+	resetstage = false;
 	//Render background
 	if ((App->render->Blit(graphics, 0, 0, &rect_background)) == false)
 	{
@@ -196,31 +203,49 @@ update_status ModuleSceneJohn::Update()
 			indicator.rect.y = 96;
 			indicator.rect.w = 100;
 			indicator.rect.h = 16;
+			if (roundcnt == 0)
+			{
+				App->audio->Play_chunk(first_round);
+				roundcnt++;
+			}
+			
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		}
 		if (rounds_counter == 1)
 		{
+			resetstage = true;
 			indicator.rect.x = 0;
 			indicator.rect.y = 80;
 			indicator.rect.w = 104;
 			indicator.rect.h = 16;
+			if (roundcnt == 0)
+			{
+				App->audio->Play_chunk(second_round);
+				roundcnt++;
+			}
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		}
 		if (rounds_counter >1)
 		{
+			resetstage = true;
 			indicator.rect.x = 0;
 			indicator.rect.y = 145;
 			indicator.rect.w = 168;
 			indicator.rect.h = 16;
+			if (roundcnt == 0)
+			{
+				App->audio->Play_chunk(last_round);
+				roundcnt++;
+			}
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 85, (SCREEN_HEIGHT / 2) - 30, &indicator, 0,1,false);
 		}
 	}
 
-	if (tick2 - tick1>2000 && tick2 - tick1 < 4000) {
+	if (tick2 - tick1>2300 && tick2 - tick1 < 4000) {
 
 		if (first_row == true)
 		{
-			//App->audio->Play_chunk(fightfx);
+			App->audio->Play_chunk(fightfx);
 		}
 		indicator.rect.x = 0;
 		indicator.rect.y = 113;
@@ -352,9 +377,12 @@ bool ModuleSceneJohn::CleanUp()
 		FrontPanel->to_delete = true;
 		BackPanel->to_delete = true;
 	}
-
 	App->sceneUI->Disable();
 	App->audio->Unload_music(lee_music);
+	App->audio->Unload_effects(fightfx);
+	App->audio->Unload_effects(first_round);
+	App->audio->Unload_effects(second_round);
+	App->audio->Unload_effects(last_round);
 	App->textures->Unload(graphics);
 	App->textures->Unload(indicator_fight);
 	App->player1->Disable();

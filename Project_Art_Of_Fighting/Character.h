@@ -90,6 +90,7 @@ public:
 	Mix_Chunk *kooukenfx = NULL;
 	Mix_Chunk *jumpfx = NULL;
 	Mix_Chunk *dmg = NULL;
+	Mix_Chunk *tauntfx = NULL;
 
 
 };
