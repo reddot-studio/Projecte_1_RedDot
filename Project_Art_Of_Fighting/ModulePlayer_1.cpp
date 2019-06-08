@@ -1055,6 +1055,7 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->punch2fx);
 			}
 			App->audio->Play_chunk(character->punchfx);
+			App->audio->Play_chunk(character->punchfx);
 
 		}
 		//LOG("PUNCH");
