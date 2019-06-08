@@ -1088,12 +1088,12 @@ void ModulePlayer_2::states(int speed)
 			{
 			case RYO:
 				App->particles->AddParticle(App->particles->pre_koouKen, pivot_player.x, pivot_player.y, COLLIDER_NONE, 50, 0, Side, RYO);
-				currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x - 28, pivot_player.y, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side, RYO);
+				currentParticle = App->particles->AddParticle(App->particles->koouKen, pivot_player.x - 28, pivot_player.y, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side, RYO);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				break;
 			case JOHN:
-				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x + 20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side, JOHN);
+				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x + 20, pivot_player.y - 20, COLLIDER_ENEMY_HIT, 600, character->specialDmg, Side, JOHN);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				break;

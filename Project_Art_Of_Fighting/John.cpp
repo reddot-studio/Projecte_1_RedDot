@@ -388,13 +388,13 @@ John::John(int player)
 	air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
 	
 	//BLOCK
-	standing_block.PushBack({338,772,60,110}, -5, -44, 5,rect1,rect2,rect3);
+	standing_block.PushBack({332,760,66,122}, -5, -44, 5,rect1,rect2,rect3);
 	standing_block.speed = 0.3f;
 	standing_block.loop = false;
 
 	//Succesfull block
-	exitBlock.PushBack({ 338,772,60,110 }, -5, -44, 5, rect1, rect2, rect3);
-	exitBlock.PushBack({ 338,772,60,110 }, -5, -44, 3, rect1, rect2, rect3, {}, {-2,0});
+	exitBlock.PushBack({ 332,760,66,122 }, -5, -44, 5, rect1, rect2, rect3);
+	exitBlock.PushBack({ 332,760,66,122 }, -5, -44, 3, rect1, rect2, rect3, {}, {-2,0});
 	exitBlock.speed = 0.3f;
 	exitBlock.loop = false;
 
