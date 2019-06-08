@@ -22,13 +22,14 @@ public:
 	void thirdScreen();
 
 public:
+	int onlyonce;
 	enum screen_state
 	{
 		MOVING,
 		NOT_MOVING,
 	};
 	Animation* current_animation;
-	
+	Mix_Chunk* brokenglass;
 	screen_state state = MOVING;
 	SDL_Texture* graphics = nullptr;
 

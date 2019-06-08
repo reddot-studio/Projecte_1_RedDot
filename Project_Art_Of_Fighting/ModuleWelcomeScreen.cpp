@@ -115,6 +115,7 @@ bool ModuleWelcomeScreen::Init()
 
 bool ModuleWelcomeScreen::Start()
 {
+	onlyonce = 0;
 	LOG("Loading intro scene");
 	if ((graphics = App->textures->Load("Assets/WelcomeScreen.png")) == NULL)
 	{
@@ -122,7 +123,7 @@ bool ModuleWelcomeScreen::Start()
 		return false;
 	}
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
-	//App->audio->Play_music(start_music);														MOVER ESTO A CUANDO SE EJECUTE SU PARTE
+	brokenglass = App->audio->Load_effects("Assets/Audio/FX/Brokenglass.wav");													
 	cuadro = App->textures->Load("Assets/cuadro.png");
 	cuadroRoto = App->textures->Load("Assets/cuadro roto.png");
 	tick1 = SDL_GetTicks();
@@ -170,7 +171,6 @@ bool ModuleWelcomeScreen::CleanUp()
 }
 
 void ModuleWelcomeScreen::thirdScreen() {
-	App->audio->Play_music(start_music);
 	tick3 = SDL_GetTicks();
 	timer2 = SDL_GetTicks();
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
@@ -197,7 +197,7 @@ void ModuleWelcomeScreen::thirdScreen() {
 		}
 		//App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}	
-	if()
+	//if()
 	sprintf_s(time, 3, "%d", 30-((timer2 - timer1)/1000));
 	App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 160, 5, time);
 
@@ -231,6 +231,11 @@ void ModuleWelcomeScreen::secondScreen() {
 		App->render->Blit(cuadro, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
 	}
 	else {
+		if (onlyonce == 0)
+		{
+			App->audio->Play_chunk(brokenglass);
+			onlyonce++;
+		}
 		App->render->Blit(cuadroRoto, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
 	}
 	if (tick3 - tick4 >= 1000) {
@@ -248,11 +253,13 @@ void ModuleWelcomeScreen::secondScreen() {
 		fadeSlow -= 1;
 	}
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+		App->audio->Play_music(start_music);
 		sequence1 = false;
 		timer1 = SDL_GetTicks();
 	}
 	if (tick2 - tick1 > 6500)
 	{
+		App->audio->Play_music(start_music);
 		sequence1 = false;
 	}
 
