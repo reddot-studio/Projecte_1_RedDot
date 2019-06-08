@@ -149,7 +149,7 @@ bool ModuleSceneJohn::Start()
 	}
 	App->audio->Play_music(lee_music);
 
-	tick1 = 0;
+
 	tick1 = SDL_GetTicks();
 	//Screen Limits
 	//BackPanel = App->collision->AddCollider({ { 0,0,25, SCREEN_HEIGHT },{ 0,0 }, {0, 0} }, COLLIDER_WALL, App->scene_john);
@@ -283,6 +283,7 @@ update_status ModuleSceneJohn::Update()
 		}
 
 
+		tick1 = SDL_GetTicks();
 
 		App->player1->CheckHealth(*App->player2);
 		App->player2->CheckHealth(*App->player1);

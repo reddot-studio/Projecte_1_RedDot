@@ -99,6 +99,7 @@ public:
 	Mix_Chunk *winfx = NULL;
 	Mix_Chunk *fallfx = NULL;
 	Mix_Chunk *jumpattackfx = NULL;
+	Mix_Chunk *koukenimpactfx = NULL;
 
 };
 

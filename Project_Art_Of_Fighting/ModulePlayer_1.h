@@ -46,6 +46,7 @@ public:
 
 	inputs last_input = IN_UNKNOWN;
 	inputs last_input_attack = IN_KICK;
+	bool koukenenabled;
 
 	bool isDamaged = false;
 	float time = 0.0f;

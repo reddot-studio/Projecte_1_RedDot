@@ -116,11 +116,17 @@ update_status ModuleUI::Update()
 		}
 	}
 	//beat by
-	if (counter1 == 2) {
-		beatby1++;
+	if (beatby1 <= 9) {
+		if (counter1 == 2) {
+			beatby1++;
+			counter1 = 0;
+		}
 	}
-	if (counter2 == 2) {
-		beatby2++;
+	if (beatby2 <= 9) {
+		if (counter2 == 2) {
+			beatby2++;
+			counter2 = 0;
+		}
 	}
 	sprintf_s(beatby_str1, 10, "beat by %d", beatby1);
 	sprintf_s(beatby_str2, 10, "beat by %d", beatby2);
