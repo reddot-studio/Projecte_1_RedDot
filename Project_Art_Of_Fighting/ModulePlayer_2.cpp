@@ -76,27 +76,27 @@ update_status ModulePlayer_2::Update()
 	//CONTROLLER
 		//Move right
 
-	if (App->input->joystick_right) {
+	if (App->input->joystick_right_p2) {
 		last_input = IN_RIGHT_DOWN;
 	}
 
-	if (App->input->joystick_left) {
+	if (App->input->joystick_left_p2) {
 		last_input = IN_LEFT_DOWN;
 	}
 
-	if (App->input->joystick_up) {
+	if (App->input->joystick_up_p2) {
 		last_input = IN_JUMP_DOWN;
 	}
 
 	//TODO: IMPLEMENT CROUCH WITH CONTROLLER
-	if (App->input->joystick_down) {
+	if (App->input->joystick_down_p2) {
 		last_input = IN_CROUCH_DOWN;
 	}
 
-	if (App->input->gamepad.A == BUTTON_DOWN) {
+	if (App->input->gamepad02.A == BUTTON_DOWN) {
 		last_input_attack = last_input = IN_PUNCH;
 	}
-	else if (App->input->gamepad.A == BUTTON_REPEAT)
+	else if (App->input->gamepad02.A == BUTTON_REPEAT)
 	{
 		if (current_state != ST_RECHARGE) {
 			if (time < 50) {
@@ -109,15 +109,15 @@ update_status ModulePlayer_2::Update()
 			}
 		}
 	}
-	else if (App->input->gamepad.A == BUTTON_UP) {
+	else if (App->input->gamepad02.A == BUTTON_UP) {
 		last_input = IN_RECHARGE_UP;
 	}
 
 
-	if (App->input->gamepad.B == BUTTON_DOWN) {
+	if (App->input->gamepad02.B == BUTTON_DOWN) {
 		last_input_attack = last_input = IN_KICK;
 	}
-	else if (App->input->gamepad.B == BUTTON_REPEAT)
+	else if (App->input->gamepad02.B == BUTTON_REPEAT)
 	{
 		if (current_state != ST_RECHARGE) {
 			if (time < 50) {
@@ -130,10 +130,10 @@ update_status ModulePlayer_2::Update()
 			}
 		}
 	}
-	else if (App->input->gamepad.B == BUTTON_UP) {
+	else if (App->input->gamepad02.B == BUTTON_UP) {
 		last_input = IN_RECHARGE_UP;
 	}
-	if (App->input->gamepad.X == BUTTON_DOWN) {
+	if (App->input->gamepad02.X == BUTTON_DOWN) {
 		switch (last_input_attack)
 		{
 		case IN_PUNCH: last_input = IN_STRONG_PUNCH; break;

@@ -47,24 +47,24 @@ update_status ModuleDebug::Update()
 	numControllers = SDL_NumJoysticks();
 	sprintf_s(controllers, 40, "num controllers: %d",numControllers);
 	App->fonts->BlitText(5, 2, 3,controllers);
-	if (App->input->GetHorizontalAxis() > App->input->deathZone)
-	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
-	else if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
-		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis());
+	if (App->input->GetHorizontalAxis_p1() > App->input->deathZone)
+	sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis_p1());
+	else if (App->input->GetHorizontalAxis_p1() < -App->input->deathZone) {
+		sprintf_s(time, 10, "%.2f", App->input->GetHorizontalAxis_p1());
 	}	
-	if (App->input->GetVerticalAxis() > App->input->deathZone)
-	sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis());
-	else if (App->input->GetVerticalAxis() < -App->input->deathZone) {
-		sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis());
+	if (App->input->GetVerticalAxis_p1() > App->input->deathZone)
+	sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis_p1());
+	else if (App->input->GetVerticalAxis_p1() < -App->input->deathZone) {
+		sprintf_s(time2, 10, "%.2f", App->input->GetVerticalAxis_p1());
 	}
-	if (App->input->GetHorizontalAxis() > App->input->deathZone || App->input->GetHorizontalAxis() < -App->input->deathZone) {
+	if (App->input->GetHorizontalAxis_p1() > App->input->deathZone || App->input->GetHorizontalAxis_p1() < -App->input->deathZone) {
 		App->fonts->BlitText(85, 59, 3, time);
 	}
 	else
 	{
 		App->fonts->BlitText(85, 59, 3, "0.0");
 	}
-	if (App->input->GetVerticalAxis() > App->input->deathZone || App->input->GetVerticalAxis() < -App->input->deathZone) {
+	if (App->input->GetVerticalAxis_p1() > App->input->deathZone || App->input->GetVerticalAxis_p1() < -App->input->deathZone) {
 		App->fonts->BlitText(200, 59, 3, time2);
 	} //ficar el right i que es tradueixi de float a string.
 	else
