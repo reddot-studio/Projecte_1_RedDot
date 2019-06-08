@@ -51,10 +51,10 @@ public:
 	int fadeSlow = 255;
 	int tick1 = 0, tick2 = 0, tick3 = 0, tick4 = 0;
 	int timer1 = 0, timer2 = 0;
-	char coinsText[10];
+	char coinsText[20];
 	int coins = 0;
 
-	char time[2];
+	char time[20];
 	bool sequence1 = true;
 
 
