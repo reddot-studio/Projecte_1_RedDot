@@ -154,7 +154,7 @@ update_status ModuleWelcomeScreen::Update()
 		thirdScreen();
 	}
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) coins++;
-	sprintf_s(coinsText, 11, "coins   %d", coins);
+	sprintf_s(coinsText, 20, "coins   %d", coins);
 	App->fonts->BlitText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10, 2, coinsText);
 
 
@@ -224,10 +224,16 @@ void ModuleWelcomeScreen::thirdScreen() {
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_john);
 	}
-	if (timer2 - timer1 > 2000) {
-		sprintf_s(time, 3, "%d", 30 - ((timer2 - timer1) / 1000));
+	if (timer2 - timer1 > 2000 && timer2-timer1<30000) {
+		sprintf_s(time, 20, "%d", 30 - ((timer2 - timer1) / 1000));
 		App->fonts->BlitText((SCREEN_WIDTH / 2) - 12, 160, 5, "time");
 		App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 170, 5,time);
+	}
+	if (timer2 - timer1 > 30000 && coins!=0) {
+		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
+	}
+	else {
+		timer2 = SDL_GetTicks();
 	}
 }
 void ModuleWelcomeScreen::secondScreen() {
