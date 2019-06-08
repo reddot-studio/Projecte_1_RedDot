@@ -97,15 +97,17 @@ update_status ModuleUI::Update()
 	}
 
 	//SPIRIT REGEN
-	spriteTimer1 = SDL_GetTicks();
-	if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 124) { //NO entra als 2 [BUG]
-		App->player2->Player_Spirit_Value_p2 += 2;
-		spriteTimer2 = SDL_GetTicks();
-	}
-	if (spriteTimer1 - spriteTimer3 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 124) {
-		App->player1->Player_Spirit_Value_p1 += 2;
-		x_spirit_1 -= 2;
-		spriteTimer3 = SDL_GetTicks();
+	if (initSpirit == false) {
+		spriteTimer1 = SDL_GetTicks();
+		if (spriteTimer1 - spriteTimer2 >= 1000 && App->player2->Player_Spirit_Value_p2 <= 124) { //NO entra als 2 [BUG]
+			App->player2->Player_Spirit_Value_p2 += 2;
+			spriteTimer2 = SDL_GetTicks();
+		}
+		if (spriteTimer1 - spriteTimer3 >= 1000 && App->player1->Player_Spirit_Value_p1 <= 124) {
+			App->player1->Player_Spirit_Value_p1 += 2;
+			x_spirit_1 -= 2;
+			spriteTimer3 = SDL_GetTicks();
+		}
 	}
 	//beat by
 	if (counter1 == 2) {
@@ -159,6 +161,16 @@ update_status ModuleUI::Update()
 		}
 
 	}
+	//SPIRIT INIT
+	if (initSpirit == true) {
+		App->player1->Player_Spirit_Value_p1++;
+		x_spirit_1--;
+		App->player2->Player_Spirit_Value_p2++;
+		if (App->player2->Player_Spirit_Value_p2 == 126) {
+			initSpirit = false;
+		}
+	}
+
 	tick2 = SDL_GetTicks();
 
 
@@ -208,8 +220,13 @@ update_status ModuleUI::Update()
 	//WinPoints
 	if (App->player1->Player_Health_Value_p1 == 0 || (time_over==true&& App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)) {
 		counter1++;
+		App->player1->Player_Spirit_Value_p1 = 0;
+		App->player2->Player_Spirit_Value_p2 = 0;
+		x_spirit_1 = (SCREEN_WIDTH / 2) - 16;;
+		initSpirit = true;
 	}
 	if(counter1 > 0 ) { 
+		RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		if (counter1 == 2) {
 			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
@@ -219,6 +236,7 @@ update_status ModuleUI::Update()
 		counter2++;
 	}
 	if (counter2 > 0) {
+		RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130, 28 - (RendPosition.rect.h / 2), &current_animation->GetCurrentFrame(), 0);
 		if (counter2 == 2) 
 		{

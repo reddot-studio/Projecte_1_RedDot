@@ -35,11 +35,13 @@ public:
 	char time[10];
 	int dont_pass = 1;
 	int timeKouKen_Spirit = 0;
-	int x_spirit_1 = (SCREEN_WIDTH / 2) - 142;
+	int x_spirit_1 = (SCREEN_WIDTH / 2) - 16;
 	int beatby1 = 0;
 	int beatby2 = 0;
 	char beatby_str1[10];
 	char beatby_str2[10];
+
+	bool initSpirit = true;
 };
 
 #endif // __MODULESCENEKEN_H__
