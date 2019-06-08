@@ -39,6 +39,7 @@ ModulePlayer_1::~ModulePlayer_1()
 bool ModulePlayer_1::Start()
 {
 	last_input = IN_RECHARGE_UP;
+	koukenenabled = false;
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_1 == 1) {
@@ -1130,6 +1131,7 @@ void ModulePlayer_1::states(int speed)
 				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,JOHN);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
+				koukenenabled = true;
 				break;
 			}
 		}
@@ -1300,12 +1302,12 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch) {
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
-			if (App->player2->current_state == ST_STANDING_KICK)
+			if (App->player2->current_state == ST_STANDING_KICK || App->player2->current_state == ST_CROUCH_KICK || App->player2->current_state == ST_STRONG_KICK || App->player2->current_state == ST_NEUTRAL_JUMP_KICK || App->player2->current_state == ST_FORWARD_JUMP_KICK || App->player2->current_state == ST_BACKWARD_JUMP_KICK)
 			{
 				App->audio->Play_chunk(character->kickfx);
 				App->audio->Play_chunk(character->kickfx);
 			}
-			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH)
+			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH || App->player2->current_state == ST_NEUTRAL_JUMP_PUNCH || App->player2->current_state == ST_FORWARD_JUMP_PUNCH || App->player2->current_state == ST_BACKWARD_JUMP_PUNCH)
 			{
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
@@ -1338,15 +1340,19 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			//App->audio->Play_chunk(character->dmg);
-			if (App->player2->current_state == ST_STANDING_KICK)
+			if (App->player2->current_state == ST_STANDING_KICK || App->player2->current_state == ST_CROUCH_KICK || App->player2->current_state == ST_STRONG_KICK || App->player2->current_state == ST_NEUTRAL_JUMP_KICK || App->player2->current_state == ST_FORWARD_JUMP_KICK || App->player2->current_state == ST_BACKWARD_JUMP_KICK)
 			{
 				App->audio->Play_chunk(character->kickfx);
 				App->audio->Play_chunk(character->kickfx);
 			}
-			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH)
+			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH || App->player2->current_state == ST_NEUTRAL_JUMP_PUNCH || App->player2->current_state == ST_FORWARD_JUMP_PUNCH || App->player2->current_state == ST_BACKWARD_JUMP_PUNCH)
 			{
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
+			}
+			if (koukenenabled == true)
+			{
+				koukenenabled = false;
 			}
 			App->particles->DeleteLastParticle(currentParticle);
 
