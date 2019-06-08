@@ -335,4 +335,11 @@ void ModuleRender::ZoomOut()
 	}
 }
 
+void ModuleRender::ResetCamera()
+{
+	zoomValue = 1.0f;
+	camera.y = 0;
+}
+
+
 

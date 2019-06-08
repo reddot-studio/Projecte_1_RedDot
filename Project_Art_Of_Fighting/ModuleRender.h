@@ -26,6 +26,7 @@ public:
 	void UpdateSpriteShake(iPoint * offset);
 	void ZoomIn();
 	void ZoomOut();
+	void ResetCamera();
 
 	float timerSpeed;
 	float timer;

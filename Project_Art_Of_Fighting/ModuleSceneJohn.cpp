@@ -131,7 +131,7 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
-
+	App->render->ResetCamera();
 	roundcnt = 0;
 	current_animation = &nthng;
 	first_row = true;

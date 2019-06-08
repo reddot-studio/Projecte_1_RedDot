@@ -99,7 +99,7 @@ update_status ModuleCongratzScreen::Update()
 	App->fonts->BlitText(220, 47, 2, "waiting for");
 	App->fonts->BlitText(215, 58, 2, "a challenger");
 	App->input->Paused = false;
-	if ((App->render->Blit(graphics, 50, 164, &chat_bubble)) == false)
+	if ((App->render->Blit(graphics, 50, 164, &chat_bubble,1.0f,1,false)) == false)
 	{
 		SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
@@ -108,7 +108,7 @@ update_status ModuleCongratzScreen::Update()
 	{
 	case true:
 
-		if ((App->render->Blit(graphics, 57.5, 40, &rect_win)) == false)
+		if ((App->render->Blit(graphics, 57.5, 40, &rect_win, 1.0f, 1, false)) == false)
 		{
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
@@ -118,7 +118,7 @@ update_status ModuleCongratzScreen::Update()
 
 		break;
 	default:
-		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose)) == false)
+		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose, 1.0f, 1, false)) == false)
 		{
 			SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
@@ -130,7 +130,7 @@ update_status ModuleCongratzScreen::Update()
 		break;
 	}
 	
-	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame());
+	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame(), 1.0f, 1, false);
  
 	//When using this, coliders do not render 
 	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN)
