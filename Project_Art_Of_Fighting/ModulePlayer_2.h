@@ -96,6 +96,8 @@ public:
 	ModulePlayer_1* Enemy;
 
 	int tick1 = 0, tick2 = 0;
+
+	float time = 0.0f;
 };
 
 #endif
