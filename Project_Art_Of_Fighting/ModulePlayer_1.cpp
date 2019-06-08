@@ -82,13 +82,8 @@ update_status ModulePlayer_1::Update()
 {
 	speed = 2;
 
-	//Player1 Input
 	states(speed);
 
-	//TESTING BUTTON
-	if (App->input->keyboard_state[SDL_SCANCODE_H] == KEY_DOWN) {
-		last_input = IN_TEST;
-	}
 
 //CONTROLLER
 		//Move right
@@ -221,9 +216,22 @@ if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHAR
 
 //kick weak
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input_attack= last_input = IN_KICK;
+else if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_REPEAT)
+{
+	if (current_state != ST_RECHARGE) {
+		if (time < 50) {
+			time++;
+		}
+		else {
+			last_input = IN_RECHARGE;
+			time = 0;
+			LOG("\nIN");
+		}
+	}
+}
+if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 //Ko'ou Ken
-
 if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Value_p1 - 23 >= 0) {
 	last_input = IN_KOOU_KEN;
 	spiritKouKen = true;
@@ -437,6 +445,14 @@ if (current_state == ST_STANDING_BLOCKED) {
 		}
 
 	}
+
+	//Waits defeat to end
+	if (current_state == ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
+	{
+		App->input->Paused = true;
+		App->player1->last_input = IN_WIN;
+	}
+
 	if (Side == 2) {
 
 		App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
@@ -972,7 +988,6 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_RECHARGE_UP:state = ST_IDLE; break;
-		case IN_PUNCH: state = ST_IDLE; break;
 		}
 		break;
 	case ST_ULTRA_KICK:
@@ -984,7 +999,7 @@ player_state ModulePlayer_1::ControlStates()
 		break;
 
 	}
-	SDL_Log("Last input: %d", last_input);
+	//SDL_Log("Last input: %d", last_input);
 	last_input = IN_UNKNOWN;
 
 	return state;
@@ -996,13 +1011,6 @@ void ModulePlayer_1::states(int speed)
 	// Control state
 	switch (state)
 	{
-	case ST_TEST:
-		if (current_animation != &character->jumpkick)
-		{
-			character->jumpkick.ResetCurrentFrame();
-			current_animation = &character->jumpkick;
-		}
-		break;
 	case ST_IDLE:
 		current_animation = &character->idle;
 		HurtColliders[0]->Enabled = true;
@@ -1295,6 +1303,7 @@ void ModulePlayer_1::states(int speed)
 			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetCurrentFrame();
 			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch;
 			App->audio->Play_chunk(character->dmg);
+
 			App->particles->DeleteLastParticle(currentParticle);
 
 		}
