@@ -3,8 +3,9 @@
 
 #include "Module.h"
 #include "Globals.h"
-#include "SDL\include\SDL_scancode.h"
+#include "SDL/include/SDL_scancode.h"
 #include "SDL/include/SDL_gamecontroller.h"
+#include "SDL/include/SDL_haptic.h"
 
 typedef unsigned char Uint8;
 
@@ -43,6 +44,7 @@ public:
 
 	key_state keyboard_state[285];
 	GamePad gamepad;
+	SDL_Haptic* haptic = nullptr;
 
 	bool joystick_up;
 	bool joystick_down;

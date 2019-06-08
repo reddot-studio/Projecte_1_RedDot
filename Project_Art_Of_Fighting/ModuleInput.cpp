@@ -48,11 +48,11 @@ bool ModuleInput::Init()
 		if (haptic == nullptr) {
 			return -1;
 		}
-	// See if it can do sine waves
-	if ((SDL_HapticQuery(haptic) & SDL_HAPTIC_SINE) == 0) {
-		SDL_HapticClose(haptic); // No sine effect
-		return -1;
+		if (SDL_HapticRumbleInit(haptic) == 0) {
+			LOG("INNITED");
 	}
+
+
 
 	
 
