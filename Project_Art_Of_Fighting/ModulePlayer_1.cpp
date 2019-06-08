@@ -38,7 +38,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	last_input = IN_UNKNOWN;
+	last_input = IN_RECHARGE_UP;
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
 		if (App->character_selection->SELECTOR_1 == 1) {
@@ -414,6 +414,7 @@ if (current_state == ST_STANDING_BLOCKED) {
 	//Waits defeat to end
 	if (current_state==ST_DEFEAT && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 	{
+		App->input->Paused = true;
 		App->player2->last_input = IN_WIN;
 	}
 
@@ -931,6 +932,11 @@ player_state ModulePlayer_1::ControlStates()
 			{
 				state = ST_IDLE;
 			} break;
+		case IN_RECHARGE_UP:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
 		}
 		break;
 
@@ -939,6 +945,11 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_UNKNOWN:
+			if (App->scene_john->resetstage == true)
+			{
+				state = ST_IDLE;
+			} break;
+		case IN_RECHARGE_UP:
 			if (App->scene_john->resetstage == true)
 			{
 				state = ST_IDLE;
@@ -1311,6 +1322,7 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->defeat) {
 			character->defeat.ResetCurrentFrame();
 			current_animation = &character->defeat;
+			App->input->keyboard_state[SDL_SCANCODE_T] = KEY_UP;
 			App->audio->Play_chunk(character->defeatfx);
 		}break;
 	case ST_RECHARGE:

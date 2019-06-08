@@ -14,7 +14,7 @@ ModuleAudio::~ModuleAudio() {}
 bool ModuleAudio::Init()
 {
 	bool ret = true;
-
+	int Mix_AllocateChannels(16);
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
 		SDL_Log("SDL_INIT_AUDIO could not initialitze! SDL_Mix Error: %s\n", Mix_GetError());

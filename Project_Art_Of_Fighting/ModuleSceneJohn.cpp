@@ -199,6 +199,7 @@ update_status ModuleSceneJohn::Update()
 
 		if (rounds_counter == 0)
 		{
+			resetstage = true;
 			indicator.rect.x = 0;
 			indicator.rect.y = 96;
 			indicator.rect.w = 100;
