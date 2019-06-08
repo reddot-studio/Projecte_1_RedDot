@@ -120,7 +120,14 @@ bool ModuleWelcomeScreen::Start()
 		return false;
 	}
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
-	App->audio->Play_music(start_music);
+	//App->audio->Play_music(start_music);														MOVER ESTO A CUANDO SE EJECUTE SU PARTE
+	cuadro = App->textures->Load("Assets/cuadro.png");
+	tick1 = SDL_GetTicks();
+
+	color.x = 0;
+	color.y = 0;
+	color.w = SCREEN_WIDTH;
+	color.h = SCREEN_HEIGHT;
 
 	return true;
 }
@@ -129,7 +136,31 @@ bool ModuleWelcomeScreen::Start()
 update_status ModuleWelcomeScreen::Update()
 {
 	App->input->Paused = false;
-	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() -1)
+
+	SDL_SetRenderDrawColor(render, 64, 16, 0, 255);
+	//SDL_RenderClear(render);
+	SDL_RenderDrawRect(render, &color);
+	SDL_RenderPresent(render);
+	RendPosition = { {0,0,304,224},{0,0},{0,0} };
+	App->render->Blit(cuadro, (SCREEN_WIDTH/2) - 152, (SCREEN_HEIGHT/2) - 112, &RendPosition, 1, 1, false);
+
+	tick2 = SDL_GetTicks();
+	
+	return update_status::UPDATE_CONTINUE;
+}
+
+
+bool ModuleWelcomeScreen::CleanUp()
+{
+	App->fonts->UnLoad(0);
+	App->audio->Unload_music(start_music);
+	App->textures->Unload(graphics);
+	LOG("Unloading welcome scene");
+	return true;
+}
+
+void ModuleWelcomeScreen::secondScreen() {
+	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 	{
 		finish_animation = 1;
 		current_animation = &final_logo;
@@ -138,12 +169,12 @@ update_status ModuleWelcomeScreen::Update()
 	{
 		App->render->Blit(graphics, 25, 0, &current_animation->GetCurrentFrame());
 	}
-	
+
 	if (finish_animation == 1) {
 		App->render->Blit(graphics, 60, 180, &snk);
 
 		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
-		
+
 		App->fonts->BlitText(61, 205, 2, "snk home entertainment, inc.!1992");
 		App->fonts->BlitText(130, 150, 2, "push start button");
 		App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
@@ -166,19 +197,8 @@ update_status ModuleWelcomeScreen::Update()
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_congratz);
 	}
 	//Canviar al nivell de Cina
-	if (App->input->keyboard_state[SDL_SCANCODE_M]== KEY_DOWN)
+	if (App->input->keyboard_state[SDL_SCANCODE_M] == KEY_DOWN)
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_john);
 	}
-	return update_status::UPDATE_CONTINUE;
-}
-
-
-bool ModuleWelcomeScreen::CleanUp()
-{
-	App->fonts->UnLoad(0);
-	App->audio->Unload_music(start_music);
-	App->textures->Unload(graphics);
-	LOG("Unloading welcome scene");
-	return true;
 }
