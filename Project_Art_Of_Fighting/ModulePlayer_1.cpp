@@ -1275,6 +1275,10 @@ void ModulePlayer_1::states(int speed)
 			current_animation = &character->recharge;
 			App->audio->Play_chunk(character->rechargefx);
 		}
+		if (Player_Spirit_Value_p1 != 126) {
+			Player_Spirit_Value_p1++;
+			App->sceneUI->x_spirit_1--;
+		}
 		LOG("RECHARGE");
 		break;
 	case ST_ULTRA_KICK:
