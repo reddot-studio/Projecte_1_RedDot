@@ -33,8 +33,10 @@ bool ModuleInput::Init()
 		ret = false;
 	}
 	SDL_Joystick * joy = SDL_JoystickOpen(0);
+	SDL_Joystick * joy1 = SDL_JoystickOpen(1);
 	if (SDL_NumJoysticks() > 0) {
 		joy = SDL_JoystickOpen(0);
+		joy1 = SDL_JoystickOpen(1);
 		if (joy) {
 			LOG("\nOpened Joystick 0");
 		}
@@ -43,16 +45,20 @@ bool ModuleInput::Init()
 		LOG("IS HAPTIC");
 	}
 	//Open the device
-	SDL_Haptic* haptic = nullptr;
 		haptic = SDL_HapticOpenFromJoystick(joy);
+		haptic1 = SDL_HapticOpenFromJoystick(joy1);
 		if (haptic == nullptr) {
 			return -1;
 		}
 		if (SDL_HapticRumbleInit(haptic) == 0) {
 			LOG("INNITED");
-	}
+		}	
+		if (SDL_HapticRumbleInit(haptic1) == 0) {
+			LOG("INNITED");
+		}
 
-
+	
+		
 
 	
 
@@ -216,6 +222,11 @@ const float ModuleInput::GetVerticalAxis_p2()
 void ModuleInput::StartEffect()
 {
 		// Test the effect
+
+}
+void ModuleInput::StartHaptic(SDL_Haptic * haptic)
+{
+	SDL_HapticRumblePlay(haptic, 1.0f, 75);
 
 }
 void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller) {

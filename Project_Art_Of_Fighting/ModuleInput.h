@@ -48,6 +48,7 @@ public:
 	GamePad gamepad01;
 	GamePad gamepad02;
 	SDL_Haptic* haptic = nullptr;
+	SDL_Haptic* haptic1 = nullptr;
 
 	bool joystick_up_p1;
 	bool joystick_down_p1;
@@ -63,7 +64,7 @@ public:
 	bool joystick_left_repeat_p2;
 	bool joystick_right_repeatp2;
 
-
+	void StartHaptic(SDL_Haptic *);
 
 };
 
