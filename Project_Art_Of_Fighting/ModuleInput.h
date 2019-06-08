@@ -15,13 +15,14 @@ public:
 	ModuleInput();
 	~ModuleInput();
 
+	void inputGamepad(SDL_GameController *);
+
 	bool Init();
 	update_status PreUpdate();
 	bool CleanUp();
 
 public:
 	const Uint8 *keyboard = nullptr;
-	Uint8 pad;
 	SDL_GameController *controller[2];
 
 	
@@ -31,9 +32,9 @@ public:
 
 	bool jump = true;
 
-	float deathZone = 0.1f;
-	float jumpZone = 0.5f;
-	float crouchZone = 0.5f;
+	float deathZone = 0.2f;
+	float jumpZone = 0.7f;
+	float crouchZone = 0.8f;
 
 	const float GetHorizontalAxis();
 	const float GetVerticalAxis();
@@ -41,8 +42,17 @@ public:
 	void StartEffect();
 
 	key_state keyboard_state[285];
-	GamePad pad_state[285];
-	SDL_GameControllerButton pads_button[16];
+	GamePad gamepad;
+
+	bool joystick_up;
+	bool joystick_down;
+	bool joystick_left;
+	bool joystick_right;
+
+	bool joystick_left_repeat;
+	bool joystick_right_repeat;
+
+
 
 };
 

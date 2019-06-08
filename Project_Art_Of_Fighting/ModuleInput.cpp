@@ -139,7 +139,14 @@ update_status ModuleInput::PreUpdate()
 			}
 		}	
 		
+		if (controller[0] != nullptr) inputGamepad(controller[0]);
+		if (controller[1] != nullptr) inputGamepad(controller[1]);
 
+		joystick_right =  (GetHorizontalAxis() > deathZone) ? true : false;
+		joystick_left =  (GetHorizontalAxis() < -deathZone) ? true : false;
+
+		joystick_up = (GetVerticalAxis() < -jumpZone) ? true : false;
+		joystick_down = (GetVerticalAxis() > crouchZone) ? true : false;
 
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 			return update_status::UPDATE_STOP;
@@ -186,5 +193,67 @@ const float ModuleInput::GetVerticalAxis()
 void ModuleInput::StartEffect()
 {
 		// Test the effect
+
+}
+void ModuleInput::inputGamepad(SDL_GameController * controller) {
+	//BUTTON A
+	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+		if (gamepad.A == BUTTON_IDLE)
+			gamepad.A = BUTTON_DOWN;
+		else
+			gamepad.A = BUTTON_REPEAT;
+	}
+	else
+	{
+		if (gamepad.A == BUTTON_REPEAT || (gamepad.A == BUTTON_DOWN))
+			gamepad.A = BUTTON_UP;
+		else
+			gamepad.A = BUTTON_IDLE;
+	}	
+	
+	//BUTTON X
+	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
+		if (gamepad.X == BUTTON_IDLE)
+			gamepad.X = BUTTON_DOWN;
+		else
+			gamepad.X = BUTTON_REPEAT;
+	}
+	else
+	{
+		if (gamepad.X == BUTTON_REPEAT || (gamepad.X == BUTTON_DOWN))
+			gamepad.X = BUTTON_UP;
+		else
+			gamepad.X = BUTTON_IDLE;
+	}	
+
+	//BUTTON B
+	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
+		if (gamepad.B == BUTTON_IDLE)
+			gamepad.B = BUTTON_DOWN;
+		else
+			gamepad.B = BUTTON_REPEAT;
+	}
+	else
+	{
+		if (gamepad.B == BUTTON_REPEAT || (gamepad.B == BUTTON_DOWN))
+			gamepad.B = BUTTON_UP;
+		else
+			gamepad.B = BUTTON_IDLE;
+	}
+
+	//BUTTON START
+	if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_START) == 1) {
+		if (gamepad.START == BUTTON_IDLE)
+			gamepad.START = BUTTON_DOWN;
+		else
+			gamepad.START = BUTTON_REPEAT;
+	}
+	else
+	{
+		if (gamepad.START == BUTTON_REPEAT || (gamepad.START == BUTTON_DOWN))
+			gamepad.START = BUTTON_UP;
+		else
+			gamepad.START = BUTTON_IDLE;
+	}
 
 }

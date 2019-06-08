@@ -93,31 +93,71 @@ update_status ModulePlayer_1::Update()
 //CONTROLLER
 		//Move right
 
-		if (App->input->GetHorizontalAxis() > App->input->deathZone) {
+		if (App->input->joystick_right) {
 			last_input = IN_RIGHT_DOWN;
 		}
 
-		if (App->input->GetHorizontalAxis() < -App->input->deathZone) {
+		if (App->input->joystick_left) {
 			last_input = IN_LEFT_DOWN;
 		}
 
-		if (App->input->GetVerticalAxis() < -App->input->jumpZone) {
+		if (App->input->joystick_up) {
 			last_input = IN_JUMP_DOWN;
 		}
 
 		//TODO: IMPLEMENT CROUCH WITH CONTROLLER
-		if (App->input->GetVerticalAxis() > App->input->jumpZone) {
+		if (App->input->joystick_down) {
 			last_input = IN_CROUCH_DOWN;
 		}
 		
+		if (App->input->gamepad.A == BUTTON_DOWN) {
+			last_input_attack = last_input = IN_PUNCH;
+		}
+		else if (App->input->gamepad.A == BUTTON_REPEAT)
+		{
+			if (current_state != ST_RECHARGE) {
+				if (time < 50) {
+					time++;
+				}
+				else {
+					last_input = IN_RECHARGE;
+					time = 0;
+					LOG("\nIN");
+				}
+			}
+		}
+		else if (App->input->gamepad.A == BUTTON_UP){
+			last_input = IN_RECHARGE_UP;
+		}
 
-		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_A)) {
-			last_input = IN_PUNCH;
-			App->input->StartEffect();
+		
+		if (App->input->gamepad.B == BUTTON_DOWN) {
+			last_input_attack = last_input = IN_KICK;
+		}	
+		else if (App->input->gamepad.B == BUTTON_REPEAT)
+		{
+			if (current_state != ST_RECHARGE) {
+				if (time < 50) {
+					time++;
+				}
+				else {
+					last_input = IN_RECHARGE;
+					time = 0;
+					LOG("\nIN");
+				}
+			}
 		}
-		if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_X)) {
-			last_input = IN_KICK;
+		else if (App->input->gamepad.B == BUTTON_UP) {
+			last_input = IN_RECHARGE_UP;
 		}
+		if (App->input->gamepad.X == BUTTON_DOWN) {
+			switch (last_input_attack)
+			{
+			case IN_PUNCH: last_input = IN_STRONG_PUNCH; break;
+			case IN_KICK: last_input = IN_STRONG_KICK; break;
+			}
+		}
+
 	
 
 //KEYBOARD
@@ -649,6 +689,8 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
+		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
+		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -666,6 +708,8 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
+		case IN_STRONG_PUNCH: state = ST_STRONG_PUNCH; break;
+		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
