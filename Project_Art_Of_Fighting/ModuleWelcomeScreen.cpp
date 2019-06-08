@@ -170,7 +170,9 @@ bool ModuleWelcomeScreen::CleanUp()
 }
 
 void ModuleWelcomeScreen::thirdScreen() {
+	App->audio->Play_music(start_music);
 	tick3 = SDL_GetTicks();
+	timer2 = SDL_GetTicks();
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 	{
 		finish_animation = 1;
@@ -194,8 +196,10 @@ void ModuleWelcomeScreen::thirdScreen() {
 			}
 		}
 		//App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
-	}
-
+	}	
+	if()
+	sprintf_s(time, 3, "%d", 30-((timer2 - timer1)/1000));
+	App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 160, 5, time);
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
 	{
@@ -223,7 +227,7 @@ void ModuleWelcomeScreen::secondScreen() {
 
 	App->render->DrawQuad(color, 64, 16, 0, 255);
 	RendPosition = { {0,0,304,224},{0,0},{0,0} };
-	if (tick2 - tick1 < 6100) {
+	if (tick2 - tick1 < 3100) {
 		App->render->Blit(cuadro, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
 	}
 	else {
@@ -235,7 +239,7 @@ void ModuleWelcomeScreen::secondScreen() {
 			tick4 = SDL_GetTicks();
 		}
 	}
-	if (tick2 - tick1 > 6000 && tick2 - tick1 < 6200) {
+	if (tick2 - tick1 > 3000 && tick2 - tick1 < 3200) {
 		App->render->DrawQuad(color, 255, 255, 255, 255);
 	}
 
@@ -244,6 +248,11 @@ void ModuleWelcomeScreen::secondScreen() {
 		fadeSlow -= 1;
 	}
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+		sequence1 = false;
+		timer1 = SDL_GetTicks();
+	}
+	if (tick2 - tick1 > 6500)
+	{
 		sequence1 = false;
 	}
 
