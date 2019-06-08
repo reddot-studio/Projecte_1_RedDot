@@ -143,42 +143,16 @@ update_status ModuleWelcomeScreen::Update()
 {
 	App->input->Paused = false;
 
-
-	tick3 = SDL_GetTicks();
-
-	App->render->DrawQuad(color, 64, 16, 0, 255);
-	RendPosition = { {0,0,304,224},{0,0},{0,0} };
-	if (tick2 - tick1 < 6100) {
-		App->render->Blit(cuadro, (SCREEN_WIDTH/2) - 152, (SCREEN_HEIGHT/2) - 112, &RendPosition, 1, 1, false);
+	if (sequence1 == true) {
+		secondScreen();
 	}
 	else {
-		App->render->Blit(cuadroRoto, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
-	}
-	if (tick3 - tick4 >= 1000) {
-		App->fonts->BlitText((SCREEN_WIDTH / 2) - 44, (SCREEN_HEIGHT / 2) + 15, 2, "insert coin");
-		if (tick3-tick4 >= 2000) {
-			tick4 = SDL_GetTicks();
-		}
-	}
-	if (tick2 - tick1 > 6000 && tick2 - tick1 < 6200) {
-		App->render->DrawQuad(color, 255, 255, 255, 255);
-	}
-	
-	if (fadeSlow != 0) {
-		App->render->DrawQuad(color, 0, 0, 0, fadeSlow);
-		fadeSlow -= 1;
+		thirdScreen();
 	}
 	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) coins++;
 	sprintf_s(coinsText, 11, "coins   %d", coins);
 	App->fonts->BlitText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10, 2, coinsText);
 
-	//QUITR CUANDO SE IMPLEMENTE LA 2 SEQUENCIA
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
-		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
-	}
-	//
-	tick2 = SDL_GetTicks();
-	
 	return update_status::UPDATE_CONTINUE;
 }
 
@@ -195,7 +169,8 @@ bool ModuleWelcomeScreen::CleanUp()
 	return true;
 }
 
-void ModuleWelcomeScreen::secondScreen() {
+void ModuleWelcomeScreen::thirdScreen() {
+	tick3 = SDL_GetTicks();
 	if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)
 	{
 		finish_animation = 1;
@@ -212,8 +187,13 @@ void ModuleWelcomeScreen::secondScreen() {
 		App->render->Blit(graphics, 89, 12, &current_animation->GetCurrentFrame());
 
 		App->fonts->BlitText(61, 205, 2, "snk home entertainment, inc.!1992");
-		App->fonts->BlitText(130, 150, 2, "push start button");
-		App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
+		if(tick3 - tick4 >= 1000) {
+			App->fonts->BlitText(106, 150, 2, "push 1p start button");
+			if (tick3 - tick4 >= 2000) {
+				tick4 = SDL_GetTicks();
+			}
+		}
+		//App->render->Blit(graphics, 130, 150, &insert_coin.GetCurrentFrame());
 	}
 
 
@@ -237,4 +217,35 @@ void ModuleWelcomeScreen::secondScreen() {
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->scene_john);
 	}
+}
+void ModuleWelcomeScreen::secondScreen() {
+	tick3 = SDL_GetTicks();
+
+	App->render->DrawQuad(color, 64, 16, 0, 255);
+	RendPosition = { {0,0,304,224},{0,0},{0,0} };
+	if (tick2 - tick1 < 6100) {
+		App->render->Blit(cuadro, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
+	}
+	else {
+		App->render->Blit(cuadroRoto, (SCREEN_WIDTH / 2) - 152, (SCREEN_HEIGHT / 2) - 112, &RendPosition, 1, 1, false);
+	}
+	if (tick3 - tick4 >= 1000) {
+		App->fonts->BlitText((SCREEN_WIDTH / 2) - 44, (SCREEN_HEIGHT / 2) + 15, 2, "insert coin");
+		if (tick3 - tick4 >= 2000) {
+			tick4 = SDL_GetTicks();
+		}
+	}
+	if (tick2 - tick1 > 6000 && tick2 - tick1 < 6200) {
+		App->render->DrawQuad(color, 255, 255, 255, 255);
+	}
+
+	if (fadeSlow != 0) {
+		App->render->DrawQuad(color, 0, 0, 0, fadeSlow);
+		fadeSlow -= 1;
+	}
+	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+		sequence1 = false;
+	}
+
+	tick2 = SDL_GetTicks();
 }

@@ -19,6 +19,7 @@ public:
 
 	bool CleanUp();
 	void secondScreen();
+	void thirdScreen();
 
 public:
 	enum screen_state
@@ -50,6 +51,8 @@ public:
 	int tick1 = 0, tick2 = 0, tick3 = 0, tick4 = 0;
 	char coinsText[10];
 	int coins = 0;
+
+	bool sequence1 = true;
 };
 
 
