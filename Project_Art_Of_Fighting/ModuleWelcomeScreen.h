@@ -55,6 +55,8 @@ public:
 
 	char time[2];
 	bool sequence1 = true;
+	SDL_Texture* timer;
+
 };
 
 
