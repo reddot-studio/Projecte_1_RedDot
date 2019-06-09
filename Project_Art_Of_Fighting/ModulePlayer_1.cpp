@@ -515,10 +515,24 @@ if (current_state == ST_DAMAGE_IN_AIR) {
 
 	for (int i = 0; i < 3; i++)
 	{
-		HurtColliders[i]->SetRect(r.hurtColliders[i], current_animation->damage, pivot_player);
+		SDL_Rect rect[3];
+		rect[i] = r.hurtColliders[i];
+		if (Side == 2) {
+			rect[0].x = rect[0].x + 5;
+			rect[1].x = rect[1].x + 5;
+			rect[2].x = rect[2].x + 10;
+
+		}
+		HurtColliders[i]->SetRect(rect[i], current_animation->damage, pivot_player);
 	}
 	if (HitCollider != nullptr)
-		HitCollider->SetRect(r.hitCollider, current_animation->damage, pivot_player, Side);
+	{
+		iPoint newPos = pivot_player;
+		if (Side == 2) {
+			newPos.x = newPos.x + 60;
+		}
+		HitCollider->SetRect(r.hitCollider, current_animation->damage, newPos, Side);
+	}
 
 
 	//TODO: Delete this line and move it to generic place
