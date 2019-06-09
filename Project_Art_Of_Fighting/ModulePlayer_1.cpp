@@ -38,6 +38,12 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
+	App->input->joystick_up_p1 = false;
+	App->input->joystick_down_p1 = false;
+	App->input->joystick_left_p1 = false;
+	App->input->joystick_right_p1 = false;
+	App->input->joystick_left_repeat_p1 = false;
+	App->input->joystick_right_repeatp1 = false;
 	last_input = IN_UNKNOWN;
 	koukenenabled = false;
 	slowdownDuration = 5;

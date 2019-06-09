@@ -147,20 +147,21 @@ update_status ModuleInput::PreUpdate()
 		if (controller[0] != nullptr) inputGamepad(1,controller[0]);
 		if (controller[1] != nullptr) inputGamepad(2,controller[1]);
 
-		//Joystick 01
-		joystick_right_p1 =  (GetHorizontalAxis_p1() > deathZone) ? true : false;
-		joystick_left_p1 =  (GetHorizontalAxis_p1() < -deathZone) ? true : false;
+		if (App->scene_john->inGame) {
+			//Joystick 01
+			joystick_right_p1 = (GetHorizontalAxis_p1() > deathZone) ? true : false;
+			joystick_left_p1 = (GetHorizontalAxis_p1() < -deathZone) ? true : false;
 
-		joystick_up_p1 = (GetVerticalAxis_p1() < -jumpZone) ? true : false;
-		joystick_down_p1 = (GetVerticalAxis_p1() > crouchZone) ? true : false;
-		
-		//Joystick 02
-		joystick_right_p2 =  (GetHorizontalAxis_p2() > deathZone) ? true : false;
-		joystick_left_p2 =  (GetHorizontalAxis_p2() < -deathZone) ? true : false;
+			joystick_up_p1 = (GetVerticalAxis_p1() < -jumpZone) ? true : false;
+			joystick_down_p1 = (GetVerticalAxis_p1() > crouchZone) ? true : false;
 
-		joystick_up_p2 = (GetVerticalAxis_p2() < -jumpZone) ? true : false;
-		joystick_down_p2 = (GetVerticalAxis_p2() > crouchZone) ? true : false;
+			//Joystick 02
+			joystick_right_p2 = (GetHorizontalAxis_p2() > deathZone) ? true : false;
+			joystick_left_p2 = (GetHorizontalAxis_p2() < -deathZone) ? true : false;
 
+			joystick_up_p2 = (GetVerticalAxis_p2() < -jumpZone) ? true : false;
+			joystick_down_p2 = (GetVerticalAxis_p2() > crouchZone) ? true : false;
+		}
 		if (keyboard_state[SDL_SCANCODE_ESCAPE] == KEY_DOWN)
 			return update_status::UPDATE_STOP;
 

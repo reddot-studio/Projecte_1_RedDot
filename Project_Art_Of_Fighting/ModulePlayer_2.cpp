@@ -33,6 +33,12 @@ ModulePlayer_2::~ModulePlayer_2()
 bool ModulePlayer_2::Start()
 {
 	last_input = IN_UNKNOWN;
+	App->input->joystick_up_p2 = false;
+	App->input->joystick_down_p2 = false;
+	App->input->joystick_left_p2 = false;
+	App->input->joystick_right_p2 = false;
+	App->input->joystick_left_repeat_p2 = false;
+	App->input->joystick_right_repeatp2 = false;
 	koukenenabled = false;;
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
