@@ -264,7 +264,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
 }
 
 //Taunt
-if (App->input->keyboard_state[SDL_SCANCODE_Y] == KEY_DOWN)
+if (App->input->keyboard_state[SDL_SCANCODE_Y] == KEY_DOWN || App->input->gamepad01.Y == BUTTON_DOWN)
 {
 	last_input = IN_TAUNT;
 	
