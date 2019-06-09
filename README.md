@@ -45,7 +45,7 @@ Responsibilites: Audio & Animation  <br>
 
 # Gameplay Video:
 <br>
-<iframe width="420" height="315" src="https://www.youtube.com/watch?v=iHjXkBdnH-I&feature=youtu.be"></iframe>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/iHjXkBdnH-I"></iframe>
 
 # Latest Release Of Our Project:
 
