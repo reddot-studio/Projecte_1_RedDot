@@ -44,6 +44,12 @@ bool ModulePlayer_1::Start()
 	App->input->joystick_right_p1 = false;
 	App->input->joystick_left_repeat_p1 = false;
 	App->input->joystick_right_repeatp1 = false;
+
+	App->input->gamepad01.A = BUTTON_IDLE;
+	App->input->gamepad02.A = BUTTON_IDLE;
+	App->input->gamepad01.B = BUTTON_IDLE;
+	App->input->gamepad02.B = BUTTON_IDLE;
+
 	last_input = IN_UNKNOWN;
 	koukenenabled = false;
 	slowdownDuration = 5;

@@ -39,6 +39,11 @@ bool ModulePlayer_2::Start()
 	App->input->joystick_right_p2 = false;
 	App->input->joystick_left_repeat_p2 = false;
 	App->input->joystick_right_repeatp2 = false;
+
+	App->input->gamepad01.A = BUTTON_IDLE;
+	App->input->gamepad02.A = BUTTON_IDLE;
+	App->input->gamepad01.B = BUTTON_IDLE;
+	App->input->gamepad02.B = BUTTON_IDLE;
 	koukenenabled = false;;
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
