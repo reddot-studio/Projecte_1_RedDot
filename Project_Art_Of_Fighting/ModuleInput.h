@@ -34,7 +34,7 @@ public:
 
 	bool jump = true;
 
-	float deathZone = 0.2f;
+	float deathZone = 0.4f;
 	float jumpZone = 0.7f;
 	float crouchZone = 0.8f;
 

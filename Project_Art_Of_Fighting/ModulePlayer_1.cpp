@@ -1040,7 +1040,6 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_RECHARGE_UP:state = ST_IDLE; break;
-		case IN_UNKNOWN: state = ST_IDLE; break;
 		}
 		break;
 	case ST_ULTRA_KICK:
