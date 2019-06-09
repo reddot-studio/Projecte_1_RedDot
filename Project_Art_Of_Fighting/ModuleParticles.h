@@ -68,6 +68,8 @@ public:
 	Particle koouKen;
 	Particle post_koouKen;	
 	
+	Particle recharge;
+
 	Particle megaSmash;
 	Particle post_megaSmash;
 

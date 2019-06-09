@@ -165,6 +165,7 @@ bool ModuleSceneJohn::Start()
 	App->player2->Enable();
 	App->sceneUI->Enable();
 	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
+
 	return true;
 }
 
@@ -211,8 +212,8 @@ update_status ModuleSceneJohn::Update()
 			{
 				App->audio->Play_chunk(first_round);
 				roundcnt++;
+				
 			}
-			
 			App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 50, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		}
 		if (rounds_counter == 1)
@@ -256,6 +257,8 @@ update_status ModuleSceneJohn::Update()
 		indicator.rect.y = 113;
 		indicator.rect.h = 16;
 		indicator.rect.w = 80;
+		App->render->CameraLimitL->type = COLLIDER_WALL;
+		App->render->CameraLimitR->type = COLLIDER_WALL;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		first_row = false;
 		
@@ -430,5 +433,10 @@ bool ModuleSceneJohn::CleanUp()
 		rounds_counter++;
 	}
 	LOG("Unloading john stage");
+
+
+	App->render->CameraLimitL->type = COLLIDER_NONE;
+	App->render->CameraLimitR->type = COLLIDER_NONE;
+
 	return true;
 }

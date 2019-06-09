@@ -62,6 +62,8 @@ public:
 	Character * character = nullptr;
 
 	Particle * currentParticle = nullptr;
+	Particle* rechargeParticle = nullptr;
+	bool particleDeleted = false;
 
 	SDL_Rect ActiveScene;
 	int timer;
@@ -95,6 +97,7 @@ public:
 	bool WallColiding = false;
 	bool spiritKouKen = false;
 	bool spiritTaunt = false;
+	bool spiritUltraKick = false;
 
 	ModulePlayer_1* Enemy;
 

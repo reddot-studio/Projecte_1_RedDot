@@ -257,7 +257,7 @@ else if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_REPEAT)
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 //Ko'ou Ken
-if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Value_p1 - 26 >= 0) {
+if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN) {
 	last_input = IN_KOOU_KEN;
 
 }
@@ -1100,6 +1100,10 @@ void ModulePlayer_1::states(int speed)
 	switch (state)
 	{
 	case ST_IDLE:
+		if (rechargeParticle != nullptr && !particleDeleted) {
+			App->particles->DeleteLastParticle(rechargeParticle);
+			particleDeleted = true;
+		}
 		current_animation = &character->idle;
 		HurtColliders[0]->Enabled = true;
 		HurtColliders[1]->Enabled = true;
@@ -1205,7 +1209,9 @@ void ModulePlayer_1::states(int speed)
 		{
 			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
-			spiritKouKen = true;
+			if (Player_Spirit_Value_p1 - 26 >= 0) {
+				spiritKouKen = true;
+			}
 			switch (character->characterType)
 			{
 			case RYO:
@@ -1399,7 +1405,6 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
 			}
-			App->particles->DeleteLastParticle(currentParticle);
 		}
 		break;
 	case ST_STANDING_BLOCK:
@@ -1492,8 +1497,8 @@ void ModulePlayer_1::states(int speed)
 		}
 		break;
 	case ST_TAUNT:
-		spiritTaunt = true;
 		if (current_animation != &character->taunt) {
+			spiritTaunt = true;
 			character->taunt.ResetCurrentFrame();
 			current_animation = &character->taunt;
 			App->audio->Play_chunk(character->tauntfx);
@@ -1518,6 +1523,8 @@ void ModulePlayer_1::states(int speed)
 			character->recharge.ResetCurrentFrame();
 			current_animation = &character->recharge;
 			App->audio->Play_chunk(character->rechargefx);
+			rechargeParticle = App->particles->AddParticle(App->particles->recharge, pivot_player.x, pivot_player.y, COLLIDER_NONE, 0, 0, Side, JOHN);
+			particleDeleted = false;
 		}
 		if (Player_Spirit_Value_p1 != 126) {
 			Player_Spirit_Value_p1++;
@@ -1528,6 +1535,9 @@ void ModulePlayer_1::states(int speed)
 	case ST_ULTRA_KICK:
 		if (current_animation != &character->ultrakick)
 		{
+			if (Player_Spirit_Value_p1 - 26 >= 0) {
+				spiritUltraKick = true;
+			}
 			HitCollider->Enabled = true;
 			character->ultrakick.ResetCurrentFrame();
 			current_animation = &character->ultrakick;
