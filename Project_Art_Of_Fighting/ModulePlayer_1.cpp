@@ -731,6 +731,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
 		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
@@ -749,6 +750,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
@@ -770,6 +772,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_CROUCH_DOWN: state = ST_CROUCH; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_BLOCKING: state = ST_STANDING_BLOCK; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
@@ -784,6 +787,7 @@ player_state ModulePlayer_1::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_KOOU_KEN: state = ST_KOOU_KEN; break;
 		}
 		break;
@@ -793,6 +797,7 @@ player_state ModulePlayer_1::ControlStates()
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		}
 		break;
 	case ST_STRONG_PUNCH:
@@ -928,7 +933,8 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_PUNCH: state = ST_CROUCH_PUNCH; break;
 		case IN_KICK: state = ST_CROUCH_KICK; break;
 		case IN_UNKNOWN: state = ST_IDLE; break;
-		case IN_RECEIVE_DAMAGE: state = ST_CROUCH_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
+		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_BLOCKING: state = ST_CROUCH_BLOCK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
@@ -953,6 +959,12 @@ player_state ModulePlayer_1::ControlStates()
 		}
 		break;
 	case ST_IDLE_TO_DAMAGE:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
+		}
+		break;
+	case ST_IDLE_TO_DAMAGE_LONG:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
@@ -1410,6 +1422,36 @@ void ModulePlayer_1::states(int speed)
 
 		}
 		break;
+	case ST_IDLE_TO_DAMAGE_LONG:
+		if (current_animation != &character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long) {
+			character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.ResetCurrentFrame();
+			current_animation = &character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long;
+			App->particles->AddParticle(App->particles->starhit, pivot_player.x + 6, pivot_player.y, COLLIDER_NONE, 200, 0, 1, RYO);
+			App->particles->AddParticle(App->particles->starhit, pivot_player.x + 4, pivot_player.y - 10, COLLIDER_NONE, 350, 0, 1, RYO);
+			App->particles->AddParticle(App->particles->starhit, pivot_player.x + 10, pivot_player.y + 40, COLLIDER_NONE, 600, 0, 1, RYO);
+			App->particles->AddParticle(App->particles->starhit, pivot_player.x , pivot_player.y - 40, COLLIDER_NONE, 800, 0, 1, RYO);
+			//App->audio->Play_chunk(character->dmg);
+			if (App->player2->current_state == ST_STANDING_KICK || App->player2->current_state == ST_CROUCH_KICK || App->player2->current_state == ST_STRONG_KICK || App->player2->current_state == ST_NEUTRAL_JUMP_KICK || App->player2->current_state == ST_FORWARD_JUMP_KICK || App->player2->current_state == ST_BACKWARD_JUMP_KICK)
+			{
+				App->audio->Play_chunk(character->kickfx);
+				App->audio->Play_chunk(character->kickfx);
+			}
+			if (App->player2->current_state == ST_STANDING_PUNCH || App->player2->current_state == ST_STRONG_PUNCH || App->player2->current_state == ST_CROUCH_PUNCH || App->player2->current_state == ST_NEUTRAL_JUMP_PUNCH || App->player2->current_state == ST_FORWARD_JUMP_PUNCH || App->player2->current_state == ST_BACKWARD_JUMP_PUNCH)
+			{
+				App->audio->Play_chunk(character->dmg);
+				App->audio->Play_chunk(character->dmg);
+			}
+			if (App->player2->koukenenabled == true)
+			{
+				App->audio->Play_chunk(character->koukenimpactfx);
+				App->player2->koukenenabled = false;
+			}
+			//App->particles->DeleteLastParticle(currentParticle);
+
+			App->input->StartHaptic(App->input->haptic);
+
+		}
+		break;
 	case ST_DAMAGE_IN_AIR:
 		if (current_animation != &character->air_damage) {
 			character->air_damage.ResetCurrentFrame();
@@ -1472,8 +1514,12 @@ iPoint ModulePlayer_1::GetPosition()
 
 void ModulePlayer_1::Deal_Damage(ModulePlayer_2& Enemy, int AttackDamage)
 {
-
-	last_input = IN_RECEIVE_DAMAGE;
+	if (Enemy.current_state == ST_ULTRA_KICK) {
+		last_input = IN_RECEIVE_DAMAGE_LONG;
+	}
+	else {
+		last_input = IN_RECEIVE_DAMAGE;
+	}
 	HurtColliders[0]->Enabled = false;
 	HurtColliders[1]->Enabled = false;
 	HurtColliders[2]->Enabled = false;
