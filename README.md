@@ -49,7 +49,7 @@ Responsibilites: Audio & Animation  <br>
 
 # Latest Release Of Our Project:
 
-[Click here!](https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/0.7.1)
+[Click here!](https://github.com/reddot-studio/Projecte_1_RedDot/releases/tag/1.0)
 
 
 
