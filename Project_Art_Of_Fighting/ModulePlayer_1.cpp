@@ -1135,18 +1135,21 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_FALL_AIR: state = ST_FALL_FROM_AIR; break;
+		case IN_DEFEAT: state = ST_FALL_FROM_AIR; break;
 		}
 		break;	
 	case ST_FALL_FROM_AIR:
 		switch (last_input)
 		{
 		case IN_BOUNCE: state = ST_BOUNCE; break;
+		case IN_DEFEAT: state = ST_BOUNCE; break;
 		}
 		break;
 	case ST_BOUNCE:
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_RECOVER_FROM_AIR; break;
+		case IN_DEFEAT: break;
 		}
 		break;
 	case ST_RECOVER_FROM_AIR:
