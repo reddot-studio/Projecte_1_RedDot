@@ -21,7 +21,7 @@ public:
 	bool CleanUp();
 	update_status Update();
 	bool Start();
-	void move();
+//	void move();
 	void timer();
 	void draw();
 	void choose();
@@ -31,7 +31,7 @@ public:
 
 	RectSprites imageSelection1;
 	RectSprites imageSelection2;
-	RectSprites ryo_other, john_other;
+	RectSprites john_other;
 	RectSprites characters;
 	RectSprites name1;
 	RectSprites name2;
@@ -53,17 +53,17 @@ public:
 	bool selected = false;
 	bool timer_init = false;
 
-	int SELECTOR_1 = 1;
+	int SELECTOR_1 = 2;
 	int SELECTOR_2 = 2;
 
 	int john1counter;
 	int john2counter;
 	int versuscounter;
 
-	int X_SELECTOR_1 = ((SCREEN_WIDTH / 2) - 28);
-	int Y_SELECTOR_1 = ((SCREEN_HEIGHT / 2) + 47);
-	int X_SELECTOR_2 = ((SCREEN_WIDTH / 2) + 28);
-	int Y_SELECTOR_2 = ((SCREEN_HEIGHT / 2) + 78);
+	int X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
+	int Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
+	int X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
+	int Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
 
 	int tick1 = 0, tick2 = 0;
 	char time_char[10];

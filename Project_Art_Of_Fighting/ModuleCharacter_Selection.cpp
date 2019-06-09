@@ -32,11 +32,6 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	selector2.PushBack({ 500,500,28,31 });
 	selector2.speed = 0.8f;
 
-	imageSelection1.rect.x = 0;
-	imageSelection1.rect.y = 0;
-	imageSelection1.rect.w = 128;
-	imageSelection1.rect.h = 123;
-
 	imageSelection2.rect.x = 128;
 	imageSelection2.rect.y = 0;
 	imageSelection2.rect.w = 128;
@@ -47,20 +42,10 @@ ModuleScreenSelection::ModuleScreenSelection() {
 	name1.rect.w = 58;
 	name1.rect.h = 15;
 
-	name2.rect.x = 58;
-	name2.rect.y = 123;
-	name2.rect.w = 44;
-	name2.rect.h = 15;
-
 	not_available.rect.x = 0;
 	not_available.rect.y = 225;
 	not_available.rect.w = 112;
 	not_available.rect.h = 56;
-
-	ryo_other.rect.x = 112;
-	ryo_other.rect.y = 128;
-	ryo_other.rect.w = 128;
-	ryo_other.rect.h = 123;
 
 	john_other.rect.x = 256;
 	john_other.rect.y = 0;
@@ -113,7 +98,7 @@ update_status ModuleScreenSelection::Update() {
 
 		choose();
 		draw();
-		move();
+//		move();
 		timer();
 	}
 	else { //Quan clicas intro
@@ -149,40 +134,40 @@ bool ModuleScreenSelection::CleanUp() {
 	App->audio->Unload_music(character_music);
 	return true;
 }
-void ModuleScreenSelection::move() {
-	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN)) {
-		if (SELECTOR_1 == 1) {
-			X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
-			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
-			SELECTOR_1 = 2;
-		}
-
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN)) {
-		if (SELECTOR_1 == 2) {
-			X_SELECTOR_1 = (SCREEN_WIDTH / 2) - 28;
-			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 47;
-			SELECTOR_1 = 1;
-		}
-
-	}
-
-
-	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)) {
-		if (SELECTOR_2 == 1) {
-			X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
-			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
-			SELECTOR_2 = 2;
-		}
-	}
-	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN)) {
-		if (SELECTOR_2 == 2) {
-			X_SELECTOR_2 = (SCREEN_WIDTH / 2) - 28;
-			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 50;
-			SELECTOR_2 = 1;
-		}
-	}
-}
+//void ModuleScreenSelection::move() {
+//	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN)) {
+//		if (SELECTOR_1 == 1) {
+//			X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
+//			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
+//			SELECTOR_1 = 2;
+//		}
+//
+//	}
+//	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN)) {
+//		if (SELECTOR_1 == 2) {
+//			X_SELECTOR_1 = (SCREEN_WIDTH / 2) - 28;
+//			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 47;
+//			SELECTOR_1 = 1;
+//		}
+//
+//	}
+//
+//
+//	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)) {
+//		if (SELECTOR_2 == 1) {
+//			X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
+//			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
+//			SELECTOR_2 = 2;
+//		}
+//	}
+//	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN)) {
+//		if (SELECTOR_2 == 2) {
+//			X_SELECTOR_2 = (SCREEN_WIDTH / 2) - 28;
+//			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 50;
+//			SELECTOR_2 = 1;
+//		}
+//	}
+//}
 void ModuleScreenSelection::timer() {
 	if (time_int <= 0) {
 		tick1 = 0;
@@ -211,21 +196,6 @@ void ModuleScreenSelection::choose() {
 		//App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
 
-	//RYO
-	if (SELECTOR_1 == 1) {
-		App->render->Blit(graphics, 35, 15, &imageSelection1, 1.0f, 2, false);
-		App->render->Blit(graphics, 77, 140, &name2, 1.0f, 1, false);
-		if (SELECTOR_2 == 1) {
-			App->render->Blit(graphics, SCREEN_WIDTH - 163, 15, &ryo_other, 1.0f, 1, false);
-			App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1, false);
-		}
-	}
-	else if (SELECTOR_2==1) {
-		App->render->Blit(graphics, SCREEN_WIDTH - 165, 15, &imageSelection1, 1.0f, 1, false);
-		App->render->Blit(graphics, 44 + SCREEN_WIDTH - 165, 140, &name2, 1.0f, 1, false);
-	}
-
-	
 
 	//JOHN
 	if (SELECTOR_1==2) {
@@ -236,10 +206,6 @@ void ModuleScreenSelection::choose() {
 			App->render->Blit(graphics, 35 + SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1, false);
 		}
 	}
-	else if (SELECTOR_2==2) {
-		App->render->Blit(graphics, SCREEN_WIDTH - 165, 10, &imageSelection2, 1.0f, 2, false);
-		App->render->Blit(graphics, 35+ SCREEN_WIDTH - 165, 140, &name1, 1.0f, 1, false);
-	}
 
 }
 void ModuleScreenSelection::characters_enter() {
@@ -249,24 +215,6 @@ void ModuleScreenSelection::characters_enter() {
 		App->audio->Play_music(character_music);
 		App->audio->Play_chunk(player1_john);
 		john1counter++;
-	}
-	if (SELECTOR_1 == 1) {
-		if (x_image1 == 20) {
-			App->render->Blit(graphics, x_image1, 20, &imageSelection1, 1, 2, false);
-		}
-		else {
-			x_image1 += 10;
-			App->render->Blit(graphics, x_image1, 20, &imageSelection1, 1, 2, false);
-		}
-		if (tick2 - tick1 > 50) {
-			if (x_name1 >= 58) {
-				App->render->Blit(graphics, x_name1, 145, &name2, 1, 1, false);
-			}
-			else {
-				x_name1 += 10;
-				App->render->Blit(graphics, x_name1, 145, &name2, 1, 1, false);
-			}
-		}
 	}
 
 	if (SELECTOR_1 == 2) {
@@ -299,11 +247,11 @@ void ModuleScreenSelection::characters_enter() {
 
 		if (SELECTOR_2 == 2) {
 			if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
-				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2, false);
+				App->render->Blit(graphics, x_image2, 15, &john_other, 1, 1, false);
 			}
 			else {
 				x_image2 -= 10;
-				App->render->Blit(graphics, x_image2, 15, &imageSelection2, 1, 2, false);
+				App->render->Blit(graphics, x_image2, 15, &john_other, 1, 1, false);
 			}
 			if (tick2 - tick1 > 2500) {
 
@@ -313,25 +261,6 @@ void ModuleScreenSelection::characters_enter() {
 				else {
 					x_name2 -= 10;
 					App->render->Blit(graphics, x_name2 - 50, 145, &name1, 1, 1, false);
-				}
-			}
-		}
-
-		if (SELECTOR_2 == 1) {
-			if (x_image2 <= (SCREEN_WIDTH / 2) + 50) {
-				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1, false);
-			}
-			else {
-				x_image2 -= 10;
-				App->render->Blit(graphics, x_image2, 15, &imageSelection1, 1, 1, false);
-			}
-			if (tick2 - tick1 > 2400) {
-				if (x_image2 <= (SCREEN_WIDTH / 2) + 70) {
-					App->render->Blit(graphics, x_name2+10, 145, &name2, 1, 1, false);
-				}
-				else {
-					x_name2 -= 10;
-					App->render->Blit(graphics, x_name2+10, 145, &name2, 1, 1, false);
 				}
 			}
 		}
