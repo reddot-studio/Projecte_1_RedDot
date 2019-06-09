@@ -1,4 +1,4 @@
-<p align="center">
+﻿<p align="center">
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/Logoprojecte.PNG"> <br/>
 </p>
 
@@ -45,7 +45,7 @@ Responsibilites: Audio & Animation  <br>
 
 # Gameplay Video:
 <br>
-<iframe width="420" height="315" src="https://www.youtube.com/embed/125mtcOb2Xc"></iframe>
+<iframe width="420" height="315" src="https://www.youtube.com/watch?v=iHjXkBdnH-I&feature=youtu.be"></iframe>
 
 # Latest Release Of Our Project:
 
