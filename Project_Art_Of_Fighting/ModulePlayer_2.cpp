@@ -1574,8 +1574,10 @@ void ModulePlayer_2::CheckHealth(ModulePlayer_1&Enemy)
 
 bool ModulePlayer_2::IsPlayerOnMapLimit()
 {
-	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
-		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w)
+	if ((pivot_player.x <= 488
+		&& pivot_player.x >= 455)
+		|| (pivot_player.x >= 8
+			&& pivot_player.x < 0 + 10 + player_collider->rect.w))
 	{
 		return true;
 	}
@@ -1583,6 +1585,9 @@ bool ModulePlayer_2::IsPlayerOnMapLimit()
 	{
 		return false;
 	}
+
+
+
 }
 
 
