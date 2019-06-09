@@ -94,6 +94,7 @@ public:
 	bool WallColiding = false;
 	bool spiritKouKen = false;
 	bool spiritTaunt = false;
+	bool spiritUltraKick = false;
 
 	ModulePlayer_1* Enemy;
 

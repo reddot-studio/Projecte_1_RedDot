@@ -91,6 +91,7 @@ update_status ModuleUI::Update()
 
 
 	//SPIRIT MANAGEMENT
+	//koouken
 	if (App->player2->spiritKouKen == true) {
 		timeKouKen_Spirit2++;
 		App->player2->Player_Spirit_Value_p2 -= 1;
@@ -108,11 +109,12 @@ update_status ModuleUI::Update()
 			App->player1->spiritKouKen = false;
 		}
 	}
+	//taunt
 	if (App->player1->spiritTaunt == true) {
 		if (App->player2->Player_Spirit_Value_p2 != 0) {
 			timeTaunt_Spirit1++;
 			App->player2->Player_Spirit_Value_p2 -= 1;
-			if (timeTaunt_Spirit1 >= 10) {
+			if (timeTaunt_Spirit1 >= 31) {
 				timeTaunt_Spirit1 = 0;
 				App->player1->spiritTaunt = false;
 			}
@@ -126,13 +128,31 @@ update_status ModuleUI::Update()
 			timeTaunt_Spirit2++;
 			x_spirit_1 += 1;
 			App->player1->Player_Spirit_Value_p1 -= 1;
-			if (timeTaunt_Spirit2 >= 10) {
+			if (timeTaunt_Spirit2 >= 31) {
 				timeTaunt_Spirit2 = 0;
 				App->player2->spiritTaunt = false;
 			}
 		}
 		else {
 			App->player2->spiritTaunt = false;
+		}
+	}
+	//ultraKick
+	if (App->player2->spiritUltraKick == true) {
+		timeUltraKick_Spirit2++;
+		App->player2->Player_Spirit_Value_p2 -= 1;
+		if (timeUltraKick_Spirit2 >= 26) {
+			timeUltraKick_Spirit2 = 0;
+			App->player2->spiritUltraKick = false;
+		}
+	}
+	if (App->player1->spiritUltraKick == true) {
+		timeUltraKick_Spirit1++;
+		x_spirit_1++;
+		App->player1->Player_Spirit_Value_p1 -= 1;
+		if (timeUltraKick_Spirit1 >= 26) {
+			timeUltraKick_Spirit1 = 0;
+			App->player1->spiritUltraKick = false;
 		}
 	}
 
@@ -149,9 +169,6 @@ update_status ModuleUI::Update()
 			spriteTimer3 = SDL_GetTicks();
 		}
 	}
-
-
-
 
 	//beat by
 	if (two_winpoints == false) {
@@ -186,7 +203,6 @@ update_status ModuleUI::Update()
 	}
 	else
 	{
-
 		RendPosition = { { 0, 0, 32, 24 },{ 0, 0 } ,{ 0, 0 } };
 		App->render->Blit(TimerTexture, SCREEN_WIDTH / 2 - RendPosition.rect.w / 2, 8, &RendPosition, 0,1,false);
 		if (timer > 0 && App->player1->win_check==false && App->player2->win_check == false)

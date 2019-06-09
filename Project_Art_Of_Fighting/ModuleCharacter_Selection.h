@@ -21,7 +21,6 @@ public:
 	bool CleanUp();
 	update_status Update();
 	bool Start();
-//	void move();
 	void timer();
 	void draw();
 	void choose();
