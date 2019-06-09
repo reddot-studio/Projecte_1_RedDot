@@ -132,7 +132,8 @@ update_status ModuleRender::Update()
 	}
 
 	Borrar->SetPos(MiddlePointOfPlayers.x - 10, App->player1->pivot_player.y);
-	Borrar2->SetPos( (((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) - 10, App->player1->pivot_player.y);
+	MiddlePointOfScreen = (((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue);
+	Borrar2->SetPos(MiddlePointOfScreen - 10, App->player1->pivot_player.y);
 	/*camera.x = -((MiddlePointOfPlayers.x / 2) * speed);*/
 
 	LOG("\n %d", CameraLimitL->rect.x);
@@ -307,10 +308,19 @@ void ModuleRender::ZoomIn()
 		{
 			zoomValue += 0.001f;
 
-			if ((((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) <= MiddlePointOfPlayers.x)
+			if (MiddlePointOfScreen < MiddlePointOfPlayers.x) 
 			{
 				camera.x -= 1;
+				if (camera.x - 1 > ((CurrentSceneLenght * zoomValue) - 385)) 
+				{
+					camera.x = -((CurrentSceneLenght * zoomValue) - 385);
+				}
 			}
+
+			//if ((((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) > MiddlePointOfPlayers.x)
+			//{
+			//	camera.x -= 2;
+			//}
 
 			if (camera.y > -90)
 			{
@@ -343,10 +353,11 @@ void ModuleRender::ZoomOut()
 	}
 }
 
-void ModuleRender::MoveCamera() 
+void ModuleRender::MoveCamera(iPoint Movement)
 {
 
-
+	if (camera.x + Movement.x < 0 && -camera.x < App->render->CurrentSceneLenght - 385)
+		camera.x += Movement.x;
 
 
 }

@@ -27,7 +27,7 @@ public:
 	void ZoomIn();
 	void ZoomOut();
 	void ResetCamera();
-	void MoveCamera();
+	void MoveCamera(iPoint);
 
 	float timerSpeed;
 	float timer;
@@ -52,6 +52,7 @@ public:
 	int sprite_shake_duration = 0.0f;
 	int sprite_shake_timer = 0.0f;
 	float sprite_shake_magnitude = 0.0f;
+	int MiddlePointOfScreen;
 	iPoint sprite_offset;
 	iPoint start_sprite_offset;
 	iPoint MiddlePointOfPlayers;

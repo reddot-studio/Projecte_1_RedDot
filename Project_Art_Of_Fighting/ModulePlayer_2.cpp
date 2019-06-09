@@ -530,8 +530,8 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 
 		if (-App->render->camera.x > App->render->CurrentSceneLenght - 44 && WIN_FULLSCREEN_DESKTOP == 0)
 			App->render->camera.x = -(App->render->CurrentSceneLenght - 44);
-		if (-App->render->camera.x > App->render->CurrentSceneLenght - 385 && WIN_FULLSCREEN_DESKTOP == 1)
-			App->render->camera.x = -(App->render->CurrentSceneLenght - 385);
+		if (-App->render->camera.x > ((App->render->CurrentSceneLenght * App->render->zoomValue) - 385) && WIN_FULLSCREEN_DESKTOP == 1)
+			App->render->camera.x = -((App->render->CurrentSceneLenght * App->render->zoomValue)- 385);
 
 		//Coliding with left side of the camera?
 		if (c2->LeftRight == false)
@@ -545,6 +545,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 
 		if (c2->LeftRight == true)
 		{
+
 			//Move camera and limit player
 			App->render->camera.x -= App->render->speed * 2;
 			pivot_player.x = c2->rect.x + (pivot_player.x - player_collider->rect.x) - player_collider->rect.w;
