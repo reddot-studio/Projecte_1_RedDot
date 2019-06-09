@@ -1107,6 +1107,8 @@ void ModulePlayer_2::states(int speed)
 			HitCollider->Enabled = true;
 			current_animation = &character->kick;
 			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->kickfx2);
+			App->audio->Play_chunk(character->kickfx2);
 		}
 		LOG("KICK");
 		break;
@@ -1384,6 +1386,7 @@ void ModulePlayer_2::states(int speed)
 				App->player1->koukenenabled = false;
 				App->audio->Play_chunk(character->koukenimpactfx);
 			}
+			
 			App->input->StartHaptic(App->input->haptic1);
 			//App->particles->DeleteLastParticle(currentParticle);
 
@@ -1412,6 +1415,12 @@ void ModulePlayer_2::states(int speed)
 			{
 				App->audio->Play_chunk(character->koukenimpactfx);
 				App->player2->koukenenabled = false;
+			}
+			if (App->player2->current_state = ST_ULTRA_KICK)
+			{
+				App->audio->Play_chunk(character->ultrakickhitfx);
+				App->audio->Play_chunk(character->ultrakickhitfx);
+
 			}
 			//App->particles->DeleteLastParticle(currentParticle);
 

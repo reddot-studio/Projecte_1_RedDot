@@ -138,9 +138,10 @@ update_status ModuleRender::Update()
 
 	LOG("\n %d", CameraLimitL->rect.x);
 
+
+	zoomSpeed = (speed * (4));
 	if (isZoomingIn)
 	{
-		zoomSpeed = (speed * (4));
 		//camera.x = (-(MiddlePointOfPlayers.x / 3) * zoomValue);
 		if (MiddlePointOfScreen < MiddlePointOfPlayers.x && camera.x - zoomSpeed > -((CurrentSceneLenght * zoomValue) - 385))
 			camera.x -= zoomSpeed;
@@ -151,7 +152,7 @@ update_status ModuleRender::Update()
 		if (camera.x < -((CurrentSceneLenght * zoomValue) - 385))
 			camera.x = -((CurrentSceneLenght * zoomValue) - 385);
 
-		if (zoomValue >= 1.3f)
+		if (zoomValue >= 1.25f)
 			isZoomingIn = false;
 
 
@@ -159,7 +160,6 @@ update_status ModuleRender::Update()
 
 	if (isZoomingOut)
 	{
-		zoomSpeed = (speed * (4));
 		//camera.x = (-(MiddlePointOfPlayers.x / 3) * zoomValue);
 		if (MiddlePointOfScreen < MiddlePointOfPlayers.x && camera.x - zoomSpeed > -((CurrentSceneLenght * zoomValue) - 385))
 			camera.x -= zoomSpeed;
@@ -169,7 +169,7 @@ update_status ModuleRender::Update()
 		if(camera.x < -((CurrentSceneLenght * zoomValue) - 385))
 			camera.x = -((CurrentSceneLenght * zoomValue) - 385);
 
-		if (zoomValue <= 1.0f)
+		if (zoomValue <= 1.05f)
 			isZoomingOut = false;
 
 

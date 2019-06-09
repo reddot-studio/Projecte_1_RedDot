@@ -86,8 +86,8 @@ update_status ModuleUI::Update()
 {
 
 	//Recuadro Johns
-	App->render->Blit(win_points, (SCREEN_WIDTH / 2) - 130, 30, &johnp1, 0, 1,false);
-	App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 74, 30, &johnp2, 0, 1, false);
+	App->render->Blit(win_points, (SCREEN_WIDTH / 2) - 166, 30, &johnp1, 0, 1,false);
+	App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110, 30, &johnp2, 0, 1, false);
 
 
 	//SPIRIT MANAGEMENT
@@ -311,6 +311,7 @@ bool ModuleUI::CleanUp()
 	//Unload everything
 
 		App->textures->Unload(TimerTexture);
+		App->textures->Unload(win_points);
 		App->textures->Unload(App->player1->Player_Health_BG);
 		App->textures->Unload(App->player1->Player_Health);
 		App->textures->Unload(App->player1->Player_Health_BG_Empty);
