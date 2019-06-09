@@ -91,10 +91,23 @@ update_status ModulePlayer_1::Update()
 
 		if (App->input->joystick_right_p1) {
 			last_input = IN_RIGHT_DOWN;
+			if (Side == 1) {
+				isClose = false;
+			}
+		}
+		else if (Side == 2) {
+			isClose = false;
 		}
 
 		if (App->input->joystick_left_p1) {
 			last_input = IN_LEFT_DOWN;
+			if (Side == 2) {
+				isClose = false;
+			}
+		}
+		else if (Side == 1) {
+				isClose = false;
+			
 		}
 
 		if (App->input->joystick_up_p1) {

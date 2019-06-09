@@ -298,7 +298,7 @@ update_status ModulePlayer_2::Update()
 	RectSprites r = current_animation->GetCurrentFrame();
 
 
-	if (App->input->keyboard_state[SDL_SCANCODE_J] == KEY_REPEAT && Side == 1) {
+	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_REPEAT || App->input->joystick_left_p2) && Side == 1) {
 		int num = pivot_player.x - App->player1->GetPosition().x;
 		if (num < 0) {
 			num *= -1;
@@ -312,7 +312,7 @@ update_status ModulePlayer_2::Update()
 			isClose = false;
 		}
 	}
-	else if (App->input->keyboard_state[SDL_SCANCODE_L] == KEY_REPEAT && Side == 2) {
+	else if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_REPEAT || App->input->joystick_right_p2) && Side == 2) {
 		int num = pivot_player.x - App->player1->GetPosition().x;
 		if (num < 0) {
 			num *= -1;
