@@ -396,14 +396,29 @@ John::John(int player)
 
 	//damage in air
 	air_damage.loop = false;
-	air_damage.PushBack({ 674,622,87,101 },0 ,-50 ,2 );
-	air_damage.PushBack({ 773,636,105,55 }, -10, -40, 4, {}, {}, {}, {}, { 0,0 });
-	air_damage.PushBack({ 892,628,91,81 }, -5, -70, 2, {}, {}, {}, {}, { 0,0 });
-	air_damage.PushBack({ 20,774,113,69 }, -25, -65, 2);
-	//air_damage.PushBack({ 162,774,109,57 }, 0, 0, 2);
-	//air_damage.PushBack({ 19,879,114,41 }, 0, 0, 2);
+	air_damage.PushBack({ 674,622,87,101 },0 ,-30 ,2 );
+	air_damage.PushBack({ 773,636,105,55 }, -10, -40, 4, {}, {}, {}, {}, { -1,-1 });
+	air_damage.PushBack({ 892,628,91,81 }, -5, -65, 2, {}, {}, {}, {}, { -1,-1 });
+	air_damage.PushBack({ 20,774,113,69 }, -10, -50, 2);
 	air_damage.speed = 0.2f;
 	
+	//air fall
+	air_damage_fall.loop = false;
+	air_damage_fall.PushBack({ 20,774,113,69 }, -10, -50, 20, {}, {}, {}, {}, {0,2});
+	air_damage_fall.speed = 0.5f;
+
+	//bounce fall
+	air_damage_bounce.PushBack({ 162,774,109,57 }, -5, -40, 2);
+	air_damage_bounce.PushBack({ 19,879,114,41 }, -2, -25, 2);
+	air_damage_bounce.loop = false;
+	air_damage_bounce.speed = 0.05f;
+
+	//Fall recover
+	fall_recover.PushBack({ 615,39,104,68 }, -4, -3, 5);
+	fall_recover.PushBack({ 556,35,59,72 }, -3, -7, 2);
+	fall_recover.loop = false;
+	fall_recover.speed = 0.2f;
+
 	//BLOCK
 	standing_block.SetReverseOffset({ -5,-44 }, 5);
 	standing_block.PushBack({334,774,60,121}, -5, -44, 5,rect1,rect2,rect3);

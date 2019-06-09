@@ -44,6 +44,7 @@ public:
 	Animation jump;
 	Animation fall;
 	Animation recover;
+	Animation fall_recover;
 	Animation jumpkick;
 	Animation jumppunch;
 	Animation jump_forward;
@@ -59,6 +60,8 @@ public:
 	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;
 	Animation pose_idle_receive_crouch_kick;
 	Animation air_damage;
+	Animation air_damage_fall;
+	Animation air_damage_bounce;
 	Animation shadow;
 
 	Animation pose_crouch_receive_standing_crouch_kick;

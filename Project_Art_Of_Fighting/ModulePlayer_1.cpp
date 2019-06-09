@@ -294,12 +294,20 @@ if (App->input->keyboard_state[SDL_SCANCODE_V] == KEY_DOWN)last_input = IN_ULTRA
 //Check duration of animation and reset state when it finishes
 if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1 && current_state != ST_IDLE && current_state != ST_CROUCH && current_state != ST_RECHARGE)
 {
+
+
 	if (current_animation == &character->recover) {
 		last_input = IN_RECOVER_FINISH;
 		if (App->player2->Player_Health_Value_p2 == 0)
 		{
 			last_input = IN_DEFEAT;
 		}
+	}
+	else if (current_animation == &character->air_damage) {
+		last_input = IN_FALL_AIR;
+	}
+	else if (current_animation == &character->air_damage_fall) {
+		last_input = IN_BOUNCE;
 	}
 	else
 	{
@@ -453,8 +461,20 @@ if (current_state == ST_DAMAGE_IN_AIR) {
 	{
 		character->air_damage.ResetDisplacement();
 	}
+}
 
+if (current_state == ST_FALL_FROM_AIR) {
+	iPoint p = character->air_damage_fall.GetDisplacementFrame();
+	if (pivot_player.y < 200) {
+		pivot_player += p;
+	}else{
+		last_input = IN_BOUNCE;
 
+	}
+	if (character->air_damage_fall.GetDisplacementFramePos() == character->air_damage_fall.GetLastFrame() - 1)
+	{
+		character->air_damage_fall.ResetDisplacement();
+	}
 }
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH || current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK)
@@ -1100,6 +1120,24 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_DAMAGE_IN_AIR:
 		switch (last_input)
 		{
+		case IN_FALL_AIR: state = ST_FALL_FROM_AIR; break;
+		}
+		break;	
+	case ST_FALL_FROM_AIR:
+		switch (last_input)
+		{
+		case IN_BOUNCE: state = ST_BOUNCE; break;
+		}
+		break;
+	case ST_BOUNCE:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_RECOVER_FROM_AIR; break;
+		}
+		break;
+	case ST_RECOVER_FROM_AIR:
+		switch (last_input)
+		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
@@ -1527,6 +1565,26 @@ void ModulePlayer_1::states(int speed)
 			current_animation = &character->air_damage;
 		}
 		break;
+	case ST_BOUNCE:
+		if (current_animation != &character->air_damage_bounce) {
+			character->air_damage_bounce.ResetCurrentFrame();
+			current_animation = &character->air_damage_bounce;
+		}
+		break;	
+
+	case ST_FALL_FROM_AIR:
+		if (current_animation != &character->air_damage_fall) {
+			character->air_damage_fall.ResetCurrentFrame();
+			current_animation = &character->air_damage_fall;
+		}
+		break;
+	case ST_RECOVER_FROM_AIR:
+		if (current_animation != &character->fall_recover) {
+			character->fall_recover.ResetCurrentFrame();
+			current_animation = &character->fall_recover;
+			pivot_player.y = 150;
+		}
+		break;
 	case ST_TAUNT:
 		if (current_animation != &character->taunt) {
 			spiritTaunt = true;
@@ -1634,10 +1692,8 @@ void ModulePlayer_1::CheckHealth(ModulePlayer_2&Enemy)
 
 bool ModulePlayer_1::IsPlayerOnMapLimit() 
 {
-	if ((pivot_player.x <= 488
-		&& pivot_player.x >= 455)
-		|| (pivot_player.x >= 8
-			&& pivot_player.x < 0 + 10 + player_collider->rect.w))
+	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
+		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w) 
 	{
 		return true;
 	}
@@ -1645,5 +1701,4 @@ bool ModulePlayer_1::IsPlayerOnMapLimit()
 	{
 		return false;
 	}
-
 }

@@ -70,6 +70,7 @@ public:
 
 	Particle* rechargeParticle = nullptr;
 	bool particleDeleted = false;
+	bool isGrounded = false;
 
 	SDL_Rect ActiveScene;
 	int timer;
