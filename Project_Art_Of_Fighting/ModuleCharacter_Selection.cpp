@@ -73,6 +73,7 @@ bool ModuleScreenSelection::Init() {
 	return true;
 }
 bool ModuleScreenSelection::Start() {
+	onlyonetime = 0;
 	john1counter = 0;
 	john2counter = 0;
 	versuscounter = 0;
@@ -81,6 +82,7 @@ bool ModuleScreenSelection::Start() {
 	character_music = App->audio->Load_music("Assets/Audio/058x200yen Arigatou.ogg");
 	player1_john = App->audio->Load_effects("Assets/Audio/FX/John_1.wav");
 	player2_john = App->audio->Load_effects("Assets/Audio/FX/John_2.wav");
+	select = App->audio->Load_effects("Assets/audio/FX/select.wav");
 	versus = App->audio->Load_effects("Assets/Audio/FX/Versus.wav");
 	App->input->Paused = false;
 	tick1 = SDL_GetTicks();
@@ -102,7 +104,12 @@ update_status ModuleScreenSelection::Update() {
 		timer();
 	}
 	else { //Quan clicas intro
-
+		if (onlyonetime == 0)
+		{
+			App->audio->Play_chunk(select);
+			onlyonetime++;
+		}
+		
 		if (timer_init == false) {
 			tick1 = SDL_GetTicks();
 			timer_init = true;
@@ -132,6 +139,10 @@ update_status ModuleScreenSelection::Update() {
 bool ModuleScreenSelection::CleanUp() {
 	App->textures->Unload(graphics);
 	App->audio->Unload_music(character_music);
+	App->audio->Unload_effects(player1_john);
+	App->audio->Unload_effects(player2_john);
+	App->audio->Unload_effects(versus);
+	App->audio->Unload_effects(select);
 	selected = false;
 	return true;
 }

@@ -32,6 +32,7 @@ public:
 	Mix_Chunk* first_round = NULL;
 	Mix_Chunk* second_round = NULL;
 	Mix_Chunk* last_round = NULL;
+	Mix_Chunk *winfx = NULL;
 	bool Start() override;
 	update_status Update()override;
 	bool CleanUp();
@@ -42,6 +43,7 @@ public:
 	Animation winp2;
 	Animation winp1;
 	int roundcnt = 0;
+	int onlyonesound;
 	bool resetstage = false;
 	int win_p1 = 0;
 	int win_p2 = 0;

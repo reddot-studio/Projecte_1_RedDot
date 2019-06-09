@@ -131,6 +131,7 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
+	onlyonesound = 0;
 	App->render->ResetCamera();
 	roundcnt = 0;
 	current_animation = &nthng;
@@ -142,6 +143,7 @@ bool ModuleSceneJohn::Start()
 	first_round = App->audio->Load_effects("Assets/Audio/FX/Round1.wav");
 	second_round = App->audio->Load_effects("Assets/Audio/FX/Round2.wav");
 	last_round = App->audio->Load_effects("Assets/Audio/FX/LastRound.wav");
+	winfx = App->audio->Load_effects("Assets/Audio/FX/win.wav");
 	if ((graphics = App->textures->Load("Assets/ChinaTown.png")) == NULL)
 	{
 		SDL_Log("Unable to load texture from path: /guardian.png");
@@ -221,6 +223,7 @@ update_status ModuleSceneJohn::Update()
 			indicator.rect.h = 16;
 			if (roundcnt == 0)
 			{
+
 				App->audio->Play_chunk(second_round);
 				roundcnt++;
 			}
@@ -274,11 +277,22 @@ update_status ModuleSceneJohn::Update()
 
 		if (App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)
 		{
+			if (onlyonesound == 0)
+			{
+				App->audio->Play_chunk(winfx);
+				onlyonesound++;
+			}
+			
 			current_animation = &winp2;
 		}
 
 		if (App->player2->Player_Health_Value_p2 > App->player1->Player_Health_Value_p1)
 		{
+			if (onlyonesound == 0)
+			{
+				App->audio->Play_chunk(winfx);
+				onlyonesound++;
+			}
 			current_animation = &winp1;
 		}
 
@@ -303,6 +317,11 @@ update_status ModuleSceneJohn::Update()
 
 	if (App->player2->win_check == true)
 	{
+		if (onlyonesound == 0)
+		{
+			App->audio->Play_chunk(winfx);
+			onlyonesound++;
+		}
 		current_animation = &winp1;
 
 		App->input->Paused = true;
@@ -323,6 +342,7 @@ update_status ModuleSceneJohn::Update()
 		{
 			if (App->player2->p1_win < 2)
 			{
+
 				App->fade->FadeToBlack(App->scene_john, App->scene_john);
 			}
 			else
@@ -334,6 +354,11 @@ update_status ModuleSceneJohn::Update()
 
 	if (App->player1->win_check == true)
 	{
+		if (onlyonesound == 0)
+		{
+			App->audio->Play_chunk(winfx);
+			onlyonesound++;
+		}
 		current_animation = &winp2;
 
 		App->input->Paused = true;
@@ -382,6 +407,7 @@ bool ModuleSceneJohn::CleanUp()
 	App->audio->Unload_effects(first_round);
 	App->audio->Unload_effects(second_round);
 	App->audio->Unload_effects(last_round);
+	App->audio->Unload_effects(winfx);
 	App->textures->Unload(graphics);
 	App->textures->Unload(indicator_fight);
 	App->player1->Disable();

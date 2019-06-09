@@ -49,9 +49,11 @@ public:
 	Mix_Chunk* player1_john;
 	Mix_Chunk* player2_john;
 	Mix_Chunk* versus;
+	Mix_Chunk* select;
 
 	bool selected = false;
 	bool timer_init = false;
+	int onlyonetime;
 
 	int SELECTOR_1 = 2;
 	int SELECTOR_2 = 2;
