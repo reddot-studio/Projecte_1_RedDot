@@ -59,6 +59,7 @@ public:
 	Collider *Borrar2;
 	bool isZoomingIn;
 	bool isZoomingOut;
+	float zoomSpeed;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake
