@@ -112,10 +112,13 @@ update_status ModuleUI::Update()
 		if (App->player2->Player_Spirit_Value_p2 != 0) {
 			timeTaunt_Spirit1++;
 			App->player2->Player_Spirit_Value_p2 -= 1;
-			if (timeTaunt_Spirit1 >= 15) {
+			if (timeTaunt_Spirit1 >= 10) {
 				timeTaunt_Spirit1 = 0;
 				App->player1->spiritTaunt = false;
 			}
+		}
+		else {
+			App->player1->spiritTaunt = false;
 		}
 	}
 	if (App->player2->spiritTaunt == true) {
@@ -123,10 +126,13 @@ update_status ModuleUI::Update()
 			timeTaunt_Spirit2++;
 			x_spirit_1 += 1;
 			App->player1->Player_Spirit_Value_p1 -= 1;
-			if (timeTaunt_Spirit2 >= 15) {
+			if (timeTaunt_Spirit2 >= 10) {
 				timeTaunt_Spirit2 = 0;
 				App->player2->spiritTaunt = false;
 			}
+		}
+		else {
+			App->player2->spiritTaunt = false;
 		}
 	}
 

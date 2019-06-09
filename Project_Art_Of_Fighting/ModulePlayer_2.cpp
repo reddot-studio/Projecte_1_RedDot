@@ -987,7 +987,6 @@ player_state ModulePlayer_2::ControlStates()
 		}
 		break;
 	case ST_TAUNT:
-		spiritTaunt = true;
 		switch (last_input)
 		{
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
