@@ -38,7 +38,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
-	last_input = IN_RECHARGE_UP;
+	last_input = IN_UNKNOWN;
 	koukenenabled = false;
 	slowdownDuration = 5;
 	//if (App->character_selection->IsEnabled()) { //no entra a la condicio fent que peti, ho he hagut de comentar
@@ -996,6 +996,7 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_RECHARGE_UP:state = ST_IDLE; break;
+		case IN_UNKNOWN: state = ST_IDLE; break;
 		}
 		break;
 	case ST_ULTRA_KICK:
@@ -1359,7 +1360,9 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->koukenimpactfx);
 				App->player2->koukenenabled = false;
 			}
-			App->particles->DeleteLastParticle(currentParticle);
+			//App->particles->DeleteLastParticle(currentParticle);
+
+			App->input->StartHaptic(App->input->haptic);
 
 		}
 		break;

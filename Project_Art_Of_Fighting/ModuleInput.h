@@ -17,6 +17,7 @@ public:
 	~ModuleInput();
 
 	void inputGamepad(int numJoystick,SDL_GameController *);
+	void StartHaptic(SDL_Haptic*);
 
 	bool Init();
 	update_status PreUpdate();
@@ -48,6 +49,7 @@ public:
 	GamePad gamepad01;
 	GamePad gamepad02;
 	SDL_Haptic* haptic = nullptr;
+	SDL_Haptic* haptic1 = nullptr;
 
 	bool joystick_up_p1;
 	bool joystick_down_p1;

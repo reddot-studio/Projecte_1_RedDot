@@ -159,6 +159,7 @@ John::John(int player)
 	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_kick.loop = false;
 	crouch_kick.speed = 0.35f;
+	crouch_kick.damage = 20;
 
 	//CROUCH PUNCH
 	crouch_punch.SetReverseOffset({ 10, -7 }, 2);
@@ -169,6 +170,7 @@ John::John(int player)
 	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_punch.loop = false;
 	crouch_punch.speed = 0.35f;
+	crouch_punch.damage = 20;
 
 	//PUNCH
 	punch.SetReverseOffset({ -4,-46 }, 2);
@@ -381,13 +383,14 @@ John::John(int player)
 
 	//damage in air
 	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
-	air_damage.PushBack({ 772,657,115,60 }, 0, 0,2 );
-	air_damage.PushBack({ 892,628,101,89 }, 0,0 ,2 );
-	air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
-	air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
-	air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
+	air_damage.PushBack({ 772,657,115,60 }, -10, -10,2 );
+	air_damage.PushBack({ 772,657,115,60 }, -10, -10,2 );
+	//air_damage.PushBack({ 892,628,101,89 }, 0,0 ,2 );
+	//air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
+	//air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
+	//air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
 	air_damage.loop = false;
-	air_damage.speed = 0.3f;
+	air_damage.speed = 0.05f;
 	
 	//BLOCK
 	standing_block.PushBack({332,760,66,122}, -5, -44, 5,rect1,rect2,rect3);
