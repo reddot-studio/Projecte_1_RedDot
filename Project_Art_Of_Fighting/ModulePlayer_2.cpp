@@ -112,6 +112,8 @@ update_status ModulePlayer_2::Update()
 	}
 
 	if (App->input->joystick_up_p2) {
+		character->jump.ResetCurrentFrame();
+		character->jump.ResetDisplacement();
 		last_input = IN_JUMP_DOWN;
 	}
 
@@ -244,7 +246,11 @@ update_status ModulePlayer_2::Update()
 
 
 	//Jump
-	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
+	if (App->input->keyboard_state[SDL_SCANCODE_I] == KEY_DOWN) {
+		last_input = IN_JUMP_DOWN;
+		character->jump.ResetCurrentFrame();
+		character->jump.ResetDisplacement();
+	}
 
 
 	//STRONG attack

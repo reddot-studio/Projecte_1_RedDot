@@ -125,6 +125,8 @@ update_status ModulePlayer_1::Update()
 		}
 
 		if (App->input->joystick_up_p1) {
+			character->jump.ResetCurrentFrame();
+			character->jump.ResetDisplacement();
 			last_input = IN_JUMP_DOWN;
 		}
 
@@ -262,7 +264,11 @@ if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Valu
 }
 
 //Jump
-if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN)	last_input = IN_JUMP_DOWN;
+if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN) {
+	last_input = IN_JUMP_DOWN;
+	character->jump.ResetCurrentFrame();
+	character->jump.ResetDisplacement();
+}
 
 //STRONG attack
 if (App->input->keyboard_state[SDL_SCANCODE_G] == KEY_DOWN) {
