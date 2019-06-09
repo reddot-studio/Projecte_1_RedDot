@@ -326,36 +326,36 @@ John::John(int player)
 	//ULTRAKICK
 	ultrakick.SetReverseOffset({ 3, -42 }, 2);
 	ultrakick.PushBack({ 769,261, 52,107 }, 10, -42, 2);
+	ultrakick.SetReverseOffset({ 6, -46 }, 2);
+	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 2);
+	ultrakick.SetReverseOffset({ -33,-46 }, 2);
+	ultrakick.PushBack({ 556,607,103,110 }, 0,-46 , 2);
+	ultrakick.SetReverseOffset({ 6, -46 }, 2);
+	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 2);
+	ultrakick.SetReverseOffset({ -40,-43 }, 2);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 2);
+	ultrakick.SetReverseOffset({ 6, -46 }, 2);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
+	ultrakick.SetReverseOffset({ -33,-46 }, 2);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 2);
+	ultrakick.SetReverseOffset({ 6, -46 }, 2);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
+	ultrakick.SetReverseOffset({ -40,-43 }, 2);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 2);
 	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
 	ultrakick.SetReverseOffset({ -33,-46 }, 3);
-	ultrakick.PushBack({ 556,607,103,110 }, 0,-46 , 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 2);
 	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5,-46 , 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
 	ultrakick.SetReverseOffset({ -40,-43 }, 3);
-	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
+	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 2);
 	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
 	ultrakick.SetReverseOffset({ -33,-46 }, 3);
-	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
+	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 2);
 	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
-	ultrakick.SetReverseOffset({ -40,-43 }, 3);
-	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
-	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
-	ultrakick.SetReverseOffset({ -33,-46 }, 3);
-	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
-	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
-	ultrakick.SetReverseOffset({ -40,-43 }, 3);
-	ultrakick.PushBack({ 213,382,102,107 }, -1, -43, 3);
-	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
-	ultrakick.SetReverseOffset({ -33,-46 }, 3);
-	ultrakick.PushBack({ 556,607,103,110 }, 0, -46, 3);
-	ultrakick.SetReverseOffset({ 6, -46 }, 3);
-	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 3);
+	ultrakick.PushBack({ 140,382,67,110 }, -5, -46, 2);
 	ultrakick.SetReverseOffset({ 15,-45 }, 3);
 	ultrakick.PushBack({ 320,382,48,109 }, 5, -45, 3);
 	ultrakick.SetReverseOffset({ 16,-45 }, 3);
@@ -366,7 +366,7 @@ John::John(int player)
 	ultrakick.PushBack({ 495 ,382,105,108 },-3, -44, 3);
 	ultrakick.SetReverseOffset({ 21,-47 }, 3);
 	ultrakick.PushBack({ 605,382,63,110 }, -6, -47, 3);
-	ultrakick.speed = 0.5f; 
+	ultrakick.speed = 0.9f; 
 	ultrakick.loop = false;
 
 	//damage reversed completed
@@ -386,6 +386,8 @@ John::John(int player)
 	air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
 	air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
 	air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
+	air_damage.loop = false;
+	air_damage.speed = 0.3f;
 	
 	//BLOCK
 	standing_block.PushBack({332,760,66,122}, -5, -44, 5,rect1,rect2,rect3);
@@ -468,6 +470,8 @@ bool John::Start()
 		jumpattackfx = App->audio->Load_effects("Assets/Audio/FX/ryo/JumpAttack.wav");
 	if (koukenimpactfx == nullptr)
 		koukenimpactfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Kouken_Impact.wav");
+	if (ultrakickfx == nullptr)
+		ultrakickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ultrakick.wav");
 
 	//Hadouken 
 	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
