@@ -758,6 +758,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
+		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		}
 		break;
 	case ST_WALK_BACKWARD:
@@ -780,6 +781,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_STRONG_KICK: state = ST_STRONG_KICK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
+		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		}
 		break;
 	case ST_STANDING_PUNCH:
@@ -798,6 +800,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
+		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		}
 		break;
 	case ST_STRONG_PUNCH:
