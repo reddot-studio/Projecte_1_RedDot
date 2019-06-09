@@ -257,6 +257,7 @@ update_status ModuleSceneJohn::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		first_row = false;
+		inGame = true;
 	}
 
 	//TIME UP//
