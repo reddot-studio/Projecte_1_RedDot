@@ -388,7 +388,13 @@ if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT || App->input->joy
 }
 if (current_state == ST_STANDING_BLOCKED) {
 	iPoint p = character->exitBlock.GetDisplacementFrame();
-	pivot_player += p;
+	if (Side == 1) {
+		pivot_player += p;
+	}
+	else {
+		pivot_player -= p;
+
+	}
 	if (character->exitBlock.GetDisplacementFramePos() == character->exitBlock.GetLastFrame() - 1)
 	{
 		character->exitBlock.ResetDisplacement();
