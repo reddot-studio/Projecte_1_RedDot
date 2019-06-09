@@ -203,7 +203,7 @@ void ModuleScreenSelection::draw() {
 }
 void ModuleScreenSelection::choose() {
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.A == BUTTON_DOWN || App->input->gamepad02.A == BUTTON_DOWN) {
 		selected = true;
 		//App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}
