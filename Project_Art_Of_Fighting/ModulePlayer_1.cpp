@@ -381,6 +381,17 @@ if (current_state == ST_STANDING_BLOCKED) {
 		character->exitBlock.ResetDisplacement();
 	}
 }
+if (current_state == ST_DAMAGE_IN_AIR) {
+	iPoint p = character->air_damage.GetDisplacementFrame();
+	pivot_player += p;
+	if (character->air_damage.GetDisplacementFramePos() == character->air_damage.GetLastFrame() - 5)
+	{
+		character->air_damage.ResetDisplacement();
+	}
+
+
+}
+
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH || current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK)
 	{
 		isJumping = true;
