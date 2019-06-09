@@ -50,7 +50,7 @@ John::John(int player)
 
 	//Hit Collider
 	SDL_Rect hit_punch_colllider = { 50,-25,43,10 };
-	SDL_Rect hit_kick_collider = { 5,-45,60,40 };
+	SDL_Rect hit_kick_collider = { 45,-45,60,40 };
 
 	//IDLE
 	idle.SetReverseOffset({ 0, -39 }, 2);
@@ -193,9 +193,9 @@ John::John(int player)
 	kick.SetReverseOffset({ 4, -46 },2 );
 	kick.PushBack({ 110,128,58,111 }, 4, -46, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ -40, -43 }, 5);
-	kick.PushBack({ 168,129,105,108 }, 1, -43, 5, rect1, rect2, rect3);
+	kick.PushBack({ 168,129,105,108 }, 1, -43, 5, rect1, rect2, rect3,hit_kick_collider);
 	kick.SetReverseOffset({ -20, -43 }, 2);
-	kick.PushBack({ 273,139,83,108 }, 3, -43, 2, rect1, rect2, rect3);
+	kick.PushBack({ 273,139,83,108 }, 3, -43, 2, rect1, rect2, rect3, hit_kick_collider);
 	kick.SetReverseOffset({ 3, -46 }, 2);
 	kick.PushBack({ 110,128,58,111 }, 5, -46, 2, rect1, rect2, rect3);
 	kick.SetReverseOffset({ 0, -49 },2 );
@@ -277,7 +277,7 @@ John::John(int player)
 	c_punch.SetReverseOffset({ 18,-46 }, 3);
 	c_punch.PushBack({ 434,382,52,110 },-3, -46, 3, rect1, rect2, rect3);	
 	c_punch.SetReverseOffset({ -37,-44 }, 5);
-	c_punch.PushBack({ 495 ,382,105,108 },-3, -44, 5, rect1, rect2, rect3);
+	c_punch.PushBack({ 495 ,382,105,108 },-3, -44, 5, rect1, rect2, rect3,hit_punch_colllider);
 	c_punch.SetReverseOffset({ 21,-47 }, 3);
 	c_punch.PushBack({ 605,382,63,110 },-6, -47, 3, rect1, rect2, rect3);
 	c_punch.loop = false;
@@ -382,14 +382,15 @@ John::John(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
 
 	//damage in air
+	air_damage.loop = false;
 	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
-	air_damage.PushBack({ 772,657,115,60 }, -10, -10,2 );
-	air_damage.PushBack({ 772,657,115,60 }, -10, -10,2 );
-	//air_damage.PushBack({ 892,628,101,89 }, 0,0 ,2 );
+	air_damage.PushBack({ 772,657,115,60 }, -10, -10, 4, rect1, rect2, rect3, {}, { -1,-1 });
+	
+	air_damage.PushBack({ 892,628,101,89 }, 0, 0, 2, rect1, rect2, rect3, {}, { 0,0 });
 	//air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
 	//air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
 	//air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
-	air_damage.loop = false;
+	
 	air_damage.speed = 0.05f;
 	
 	//BLOCK
