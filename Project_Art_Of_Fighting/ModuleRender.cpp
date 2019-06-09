@@ -138,6 +138,20 @@ update_status ModuleRender::Update()
 
 	LOG("\n %d", CameraLimitL->rect.x);
 
+	if (isZoomingIn)
+	{
+		zoomSpeed = (speed * (4));
+		//camera.x = (-(MiddlePointOfPlayers.x / 3) * zoomValue);
+		if (MiddlePointOfScreen < MiddlePointOfPlayers.x && camera.x - zoomSpeed > -((CurrentSceneLenght * zoomValue) - 385))
+			camera.x -= zoomSpeed;
+		if (MiddlePointOfScreen > MiddlePointOfPlayers.x && camera.x + zoomSpeed <= 0)
+			camera.x += zoomSpeed;
+
+		if (MiddlePointOfScreen == MiddlePointOfPlayers.x)
+			isZoomingIn = false;
+
+
+	}
 
 	return update_status::UPDATE_CONTINUE;
 }
@@ -172,7 +186,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, RectSprites* section
 	SDL_Rect rect;
 
 	if (zoom) {
-		if (isZoomed) {
+		if (isZoomed) 
+		{
 			ZoomIn();
 		}
 
@@ -303,25 +318,10 @@ void ModuleRender::ZoomIn()
 	if (isZoomed) 
 	{
 		LOG("\n %d and point = %d", (-(camera.x - ((SCREEN_WIDTH * SCREEN_SIZE) / 2))), MiddlePointOfPlayers.x);
-
 		if (zoomValue < 1.3f)
 		{
+			isZoomingIn = true;
 			zoomValue += 0.001f;
-
-			if (MiddlePointOfScreen < MiddlePointOfPlayers.x) 
-			{
-				camera.x -= 1;
-				if (camera.x - 1 > ((CurrentSceneLenght * zoomValue) - 385)) 
-				{
-					camera.x = -((CurrentSceneLenght * zoomValue) - 385);
-				}
-			}
-
-			//if ((((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) > MiddlePointOfPlayers.x)
-			//{
-			//	camera.x -= 2;
-			//}
-
 			if (camera.y > -90)
 			{
 				timer += timerSpeed;
@@ -331,6 +331,7 @@ void ModuleRender::ZoomIn()
 					timer = 0.0f;
 				}
 			}
+
 		}
 	}
 	
@@ -338,29 +339,27 @@ void ModuleRender::ZoomIn()
 
 void ModuleRender::ZoomOut()
 {
-	if (!isZoomed) {
-		if (zoomValue > 1.0f) {
+	if (!isZoomed) 
+	{
+		if (zoomValue > 1.0f) 
+		{
+			isZoomingOut = true;
 			zoomValue -= 0.001f;
 
-			if (camera.y < 0) {
+			if (camera.y < 0) 
+			{
 				timer += timerSpeed;
-				if (timer > 0.80f) {
+				if (timer > 0.80f) 
+				{
 					camera.y += 1;
 					timer = 0.0f;
 				}
 			}
 		}
+	
 	}
 }
 
-void ModuleRender::MoveCamera(iPoint Movement)
-{
-
-	if (camera.x + Movement.x < 0 && -camera.x < App->render->CurrentSceneLenght - 385)
-		camera.x += Movement.x;
-
-
-}
 
 void ModuleRender::ResetCamera()
 {
