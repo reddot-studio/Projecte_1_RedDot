@@ -346,7 +346,7 @@ player_collider->rect.x = pivot_player.x;
 player_collider->rect.h = 90;
 player_collider->rect.w = 32;
 
-if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && Side == 1) {
+if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT || App->input->joystick_left_p1) && Side == 1) {
 	int num = pivot_player.x - App->player2->GetPosition().x;
 	if (num < 0) {
 		num *= -1;
@@ -359,7 +359,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_A] == KEY_REPEAT && Side == 1) {
 	else {
 		isClose = false;
 	}
-}else if (App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT && Side == 2) {
+}else if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_REPEAT || App->input->joystick_right_p1) && Side == 2) {
 	int num = pivot_player.x - App->player2->GetPosition().x;
 	if (num < 0) {
 		num *= -1;
