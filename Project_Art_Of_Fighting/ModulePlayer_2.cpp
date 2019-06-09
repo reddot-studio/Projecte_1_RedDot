@@ -79,10 +79,23 @@ update_status ModulePlayer_2::Update()
 
 	if (App->input->joystick_right_p2) {
 		last_input = IN_RIGHT_DOWN;
+		if (Side == 1) {
+			isClose = false;
+		}
+	}
+	else if (Side == 2) {
+		isClose = false;
 	}
 
 	if (App->input->joystick_left_p2) {
 		last_input = IN_LEFT_DOWN;
+		if (Side == 2) {
+			isClose = false;
+		}
+	}
+	else if (Side == 1) {
+		isClose = false;
+
 	}
 
 	if (App->input->joystick_up_p2) {
@@ -328,7 +341,13 @@ update_status ModulePlayer_2::Update()
 	}
 	if (current_state == ST_STANDING_BLOCKED) {
 		iPoint p = character->exitBlock.GetDisplacementFrame();
-		pivot_player += p;
+		if (Side == 1) {
+			pivot_player += p;
+		}
+		else {
+			pivot_player -= p;
+
+		}
 		if (character->exitBlock.GetDisplacementFramePos() == character->exitBlock.GetLastFrame() - 1)
 		{
 			character->exitBlock.ResetDisplacement();
@@ -593,7 +612,7 @@ void ModulePlayer_2::OnCollision(Collider * c1, Collider * c2)
 			if (Side == 2) {
 				offsetX = 35;
 			}
-			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE, RYO);
+			App->particles->AddParticle(App->particles->starhit, c2->rect.x + offsetX, c2->rect.y, COLLIDER_NONE,0,0,Side, RYO);
 			c2->Enabled = false;
 		}
 		else if (App->player2->character->isBlocking) {
@@ -1328,7 +1347,6 @@ void ModulePlayer_2::states(int speed)
 				App->player1->koukenenabled = false;
 				App->audio->Play_chunk(character->koukenimpactfx);
 			}
-			
 			App->input->StartHaptic(App->input->haptic1);
 			//App->particles->DeleteLastParticle(currentParticle);
 
