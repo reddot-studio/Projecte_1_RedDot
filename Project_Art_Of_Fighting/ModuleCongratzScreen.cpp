@@ -107,7 +107,7 @@ update_status ModuleCongratzScreen::Update()
 	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame(), 1.0f, 1, false);
  
 	//When using this, coliders do not render 
-	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN)
+	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN)
 	{
 
 		App->fade->FadeToBlack(App->scene_congratz, App->character_selection);
