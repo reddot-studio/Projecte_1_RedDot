@@ -228,7 +228,7 @@ void ModuleWelcomeScreen::thirdScreen() {
 		sprintf_s(time, 20, "%d", 30 - ((timer2 - timer1) / 1000));
 		if (30 - ((timer2 - timer1) / 1000) < 10) {
 			App->fonts->BlitText((SCREEN_WIDTH / 2), 170, 5, time);
-			App->fonts->BlitText((SCREEN_WIDTH / 2), 170-6, 5, "0");			
+			App->fonts->BlitText((SCREEN_WIDTH / 2)-6, 170, 5, "0");			
 		}
 		else {
 			App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 170, 5, time);
