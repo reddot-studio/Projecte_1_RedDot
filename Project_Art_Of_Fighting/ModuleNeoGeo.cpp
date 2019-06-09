@@ -68,7 +68,7 @@ update_status ModuleNeoGeo::Update() {
 
 	App->render->Blit(graphics, (SCREEN_WIDTH/2)-160, (SCREEN_HEIGHT/2)-112, &current_animation->GetCurrentFrame());
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN) {
 		App->fade->FadeToBlack(App->neogeo, App->scene_welcome);
 	}
 	if (App->input->keyboard_state[SDL_SCANCODE_P] == KEY_DOWN) {

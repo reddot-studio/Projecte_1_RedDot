@@ -153,7 +153,7 @@ update_status ModuleWelcomeScreen::Update()
 	else {
 		thirdScreen();
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) coins++;
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN) coins++;
 	sprintf_s(coinsText, 20, "coins   %d", coins);
 	App->fonts->BlitText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10, 2, coinsText);
 
@@ -204,15 +204,15 @@ void ModuleWelcomeScreen::thirdScreen() {
 
 
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN)
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN)
 	{
 		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
 		App->input->Enable();
 	}
-	if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_START)) {
-		App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
-		App->input->Enable();
-	}
+	//if (SDL_GameControllerGetButton(App->input->controller[0], SDL_CONTROLLER_BUTTON_START)) {
+	//	App->fade->FadeToBlack(App->scene_welcome, App->scene_todo);
+	//	App->input->Enable();
+	//}
 
 
 	if (App->input->keyboard_state[SDL_SCANCODE_0] == KEY_DOWN)
@@ -272,7 +272,7 @@ void ModuleWelcomeScreen::secondScreen() {
 		App->render->DrawQuad(color, 0, 0, 0, fadeSlow);
 		fadeSlow -= 1;
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN) {
 		App->audio->Play_music(start_music);
 		sequence1 = false;
 		timer1 = SDL_GetTicks();
