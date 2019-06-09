@@ -396,15 +396,13 @@ John::John(int player)
 
 	//damage in air
 	air_damage.loop = false;
-	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
-	air_damage.PushBack({ 772,657,115,60 }, -10, -10, 4, rect1, rect2, rect3, {}, { -1,-1 });
-	
-	air_damage.PushBack({ 892,628,101,89 }, 0, 0, 2, rect1, rect2, rect3, {}, { 0,0 });
-	//air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
+	air_damage.PushBack({ 677,610,93,108 },0 ,-50 ,2 );
+	air_damage.PushBack({ 772,657,115,60 }, -10, -40, 4, {}, {}, {}, {}, { 0,0 });
+	air_damage.PushBack({ 892,628,101,89 }, -5, -70, 2, {}, {}, {}, {}, { 0,0 });
+	air_damage.PushBack({ 1,772,136,83 }, -25, -65, 2);
 	//air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
 	//air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
-	
-	air_damage.speed = 0.05f;
+	air_damage.speed = 0.2f;
 	
 	//BLOCK
 	standing_block.SetReverseOffset({ -5,-44 }, 5);
