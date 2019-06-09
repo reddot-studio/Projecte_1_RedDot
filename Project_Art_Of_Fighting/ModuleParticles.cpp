@@ -26,6 +26,7 @@ void ModuleParticles::DeleteLastParticle(Particle * particle)
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; i++)
 	{
 		if (active[i] == particle) {
+			particle = nullptr;
 			delete active[i];
 			active[i] = nullptr;
 		}
@@ -128,6 +129,18 @@ bool ModuleParticles::Start()
 	blood.anim.PushBack({ 959 ,1175,48,17 }, 0, 0, 0);
 	blood.anim.PushBack({ 961 ,1204,43,16 }, 0, 0, 0);
 	blood.anim.PushBack({ 960 ,1224,49,16 }, 0, 0, 0);
+
+
+	//Recharge
+	recharge.anim.SetReverseOffset({ 25,-40 }, 5);
+	recharge.anim.PushBack({ 825 ,500,44,22 }, -4, -40, 5);
+	recharge.anim.SetReverseOffset({ 25,-40 }, 5);
+	recharge.anim.PushBack({ 825 ,533,44,25 }, -4, -40, 5);
+	recharge.anim.SetReverseOffset({ 25,-40 }, 5);
+	recharge.anim.PushBack({ 825 ,568,45,25 }, -5, -40, 5);
+	recharge.anim.speed = 0.5f;
+	recharge.anim.loop = true;
+	recharge.life = 10000;
 
 	return true;
 }

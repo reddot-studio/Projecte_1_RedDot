@@ -56,7 +56,7 @@ bool ModulePlayer_2::Start()
 	
 	character->Start();
 	current_animation = &character->idle;
-	pivot_player.x = 90;
+	pivot_player.x = 50;
 	pivot_player.y = 150;
 	Player_Health_Value_p2 = 126;
 	Player_Spirit_Value_p2 = 0;
@@ -689,6 +689,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
 		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
+		case IN_JUMP_BACKWARD: state = ST_FORWARD_JUMP; break;
 		}
 		break;
 	case ST_WALK_FORWARD:
@@ -1042,6 +1043,10 @@ void ModulePlayer_2::states(int speed)
 	switch (state)
 	{
 	case ST_IDLE:
+		if (rechargeParticle != nullptr && !particleDeleted) {
+			App->particles->DeleteLastParticle(rechargeParticle);
+			particleDeleted = true;
+		}
 		current_animation = &character->idle;
 		HurtColliders[0]->Enabled = true;
 		HurtColliders[1]->Enabled = true;
@@ -1105,6 +1110,8 @@ void ModulePlayer_2::states(int speed)
 			HitCollider->Enabled = true;
 			current_animation = &character->kick;
 			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->kickfx2);
+			App->audio->Play_chunk(character->kickfx2);
 		}
 		LOG("KICK");
 		break;
@@ -1342,7 +1349,7 @@ void ModulePlayer_2::states(int speed)
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
 			}
-			App->particles->DeleteLastParticle(currentParticle);
+			//App->particles->DeleteLastParticle(currentParticle);
 		}
 		break;
 	case ST_STANDING_BLOCK:
@@ -1384,6 +1391,7 @@ void ModulePlayer_2::states(int speed)
 				App->player1->koukenenabled = false;
 				App->audio->Play_chunk(character->koukenimpactfx);
 			}
+			
 			App->input->StartHaptic(App->input->haptic1);
 			//App->particles->DeleteLastParticle(currentParticle);
 
@@ -1412,6 +1420,12 @@ void ModulePlayer_2::states(int speed)
 			{
 				App->audio->Play_chunk(character->koukenimpactfx);
 				App->player2->koukenenabled = false;
+			}
+			if (App->player2->current_state = ST_ULTRA_KICK)
+			{
+				App->audio->Play_chunk(character->ultrakickhitfx);
+				App->audio->Play_chunk(character->ultrakickhitfx);
+
 			}
 			//App->particles->DeleteLastParticle(currentParticle);
 
@@ -1447,6 +1461,8 @@ void ModulePlayer_2::states(int speed)
 			character->recharge.ResetCurrentFrame();
 			current_animation = &character->recharge;
 			App->audio->Play_chunk(character->rechargefx);
+			rechargeParticle = App->particles->AddParticle(App->particles->recharge, pivot_player.x, pivot_player.y, COLLIDER_NONE, 0, 0, Side, JOHN);
+			particleDeleted = false;
 		}
 		if (Player_Spirit_Value_p2 != 126) {
 			Player_Spirit_Value_p2++;

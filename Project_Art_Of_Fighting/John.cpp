@@ -370,6 +370,7 @@ John::John(int player)
 	ultrakick.PushBack({ 605,382,63,110 }, -6, -47, 3, rect1, rect2, rect3);
 	ultrakick.speed = 0.9f; 
 	ultrakick.loop = false;
+	ultrakick.damage = 20;
 
 	//damage reversed completed
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({6, -42}, 2);
@@ -465,6 +466,8 @@ bool John::Start()
 		punch2fx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_punchvoice2.wav");
 	if (kickfx == nullptr)
 		kickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kick.wav");
+	if (kickfx2 == nullptr)
+		kickfx2 = App->audio->Load_effects("Assets/Audio/FX/windkick.wav");
 	if (kooukenfx == nullptr)
 		kooukenfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ryo_kooken.wav");
 	if (jumpfx == nullptr)
@@ -489,6 +492,11 @@ bool John::Start()
 		koukenimpactfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Kouken_Impact.wav");
 	if (ultrakickfx == nullptr)
 		ultrakickfx = App->audio->Load_effects("Assets/Audio/FX/ryo/Ultrakick.wav");
+	if (ultrakickhitfx == nullptr)
+		ultrakickhitfx = App->audio->Load_effects("Assets/Audio/FX/ultrakickhit.wav");
+	if (blockfx == nullptr)
+		blockfx = App->audio->Load_effects("Assets/Audio/FX/block.wav");
+
 
 	//Hadouken 
 	//AddCombo(6, IN_KOOU_KEN, IN_CROUCH_UP, IN_UNKNOWN, IN_RIGHT_DOWN, IN_RIGHT_UP, IN_UNKNOWN, IN_PUNCH);
@@ -538,6 +546,11 @@ bool John::CleanUp()
 	{
 		App->audio->Unload_effects(kickfx);
 		kickfx = nullptr;
+	}
+	if (kickfx2 != nullptr)
+	{
+		App->audio->Unload_effects(kickfx2);
+		kickfx2 = nullptr;
 	}
 	if (kooukenfx != nullptr)
 	{
@@ -593,6 +606,16 @@ bool John::CleanUp()
 	{
 		App->audio->Unload_effects(koukenimpactfx);
 			koukenimpactfx = nullptr;
+	}
+	if (ultrakickfx != nullptr)
+	{
+		App->audio->Unload_effects(ultrakickfx);
+		ultrakickfx = nullptr;
+	}
+	if (ultrakickhitfx != nullptr)
+	{
+		App->audio->Unload_effects(ultrakickhitfx);
+		ultrakickhitfx = nullptr;
 	}
 
 	

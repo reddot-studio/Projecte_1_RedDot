@@ -61,6 +61,8 @@ public:
 	Character * character = nullptr;
 
 	Particle * currentParticle = nullptr;
+	Particle* rechargeParticle = nullptr;
+	bool particleDeleted = false;
 
 	SDL_Rect ActiveScene;
 	int timer;
