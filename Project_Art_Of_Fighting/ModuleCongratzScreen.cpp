@@ -33,15 +33,10 @@ ModuleCongratzScreen::ModuleCongratzScreen()
 
 	zero.PushBack({ 1968,1397,80,96 });
 
-	rect_win.rect.x = 1547;
-	rect_win.rect.y = 931;
-	rect_win.rect.w = 129;
-	rect_win.rect.h = 124;
-
-	rect_lose.rect.x = 1692;
-	rect_lose.rect.y = 931;
-	rect_lose.rect.w = 129;
-	rect_lose.rect.h = 124;
+	rect_win.rect.x = 1549;
+	rect_win.rect.y = 799;
+	rect_win.rect.w = 128;
+	rect_win.rect.h = 128;
 
 	chat_bubble.rect.x = 1547;
 	chat_bubble.rect.y = 1085;
@@ -104,31 +99,10 @@ update_status ModuleCongratzScreen::Update()
 		SDL_Log("Unable to [BLIT] texture: texture_background");
 			return update_status::UPDATE_STOP;
 	}
-	switch (result)
-	{
-	case true:
-
-		if ((App->render->Blit(graphics, 57.5, 40, &rect_win, 1.0f, 1, false)) == false)
-		{
-			SDL_Log("Unable to [BLIT] texture: texture_background");
-			return update_status::UPDATE_STOP;
-		}
-		App->fonts->BlitText(58.5, 173, 1, "anytime, anywhere, cross my path");
-		App->fonts->BlitText(58.5, 188, 1, "again and you're mine!");
-
-		break;
-	default:
-		if ((App->render->Blit(graphics, 57.5, 40, &rect_lose, 1.0f, 1, false)) == false)
-		{
-			SDL_Log("Unable to [BLIT] texture: texture_background");
-			return update_status::UPDATE_STOP;
-		}
-		App->fonts->BlitText(58.5, 173, 1, "i'll take you on anytime,");
-		App->fonts->BlitText(58.5, 188, 1, "taco breath!");
-
-
-		break;
-	}
+	App->render->Blit(graphics, 57.5, 36, &rect_win, 1.0f, 1, false);
+	App->fonts->BlitText(58.5, 173, 1, "what ya lookin' at? if you wanna");
+	App->fonts->BlitText(58.5, 188, 1, "start somethin', lets do it!");
+	
 	
 	App->render->Blit(graphics, 220, 68.5, &current_animation->GetCurrentFrame(), 1.0f, 1, false);
  
