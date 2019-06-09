@@ -147,7 +147,7 @@ update_status ModuleRender::Update()
 		if (MiddlePointOfScreen > MiddlePointOfPlayers.x && camera.x + zoomSpeed <= 0)
 			camera.x += zoomSpeed;
 
-		if (MiddlePointOfScreen == MiddlePointOfPlayers.x)
+		if (zoomValue >= 1.3f)
 			isZoomingIn = false;
 
 
