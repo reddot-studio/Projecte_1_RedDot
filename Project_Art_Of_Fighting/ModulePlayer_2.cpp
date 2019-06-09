@@ -475,7 +475,7 @@ update_status ModulePlayer_2::Update()
 	{	
 		iPoint newPos = pivot_player;
 		if (Side == 2) {
-			//newPos.x = newPos.x + 11;
+			newPos.x = newPos.x + 60;
 		}
 		HitCollider->SetRect(r.hitCollider, current_animation->damage, newPos, Side);
 	}
