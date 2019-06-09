@@ -238,7 +238,7 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 	//Ko'ou Ken
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN&& Player_Spirit_Value_p2 >= 23) {
 		last_input = IN_KOOU_KEN;
 	}
 
@@ -268,8 +268,9 @@ update_status ModulePlayer_2::Update()
 	//damage air try
 	if (App->input->keyboard_state[SDL_SCANCODE_8] == KEY_DOWN) last_input = IN_DAMAGE_IN_AIR;
 	//ultrakick try
-	if (App->input->keyboard_state[SDL_SCANCODE_B] == KEY_DOWN)last_input = IN_ULTRA_KICK;
-
+	if (App->input->keyboard_state[SDL_SCANCODE_B] == KEY_DOWN && Player_Spirit_Value_p2 - 26 >= 0) {
+		last_input = IN_ULTRA_KICK;
+	}
 
 
 
@@ -1185,9 +1186,7 @@ void ModulePlayer_2::states(int speed)
 		{
 			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
-			if (Player_Spirit_Value_p2 >= 23) {
-				spiritKouKen = true;
-			}
+			spiritKouKen = true;
 			switch (character->characterType)
 			{
 			case RYO:
@@ -1505,9 +1504,7 @@ void ModulePlayer_2::states(int speed)
 	case ST_ULTRA_KICK:
 		if (current_animation != &character->ultrakick)
 		{
-			if (Player_Spirit_Value_p2 - 26 >= 0) {
-				spiritUltraKick = true;
-			}
+			spiritUltraKick = true;
 			HitCollider->Enabled = true;
 			character->ultrakick.ResetCurrentFrame();
 			current_animation = &character->ultrakick;
