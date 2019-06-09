@@ -127,7 +127,8 @@ bool ModuleWelcomeScreen::Start()
 		return false;
 	}
 	start_music = App->audio->Load_music("Assets/Audio/041xRyukoh-no Theme.ogg");
-	brokenglass = App->audio->Load_effects("Assets/Audio/FX/Brokenglass.wav");													
+	brokenglass = App->audio->Load_effects("Assets/Audio/FX/Brokenglass.wav");	
+	select= App->audio->Load_effects("Assets/audio/FX/select.wav");
 	cuadro = App->textures->Load("Assets/cuadro.png");
 	cuadroRoto = App->textures->Load("Assets/cuadro roto.png");
 	tick1 = SDL_GetTicks();
@@ -166,6 +167,8 @@ bool ModuleWelcomeScreen::CleanUp()
 {
 	App->fonts->UnLoad(0);
 	App->audio->Unload_music(start_music);
+	App->audio->Unload_effects(brokenglass);
+	App->audio->Unload_effects(select);
 	App->textures->Unload(graphics);
 	App->textures->Unload(cuadro);
 	App->textures->Unload(cuadroRoto);
@@ -206,6 +209,7 @@ void ModuleWelcomeScreen::thirdScreen() {
 
 	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN)
 	{
+		App->audio->Play_chunk(select);
 		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
 		App->input->Enable();
 	}

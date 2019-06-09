@@ -57,6 +57,7 @@ bool ModuleCongratzScreen::Start()
 		return false;
 	}	
 	ending_music = App->audio->Load_music("Assets/Audio/042xSono hito-wa watashitachi-no kodomo kana.ogg");
+	select = App->audio->Load_effects("Assets/audio/FX/select.wav");
 	App->audio->Play_music(ending_music);
 
 	//if (App->player1->Player_Health_Value <= 0)
@@ -109,7 +110,7 @@ update_status ModuleCongratzScreen::Update()
 	//When using this, coliders do not render 
 	if (App->input->keyboard_state[SDL_SCANCODE_Q] == KEY_DOWN || App->input->gamepad01.START == BUTTON_DOWN || App->input->gamepad02.START == BUTTON_DOWN)
 	{
-
+		App->audio->Play_chunk(select);
 		App->fade->FadeToBlack(App->scene_congratz, App->character_selection);
 	}
 
@@ -125,6 +126,7 @@ bool ModuleCongratzScreen::CleanUp()
 {
 	App->textures->Unload(graphics);
 	App->audio->Unload_music(ending_music);
+	App->audio->Unload_effects(select);
 	App->player1->p2_win = 0;
 	App->player2->p1_win = 0;
 	App->sceneUI->counter1 = 0;
