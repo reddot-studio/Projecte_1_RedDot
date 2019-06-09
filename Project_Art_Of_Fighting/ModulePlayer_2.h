@@ -93,6 +93,7 @@ public:
 	int speed;
 	bool WallColiding = false;
 	bool spiritKouKen = false;
+	bool spiritTaunt = false;
 
 	ModulePlayer_1* Enemy;
 

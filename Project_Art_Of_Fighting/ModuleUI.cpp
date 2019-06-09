@@ -92,20 +92,37 @@ update_status ModuleUI::Update()
 
 	//SPIRIT MANAGEMENT
 	if (App->player2->spiritKouKen == true) {
-		timeKouKen_Spirit++;
+		timeKouKen_Spirit2++;
 		App->player2->Player_Spirit_Value_p2 -= 1;
-		if (timeKouKen_Spirit >= 26) {
-			timeKouKen_Spirit = 0;
+		if (timeKouKen_Spirit2 >= 26) {
+			timeKouKen_Spirit2 = 0;
 			App->player2->spiritKouKen = false;
 		}
 	}
 	if (App->player1->spiritKouKen == true) {
-		timeKouKen_Spirit++;
+		timeKouKen_Spirit1++;
 		App->player1->Player_Spirit_Value_p1 -= 1;
 		x_spirit_1 += 1;
-		if (timeKouKen_Spirit >= 26) {
-			timeKouKen_Spirit = 0;
+		if (timeKouKen_Spirit1 >= 26) {
+			timeKouKen_Spirit1 = 0;
 			App->player1->spiritKouKen = false;
+		}
+	}
+	if (App->player1->spiritTaunt == true) {
+		timeTaunt_Spirit1++;
+		App->player2->Player_Spirit_Value_p2 -= 1;
+		if (timeTaunt_Spirit1 >= 31) {
+			timeTaunt_Spirit1 = 0;
+			App->player1->spiritTaunt = false;
+		}
+	}
+	if (App->player2->spiritTaunt == true) {
+		timeTaunt_Spirit2++;
+		x_spirit_1 += 1;
+		App->player1->Player_Spirit_Value_p1 -= 1;
+		if (timeTaunt_Spirit2 >= 31) {
+			timeTaunt_Spirit2 = 0;
+			App->player2->spiritTaunt = false;
 		}
 	}
 

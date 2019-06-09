@@ -34,7 +34,8 @@ public:
 	int counter1 = 0, counter2 = 0;
 	char time[10];
 	int dont_pass = 1;
-	int timeKouKen_Spirit = 0;
+	int timeKouKen_Spirit1 = 0, timeKouKen_Spirit2 = 0;
+	int timeTaunt_Spirit1 = 0, timeTaunt_Spirit2 = 0;
 	int x_spirit_1 = (SCREEN_WIDTH / 2) - 16;
 	int beatby1 = 0;
 	int beatby2 = 0;
