@@ -257,6 +257,7 @@ update_status ModuleSceneJohn::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		first_row = false;
+		inGame = true;
 	}
 
 	//TIME UP//
@@ -328,14 +329,14 @@ update_status ModuleSceneJohn::Update()
 
 		if (App->player1->isJumping != true)
 		{
-			//App->player1->current_state = ST_IDLE;
-			//App->player1->last_input = IN_UNKNOWN;
+			App->player1->current_state = ST_IDLE;
+			App->player1->last_input = IN_UNKNOWN;
 		}
 
 		if (App->player2->isJumping != true)
 		{
-			//App->player2->current_state = ST_IDLE;
-			//App->player2->last_input = IN_UNKNOWN;
+			App->player2->current_state = ST_IDLE;
+			App->player2->last_input = IN_UNKNOWN;
 		}
 		App->render->Blit(indicator_fight, 145, 65, &current_animation->GetCurrentFrame(), 0,1,false);
 		if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 1)

@@ -379,7 +379,17 @@ John::John(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({10, -42}, 2);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,-42 ,2);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;	
+	
+	//damage reversed completed
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({6, -42}, 5);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 236,261,58,107 },0 ,-42 ,5 );
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 15);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 299,261,59,107 },-3, -42 , 15);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 364,261,55,107 },0 ,-42 ,2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.loop = false;
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.speed = 0.3f;
 
 	//damage in air
 	air_damage.loop = false;

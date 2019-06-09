@@ -77,6 +77,8 @@ bool ModuleScreenSelection::Start() {
 	john1counter = 0;
 	john2counter = 0;
 	versuscounter = 0;
+	int SELECTOR_1 = 2;
+	int SELECTOR_2 = 2;
 	graphics = App->textures->Load("Assets/character_selection.png");
 	selection_music = App->audio->Load_music("Assets/Audio/Donokagoshi.ogg");
 	character_music = App->audio->Load_music("Assets/Audio/058x200yen Arigatou.ogg");
@@ -143,6 +145,12 @@ bool ModuleScreenSelection::CleanUp() {
 	App->audio->Unload_effects(player2_john);
 	App->audio->Unload_effects(versus);
 	App->audio->Unload_effects(select);
+	onlyonetime = 0;
+	john1counter = 0;
+	john2counter = 0;
+	versuscounter = 0;
+	int SELECTOR_1 = 2;
+	int SELECTOR_2 = 2;
 	selected = false;
 	return true;
 }
@@ -203,7 +211,7 @@ void ModuleScreenSelection::draw() {
 }
 void ModuleScreenSelection::choose() {
 
-	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.A == BUTTON_DOWN || App->input->gamepad02.A == BUTTON_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN || App->input->gamepad01.Y == BUTTON_DOWN || App->input->gamepad02.Y == BUTTON_DOWN) {
 		selected = true;
 		//App->fade->FadeToBlack(App->character_selection, App->scene_todo, 0.7f);
 	}

@@ -228,7 +228,7 @@ void ModuleInput::StartEffect()
 void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller) {
 	if (numJoystick == 1) {
 		//BUTTON A
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1) {
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_A) == 1 && App->scene_john->inGame == true) {
 			if (gamepad01.A == BUTTON_IDLE)
 				gamepad01.A = BUTTON_DOWN;
 			else
@@ -240,6 +240,20 @@ void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller)
 				gamepad01.A = BUTTON_UP;
 			else
 				gamepad01.A = BUTTON_IDLE;
+		}		
+		//BUTTON Y
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y) == 1) {
+			if (gamepad01.Y == BUTTON_IDLE)
+				gamepad01.Y = BUTTON_DOWN;
+			else
+				gamepad01.Y = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad01.Y == BUTTON_REPEAT || (gamepad01.Y == BUTTON_DOWN))
+				gamepad01.Y = BUTTON_UP;
+			else
+				gamepad01.Y = BUTTON_IDLE;
 		}
 
 		//BUTTON X
@@ -258,7 +272,7 @@ void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller)
 		}
 
 		//BUTTON B
-		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1) {
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_B) == 1 && App->scene_john->inGame == true) {
 			if (gamepad01.B == BUTTON_IDLE)
 				gamepad01.B = BUTTON_DOWN;
 			else

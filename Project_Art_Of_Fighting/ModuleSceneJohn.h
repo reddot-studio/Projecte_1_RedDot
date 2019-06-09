@@ -59,6 +59,8 @@ public:
 	Collider* BackPanel;
 	Collider* FrontPanel;
 
+	bool inGame = false;
+
 };
 
 #endif
