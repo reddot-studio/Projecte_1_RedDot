@@ -284,6 +284,12 @@ update_status ModulePlayer_2::Update()
 				last_input = IN_DEFEAT;
 			}
 		}
+		else if (current_animation == &character->air_damage) {
+			last_input = IN_FALL_AIR;
+		}
+		else if (current_animation == &character->air_damage_fall) {
+			last_input = IN_BOUNCE;
+		}
 		else 
 		{
 			last_input = IN_ATTACK_FINISH;
@@ -380,10 +386,13 @@ update_status ModulePlayer_2::Update()
 	if (current_state == ST_DAMAGE_IN_AIR) {
 		iPoint p = character->air_damage.GetDisplacementFrame();
 		if (Side == 1) {
-			pivot_player += p;
+			pivot_player.x += p.x;
+			pivot_player.y += p.y;
 		}
 		else {
-			pivot_player -= p;
+
+			pivot_player.x -= p.x;
+			pivot_player.y += p.y;
 
 		}
 		if (character->air_damage.GetDisplacementFramePos() == character->air_damage.GetLastFrame() - 5)
@@ -399,7 +408,8 @@ update_status ModulePlayer_2::Update()
 				pivot_player += p;
 			}
 			else {
-				pivot_player -= p;
+				pivot_player.x -= p.x;
+				pivot_player.y += p.y;
 
 			}
 		}
