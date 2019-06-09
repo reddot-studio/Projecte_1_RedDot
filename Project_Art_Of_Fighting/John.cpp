@@ -376,33 +376,33 @@ John::John(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({6, -42}, 2);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 236,261,58,107 },0 ,-42 ,2 );
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({10, -42}, 2);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 299,261,59,107 },-3, -42 , 2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 299,261,59,107 },-3, -42 , 2, {}, {}, {}, {}, { -3,0 });
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({10, -42}, 2);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 },0 ,-42 ,2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 364,261,55,107 }, 0, -42, 2, {}, {}, {}, {}, {-2,0});
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.3f;	
 	
 	//damage reversed completed
 	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({6, -42}, 5);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 236,261,58,107 },0 ,-42 ,5 );
-	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 15);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 299,261,59,107 },-3, -42 , 15);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 12);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 299,261,59,107 },-3, -42 , 12);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 3);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 299,261,59,107 },-3, -42 , 3, {}, {}, {}, {}, { -3,0 });
 	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.SetReverseOffset({10, -42}, 2);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 364,261,55,107 },0 ,-42 ,2);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.PushBack({ 364,261,55,107 },0 ,-42 ,2, {}, {}, {}, {}, { -2,0 });
 	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.loop = false;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch_long.speed = 0.3f;
 
 	//damage in air
 	air_damage.loop = false;
-	air_damage.PushBack({ 677,610,93,108 },0 ,0 ,2 );
-	air_damage.PushBack({ 772,657,115,60 }, -10, -10, 4, rect1, rect2, rect3, {}, { -1,-1 });
-	
-	air_damage.PushBack({ 892,628,101,89 }, 0, 0, 2, rect1, rect2, rect3, {}, { 0,0 });
-	//air_damage.PushBack({ 1,772,136,83 }, 0, 0, 2);
-	//air_damage.PushBack({ 143,785,134,70 }, 0, 0, 2);
-	//air_damage.PushBack({ 2,881,131,47 }, 0, 0, 2);
-	
-	air_damage.speed = 0.05f;
+	air_damage.PushBack({ 674,622,87,101 },0 ,-50 ,2 );
+	air_damage.PushBack({ 773,636,105,55 }, -10, -40, 4, {}, {}, {}, {}, { 0,0 });
+	air_damage.PushBack({ 892,628,91,81 }, -5, -70, 2, {}, {}, {}, {}, { 0,0 });
+	air_damage.PushBack({ 20,774,113,69 }, -25, -65, 2);
+	//air_damage.PushBack({ 162,774,109,57 }, 0, 0, 2);
+	//air_damage.PushBack({ 19,879,114,41 }, 0, 0, 2);
+	air_damage.speed = 0.2f;
 	
 	//BLOCK
 	standing_block.SetReverseOffset({ -5,-44 }, 5);

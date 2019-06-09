@@ -136,7 +136,6 @@ update_status ModuleRender::Update()
 	Borrar2->SetPos(MiddlePointOfScreen - 10, App->player1->pivot_player.y);
 	/*camera.x = -((MiddlePointOfPlayers.x / 2) * speed);*/
 
-	LOG("\n %d", CameraLimitL->rect.x);
 
 
 	zoomSpeed = (speed * (4));
@@ -197,6 +196,9 @@ bool ModuleRender::CleanUp()
 	{
 		SDL_DestroyRenderer(renderer);
 	}
+	Borrar->to_delete = true;
+	Borrar2->to_delete = true;
+	Borrar->Enabled = false;
 
 	return true;
 }
@@ -340,7 +342,6 @@ void ModuleRender::ZoomIn()
 {
 	if (isZoomed) 
 	{
-		LOG("\n %d and point = %d", (-(camera.x - ((SCREEN_WIDTH * SCREEN_SIZE) / 2))), MiddlePointOfPlayers.x);
 		if (zoomValue < 1.3f)
 		{
 			isZoomingIn = true;
