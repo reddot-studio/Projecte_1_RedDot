@@ -1405,6 +1405,7 @@ void ModulePlayer_2::states(int speed)
 		}
 		break;
 	case ST_TAUNT:
+		spiritTaunt = true;
 		if (current_animation != &character->taunt) {
 			character->taunt.ResetCurrentFrame();
 			current_animation = &character->taunt;
