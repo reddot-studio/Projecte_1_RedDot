@@ -226,8 +226,14 @@ void ModuleWelcomeScreen::thirdScreen() {
 	}
 	if (timer2 - timer1 > 2000 && timer2-timer1<30000) {
 		sprintf_s(time, 20, "%d", 30 - ((timer2 - timer1) / 1000));
+		if (30 - ((timer2 - timer1) / 1000) < 10) {
+			App->fonts->BlitText((SCREEN_WIDTH / 2), 170, 5, time);
+			App->fonts->BlitText((SCREEN_WIDTH / 2), 170-6, 5, "0");			
+		}
+		else {
+			App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 170, 5, time);
+		}
 		App->fonts->BlitText((SCREEN_WIDTH / 2) - 12, 160, 5, "time");
-		App->fonts->BlitText((SCREEN_WIDTH / 2) - 6, 170, 5,time);
 	}
 	if (timer2 - timer1 > 30000 && coins!=0) {
 		App->fade->FadeToBlack(App->scene_welcome, App->character_selection);
@@ -275,6 +281,7 @@ void ModuleWelcomeScreen::secondScreen() {
 	{
 		App->audio->Play_music(start_music);
 		sequence1 = false;
+		timer1 = SDL_GetTicks();
 	}
 
 	tick2 = SDL_GetTicks();
