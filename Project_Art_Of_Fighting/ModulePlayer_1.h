@@ -31,6 +31,7 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp() override;
+	bool IsPlayerOnMapLimit();
 
 	void OnCollision(Collider*, Collider*);
 	player_state ControlStates();

@@ -416,6 +416,36 @@ if (current_state == ST_STANDING_BLOCKED) {
 		character->exitBlock.ResetDisplacement();
 	}
 }
+if (current_state == ST_IDLE_TO_DAMAGE) {
+	iPoint p = character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetDisplacementFrame();
+	if (Side == 1) {
+		pivot_player += p;
+	}
+	else {
+		pivot_player -= p;
+
+	}
+	if (character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetDisplacementFramePos() == character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetLastFrame() - 1)
+	{
+		character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetDisplacement();
+	}
+}
+if (current_state == ST_IDLE_TO_DAMAGE_LONG) {
+	iPoint p = character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetDisplacementFrame();
+	if (Side == 1) {
+		pivot_player += p;
+	}
+	else {
+		pivot_player -= p;
+
+	}
+	if (character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetDisplacementFramePos() == character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetLastFrame() - 1)
+	{
+		character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.ResetDisplacement();
+	}
+}
+
+
 if (current_state == ST_DAMAGE_IN_AIR) {
 	iPoint p = character->air_damage.GetDisplacementFrame();
 	pivot_player += p;
@@ -609,6 +639,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 			App->render->camera.x = -(App->render->CurrentSceneLenght - 44);
 		if (-App->render->camera.x > ((App->render->CurrentSceneLenght * App->render->zoomValue) - 385) && WIN_FULLSCREEN_DESKTOP == 1)
 			App->render->camera.x = -((App->render->CurrentSceneLenght * App->render->zoomValue) - 385);
+
 
 		//Coliding with left side of the camera?
 		if (c2->LeftRight == false)
@@ -1601,4 +1632,15 @@ void ModulePlayer_1::CheckHealth(ModulePlayer_2&Enemy)
 	}
 }
 
-
+bool ModulePlayer_1::IsPlayerOnMapLimit() 
+{
+	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
+		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w) 
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
