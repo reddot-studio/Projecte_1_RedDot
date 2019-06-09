@@ -610,6 +610,7 @@ void ModulePlayer_1::OnCollision(Collider * c1, Collider * c2)
 		if (-App->render->camera.x > ((App->render->CurrentSceneLenght * App->render->zoomValue) - 385) && WIN_FULLSCREEN_DESKTOP == 1)
 			App->render->camera.x = -((App->render->CurrentSceneLenght * App->render->zoomValue) - 385);
 
+
 		//Coliding with left side of the camera?
 		if (c2->LeftRight == false)
 		{
@@ -1601,4 +1602,15 @@ void ModulePlayer_1::CheckHealth(ModulePlayer_2&Enemy)
 	}
 }
 
-
+bool ModulePlayer_1::IsPlayerOnMapLimit() 
+{
+	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
+		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w) 
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

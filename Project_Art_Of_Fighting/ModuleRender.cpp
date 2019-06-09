@@ -197,6 +197,9 @@ bool ModuleRender::CleanUp()
 	{
 		SDL_DestroyRenderer(renderer);
 	}
+	Borrar->to_delete = true;
+	Borrar2->to_delete = true;
+	Borrar->Enabled = false;
 
 	return true;
 }

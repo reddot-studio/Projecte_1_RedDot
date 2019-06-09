@@ -1544,5 +1544,18 @@ void ModulePlayer_2::CheckHealth(ModulePlayer_1&Enemy)
 	}
 }
 
+bool ModulePlayer_2::IsPlayerOnMapLimit()
+{
+	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
+		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 
 
