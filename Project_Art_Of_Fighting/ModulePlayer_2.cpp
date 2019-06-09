@@ -376,6 +376,34 @@ update_status ModulePlayer_2::Update()
 			character->exitBlock.ResetDisplacement();
 		}
 	}
+	if (current_state == ST_IDLE_TO_DAMAGE) {
+		iPoint p = character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetDisplacementFrame();
+		if (Side == 1) {
+			pivot_player += p;
+		}
+		else {
+			pivot_player -= p;
+
+		}
+		if (character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetDisplacementFramePos() == character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetLastFrame() - 1)
+		{
+			character->pose_idle_receive_standing_punch_kick_plus_jump_punch.ResetDisplacement();
+		}
+	}
+	if (current_state == ST_IDLE_TO_DAMAGE_LONG) {
+		iPoint p = character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetDisplacementFrame();
+		if (Side == 1) {
+			pivot_player += p;
+		}
+		else {
+			pivot_player -= p;
+
+		}
+		if (character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetDisplacementFramePos() == character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.GetLastFrame() - 1)
+		{
+			character->pose_idle_receive_standing_punch_kick_plus_jump_punch_long.ResetDisplacement();
+		}
+	}
 
 	if (current_state == ST_NEUTRAL_JUMP || current_state == ST_NEUTRAL_JUMP_PUNCH || current_state == ST_FALL || current_state == ST_NEUTRAL_JUMP_KICK)
 	{

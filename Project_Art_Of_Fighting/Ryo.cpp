@@ -266,7 +266,7 @@ Ryo::Ryo(int player)
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({ -21,-45 }, 3);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 565,1259,80,111 }, -50, -45, 3);
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({ -23,-43 }, 3);
-	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 492 ,1261,68,109 }, -36, -43, 3);
+	pose_idle_receive_standing_punch_kick_plus_jump_punch.PushBack({ 492 ,1261,68,109 }, -36, -43, 3, {}, {}, {}, {}, {4,0});
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.speed = 0.8f;
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.loop = false;
 
