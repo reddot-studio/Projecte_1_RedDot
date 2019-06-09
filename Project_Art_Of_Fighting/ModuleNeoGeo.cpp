@@ -80,6 +80,9 @@ update_status ModuleNeoGeo::Update() {
 	if (App->input->keyboard_state[SDL_SCANCODE_O] == KEY_DOWN) {
 		App->fade->FadeToBlack(App->neogeo, App->character_selection);
 	}
+	if (App->input->keyboard_state[SDL_SCANCODE_N] == KEY_DOWN) {
+		App->fade->FadeToBlack(App->neogeo, App->scene_congratz);
+	}
 	return update_status::UPDATE_CONTINUE;
 }
 
