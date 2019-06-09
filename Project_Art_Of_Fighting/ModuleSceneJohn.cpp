@@ -258,7 +258,14 @@ update_status ModuleSceneJohn::Update()
 		indicator.rect.w = 80;
 		App->render->Blit(indicator_fight, (SCREEN_WIDTH / 2) - 40, (SCREEN_HEIGHT / 2) - 8, &indicator, 0,1,false);
 		first_row = false;
+		
+		App->input->Paused = false;
+		if (!inGame) {
+			App->player1->last_input = IN_JUMP_BACKWARD;
+			App->player2->last_input = IN_JUMP_BACKWARD;
+		}
 		inGame = true;
+		
 	}
 
 	//TIME UP//

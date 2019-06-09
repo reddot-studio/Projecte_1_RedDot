@@ -66,7 +66,7 @@ bool ModulePlayer_1::Start()
  
 	character->Start();
 	current_animation = &character->idle;
-	pivot_player.x = 30;
+	pivot_player.x = 130;
 	pivot_player.y = 150;
 	Player_Health_Value_p1 = 126;
 	Player_Spirit_Value_p1 = 0;
@@ -752,6 +752,7 @@ player_state ModulePlayer_1::ControlStates()
 		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
 		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		case IN_RECHARGE : state = ST_RECHARGE; break;
+		case IN_JUMP_BACKWARD: state = ST_BACKWARD_JUMP; break;
 		}
 		break;
 	case ST_WALK_FORWARD:

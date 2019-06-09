@@ -370,6 +370,7 @@ John::John(int player)
 	ultrakick.PushBack({ 605,382,63,110 }, -6, -47, 3, rect1, rect2, rect3);
 	ultrakick.speed = 0.9f; 
 	ultrakick.loop = false;
+	ultrakick.damage = 20;
 
 	//damage reversed completed
 	pose_idle_receive_standing_punch_kick_plus_jump_punch.SetReverseOffset({6, -42}, 2);
