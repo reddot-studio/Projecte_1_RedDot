@@ -377,6 +377,41 @@ update_status ModulePlayer_2::Update()
 			character->exitBlock.ResetDisplacement();
 		}
 	}
+	if (current_state == ST_DAMAGE_IN_AIR) {
+		iPoint p = character->air_damage.GetDisplacementFrame();
+		if (Side == 1) {
+			pivot_player += p;
+		}
+		else {
+			pivot_player -= p;
+
+		}
+		if (character->air_damage.GetDisplacementFramePos() == character->air_damage.GetLastFrame() - 5)
+		{
+			character->air_damage.ResetDisplacement();
+		}
+	}
+
+	if (current_state == ST_FALL_FROM_AIR) {
+		iPoint p = character->air_damage_fall.GetDisplacementFrame();
+		if (pivot_player.y < 200) {
+			if (Side == 1) {
+				pivot_player += p;
+			}
+			else {
+				pivot_player -= p;
+
+			}
+		}
+		else {
+			last_input = IN_BOUNCE;
+
+		}
+		if (character->air_damage_fall.GetDisplacementFramePos() == character->air_damage_fall.GetLastFrame() - 5)
+		{
+			character->air_damage_fall.ResetDisplacement();
+		}
+	}
 	if (current_state == ST_IDLE_TO_DAMAGE) {
 		iPoint p = character->pose_idle_receive_standing_punch_kick_plus_jump_punch.GetDisplacementFrame();
 		if (Side == 1) {
@@ -720,7 +755,6 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
 		case IN_TAUNT: state = ST_TAUNT; break;
-		case IN_DAMAGE_IN_AIR: state = ST_DAMAGE_IN_AIR; break;
 		case IN_ULTRA_KICK:state = ST_ULTRA_KICK; break;
 		case IN_RECHARGE: state = ST_RECHARGE; break;
 		case IN_JUMP_BACKWARD: state = ST_FORWARD_JUMP; break;
@@ -818,6 +852,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_PUNCH: state = ST_NEUTRAL_JUMP_PUNCH; break;
 		case IN_KICK: state = ST_NEUTRAL_JUMP_KICK; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_FORWARD_JUMP:
@@ -827,6 +862,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_FORWARD_JUMP_KICK; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_FORWARD_JUMP_PUNCH:
@@ -835,6 +871,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_FORWARD_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_FORWARD_JUMP_KICK:
@@ -843,6 +880,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_FORWARD_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_BACKWARD_JUMP:
@@ -852,6 +890,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_KICK: state = ST_BACKWARD_JUMP_KICK; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_BACKWARD_JUMP_PUNCH:
@@ -860,6 +899,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_BACKWARD_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_BACKWARD_JUMP_KICK:
@@ -868,6 +908,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_BACKWARD_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_KOOU_KEN:
@@ -883,6 +924,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_NEUTRAL_JUMP_KICK:
@@ -891,6 +933,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_ATTACK_FINISH: state = ST_FALL; break;
 		case IN_JUMP_FINISH: state = ST_IDLE; break;
 		case IN_RECOVER: state = ST_RECOVER; break;
+		case IN_RECEIVE_DAMAGE: state = ST_DAMAGE_IN_AIR; break;
 		}
 		break;
 	case ST_FALL:
@@ -1044,7 +1087,25 @@ player_state ModulePlayer_2::ControlStates()
 	case ST_DAMAGE_IN_AIR:
 		switch (last_input)
 		{
-		case IN_KICK: state = ST_IDLE; break;
+		case IN_FALL_AIR: state = ST_FALL_FROM_AIR; break;
+		}
+		break;
+	case ST_FALL_FROM_AIR:
+		switch (last_input)
+		{
+		case IN_BOUNCE: state = ST_BOUNCE; break;
+		}
+		break;
+	case ST_BOUNCE:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_RECOVER_FROM_AIR; break;
+		}
+		break;
+	case ST_RECOVER_FROM_AIR:
+		switch (last_input)
+		{
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
 	case ST_RECHARGE:
@@ -1463,6 +1524,32 @@ void ModulePlayer_2::states(int speed)
 
 			App->input->StartHaptic(App->input->haptic);
 
+		}
+		break;
+	case ST_DAMAGE_IN_AIR:
+		if (current_animation != &character->air_damage) {
+			character->air_damage.ResetCurrentFrame();
+			current_animation = &character->air_damage;
+		}
+		break;
+	case ST_BOUNCE:
+		if (current_animation != &character->air_damage_bounce) {
+			character->air_damage_bounce.ResetCurrentFrame();
+			current_animation = &character->air_damage_bounce;
+		}
+		break;
+
+	case ST_FALL_FROM_AIR:
+		if (current_animation != &character->air_damage_fall) {
+			character->air_damage_fall.ResetCurrentFrame();
+			current_animation = &character->air_damage_fall;
+		}
+		break;
+	case ST_RECOVER_FROM_AIR:
+		if (current_animation != &character->fall_recover) {
+			character->fall_recover.ResetCurrentFrame();
+			current_animation = &character->fall_recover;
+			pivot_player.y = 150;
 		}
 		break;
 	case ST_TAUNT:
