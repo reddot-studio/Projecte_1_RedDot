@@ -1160,6 +1160,8 @@ void ModulePlayer_1::states(int speed)
 			HitCollider->Enabled = true;
 			current_animation = &character->kick;
 			App->audio->Play_chunk(character->punch2fx);
+			App->audio->Play_chunk(character->kickfx2);
+			App->audio->Play_chunk(character->kickfx2);
 		}
 		LOG("KICK");
 		break;
@@ -1409,11 +1411,13 @@ void ModulePlayer_1::states(int speed)
 			character->exitBlock.ResetDisplacement();
 			current_animation = &character->exitBlock;
 			App->render->StartSpriteShake(10, 1, character->exitBlock.frames[0].offset);
+			App->audio->Play_chunk(character->blockfx);
 		}
 		break;
 	case ST_CROUCH_BLOCK:
 		if (current_animation != &character->crouch_block) {
 			character->crouch_block.ResetCurrentFrame();
+			current_animation = &character->crouch_block;
 			current_animation = &character->crouch_block;
 		}
 		break;
@@ -1466,6 +1470,11 @@ void ModulePlayer_1::states(int speed)
 			{
 				App->audio->Play_chunk(character->koukenimpactfx);
 				App->player2->koukenenabled = false;
+			}
+			if (App->player2->current_state = ST_ULTRA_KICK)
+			{
+				App->audio->Play_chunk(character->ultrakickhitfx);
+				App->audio->Play_chunk(character->ultrakickhitfx);
 			}
 			//App->particles->DeleteLastParticle(currentParticle);
 
