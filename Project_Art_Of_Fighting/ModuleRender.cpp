@@ -138,7 +138,7 @@ update_status ModuleRender::Update()
 
 	LOG("\n %d", CameraLimitL->rect.x);
 
-	if (true)
+	if (isZoomed)
 	{
 		//camera.x = (-(MiddlePointOfPlayers.x / 3) * zoomValue);
 		if (MiddlePointOfScreen < MiddlePointOfPlayers.x && camera.x - (speed * 2) > -((CurrentSceneLenght * zoomValue) - 385))
