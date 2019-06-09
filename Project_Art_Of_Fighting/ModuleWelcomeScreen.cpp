@@ -153,7 +153,7 @@ update_status ModuleWelcomeScreen::Update()
 	else {
 		thirdScreen();
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) coins++;
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) coins++;
 	sprintf_s(coinsText, 20, "coins   %d", coins);
 	App->fonts->BlitText(SCREEN_WIDTH - 100, SCREEN_HEIGHT - 10, 2, coinsText);
 
