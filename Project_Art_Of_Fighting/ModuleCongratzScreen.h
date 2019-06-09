@@ -15,6 +15,7 @@ public:
 public:
 	bool result;
 	Mix_Music * ending_music = nullptr;
+	Mix_Chunk* select = nullptr;
 	SDL_Texture* graphics = nullptr;
 	Animation countback;
 	Animation* current_animation;

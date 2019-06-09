@@ -30,6 +30,7 @@ public:
 	};
 	Animation* current_animation;
 	Mix_Chunk* brokenglass;
+	Mix_Chunk* select;
 	screen_state state = MOVING;
 	SDL_Texture* graphics = nullptr;
 

@@ -1100,7 +1100,7 @@ player_state ModulePlayer_1::ControlStates()
 	case ST_DAMAGE_IN_AIR:
 		switch (last_input)
 		{
-		case IN_KICK: state = ST_IDLE; break;
+		case IN_ATTACK_FINISH: state = ST_IDLE; break;
 		}
 		break;
 	case ST_RECHARGE:
