@@ -159,6 +159,7 @@ John::John(int player)
 	crouch_kick.PushBack({ 556,35,59,72 },-3,-7,2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_kick.loop = false;
 	crouch_kick.speed = 0.35f;
+	crouch_kick.damage = 20;
 
 	//CROUCH PUNCH
 	crouch_punch.SetReverseOffset({ 10, -7 }, 2);
@@ -169,6 +170,7 @@ John::John(int player)
 	crouch_punch.PushBack({ 556,35,59,72 }, -3, -7, 2, { -5,-8,25,20 },body_crouchPunch_collider);
 	crouch_punch.loop = false;
 	crouch_punch.speed = 0.35f;
+	crouch_punch.damage = 20;
 
 	//PUNCH
 	punch.SetReverseOffset({ -4,-46 }, 2);
