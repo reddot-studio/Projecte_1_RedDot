@@ -1252,7 +1252,7 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->kooukenfx);
 				break;
 			case JOHN:
-				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,JOHN);
+				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +35, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,JOHN);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				koukenenabled = true;
