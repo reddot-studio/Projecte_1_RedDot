@@ -94,7 +94,7 @@ update_status ModuleUI::Update()
 	if (App->player2->spiritKouKen == true) {
 		timeKouKen_Spirit++;
 		App->player2->Player_Spirit_Value_p2 -= 1;
-		if (timeKouKen_Spirit >= 23) {
+		if (timeKouKen_Spirit >= 26) {
 			timeKouKen_Spirit = 0;
 			App->player2->spiritKouKen = false;
 		}
@@ -103,7 +103,7 @@ update_status ModuleUI::Update()
 		timeKouKen_Spirit++;
 		App->player1->Player_Spirit_Value_p1 -= 1;
 		x_spirit_1 += 1;
-		if (timeKouKen_Spirit >= 23) {
+		if (timeKouKen_Spirit >= 26) {
 			timeKouKen_Spirit = 0;
 			App->player1->spiritKouKen = false;
 		}
