@@ -266,7 +266,7 @@ void ModuleWelcomeScreen::secondScreen() {
 		App->render->DrawQuad(color, 0, 0, 0, fadeSlow);
 		fadeSlow -= 1;
 	}
-	if (App->input->keyboard_state[SDL_SCANCODE_SPACE] == KEY_DOWN) {
+	if (App->input->keyboard_state[SDL_SCANCODE_RETURN] == KEY_DOWN) {
 		App->audio->Play_music(start_music);
 		sequence1 = false;
 		timer1 = SDL_GetTicks();
