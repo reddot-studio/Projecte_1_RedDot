@@ -277,6 +277,10 @@ update_status ModulePlayer_2::Update()
 	{
 		if (current_animation == &character->recover) {
 			last_input = IN_RECOVER_FINISH;
+			if (App->player1->Player_Health_Value_p1 == 0)
+			{
+				last_input = IN_DEFEAT;
+			}
 		}
 		else 
 		{
