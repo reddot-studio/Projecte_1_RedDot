@@ -42,6 +42,7 @@ public:
 	char beatby_str2[10];
 
 	bool initSpirit = true;
+	bool two_winpoints = false;
 };
 
 #endif // __MODULESCENEKEN_H__
