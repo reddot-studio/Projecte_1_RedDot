@@ -132,7 +132,7 @@ update_status ModuleRender::Update()
 	}
 
 	Borrar->SetPos(MiddlePointOfPlayers.x - 10, App->player1->pivot_player.y);
-	Borrar2->SetPos( (((-(camera.x / 3)) + camera.w / 2) / zoomValue) - 10, App->player1->pivot_player.y);
+	Borrar2->SetPos( (((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) - 10, App->player1->pivot_player.y);
 	/*camera.x = -((MiddlePointOfPlayers.x / 2) * speed);*/
 
 	LOG("\n %d", CameraLimitL->rect.x);
@@ -307,9 +307,9 @@ void ModuleRender::ZoomIn()
 		{
 			zoomValue += 0.001f;
 
-			if ((((-(camera.x / 3)) + camera.w / 2) / zoomValue) <= MiddlePointOfPlayers.x)
+			if ((((-(camera.x * SCREEN_SIZE)) + camera.w / 2) / zoomValue) <= MiddlePointOfPlayers.x)
 			{
-				camera.x -= 2;
+				camera.x -= 1;
 			}
 
 			if (camera.y > -90)
