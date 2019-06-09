@@ -70,7 +70,8 @@ bool ModuleRender::Init()
 		ret = false;
 	}
 
-	Borrar = App->collision->AddCollider({ { 20, 20, 20, 20 }, {0, 0} }, COLLIDER_WALL);
+	Borrar = App->collision->AddCollider({ { 20, 20, 20, 20 }, {0, 0} }, COLLIDER_NONE);
+	Borrar2 = App->collision->AddCollider({ { 20, 20, 20, 20 }, {0, 0} }, COLLIDER_NONE);
 
 	return ret;
 }
@@ -131,6 +132,7 @@ update_status ModuleRender::Update()
 	}
 
 	Borrar->SetPos(MiddlePointOfPlayers.x - 10, App->player1->pivot_player.y);
+	Borrar2->SetPos( (((-(camera.x / 3)) + camera.w / 2) / zoomValue) - 10, App->player1->pivot_player.y);
 	/*camera.x = -((MiddlePointOfPlayers.x / 2) * speed);*/
 
 	LOG("\n %d", CameraLimitL->rect.x);
@@ -299,10 +301,16 @@ void ModuleRender::ZoomIn()
 {
 	if (isZoomed) 
 	{
-		
+		LOG("\n %d and point = %d", (-(camera.x - ((SCREEN_WIDTH * SCREEN_SIZE) / 2))), MiddlePointOfPlayers.x);
+
 		if (zoomValue < 1.3f)
 		{
 			zoomValue += 0.001f;
+
+			if ((((-(camera.x / 3)) + camera.w / 2) / zoomValue) <= MiddlePointOfPlayers.x)
+			{
+				camera.x -= 2;
+			}
 
 			if (camera.y > -90)
 			{
@@ -333,6 +341,14 @@ void ModuleRender::ZoomOut()
 			}
 		}
 	}
+}
+
+void ModuleRender::MoveCamera() 
+{
+
+
+
+
 }
 
 void ModuleRender::ResetCamera()

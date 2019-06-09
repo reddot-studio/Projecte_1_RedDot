@@ -27,6 +27,7 @@ public:
 	void ZoomIn();
 	void ZoomOut();
 	void ResetCamera();
+	void MoveCamera();
 
 	float timerSpeed;
 	float timer;
@@ -55,6 +56,7 @@ public:
 	iPoint start_sprite_offset;
 	iPoint MiddlePointOfPlayers;
 	Collider *Borrar;
+	Collider *Borrar2;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake
