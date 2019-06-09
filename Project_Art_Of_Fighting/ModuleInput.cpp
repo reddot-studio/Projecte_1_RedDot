@@ -316,7 +316,20 @@ void ModuleInput::inputGamepad(int numJoystick, SDL_GameController * controller)
 			else
 				gamepad02.A = BUTTON_IDLE;
 		}
-
+		//BUTTON Y
+		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_Y) == 1) {
+			if (gamepad02.Y == BUTTON_IDLE)
+				gamepad02.Y = BUTTON_DOWN;
+			else
+				gamepad02.Y = BUTTON_REPEAT;
+		}
+		else
+		{
+			if (gamepad02.Y == BUTTON_REPEAT || (gamepad02.Y == BUTTON_DOWN))
+				gamepad02.Y = BUTTON_UP;
+			else
+				gamepad02.Y = BUTTON_IDLE;
+		}
 		//BUTTON X
 		if (SDL_GameControllerGetButton(controller, SDL_CONTROLLER_BUTTON_X) == 1) {
 			if (gamepad02.X == BUTTON_IDLE)

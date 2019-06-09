@@ -244,7 +244,7 @@ update_status ModulePlayer_2::Update()
 		}
 	}
 
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_DIVIDE] == KEY_DOWN)	
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_DIVIDE] == KEY_DOWN || App->input->gamepad02.Y == BUTTON_DOWN)
 	{
 		last_input = IN_TAUNT;
 
