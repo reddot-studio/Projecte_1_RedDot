@@ -43,6 +43,10 @@ public:
 
 	bool initSpirit = true;
 	bool two_winpoints = false;
+
+
+	RectSprites johnp1;
+	RectSprites johnp2;
 };
 
 #endif // __MODULESCENEKEN_H__

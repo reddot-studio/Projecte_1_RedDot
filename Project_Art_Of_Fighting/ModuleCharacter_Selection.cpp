@@ -132,6 +132,7 @@ update_status ModuleScreenSelection::Update() {
 bool ModuleScreenSelection::CleanUp() {
 	App->textures->Unload(graphics);
 	App->audio->Unload_music(character_music);
+	selected = false;
 	return true;
 }
 //void ModuleScreenSelection::move() {
