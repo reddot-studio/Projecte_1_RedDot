@@ -131,6 +131,7 @@ ModuleSceneJohn::~ModuleSceneJohn()
 
 bool ModuleSceneJohn::Start()
 {
+	inGame = false;	
 	onlyonesound = 0;
 	App->render->ResetCamera();
 	roundcnt = 0;
