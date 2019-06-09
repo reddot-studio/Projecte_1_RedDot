@@ -1328,8 +1328,8 @@ void ModulePlayer_2::states(int speed)
 				App->audio->Play_chunk(character->koukenimpactfx);
 			}
 			
-			
-			App->particles->DeleteLastParticle(currentParticle);
+			App->input->StartHaptic(App->input->haptic1);
+			//App->particles->DeleteLastParticle(currentParticle);
 
 		}
 		break;
