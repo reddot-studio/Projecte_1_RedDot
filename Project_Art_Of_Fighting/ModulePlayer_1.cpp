@@ -291,6 +291,10 @@ if (current_animation->GetCurrentFramePos() == current_animation->GetLastFrame()
 {
 	if (current_animation == &character->recover) {
 		last_input = IN_RECOVER_FINISH;
+		if (App->player2->Player_Health_Value_p2 == 0)
+		{
+			last_input = IN_DEFEAT;
+		}
 	}
 	else
 	{
@@ -931,6 +935,8 @@ player_state ModulePlayer_1::ControlStates()
 		switch (last_input)
 		{
 		case IN_RECOVER_FINISH: state = ST_IDLE; break;
+		case IN_WIN: state = ST_WIN; break;
+		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
 		break;
 	case ST_CROUCH:
