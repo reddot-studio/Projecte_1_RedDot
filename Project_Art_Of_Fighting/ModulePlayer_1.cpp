@@ -246,7 +246,7 @@ else if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_REPEAT)
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 //Ko'ou Ken
-if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Value_p1 - 23 >= 0) {
+if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Value_p1 - 26 >= 0) {
 	last_input = IN_KOOU_KEN;
 
 }
