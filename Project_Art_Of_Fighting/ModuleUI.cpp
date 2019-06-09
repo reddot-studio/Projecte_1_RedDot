@@ -62,6 +62,17 @@ bool ModuleUI::Start()
 	winpoint.speed = 0.2f;
 	current_animation = &winpoint;
 
+	//Recuadros Johns
+	johnp1.rect.x = 0;
+	johnp1.rect.y = 176;
+	johnp1.rect.w = 56;
+	johnp1.rect.h = 26;
+
+	johnp2.rect.x = 0;
+	johnp2.rect.y = 202;
+	johnp2.rect.w = 56;
+	johnp2.rect.h = 26;
+
 	App->player1->Player_Spirit_Value_p1 = 0;
 	App->player2->Player_Spirit_Value_p2 = 0;
 	x_spirit_1 = (SCREEN_WIDTH / 2) - 16;;
@@ -74,14 +85,10 @@ bool ModuleUI::Start()
 update_status ModuleUI::Update()
 {
 
-	//Draw UI
-	//if ((App->render->Blit(graphics, 0, 0, &rect_background)) == false)
-	//{
-	//	SDL_Log("Unable to [BLIT] texture: texture_background");
-	//	return update_status::UPDATE_STOP;
-	//}
+	//Recuadro Johns
+	App->render->Blit(win_points, (SCREEN_WIDTH / 2) - 120, 30, &johnp1, 1, 1, false);
+	App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 64, 30, &johnp2, 1, 1, false);
 
-	//Needs To sTop on fail bliT
 
 	//SPIRIT MANAGEMENT
 	if (App->player2->spiritKouKen == true) {
@@ -115,6 +122,10 @@ update_status ModuleUI::Update()
 			spriteTimer3 = SDL_GetTicks();
 		}
 	}
+
+
+
+
 	//beat by
 	if (two_winpoints == false) {
 		if (counter1 == 2) {
@@ -244,9 +255,9 @@ update_status ModuleUI::Update()
 	}
 	if(counter1 > 0 ) { 
 		RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-		App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17, 28 - (RendPosition.rect.h / 2)+6, &current_animation->GetCurrentFrame(), 0,1,false);
+		App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 17+50, 28 - (RendPosition.rect.h / 2)+14, &current_animation->GetCurrentFrame(), 0,1,false);
 		if (counter1 == 2) {
-			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2, 28 - (RendPosition.rect.h / 2)+6, &current_animation->GetCurrentFrame(), 0, 1, false);
+			App->render->Blit(win_points, (SCREEN_WIDTH / 2 - RendPosition.rect.w) - 2+50+15, 28 - (RendPosition.rect.h / 2)+14, &current_animation->GetCurrentFrame(), 0, 1, false);
 		}
 	}
 	if (App->player2->Player_Health_Value_p2 == 0 || (time_over == true && App->player1->Player_Health_Value_p1 > App->player2->Player_Health_Value_p2)) {
@@ -254,10 +265,10 @@ update_status ModuleUI::Update()
 	}
 	if (counter2 > 0) {
 		RendPosition = { { 0, 0, 126, 6 },{ 0, 0 } ,{ 0, 0 } };
-		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130, 28 - (RendPosition.rect.h / 2)+6, &current_animation->GetCurrentFrame(), 0, 1, false);
+		App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 130-50, 28 - (RendPosition.rect.h / 2)+14, &current_animation->GetCurrentFrame(), 0, 1, false);
 		if (counter2 == 2) 
 		{
-			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110, 28 - (RendPosition.rect.h / 2)+6, &current_animation->GetCurrentFrame(), 0, 1, false);
+			App->render->Blit(win_points, (SCREEN_WIDTH / 2) + 110-50-15, 28 - (RendPosition.rect.h / 2)+14, &current_animation->GetCurrentFrame(), 0, 1, false);
 		}
 	}
 
