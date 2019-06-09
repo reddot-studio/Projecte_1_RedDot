@@ -22,6 +22,7 @@ bool ModuleDebug::Init()
 }
 bool ModuleDebug::Start() {
 	App->fonts->Load("Assets/fonts/small_white_font.png", " abcdefghiklmnoprstuwy!.0123456789", 2, 8, 8, 34);
+	debug = false;
 	return true;
 }
 

@@ -40,12 +40,10 @@ Application::Application()
 	modules[num++] = neogeo = new ModuleNeoGeo();
 	modules[num++] = scene_welcome = new ModuleWelcomeScreen();
 	modules[num++] = collision = new ModuleCollision();
-	modules[num++] = debug = new ModuleDebug();
 	modules[num++] = character_selection = new ModuleScreenSelection();
 	modules[num++] = slowdown = new ModuleSlowdown();
 	modules[num++] = sceneUI = new ModuleUI();
-	
-	
+	modules[num++] = debug = new ModuleDebug();
 }	
 
 Application::~Application()
