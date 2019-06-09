@@ -100,6 +100,7 @@ public:
 	Mix_Chunk *fallfx = NULL;
 	Mix_Chunk *jumpattackfx = NULL;
 	Mix_Chunk *koukenimpactfx = NULL;
+	Mix_Chunk *ultrakickfx = NULL;
 
 };
 

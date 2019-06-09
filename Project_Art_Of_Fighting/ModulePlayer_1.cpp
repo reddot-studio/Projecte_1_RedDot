@@ -450,6 +450,10 @@ if (current_state == ST_STANDING_BLOCKED) {
 		App->input->Paused = true;
 		App->player2->last_input = IN_WIN;
 	}
+	if (current_state == ST_ULTRA_KICK && current_animation->GetCurrentFramePos() == current_animation->GetLastFrame() - 3)
+	{
+		App->audio->Play_chunk(character->punch1fx);
+	}
 
 	if (Side == 2) {
 
@@ -1403,6 +1407,8 @@ void ModulePlayer_1::states(int speed)
 		{
 			character->ultrakick.ResetCurrentFrame();
 			current_animation = &character->ultrakick;
+			App->audio->Play_chunk(character->ultrakickfx);
+			App->audio->Play_chunk(character->punch2fx);
 		}
 		break;
 	}
