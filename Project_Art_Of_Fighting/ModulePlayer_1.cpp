@@ -1098,6 +1098,10 @@ void ModulePlayer_1::states(int speed)
 	switch (state)
 	{
 	case ST_IDLE:
+		if (rechargeParticle != nullptr && !particleDeleted) {
+			App->particles->DeleteLastParticle(rechargeParticle);
+			particleDeleted = true;
+		}
 		current_animation = &character->idle;
 		HurtColliders[0]->Enabled = true;
 		HurtColliders[1]->Enabled = true;
@@ -1397,7 +1401,6 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->dmg);
 				App->audio->Play_chunk(character->dmg);
 			}
-			App->particles->DeleteLastParticle(currentParticle);
 		}
 		break;
 	case ST_STANDING_BLOCK:
@@ -1516,6 +1519,8 @@ void ModulePlayer_1::states(int speed)
 			character->recharge.ResetCurrentFrame();
 			current_animation = &character->recharge;
 			App->audio->Play_chunk(character->rechargefx);
+			rechargeParticle = App->particles->AddParticle(App->particles->recharge, pivot_player.x, pivot_player.y, COLLIDER_NONE, 0, 0, Side, JOHN);
+			particleDeleted = false;
 		}
 		if (Player_Spirit_Value_p1 != 126) {
 			Player_Spirit_Value_p1++;
