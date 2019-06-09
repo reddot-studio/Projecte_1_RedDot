@@ -32,6 +32,7 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
+	
 	last_input = IN_UNKNOWN;
 	App->input->joystick_up_p2 = false;
 	App->input->joystick_down_p2 = false;
@@ -55,6 +56,7 @@ bool ModulePlayer_2::Start()
 		}
 	
 	character->Start();
+	shadow_animation = &character->shadow;
 	current_animation = &character->idle;
 	pivot_player.x = 50;
 	pivot_player.y = 150;
@@ -324,6 +326,7 @@ update_status ModulePlayer_2::Update()
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
+	RectSprites shadow = shadow_animation->GetCurrentFrame();
 	if (App->render->spriteShaking) {
 		App->render->UpdateSpriteShake(&r.offset);
 	}
@@ -445,12 +448,14 @@ update_status ModulePlayer_2::Update()
 
 
 	if (Side == 2) {
+		App->render->Blit(character->graphics, pivot_player.x + shadow.offset_reverse.x, 145 + shadow.offset_reverse.y, &shadow, 1, Side);
+		App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
 
-	App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
 	}
 	else if(Side ==1)
 	{
 	App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	App->render->Blit(character->graphics, pivot_player.x + shadow.offset.x, 145 + shadow.offset.y, &shadow, 1, Side);
 
 	}
 

@@ -56,6 +56,7 @@ public:
 	iPoint pivot_player;
 
 	Animation* current_animation = nullptr;
+	Animation* shadow_animation = nullptr;
 	Animation* current_fx_animation = nullptr;
 
 	Character * character = nullptr;

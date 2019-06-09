@@ -38,6 +38,7 @@ ModulePlayer_1::~ModulePlayer_1()
 // Load assets
 bool ModulePlayer_1::Start()
 {
+
 	App->input->joystick_up_p1 = false;
 	App->input->joystick_down_p1 = false;
 	App->input->joystick_left_p1 = false;
@@ -65,6 +66,7 @@ bool ModulePlayer_1::Start()
 
  
 	character->Start();
+	shadow_animation = &character->shadow;
 	current_animation = &character->idle;
 	pivot_player.x = 130;
 	pivot_player.y = 150;
@@ -237,9 +239,6 @@ else if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_REPEAT)
 }
 if (App->input->keyboard_state[SDL_SCANCODE_T] == KEY_UP) last_input = IN_RECHARGE_UP;
 
-
-
-
 //kick weak
 if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_DOWN)	last_input_attack= last_input = IN_KICK;
 else if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_REPEAT)
@@ -366,6 +365,7 @@ if (tick2 - tick1 > 4000 && App->sceneUI->time_over == false && App->player1->wi
 
 // Draw everything --------------------------------------
 RectSprites r = current_animation->GetCurrentFrame();
+RectSprites shadow = shadow_animation->GetCurrentFrame();
 
 if (App->render->spriteShaking) {
 	App->render->UpdateSpriteShake(&r.offset);
@@ -503,11 +503,14 @@ if (current_state == ST_DAMAGE_IN_AIR) {
 
 	if (Side == 2) {
 
+		App->render->Blit(character->graphics, pivot_player.x + shadow.offset_reverse.x,145 + shadow.offset_reverse.y, &shadow, 1, Side);
 		App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
 	}
 	else if (Side == 1)
 	{
+		App->render->Blit(character->graphics, pivot_player.x + shadow.offset.x,145 + shadow.offset.y, &shadow, 1, Side, true);
 		App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side,true);
+		
 
 	}
 
@@ -563,7 +566,6 @@ if (current_state == ST_DAMAGE_IN_AIR) {
 
 bool ModulePlayer_1::CleanUp()
 {
-
 	App->textures->Unload(pivotTexture);
 	if (character != nullptr) {
 		character->CleanUp();

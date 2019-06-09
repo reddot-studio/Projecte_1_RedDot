@@ -436,6 +436,11 @@ John::John(int player)
 	recharge.PushBack({ 366,149,69,98 }, -10, -34, 5, rect1, rect2, rect3);
 	recharge.speed = 0.5f;
 
+	//shadow
+	shadow.SetReverseOffset({ 2,65 }, 2);
+	shadow.PushBack({ 674,914,71,11 },-5 ,65 ,2 );
+	shadow.PushBack({ 603,914,71,11 },0 ,0 ,1 );
+	shadow.speed = 0.3f;
 	//Combos
 	for (int i = 0; i < 30; i++)
 	{
