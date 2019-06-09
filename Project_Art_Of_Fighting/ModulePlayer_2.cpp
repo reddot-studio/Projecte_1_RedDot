@@ -309,7 +309,13 @@ update_status ModulePlayer_2::Update()
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
+	if (App->render->spriteShaking) {
+		App->render->UpdateSpriteShake(&r.offset);
+	}
 
+	player_collider->rect.x = pivot_player.x;
+	player_collider->rect.h = 90;
+	player_collider->rect.w = 32;
 
 	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_REPEAT || App->input->joystick_left_p2) && Side == 1) {
 		int num = pivot_player.x - App->player1->GetPosition().x;
@@ -1319,7 +1325,7 @@ void ModulePlayer_2::states(int speed)
 			character->exitBlock.ResetCurrentFrame();
 			character->exitBlock.ResetDisplacement();
 			current_animation = &character->exitBlock;
-			App->render->StartSpriteShake(10, 1, character->exitBlock.frames[0].offset);
+			//App->render->StartSpriteShake(10, 1, character->exitBlock.frames[0].offset);
 		}
 		break;
 	case ST_CROUCH_BLOCK:
