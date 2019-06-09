@@ -26,18 +26,15 @@ opponent's spirit gauge by taunting them.
 Jordi Pardo Gutiérrez. Github User: [@Kansas94](https://github.com/Jordi-Pardo)<br>
 Responsibilities: States & Controller <br>
 
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotoberni.png">
-<br>
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotoberni.png"><br>
 Bernat Casañas Masip. Github User: [@BernatCasanas](https://github.com/Berniix)<br>
 Responsibilites: UI & Character Selection <br>
 
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.png">
-<br>
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.png"><br>
 Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
 Responsibilites: Colliders & Camera  <br>
 
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg">
-<br>
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg"><br>
 * Eudald Garrofé Flix. Github User: [@Hevne](https://github.com/Hevne)<br>
 Responsibilites: Audio & Animation  <br>
 
