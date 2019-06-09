@@ -23,15 +23,15 @@ opponent's spirit gauge by taunting them.
 ## Members: 
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/Fotogordi.jpg"><br>
-Jordi Pardo Gutiérrez. Github User: [@Kansas94](https://github.com/Jordi-Pardo)<br>
+* Jordi Pardo Gutiérrez. Github User: [@Kansas94](https://github.com/Jordi-Pardo)<br>
 Responsibilities: States & Controller <br>
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotoberni.png"><br>
-Bernat Casañas Masip. Github User: [@BernatCasanas](https://github.com/Berniix)<br>
+* Bernat Casañas Masip. Github User: [@BernatCasanas](https://github.com/Berniix)<br>
 Responsibilites: UI & Character Selection <br>
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.png"><br>
-Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
+* Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
 Responsibilites: Colliders & Camera  <br>
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg"><br>
