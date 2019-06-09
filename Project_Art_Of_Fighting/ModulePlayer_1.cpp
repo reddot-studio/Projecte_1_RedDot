@@ -235,7 +235,7 @@ if (App->input->keyboard_state[SDL_SCANCODE_R] == KEY_UP) last_input = IN_RECHAR
 //Ko'ou Ken
 if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Value_p1 - 23 >= 0) {
 	last_input = IN_KOOU_KEN;
-	spiritKouKen = true;
+
 }
 
 //Jump
@@ -1135,6 +1135,7 @@ void ModulePlayer_1::states(int speed)
 		{
 			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
+			spiritKouKen = true;
 			switch (character->characterType)
 			{
 			case RYO:

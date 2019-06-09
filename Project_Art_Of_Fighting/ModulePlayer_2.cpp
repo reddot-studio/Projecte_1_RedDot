@@ -1091,6 +1091,7 @@ void ModulePlayer_2::states(int speed)
 		{
 			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
+			spiritKouKen = true;
 			switch (character->characterType)
 			{
 			case RYO:
