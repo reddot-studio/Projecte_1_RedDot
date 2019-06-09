@@ -1452,6 +1452,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_ULTRA_KICK:
 		if (current_animation != &character->ultrakick)
 		{
+			HitCollider->Enabled = true;
 			character->ultrakick.ResetCurrentFrame();
 			current_animation = &character->ultrakick;
 			App->audio->Play_chunk(character->ultrakickfx);
