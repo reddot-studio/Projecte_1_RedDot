@@ -27,7 +27,6 @@ public:
 	void ZoomIn();
 	void ZoomOut();
 	void ResetCamera();
-	void MoveCamera(iPoint);
 
 	float timerSpeed;
 	float timer;
@@ -58,6 +57,8 @@ public:
 	iPoint MiddlePointOfPlayers;
 	Collider *Borrar;
 	Collider *Borrar2;
+	bool isZoomingIn;
+	bool isZoomingOut;
 
 private:
 	//TODO 0: A new set of variables to handle the camera shake
