@@ -147,11 +147,34 @@ update_status ModuleRender::Update()
 		if (MiddlePointOfScreen > MiddlePointOfPlayers.x && camera.x + zoomSpeed <= 0)
 			camera.x += zoomSpeed;
 
+
+		if (camera.x < -((CurrentSceneLenght * zoomValue) - 385))
+			camera.x = -((CurrentSceneLenght * zoomValue) - 385);
+
 		if (zoomValue >= 1.3f)
 			isZoomingIn = false;
 
 
 	}
+
+	if (isZoomingOut)
+	{
+		zoomSpeed = (speed * (4));
+		//camera.x = (-(MiddlePointOfPlayers.x / 3) * zoomValue);
+		if (MiddlePointOfScreen < MiddlePointOfPlayers.x && camera.x - zoomSpeed > -((CurrentSceneLenght * zoomValue) - 385))
+			camera.x -= zoomSpeed;
+		if (MiddlePointOfScreen > MiddlePointOfPlayers.x && camera.x + zoomSpeed <= 0)
+			camera.x += zoomSpeed;
+
+		if(camera.x < -((CurrentSceneLenght * zoomValue) - 385))
+			camera.x = -((CurrentSceneLenght * zoomValue) - 385);
+
+		if (zoomValue <= 1.0f)
+			isZoomingOut = false;
+
+
+	}
+
 
 	return update_status::UPDATE_CONTINUE;
 }
