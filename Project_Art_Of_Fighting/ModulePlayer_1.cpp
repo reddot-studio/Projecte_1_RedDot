@@ -1252,7 +1252,7 @@ void ModulePlayer_1::states(int speed)
 				App->audio->Play_chunk(character->kooukenfx);
 				break;
 			case JOHN:
-				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +20, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,JOHN);
+				currentParticle = App->particles->AddParticle(App->particles->megaSmash, pivot_player.x +35, pivot_player.y - 20, COLLIDER_PLAYER_HIT, 600, character->specialDmg, Side,JOHN);
 				current_animation = &character->koouKen;
 				App->audio->Play_chunk(character->kooukenfx);
 				koukenenabled = true;
@@ -1634,8 +1634,10 @@ void ModulePlayer_1::CheckHealth(ModulePlayer_2&Enemy)
 
 bool ModulePlayer_1::IsPlayerOnMapLimit() 
 {
-	if (pivot_player.x + player_collider->rect.w < App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w
-		&& pivot_player.x > App->render->CurrentSceneLenght - App->render->CameraLimitR->rect.w - player_collider->rect.w) 
+	if ((pivot_player.x <= 488
+		&& pivot_player.x >= 455)
+		|| (pivot_player.x >= 8
+			&& pivot_player.x < 0 + 10 + player_collider->rect.w))
 	{
 		return true;
 	}
@@ -1643,4 +1645,5 @@ bool ModulePlayer_1::IsPlayerOnMapLimit()
 	{
 		return false;
 	}
+
 }

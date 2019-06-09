@@ -72,8 +72,9 @@ bool ModuleParticles::Start()
 	koouKen.anim.speed = 1.2f;
 
 	//Megasmash
-
+	megaSmash.anim.SetReverseOffset({-75,0}, 5);
 	megaSmash.anim.PushBack({681,139,83,27},0,0,5);
+	megaSmash.anim.SetReverseOffset({-75,1}, 5);
 	megaSmash.anim.PushBack({682,168,78,25},5,1,5);
 	megaSmash.life = 1500;
 	megaSmash.speed ={ 10,0 };
@@ -332,10 +333,10 @@ bool Particle::Update()
 
 		if (collider != nullptr) {
 			if (Side == 1) {
-				collider->SetPos(position.x - collider->rect.w/10 , position.y - collider->rect.h / 2);
+				collider->SetPos(position.x - collider->rect.w/10 + 8 , position.y - collider->rect.h/10 +2);
 			}
 			else {
-				collider->SetPos(position.x - collider->rect.w/10 + 4, position.y - collider->rect.h / 2);
+				collider->SetPos(position.x - collider->rect.w/10 -68, position.y - collider->rect.h / 10 + 2);
 			}
 		}
 	}
