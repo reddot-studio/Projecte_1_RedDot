@@ -165,6 +165,10 @@ bool ModuleSceneJohn::Start()
 	App->player2->Enable();
 	App->sceneUI->Enable();
 	App->input->keyboard_state[SDL_SCANCODE_RETURN] = KEY_IDLE;
+
+	App->render->CameraLimitL->Enabled = true;
+	App->render->CameraLimitR->Enabled = true;
+
 	return true;
 }
 
@@ -430,5 +434,10 @@ bool ModuleSceneJohn::CleanUp()
 		rounds_counter++;
 	}
 	LOG("Unloading john stage");
+
+
+	App->render->CameraLimitL->Enabled = false;
+	App->render->CameraLimitR->Enabled = false;
+
 	return true;
 }
