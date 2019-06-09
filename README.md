@@ -32,7 +32,6 @@ Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.jpg" width=210>
 <br>
 * Eudald Garrofé Flix. Github User: [@Hevne](https://github.com/Hevne)<br>
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/Fotojo.jpg" width=210>
 <br>
 
 
