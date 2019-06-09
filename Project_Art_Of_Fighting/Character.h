@@ -59,6 +59,7 @@ public:
 	Animation pose_idle_receive_jump_kick_plus_crouch_receive_jump_kick_punch;
 	Animation pose_idle_receive_crouch_kick;
 	Animation air_damage;
+	Animation shadow;
 
 	Animation pose_crouch_receive_standing_crouch_kick;
 	Animation pose_crouch_receive_crouch_punch;

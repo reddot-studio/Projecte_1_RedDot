@@ -32,6 +32,7 @@ ModulePlayer_2::~ModulePlayer_2()
 // Load assets
 bool ModulePlayer_2::Start()
 {
+	
 	last_input = IN_UNKNOWN;
 	App->input->joystick_up_p2 = false;
 	App->input->joystick_down_p2 = false;
@@ -55,6 +56,7 @@ bool ModulePlayer_2::Start()
 		}
 	
 	character->Start();
+	shadow_animation = &character->shadow;
 	current_animation = &character->idle;
 	pivot_player.x = 50;
 	pivot_player.y = 150;
@@ -236,9 +238,8 @@ update_status ModulePlayer_2::Update()
 	if (App->input->keyboard_state[SDL_SCANCODE_KP_7] == KEY_UP) last_input = IN_RECHARGE_UP;
 
 	//Ko'ou Ken
-	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN && Player_Spirit_Value_p2>=23) {
+	if (App->input->keyboard_state[SDL_SCANCODE_KP_0] == KEY_DOWN) {
 		last_input = IN_KOOU_KEN;
-		spiritKouKen = true;
 	}
 
 
@@ -324,6 +325,7 @@ update_status ModulePlayer_2::Update()
 
 	// Draw everything --------------------------------------
 	RectSprites r = current_animation->GetCurrentFrame();
+	RectSprites shadow = shadow_animation->GetCurrentFrame();
 	if (App->render->spriteShaking) {
 		App->render->UpdateSpriteShake(&r.offset);
 	}
@@ -473,12 +475,14 @@ update_status ModulePlayer_2::Update()
 
 
 	if (Side == 2) {
+		App->render->Blit(character->graphics, pivot_player.x + shadow.offset_reverse.x, 145 + shadow.offset_reverse.y, &shadow, 1, Side);
+		App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
 
-	App->render->Blit(character->graphics, pivot_player.x + r.offset_reverse.x, pivot_player.y + r.offset_reverse.y, &r, 1, Side);
 	}
 	else if(Side ==1)
 	{
 	App->render->Blit(character->graphics, pivot_player.x + r.offset.x, pivot_player.y + r.offset.y, &r, 1, Side);
+	App->render->Blit(character->graphics, pivot_player.x + shadow.offset.x, 145 + shadow.offset.y, &shadow, 1, Side);
 
 	}
 
@@ -1181,7 +1185,9 @@ void ModulePlayer_2::states(int speed)
 		{
 			//App->render->StartCameraShake(10,4.0f);
 			character->koouKen.ResetCurrentFrame();
-			spiritKouKen = true;
+			if (Player_Spirit_Value_p2 >= 23) {
+				spiritKouKen = true;
+			}
 			switch (character->characterType)
 			{
 			case RYO:
@@ -1461,8 +1467,8 @@ void ModulePlayer_2::states(int speed)
 		}
 		break;
 	case ST_TAUNT:
-		spiritTaunt = true;
 		if (current_animation != &character->taunt) {
+			spiritTaunt = true;
 			character->taunt.ResetCurrentFrame();
 			current_animation = &character->taunt;
 			App->audio->Play_chunk(character->tauntfx);
@@ -1499,6 +1505,9 @@ void ModulePlayer_2::states(int speed)
 	case ST_ULTRA_KICK:
 		if (current_animation != &character->ultrakick)
 		{
+			if (Player_Spirit_Value_p2 - 26 >= 0) {
+				spiritUltraKick = true;
+			}
 			HitCollider->Enabled = true;
 			character->ultrakick.ResetCurrentFrame();
 			current_animation = &character->ultrakick;

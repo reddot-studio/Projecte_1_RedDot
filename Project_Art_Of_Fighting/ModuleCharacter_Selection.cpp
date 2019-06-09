@@ -77,8 +77,11 @@ bool ModuleScreenSelection::Start() {
 	john1counter = 0;
 	john2counter = 0;
 	versuscounter = 0;
+	x_image1 = -140, x_image2 = SCREEN_WIDTH + 10;
+	x_name1 = -140, x_name2 = SCREEN_WIDTH + 10;
 	int SELECTOR_1 = 2;
 	int SELECTOR_2 = 2;
+	selected = false;
 	graphics = App->textures->Load("Assets/character_selection.png");
 	selection_music = App->audio->Load_music("Assets/Audio/Donokagoshi.ogg");
 	character_music = App->audio->Load_music("Assets/Audio/058x200yen Arigatou.ogg");
@@ -102,12 +105,12 @@ update_status ModuleScreenSelection::Update() {
 
 		choose();
 		draw();
-//		move();
 		timer();
 	}
 	else { //Quan clicas intro
 		if (onlyonetime == 0)
 		{
+			tick1 = SDL_GetTicks();
 			App->audio->Play_chunk(select);
 			onlyonetime++;
 		}
@@ -118,12 +121,7 @@ update_status ModuleScreenSelection::Update() {
 		}
 		tick2 = SDL_GetTicks();
 		//VS//
-		if (tick2 - tick1 > 1200) {
-			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs.GetCurrentFrame(), 1.0f, 1, false);
-			if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
-				App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs_final.GetCurrentFrame(), 1.0f, 1, false);
-			}
-		}
+
 
 		//character image animation
 		
@@ -149,45 +147,16 @@ bool ModuleScreenSelection::CleanUp() {
 	john1counter = 0;
 	john2counter = 0;
 	versuscounter = 0;
+	tick1 = SDL_GetTicks();
+	vs.ResetCurrentFrame();
+	no_zero = true;
 	int SELECTOR_1 = 2;
 	int SELECTOR_2 = 2;
 	selected = false;
+	x_image1 = -140, x_image2 = SCREEN_WIDTH + 10;
+	x_name1 = -140, x_name2 = SCREEN_WIDTH + 10;
 	return true;
 }
-//void ModuleScreenSelection::move() {
-//	if ((App->input->keyboard_state[SDL_SCANCODE_D] == KEY_DOWN)) {
-//		if (SELECTOR_1 == 1) {
-//			X_SELECTOR_1 = (SCREEN_WIDTH / 2) + 28;
-//			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 75;
-//			SELECTOR_1 = 2;
-//		}
-//
-//	}
-//	if ((App->input->keyboard_state[SDL_SCANCODE_A] == KEY_DOWN)) {
-//		if (SELECTOR_1 == 2) {
-//			X_SELECTOR_1 = (SCREEN_WIDTH / 2) - 28;
-//			Y_SELECTOR_1 = (SCREEN_HEIGHT / 2) + 47;
-//			SELECTOR_1 = 1;
-//		}
-//
-//	}
-//
-//
-//	if ((App->input->keyboard_state[SDL_SCANCODE_L] == KEY_DOWN)) {
-//		if (SELECTOR_2 == 1) {
-//			X_SELECTOR_2 = (SCREEN_WIDTH / 2) + 28;
-//			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 78;
-//			SELECTOR_2 = 2;
-//		}
-//	}
-//	if ((App->input->keyboard_state[SDL_SCANCODE_J] == KEY_DOWN)) {
-//		if (SELECTOR_2 == 2) {
-//			X_SELECTOR_2 = (SCREEN_WIDTH / 2) - 28;
-//			Y_SELECTOR_2 = (SCREEN_HEIGHT / 2) + 50;
-//			SELECTOR_2 = 1;
-//		}
-//	}
-//}
 void ModuleScreenSelection::timer() {
 	if (time_int <= 0) {
 		tick1 = 0;
@@ -261,6 +230,12 @@ void ModuleScreenSelection::characters_enter() {
 		{
 			App->audio->Play_chunk(versus);
 			versuscounter++;
+		}
+	}
+	if (tick2 - tick1 > 1200) {
+		App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs.GetCurrentFrame(), 1.0f, 1, false);
+		if (vs.GetCurrentFramePos() == vs.GetLastFrame() - 1) {
+			App->render->Blit(graphics, (SCREEN_WIDTH / 2) - 25, (SCREEN_HEIGHT / 2) - 16, &vs_final.GetCurrentFrame(), 1.0f, 1, false);
 		}
 	}
 	if (tick2 - tick1 > 2400) {

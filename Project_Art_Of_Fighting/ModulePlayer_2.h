@@ -56,6 +56,7 @@ public:
 	iPoint pivot_player;
 
 	Animation* current_animation = nullptr;
+	Animation* shadow_animation = nullptr;
 	Animation* current_fx_animation = nullptr;
 
 	Character * character = nullptr;
@@ -96,6 +97,7 @@ public:
 	bool WallColiding = false;
 	bool spiritKouKen = false;
 	bool spiritTaunt = false;
+	bool spiritUltraKick = false;
 
 	ModulePlayer_1* Enemy;
 
