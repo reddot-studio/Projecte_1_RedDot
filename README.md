@@ -29,10 +29,10 @@ Bernat Casañas Masip. Github User: [@BernatCasanas](https://github.com/Berniix)
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotoberni.png">
 <br>
 Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.jpg" width=210>
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/FotoMayk.png">
 <br>
 * Eudald Garrofé Flix. Github User: [@Hevne](https://github.com/Hevne)<br>
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg" width=210>
+<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg">
 <br>
 
 
