@@ -23,7 +23,7 @@ opponent's spirit gauge by taunting them.
 ## Members: 
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/Fotogordi.jpg"><br>
-* Jordi Pardo Gutiérrez. Github User: [@Kansas94](https://github.com/Jordi-Pardo)<br>
+* Jordi Pardo Gutiérrez. Github User: [@Jordi-Pardo](https://github.com/Jordi-Pardo)<br>
 Responsibilities: States & Controller <br>
 
 <img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotoberni.png"><br>
