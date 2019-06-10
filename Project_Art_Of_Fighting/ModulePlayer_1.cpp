@@ -125,8 +125,6 @@ update_status ModulePlayer_1::Update()
 		}
 
 		if (App->input->joystick_up_p1) {
-			character->jump.ResetCurrentFrame();
-			character->jump.ResetDisplacement();
 			last_input = IN_JUMP_DOWN;
 		}
 
@@ -266,8 +264,6 @@ if (App->input->keyboard_state[SDL_SCANCODE_F] == KEY_DOWN && Player_Spirit_Valu
 //Jump
 if (App->input->keyboard_state[SDL_SCANCODE_W] == KEY_DOWN) {
 	last_input = IN_JUMP_DOWN;
-	character->jump.ResetCurrentFrame();
-	character->jump.ResetDisplacement();
 }
 
 //STRONG attack
@@ -783,12 +779,6 @@ player_state ModulePlayer_1::ControlStates()
 
 	switch (current_state)
 	{
-	case ST_TEST:
-		switch (last_input)
-		{
-		case IN_ATTACK_FINISH: state = ST_IDLE; break;
-		}
-		break;
 	case ST_IDLE:
 		switch (last_input)
 		{
@@ -1186,6 +1176,7 @@ void ModulePlayer_1::states(int speed)
 	switch (state)
 	{
 	case ST_IDLE:
+	
 		if (rechargeParticle != nullptr && !particleDeleted) {
 			App->particles->DeleteLastParticle(rechargeParticle);
 			particleDeleted = true;
@@ -1284,6 +1275,7 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->jump)
 		{
 			character->jump.ResetCurrentFrame();
+			character->jump.ResetDisplacement();
 			current_animation = &character->jump;
 			App->audio->Play_chunk(character->jumpfx);
 			player_collider->Enabled = false;
@@ -1345,6 +1337,7 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->jump_forward)
 		{
 			character->jump_forward.ResetCurrentFrame();
+			character->jump_forward.ResetDisplacement();
 			current_animation = &character->jump_forward;
 			App->audio->Play_chunk(character->jumpfx);
 			player_collider->Enabled = false;
@@ -1383,6 +1376,7 @@ void ModulePlayer_1::states(int speed)
 		if (current_animation != &character->jump_backward)
 		{
 			character->jump_backward.ResetCurrentFrame();
+			character->jump_backward.ResetDisplacement();
 			current_animation = &character->jump_backward;
 			App->audio->Play_chunk(character->jumpfx);
 			player_collider->Enabled = false;
@@ -1420,6 +1414,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_FALL:
 		if (current_animation != &character->fall) {
 			character->fall.ResetCurrentFrame();
+			character->fall.ResetDisplacement();
 			current_animation = &character->fall;
 			player_collider->Enabled = false;
 		}
@@ -1428,6 +1423,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_FORWARD_FALL:
 		if (current_animation != &character->fall) {
 			character->fall.ResetCurrentFrame();
+			character->fall.ResetDisplacement();
 			current_animation = &character->fall;
 			player_collider->Enabled = false;
 		}
@@ -1436,6 +1432,7 @@ void ModulePlayer_1::states(int speed)
 	case ST_BACKWARD_FALL:
 		if (current_animation != &character->fall) {
 			character->fall.ResetCurrentFrame();
+			character->fall.ResetDisplacement();
 			current_animation = &character->fall;
 			player_collider->Enabled = false;
 		}
