@@ -983,7 +983,7 @@ player_state ModulePlayer_2::ControlStates()
 		case IN_UNKNOWN: state = ST_IDLE; break;
 		case IN_RECEIVE_DAMAGE: state = ST_IDLE_TO_DAMAGE; break;
 		case IN_RECEIVE_DAMAGE_LONG: state = ST_IDLE_TO_DAMAGE_LONG; break;
-		case IN_BLOCKING: state = ST_CROUCH_BLOCK; break;
+		//case IN_BLOCKING: state = ST_CROUCH_BLOCK; break;
 		case IN_WIN: state = ST_WIN; break;
 		case IN_DEFEAT: state = ST_DEFEAT; break;
 		}
