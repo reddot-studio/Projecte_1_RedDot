@@ -34,7 +34,6 @@ Responsibilites: UI & Character Selection <br>
 * Miquel Suau González. Github User: [@MayKoder](https://github.com/MayKoder)<br>
 Responsibilites: Colliders & Camera  <br>
 
-<img src="https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/eudalxd.jpg"><br>
 * Eudald Garrofé Flix. Github User: [@Hevne](https://github.com/Hevne)<br>
 Responsibilites: Audio & Animation  <br>
 
