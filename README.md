@@ -39,7 +39,7 @@ Responsibilites: Colliders & Camera  <br>
 Responsibilites: Audio & Animation  <br>
 
 
-![](https://raw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg)
+![](httpsraw.githubusercontent.com/MayKoder/Projecte_1_RedDot/master/fotogrup.jpg)
 
 <br>
 
